@@ -1,0 +1,228 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+    includes:
+     in_header: header.html
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  message = FALSE,
+	warning = FALSE,
+  cache.extra = packageVersion('msmbstyle'))
+
+options(htmltools.dir.version = FALSE)
+
+```
+
+# Intro to `data.frames`
+
+
+**Learning Objectives**
+
+After completing this tutorial you should be able to
+
+* read a data from a csv or tab-delimited file into R as a `data.frame`.
+* describe what a `data.frame` is.
+* inspect the contents of a data frame to summarize the content.
+* write a `data.frame` to file.
+
+You should have a `DataFrames.Rmd` in your project directory. Use that file to work through this tutorial - you will hand in your rendered ("knitted") rmarkdown file as your homework assignment. So, first thing in the `YAML` header, change the author to your name. You will use this `Rmarkdown` file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set^[You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn't commented in the manual ... you may of course add as many comments as you need to be able to recall what you did].
+
+Let's start by loading the packages we will need for this activity.
+
+```{r}
+
+# load libraries
+library(knitr)
+library(tidyverse)
+
+```
+
+
+## Reading data into R
+
+`library(tidyverse)` is actually loading a set of packages used for data science that share a common design philosophy, and "grammar". One of the packages we loaded is called `readr` which contains functions for reading in and parsing files.
+
+`r msmbstyle::question(label = "ques:df-1", text = "Use ?read_delim to pull up the help page for the function we will using and explore the arguments. How do you think we read in our csv file?")`
+
+`r msmbstyle::solution_begin()`
+
+`read_delim` has two required arguments, the **path** (`data/longline_catchdata.csv`) which tells `R` where your file is located and the **delimiter** in this case a comma (`,`) tells `R` how columns are separated from each other.
+
+```{r eval=FALSE}
+
+# read catch data
+catch <- read_delim("data/longline_catchdata.csv", delim = "\t")
+
+catch %>%
+  distinct(Species)
+
+```
+
+As we access data sets that are not as "clean" as the one we have hear, you will find that some of the other arguments will come in handy - but don't worry about those for now.
+
+`r msmbstyle::solution_end()`
+
+
+Execute the code. If you look over in your environment pane you should now see the object `catch`. This is your dataframe. Click on it, you should see the command `View(catch)` in your console and a tab `catch` appear in your top left pane.
+
+`r msmbstyle::question(label = "ques:df-2", text = "Based on how you read in the csv file how would you read in the tab-delimited version?")`
+
+`r msmbstyle::solution_begin()`
+
+We need to change delimiter - `\t` is "computer" for tab. 
+
+```{r}
+
+# read catch data
+catch <- read_delim("data/longline_catchdata.txt", delim = "\t")
+
+```
+
+Another delimiters you might encounter are white space (`" "`) but technically it could be anything. 
+
+`r msmbstyle::solution_end()`
+
+When you loaded your data set you should have seem an message along the lines of `parsed with column specification` and information on the number of columns and their data type. What this means is that `read_delim()` looks through the first 1,000 rows for each column and guesses the data type - usually this works pretty well though occasionally we will have to either specify the data types manually (`col_types` argument) or convert the data type later on.
+
+Let's use `class()` to figure out what type of object we are dealing with.
+
+```{r}
+
+class(catch)
+
+```
+You can see that this object actually has multiple classes attached to it. The last one in the list is `data.frame` which is the standard format for (rectangular) tabular data.
+
+Recall from our tutorial on vectors that each column in a `data.frame` is an atomic vector, they must all have the same length (hence, "rectangular") and each must contain the same data type (character,s integers, ...).
+
+The other three have the same basic properties as a `data.frame` along with some additional features. The `tbl` (pronounced tibble) was designed to be at the center of the `tidyverse` which means that when you use `readr` functions it will automatically be read in as a tibble and `data.frame`. If you do some exploring and/or troubleshooting on the web you will likely run into tibbles but for our intents of purposes we will use `data.frame`.
+
+
+
+## Inspect your `data.frame`
+
+`r msmbstyle::question_begin(label = "ques:df-3")`
+
+There are several functions that you can use for a preliminary inspection of your data, including figuring out what dimensions it has and what information is contained in your data set.
+
+Call the following functions on your object and describe what each function does, what information you can learn about your data set from executing them, and when these could be helpful. 
+
+* `dim()`, `nrow()`, `ncol()`
+* `str()`, `summary()`
+* `head()`, `tail()`
+* `colnames()`, `rownames()`
+* `View()`
+
+`r msmbstyle::question_end()`
+
+Similar to the way we were able to subset vectors we can do the same things with our `data.frames` using rows and columns as our "coordinates" in the format `data_frame[row_index, column_index].
+
+So for example we can extract the first row and colum from our `catch` object as
+
+```{r}
+
+catch[1, 1]
+
+```
+
+`r msmbstyle::question(label = "ques:df-4", text = "How would you extract the 5th column from the third row?")`
+
+You can select multiple rows or columns by specifying them using a vector.
+
+```{r}
+
+catch[c(1, 20, 40), c(2, 5)]
+
+```
+
+You can also select a set of adjacent rows (columns) using `:` as so
+
+```{r}
+
+catch[500:505, 2:5]
+
+```
+
+You can exclude indices using `-`
+
+```{r}
+
+catch[1:5, -1]
+
+```
+
+You can select all columns of a given row by leaving the column index blank; for example if we want to extract the first row.
+
+```{r}
+
+catch[1, ]
+
+```
+
+`r msmbstyle::question(label = "ques:df-5", text = "How would you extract the entire 5th column?")`
+
+`r msmbstyle::solution_begin()`
+
+Here are two options using indices:
+
+```{r}
+
+catch[, 1]
+
+catch[1]
+
+```
+
+Instead of using indices you can also call their column names directly - both of these options will return a `data.frame`.
+
+```{r}
+
+catch["Site"]
+
+catch[, "Site"]
+
+```
+
+You can also return them as a vector using square brackets `[[]]` or `$`.
+
+```{r}
+
+catch[["Site"]]
+
+catch$Site
+
+```
+
+`r msmbstyle::solution_end()`
+
+Using indices might seem a little bit clunky, e.g. you have to know which column and row is which by position but it has its practical applications and is computationally very fast. For most of our data wrangling we will be using functions from the tidyverse packages `dplyr` and `tidyr` which work a little bit more intuitively.
+
+
+## Write `data.frame` to file
+
+Frequently, we will process raw data sets and then need to write intermediate or final results to file, for example to share them with collaborators. Here, the `readr` packages comes in handy. 
+
+
+`r msmbstyle::question(label = "ques:df-6", text = "Create a subset of our data set consisting of the first 100 rows and containing information on the species, Sex and forklength. Then use the help page for the function write_delim() to figure out how to write out a tab-delimited file.")`

@@ -1,0 +1,592 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+    includes:
+     in_header: header.html
+bibliography: labmanual.bib
+link-citations: yes
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  message = FALSE,
+	warning = FALSE,
+  cache.extra = packageVersion('msmbstyle'))
+
+options(htmltools.dir.version = FALSE)
+
+```
+
+# Welcome to the tidyverse
+
+**Date**: 8/26/2020
+
+**Learning Objectives**
+
+After completing this tutorial you should
+
+* be able to read a tab-delimited file into R.
+* use `filter()` and `select()` to include/exclude rows and columns from a data frame.
+* use `distinct()` to select only unique/distinct rows from a data frame.
+* use `separate()` and `unite()` to separate content from a column across multiple columns and vice versa.
+* use `mutate()` to add new columns.
+* use `group_by()` to group rows.
+* use `summarize()` to calculate summary statistics.
+
+As always, let's start by loading our packages needed for this analysis.
+
+```{r}
+
+# load libraries (make sure you have installed them first)
+library(knitr)
+library(tidyverse)
+
+```
+
+## Data Wrangling
+
+Now that we have a data frame to play with, let's explore some data wrangling options using `dplyr`. The `d` stands for `data` and the `plyr` stands for `plyers` - this package is designed to manipulate data frames^[This is also known as `data wrangling`, manipulating is not a negative thing in this case it means you can clean up and format the data in appropriate way to fit the questions you are asking and allow to to display the information in a hepful way; you will also see this described as data transformation.]. We are going to focus on the central actions (`verbs`) that will allow you to manipulate the data frame.
+
+We will compare using excel vs R (or another coding language) down the line but here are some of the main advantages to using code -
+
+* You aren't manipulating the raw data set - if you make a mistake or accidentally overwrite something you haven't made any permanent damage.
+* You can manipulate data sets too large to easily handle in Excel.
+* If you update your data set or have a second identically formatted data set you just have to re-run the code.
+
+Be sure to record all the steps (code chunks) in your Rmarkdown - both the examples given here and the applications you will be asked to make. You can copy and paste, but you will find that writing out the code will help you get more used to syntax, how autocomplete etc. works. Make use of the fact that you can add headers, text etc. + code chunks. Be sure to comment your code. These are central concepts that you will use and reuse throughout the semester so you will likely want to refer back to this document. 
+
+
+## Selecting and organizing columns
+
+Let's start by loading our data set.
+
+```{r}
+
+# read catch data
+catch <- read_delim("data/longline_catchdata.txt", delim = "\t")
+
+```
+
+
+```{marginfigure}
+
+We will make heavy use of the magrittr pipe `%>%` this allows you to link commands together; think of it as "and now do this".
+
+Because we are mostly interested in what the individual functions (verbs) do we will not always assign a new object, but just having it print to the console/below the code chunk we will be able to immediately assess the affect. By piping our function to `head()` it will print just the first 6 lines.
+
+```
+
+The function `select()` is used to select a subset of columns from a data set.
+
+For example, you can select just the Site and Species columns.
+
+```{r}
+
+catch %>%
+  select(Site, Species) %>%
+  head()
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-1", text = "How would you select just Day, Month, and Year columns?")`
+
+You PCL column doesn't contain any information (all `NA`s) - you can also eliminate individual columns by name.
+
+```{r}
+
+catch %>%
+  select(-PCL)
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-2", text = "How would you eliminate hook size from the data set?")`
+
+You can also eliminate multiple columns by name, for example you would remove Day, Month and Year like this:
+
+```{r}
+
+catch %>%
+  select(-Day, -Month, -Year)
+
+```
+
+If you want to re-arrange columns in your data frame, you would also use `select()`.
+
+```{r}
+
+catch %>%
+  select(FL, Sex, Day)
+
+```
+
+If you wanted to move a set of columns to the front, but not have to type in all the other column names you can use `everything()`.
+
+```{r}
+
+catch %>%
+  select(Day, Month, Year, everything())
+
+```
+
+There you go. Simple as that.
+
+## Separate & uniting columns
+
+Occasionally you will find that you want to combine the contents of two columns into a single column (e.g. first name, last name) or at other times you may want to separate the contents of a column over multiple columns (e.g. dates). 
+
+For example, you may have noticed that the Species is entered as `genus_species` - what if you wanted to have two separate columns with that information? The function `separate()` is a function that will split the contents from one column across two or more columns. 
+
+To do this you need to specify the new column names (`into = c("column1", "column2")`), and what pattern should be used to determine where the content should be split (`sep = "pattern"`).
+
+```{r}
+
+catch %>%
+  separate(Species, into = c("species", "genus"), sep = "_", remove = FALSE)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:tidy-3")`
+
+In some cases, there might not be a distinct pattern that you can use to identify where to split the column content. In this case it may be more helpful to use the position (e.g. "split at "third character from the left") Look up the `separate()` function in the help and determine how you could split the Year column so you get two new columns by splitting off the last two digits (i.e. 2021 would be 20 and 21). Then eliminate the column containing the first two digits.
+
+`r msmbstyle::question_end()`
+
+To do the opposite action you would use `unite()`. For example, if we wanted to create a column called date that had the day, month, and year of each sampling trip separated by an `_`.
+
+```{r}
+
+catch %>%
+  unite(Date, Day, Month, Year, sep = "_", remove = FALSE)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:tidy-4")`
+
+Create a data set with the following columns in this sequence
+
+* Set_ID (combining day, month, year, and set)
+* Genus
+* Species
+* FL
+* STL
+
+`r msmbstyle::question_end()`
+
+
+## Filtering (subsetting) rows
+
+Until you want to visualize a table how the rows are arranged is not really important. However, when generating reports for example you might want values to be listed in a specific way. This can be done using the function `arrange()`.
+
+For example, if we wanted to arrange our dataframe based on the `Observed_Stage` column we could do the following:
+
+```{r}
+
+catch %>%
+  arrange(Observed_Stage)
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-8", text = "How would sort your table by Sex?")`
+
+Characters are sorted alphabetically, numeric columns from smallest to largest value. If you want to order your values from largest to smallest, you can specify that using `desc()`
+
+```{r}
+
+catch %>%
+  arrange(desc(FL))
+
+```
+
+The function `filter()` is used to subset a data frame by row. 
+
+We do this using `regular expressions` and the `boolean operators` we previously encounter to describe the content of sets of rows.
+
+For example, we might a `data.frame` with only Gafftop sail catfish (*Bagre marinus*).
+
+```{r}
+
+catch %>%
+  filter(Species == "Bagre_marinus")
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-9", text = "How would you select only rows containing Scalloped Hammerheads (*Sphyrna lewini*)?")`^[Note: you need to use `==` (not `=` if you are looking for an exact match).]
+
+If want all rows but Gafftop sailfish you can use a `!` to say "not that".
+
+```{r}
+
+catch %>%
+  filter(!Species == "Bagre_marinus")
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-10", text = "How would you create a dataframe without Scalloped Hammerheads (*Sphyrna lewini*) entries?")`
+
+Sometimes you might want to select rows that match one of a set of values^[Recall, the function `c()` (concatenate) creates a vector].
+
+```{r}
+
+catch %>%
+  filter(Species %in% c("Sciades_felis", "Bagre_marinus", "Synodus_foetens"))
+
+
+```
+
+Again, if you wanted everything but rows containing those values you would preface it with a `!`.
+
+```{r}
+
+catch %>%
+  filter(!Species %in% c("Sciades_felis", "Bagre_marinus", "Synodus_foetens"))
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-11", text = "How would you subset a data frame to contain only entries for different species in the genus Charcharhinus aka the sharky-sharks? There are four species in the data set - Carcharhinus_leucas, Carcharhinus_brevipinna, Carcharhinus_limbatus, Carcharhinus_porosus.")`
+
+For numbers you likely aren't just searching for exact matches, you also want to be able to set threshold values and select everything above or below. For example, you can select all rows with values greater than a certain value using `>`.
+
+```{r}
+
+catch %>%
+  filter(FL > 440)
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-12", text = "Create a data frame containing only entries with a forklength < 300.")`
+
+You can also combine expressions - for example to select only scalloped hammerheads that are also smaller that 300 cm you would use
+
+```{r}
+
+catch %>%
+  filter(Species == "Sphyrna_lewini" & FL < 300)
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-13", text = "How would you subset a data frame to contain only entries for different species in the genus Charcharhinus that have a forklength larger than 500 cm?")`
+
+Instead of entries having to fulfill two (or more) requirements, you might have a situation where you only want to retain rows that fulfill one or another argument. For example, if you wanted all entries that are either gafftops or a fork length smaller than 300 cm you could use the following code^[When you are combining arguments you use `&` to say "it must fulfill this **AND** this" or `|` (called the pipe) to say "it must fulfill this **OR** that.]:
+
+```{r}
+
+catch %>%
+  filter(Species == "Sphyrna_lewini" | FL < 300)
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-14", text = "How would you select fish that have a forklength either smaller than 200 cm or larger than 300cm?")`
+
+The tidyverse has a central concept call "split-apply-combine", which means that occasionally we want to group entries in a dataframe (split), do some sort of manipulation (apply), but end up with a single data frame (combine).
+
+
+```{marginfigure}
+
+The function `max()` can be used to get the maximum value for a vector of numbers. In this case, the vector we are looking at is the `FL` column of the `catch` dataframe.
+
+```
+
+For example, we might want to retain the entry with the longest fork length for each species. To do this we can use the `group_by()` function, then the `filter()` function.
+
+```{r}
+
+catch %>%
+  group_by(Species) %>%
+  filter(FL == max(FL)) %>%
+  ungroup()
+
+```
+
+This is also an example of how we can use the pipe (`%>%`) to string a bunch of commands, in this example we are saying "take the object catch, and then group rows by Species and then for each group retain only the maximum forklength value for that group and then ungroup them again."
+
+`r msmbstyle::question(label = "ques:tidy-15", text = "How would you group rows by Species and then retain the individual caught on the largest hook size for each species?")`
+
+By doing that, you retained only one observation per species. That is actually a common process you might need to perform during exploratory analysis and can be achieved in a straightforward way using the function `distinct()`. For example, if we wanted to know all the years that had been sampled in we could use 
+
+```{r}
+
+catch %>%
+  distinct(Year)
+
+```
+Notice how that dropped all the other columns. You can switch that off usiing `.keep_all = FALSE`.
+
+`r msmbstyle::question(label = "ques:tidy-16", text = "How would you produce a table with only one representative per species?")`
+
+You can also combine columns. For example if we wanted to determine the individual sets of the data set we could use 
+
+```{r}
+
+catch %>%
+  distinct(Day, Month, Year, Set)
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-17", text = "How would you produce a table showing all the species caught per station using distinct(), presented as arranged alphabetically by Site and Species within Site?")`
+
+
+## Adding new variables
+
+Turns out selecting columns and filtering based on content in rows is pretty straightforward. But frequently when we are processing our raw data sets we end up wanting to compute additional metrics or use the existing raw data to create new categories.
+
+The function `mutate()` can be used to create new columns - frequently based on columns already existing in the data frame. This is a very powerful function with endless possibilities, but we are going to stick to some of the basics for now^[Rest assured if your answer is "Oh, could I ..." the answer is "Yes".].
+
+Let's say you wanted create a column that contained the difference between the fork length and the stretch total length:
+
+```{r}
+
+catch %>%
+  mutate(difference = STL - FL)
+
+```
+
+You should now have a column called `difference` at the end of the data frame^[Instead of `-` you can of course use `+` to add , `*` to multiple, and `/` to divide values when creating a new column.].
+
+`r msmbstyle::question(label = "ques:tidy-18", text = "How would you create a new column called ratio, that is the ratio of the fork to stretch total length?")`
+
+You can also create a column that contains a logical value (`TRUE`/`FALSE`). For example we might need a column that indicates if the Sex is unknown.
+
+```{r}
+
+catch %>%
+  mutate(unknown_sex = Sex == "U")
+
+```
+
+You should know have a column called `unknown_sex` where if the animal that was caught was not sexed contains the value `TRUE`, if it was identified as male or female it would say `FALSE`.
+
+`r msmbstyle::question(label = "ques:tidy-19", text = "How would you create a new column called post_2017 that is TRUE if fish were caught after 2017?")`
+
+```{marginfigure}
+
+Note: For that last one, a "conditional mutate" using an `ifelse` statement (if this then do that, else do that) could have come in handy. Another option is `case_when()` which allows you to create multiple sets of conditions as opposed to `ifelse` which sets up a `TRUE`/`FALSE` dichotomy (file this information away for "maybe useful later").
+
+```
+
+Many problems in data science require you to split your data set into subsets according to some grouping variable, apply a function, and then combine the results. `dplyr` is designed to make this straightforward; you have already sen an example of this while you were learning about `filter()`. Similarly, you can combine `mutate()` with `group_by()`.
+
+```{marginfigure}
+
+The function `mean()` will calculate the mean value of a vector of numbers, the argument `na.rm=TRUE` tells the function to ignore any `NA`-values in the data set.
+
+```
+
+For example, let's say you wanted to create a column that is the difference between the fork length of an individual and the mean fork length of *that species*.
+
+```{r}
+
+catch %>%
+  group_by(Species) %>%
+  mutate(diff_mean = FL-mean(FL, na.rm = TRUE))
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-20", text = "How would you create a new column called that contains the difference between the fork length of an individual and the mean fork length of that species for each month?")`
+
+
+## Create new `data.frame` based on another
+
+Not infrequently we are more interested in summary stats of a data set rather than all the raw data - `Tidyverse` got you covered with the function `summarize()`.
+
+For example, we might want to calculate the mean and standard deviation of the measured fork length.
+
+```{r}
+
+catch %>%
+  summarize(mean_FL = mean(FL, na.rm = TRUE),
+            sd_FL = sd(FL, na.rm = TRUE))
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-21", text = "How could you use summarize to get the maximum forklength?")`^[Hint: Remember earlier we used the function max() to get a maximum value.]
+
+That's cool but really we could have also just used 
+
+```{r}
+
+mean(catch$FL, na.rm = TRUE)
+
+```
+to get that information.
+
+`summarize` becomes especially powerful once we leverage `group_by()` to start calculating summary stats for entries grouped by a grouping variable.
+
+For example we can calculate summary stats by species:
+
+```{r echo=FALSE}
+
+catch %>%
+  group_by(Species) %>%
+  summarize(mean_FL = mean(FL, na.rm = TRUE),
+           median_FL = median(FL, na.rm = TRUE),
+           max_FL = max(FL, na.rm = TRUE),
+           min_FL = min(FL, na.rm = TRUE),
+           sd_FL = sd(FL, na.rm = TRUE)) %>%
+  ungroup()
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-22", text = "If you look closely you should see that you are getting a few NA, NaN, -Inf, and Inf values - any guesses why? You might want to pull up the catch data frame in the view panel to see what is going on with those species.")`
+
+`r msmbstyle::question(label = "ques:tidy-23", text = "How could you use summarize calculate a range of summary stats for the stretch total length for individuals grouped by sex?")`
+
+So far, we have been manipulating our data frame using code and printing it directly to the console (and our rmarkdown). This can be useful for example to generate tables for reports but frequently we want to create a new object that has been manipulated according to our code and then we will further process, visualize, or analyze that dataframe down the line.
+
+```{r}
+
+summary <- catch %>%
+  group_by(Species) %>%
+  summarize(mean_FL = mean(FL, na.rm = TRUE),
+           median_FL = median(FL, na.rm = TRUE),
+           max_FL = max(FL, na.rm = TRUE),
+           min_FL = min(FL, na.rm = TRUE),
+           sd_FL = sd(FL, na.rm = TRUE)) %>%
+  ungroup()
+
+```
+
+When you execute this code, you'll notice that the code (and probably a warning) is printed to the console but there is no output. Instead, if you look at the environment in the top right corner you should now see a new object called `summary`. Per usual, you can pull that up in the Editor/View pane (top left) using either `View(summary)` in the console or by clicking on the object in the environment.
+
+You will be presenting results in reports over the course of the semester, when you `knit` an `Rmarkdown` file you will get tables formatted in a standard way according to defaults in the resulting `html` file. If you want finer control over the output, you can use the `kable()` function. This will allow you to further format the table, for example, you may specify the number of digits printed using the argument `digits = ` and add a caption using `caption = "caption"`.
+
+```{r}
+
+kable(
+  summary,
+  digits = 1,
+  caption = "Summary statistics of forklength for each species."
+)
+
+```
+
+
+## Combining verbs
+
+We've already combined most of our `dplyr` verbs with `group_by()`. When you are wrangling data you will find that making use of the pipe (`%>%`) to combine `select()`, `filter()`, `mutate()`, and `summarize()` as a series of commands will be necessary to get your data set in the correct format and further process it.
+
+`r msmbstyle::question_begin(label = "ques:tidy-24")`
+
+Copy this code into your `Rmarkdown` file and execute the code chunk. Then describe what each line is doing to manipulate the data frame.
+
+```{r}
+
+catch %>%
+  select(-PCL, -Hook_Size) %>%
+  separate(Species, into = c("genus", "species"), remove = TRUE) %>%
+  unite(Date, Day, Month, Year) %>%
+  filter(genus == "Carcharhinus" & Sex %in% c("F", "M")) %>%
+  group_by(Site, genus, species, Sex) %>%
+  filter(FL == max(FL)) %>%
+  arrange(species)
+
+```
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label = "ques:tidy-25")`
+
+Generate the code that will manipulate the data frame as follows^[some bullet points may require more than one line of code; you do not have to perform the steps in the sequence presented, play around a little bit to see how to code this more efficiently]:
+
+Challenge 1:
+
+* order columns so Day, Month, Year, Set are at the beginning.
+* retain all male individuals in the genus Carcharhinus.
+* get rid of columns containing information on observed stage, precaudal length, and hook size
+
+Challenge 2:
+
+* create a new variable called Set_ID consisting of Day, Month, Year, and Set number.
+* determine the number of individuals per species per set^[There is a function called `n()` that allows us to count rows fulfilling a specific condition].
+
+Challenge 3:
+
+* remove all gafftops
+* calculate mean forklength for each species by sex and month of the year.
+
+format each data frame in a separate code chunk.
+
+`r msmbstyle::question_end()`
+
+
+## Producing tidy data sets
+
+The last set up functions that we need to get comfortable with allow us to create tidy data sets. 
+
+`r msmbstyle::question(label = "ques:tidy-26", text = "List the three characteristics of a tidy data set. Explain why a tidy data set is sometimes also describe as a long data set.")`
+
+`r msmbstyle::question(label = "ques:tidy-27", text = "Take a look at our data set and argue whether or not it is a tidy data set. The easiest way to do this is to determine if it fullfills all the characteristics.")`
+
+Let's quickly reformat our catch data as follows
+
+```{r}
+
+catch_length <- catch %>%
+  unite(SetID, Year, Month, Day, Set, sep = "_") %>%
+  select(SetID, Site, Species, Sex, PCL, FL, STL)
+
+head(catch_length)
+
+```
+
+We can turn this into a tidy data set using `pivot_longer()`. To do that we have to identify columns that will be used as the key (`cols = `) and then name the column that will hold those values (`names_to()`) and the column that will hold the value (`values_to()`).
+
+So in this case `Measurement` would be the key. This column will let us know whether an observation (row) is pre-caudal length, fork length, or stretch total length.
+
+We will designate another column `Length` to hold the values for each measurement.
+
+We can identify the columns that need to be gathered either by name or since we have re-arranged our dataframe so they are the last columns but column number.
+
+```{r}
+
+tidy_length <- catch_length %>%
+  pivot_longer(names_to = "Measurement", values_to = "Length", cols = 5:7)
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-28", text = "Briefly outline advantages to using tidy data sets.")`
+
+With this data set it would be straightforward for us to e.g. calculate mean values for each length measurement by species.
+
+```{r}
+
+tidy_length %>%
+  group_by(Species, Measurement) %>%
+  summarize(mean = mean(Length, na.rm = TRUE))
+
+```
+Despite all the advantages of tidy data sets you can see from the table above that frequently when we are presenting results in a table it may be advantageous in terms of layout to have a non-tidy format. 
+
+This can be done using `pivot_wider()` which essentially works like `pivot_longer()` but in reverse. You designate which column is the key (`names_from = `), i.e. these will become the column names in the new table.
+
+Then you need to identify which column in your current data frame contains the values that should be filled out/spread into the columns that will be generated from your key (`values_from =`).
+
+Since we don't have values for precaudal length, we probably want to use `filter()` to remove those rows first.
+
+```{r}
+
+tidy_length %>%
+  filter(!Measurement == "PCL") %>%
+  group_by(Species, Measurement) %>%
+  summarize(mean = mean(Length, na.rm = TRUE)) %>%
+  pivot_wider(names_from = "Measurement", values_from = "mean")
+
+```
+
+`r msmbstyle::question(label = "ques:tidy-29", text = "Calculate the number of individuals per species caught per month in 2019 and present that data in a wide formate to make it easy to compare the number of species (species) per month (columns). As a bonus create an additional column with total catch of that species for 2019.")`

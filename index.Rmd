@@ -1,0 +1,82 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('msmbstyle'))
+
+
+options(htmltools.dir.version = FALSE)
+
+library(conflicted)
+conflict_prefer("select", "dplyr")
+conflict_prefer("filter", "dplyr")
+
+```
+
+# Overview {-}
+
+Welcome to our lab manual for `Data Science for the Natural Environment (Fall 2021)` - it will be continuously updated throughout the semester. For the most part an electronic copy (on a laptop or tablet) is sufficient, at times you may be instructed to print a data or worksheet for lab.
+
+
+## Course Format {-}
+
+This is a lecture/lab course meeting three times a week (TR 11:10 – 12:25, W 13:30 – 15:55). Key concepts will be introduced in reading assignments, short ‘prelab’-type tutorials, or exercises that you will be expected to complete before class.
+
+While lecture/lab time will incorporate brief refreshers and more in-depth demonstrations of some of the more complex topics, the focus will be on applying the concepts and ‘learning by doing’ by directly applying new skills to case studies and data sets from ecology, environmental science and public health
+
+
+**BYOD: Bring your own device (to lab)**
+
+You are required to bring your laptop for use during lab; a tablet will not be sufficient to participate though you are welcome to bring an additional device to have an extra screen to follow along an electronic version of the lab manual. Make sure to have a power cable and/or fully charged battery!
+
+
+**Course Materials**
+
+Readings will primarily assigned from [Wickham, H., & Grolemund, G. (2016). R for data science: import, tidy, transform, visualize, and model data. " O'Reilly Media, Inc.".](https://r4ds.had.co.nz/index.html)
+
+
+<br>
+
+
+
+## Homework assignments {-}
+
+You will spend a significant portion of lecture/lab time working on exercises and engaging with your peers and the instructor on an individual basis to troubleshoot, clarify misunderstandings, and discuss alternative approaches to problem solve.
+
+Most of the exercises will be completed during lab/lecture time though occasionally you will be instructed to complete an exercise outside of. Once a module is complete you will have two days to review, synthesize, clean up/complete your code and answers and turn in the knitted document (`*.html`) through `Canvas`^[For example, if we wrap up a module on a Tuesday your homework will be due Thursday at 11:59pm]. No late or incomplete homework will be accepted or receive credit.
+
+You are encouraged to work collaboratively both during/outside of class times but everyone should be submitting their own work. If you worked closely with a certain person please make a note at the beginning of your document.
+
+### Due Friday, Aug. 25th {-}
+
+Complete the `IntroR` activity and upload the knitted `*.html` file through canvas.
+
+
+<br>
+
+### Due Wednesday, Aug. 25th (1pm) {-}
+
+Introduce yourself in the  `#general` slack channel:
+
+* Give your name, major, year
+* Tell us what you are hoping to get out of this class^[If it's 'check it off my list to graduate' - that's fine, we'll try to make this class more than a check mark!].
+* Let us know how much experience you have with data analysis and coding.

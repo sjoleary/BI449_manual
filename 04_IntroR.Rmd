@@ -1,0 +1,485 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  message = FALSE,
+	warning = FALSE,
+  cache.extra = packageVersion('msmbstyle'))
+
+options(htmltools.dir.version = FALSE)
+
+```
+
+# R: Functions, Objects, Vectors - oh my!
+
+**Learning Objectives**
+
+After completing this tutorial you should be able to
+
+* name, create, and assign values to objects.
+* save a series of commands/code as an `R script`.
+* use comments to describe your code/scripts.
+* call `functions` and modify the default options using their `arguments`.
+* understand what a `vector` is and distinguish between the main data types.
+* to inspect, subset, and extract their content from a `vector`. 
+* understand how `data.frames` and `vectors` relate.
+
+
+
+## R is all about `Objects`
+
+You can think of the `R console` as a super-powerful calculator. You can get output from `R` by simply typing math directly into the console.
+
+```{r}
+
+13 + 29
+
+```
+
+or 
+
+```{r}
+
+546 / 13
+
+```
+
+Well that's fun - but not super helpful. 
+
+For us to get to the good stuff we need to assign `values` to `objects`. Creating an `object` is straightforward. First, we give it a name, then we use the `assignment operator` to assign it a `value`.
+
+The `assignment operator` (`<-`) assigns the `value` on the right of the `<-` to the `object` on the left.
+
+```{r}
+
+fork_length_mm <- 344
+
+```
+
+Type that into the console and execute the command using `Enter`. If you look at your `Global Environment` (top right panel) you should now see `forklength` and the `value` you assigned it.
+
+Notice, how when you assigned a `value` to your new `object` nothing was printed in the console compared to when you were typing in math.
+
+To print the `value` of an `object` you can type the name of the object into the console.
+
+```{r}
+
+# print value
+fork_length_mm
+
+```
+
+Now that `fork_length` is in your environment we can use it to compute instead of the `value` itself.
+
+For example, we might need to convert our fork length from millimeters (mm) to centimeters (cm).
+
+```{r}
+
+fork_length_mm / 10 
+
+```
+
+We can change the `value` of an `object` any time by assigning it a new one. Changing the `value` of one `object` does not change the `values` of other objects.
+
+```{r}
+
+fork_length_mm <- 567
+
+```
+
+
+`r msmbstyle::question(label = "ques:R-1", text = "Create a new object with the fork length in centimeters. Then change then change the value of our fork length in millimeters object to 50. What do you think the value of fork_length_mm will be now?")`
+
+
+**Some thoughts on naming things**^[You will soon discover that coding is 90% naming things.]
+
+Theoretically, we can name objects anything we want - but before that gets out of hand let's think about some guidelines for naming objects.
+
+* Make them simple, specific, and not too long (otherwise you will end up with a lot of typing to do and difficulties remembering which object is which).
+* Object names cannot start with a number.
+* R is case sensitive, `fork_length` is not the same as `Fork_Length`.
+* Avoid using dots (`.`) in names. Typically dots are used in function names and also have special meaning (methods) in R.
+* Some names are already taken by fundamental functions (e.g. `if`, `else`, `for`) and cannot be used as names for objects; in general avoid using names that have already been used by other function names.
+* Rule of thumb: nouns for object names, verbs for function names.
+
+Using a consistent style for naming your objects is part of adopting a consistent styling of your code - this will make following your code a lot easier for yourself and others. This includes things like spacing, how you name objects, and upper/lower case.
+
+
+## Saving your work
+
+So far, we have inputed all of our code directly into the `console`. If you scroll up in the `console` you will find that all the commands and results from your current R session are still in the console. Using `Ctrl + L` will clear the entire console.
+
+Uh-oh - what if we need to go back over the code we just cleared?
+
+Well, for one if you check the `History` tab in the top right panel you will see that all your commands have been recorded. If you highlight one of them and either click on `To Console` or hit `Enter` it will send it directly to the console.
+
+Usually your history will be saved automatically when you close R/end an R session (unless you have changed the settings) and it will be restored when you open R again. You can use the broom icon to clear your entire history.
+
+Uh-oh - now what do we do?
+
+In general, you should only be typing code directly into the console for quick queries but since usually we want to be able to revisit and share our work you will want to be able to save your work in an `R script` (`*.R`) or include it in an `Rmarkdown` file (`*Rmd`) as a code chunk. For this course we will mostly be operating with `Rmarkdown` files.
+
+You can open a new `R script` using `Ctrl + Shift + C` or using `File > New File > R Script`. This will open an R script in a new tab in the top left pane.
+
+Save your `R script` using `Ctrl + S` or `File > Save As` - this will open a dialogue box for you to save your `R script` with the file extension `.R`.
+
+`Ctrl` + `Enter` will execute commands directly from the script editor You can use this to run the line of code your cursor is currently in in the script editor or you can highlight a series of lines to execute. You can also run all the code in a script by clicking on the `Run` button.
+
+Create a new `R script` to keep track of the rest of the things we will learn today.
+
+
+## Using comments
+
+You can add comments to your `R scripts` using `#`. Essentially, once you type an `#` in a line anything to the right of it will be ignored.
+
+This is really helpful as it will allow you to comment your script, i.e. you can leave yourself and other notes and explanations as to what your code is doing. This is especially helpful if you come back to some of your code after a period of time, if you are sharing your code with others, and when you are debugging code. You will find that as you become more experienced your comments will become shorter and more concise and you might even be tempted to leave them out completely - don't!
+
+For example you might find a comment like this more helpful at the moment:
+
+```{r}
+
+# assign value to new object total length
+fork_length <- 436
+
+```
+
+But soon you'll find this just as helpful:
+
+```{r}
+
+# total length fish
+fork_length <- 436
+
+```
+
+
+`r question_begin(label = "ques:R-2")`
+
+What do you expect the value of the object `total_length` to be after executing this command?
+
+```{r}
+
+FL <- 436  # total length fish
+
+```
+
+`r question_end()`
+
+You can comment/uncomment multiple lines at once by highlighting the lines you want to comment (or uncomment) and hitting `Ctrl + Shift + C`. This can be useful if you are playing around with code and don't want to delete something but don't want it to be run either.
+
+
+## Functions
+
+When we installed `R packages` earlier we mentioned that they are sets of predefined `functions`. These are essentially mini-scripts that automate using specific sets of commands. So instead of having to run multiple lines of code (this can be 10s - 100s of lines code) you *call* the function instead.
+
+Each function usually requires multiple inputs (*arguments*) and once executed return a `value` (though this is not always the case).
+
+For example the function `round()` can be used to round a number^[This is an excellent example of naming things well!].
+
+```{r}
+
+fork_length_cm <- round(34.8821)
+
+```
+
+If we print the value of our object we see the following value is returned.
+
+```{r}
+
+fork_length_cm
+
+```
+For this function the input (argument) is a number and the returned value is also a number. This is not always the case, arguments can be numbers, objects, file paths ...
+
+Many functions have set of arguments that alter the way a function operates - these are called `options`. Generally, they have a default value which are used unless specified otherwise by the user.
+
+You can determine the arguments as function by calling the function `args()`.
+
+```{r}
+
+args(round)
+
+```
+
+Or you can call up the help page using `?round` or by typing it into the search box in the `help` tab in the lower right panel.
+
+For example, our `round()` function has an argument called `digits`, we can use this to specify the number of significant digits we want our rounded value to have.
+
+```{r}
+
+round(34.8821, digits = 2)
+
+```
+
+If you provide the arguments in the exact same order as they are defined you do not have to specify them.
+
+```{r}
+
+round(34.8821, 2)
+
+```
+
+And you can switch their order if you do.
+
+```{r}
+
+round(digits = 2, x = 34.8821)
+
+```
+
+Good code style is to put the non-optional arguments (frequently the object, file path or value you are using) first and then specify the names of all the optional arguments you are specifying. This provides clarity and makes it easier for yourself and others to follow your code. Occasionally you might even want to use comments to further specify what each argument is doing or why you are choosing a specific option.
+
+```{r}
+
+round(34.8821,
+      digits = 2)  # specify number of significant digits
+
+```
+
+
+## Vectors (data types I)
+
+Now that we've figured out what objects and functions are let's get to know the two data types we will be spending the most time with this semester - `vectors` and data frames (`data.frame`)^[Other data types include lists (`list`), factors (`factor`) matrices (`matrix`),  and arrays (`array`); we'll introduce those later on.].
+
+The most simple data type in R is the (atomic) `vector` which is a linear vector of a single type. There are six main types -
+
+* `character`: strings or words.
+* `numeric` or `double`: numbers.
+* `integer`: integer numbers (usually indicated as `2L` to distinguish from `numeric`).
+* `logical`: `TRUE` or `FALSE` (i.e. boolean data type).
+* `complex`: complex numbers with real and imaginary parts (we'll leave it at that).
+* `raw`: bitstreams (we won't use those either).
+
+You can check the data type of any object using `class()`.
+
+```{r}
+
+class(fork_length)
+
+```
+
+Currently, our `fork_length` object consists of a single value. The function `c()` (concatenate) will allow us to assign a series of values to an object.
+
+```{r}
+
+fork_length <- c(454, 234, 948, 201)
+
+fork_length
+
+```
+
+`r msmbstyle::question(label = "ques:R-3", text = "What data type do you expect this vector to be?")`
+
+We call the same function to create a `character vector`.
+
+```{r}
+
+sharks <- c("bullshark", "blacktip", "scallopedhammerhead")
+
+class(sharks)
+
+```
+
+The quotes around `"bullshark"` etc. are essential because they indicate that this is a character. If we do not use quotes, R will assume that we are trying to call an object.
+
+```
+
+bullshark
+
+```
+
+Since these objects don't exist, we will just get an error message.
+
+You can use `c()` to combine an existing object with additional elements (assuming they are the same data type).
+
+```{r}
+
+species <- c(sharks, "gafftop")
+
+species
+
+```
+Next to `class()` there are other helpful functions to inspect the content of a vector. For example `length()` will tell you how many elements are in a particular vector.
+
+```{r}
+
+length(fork_length)
+
+
+```
+
+The function `str()` will give you an overview of the structure of any object and its elements.
+
+```{r}
+
+str(fork_length)
+
+```
+Recall, that an atomic vector is a linear vector of *a single type* - what does that mean. Let's take a look at what happens if we create atomic vectors where we mix the data types.
+
+```{r}
+
+numeric_character <- c(1, 2, 3, "a")
+numeric_logical <- c(1, 2, 3, TRUE)
+character_logical <- c("a", "b", "c", TRUE)
+wtf <- c(1, 2, 3, "4")
+
+```
+
+`r msmbstyle::question(label = "ques:R-4", text = "Describe what happens when data types are mixed in a single atomic vector?")`
+
+We already discovered that we can combine vectors - but can we extract certain components from vectors? Indeed, there are a variety of ways that we can subset vectors.
+
+The most simple way is using square brackets to indicate which element (or elements) we can't extract. In R, indices start at 1.^[This is not the case for all programming languages, e.g. Perl, Python, or C++ start with 0.]
+
+```{r}
+
+# extract second element
+species[2]
+
+# extract fourth and second element
+species[c(4, 2)]
+
+```
+You can also repeat indices to create a new object with additional elements.
+
+```{r}
+
+species_longer <- species[c(2, 2, 4, 3, 4, 4, 1, 1)]
+
+species_longer
+
+```
+
+More frequently, we will want to extract certain elements based on a specific condition (conditional subsetting). 
+
+This is done using a logical vector, here `TRUE` select the element with the same index and `FALSE` will not.
+
+```{r}
+
+fork_length <- c(454, 234, 948, 201)
+
+# use logical vector to subset
+fork_length[c(TRUE, FALSE, TRUE, FALSE)]
+
+```
+
+This seems like a very impractical option but normally we would not create the logical vector by hand as we have done here, rather it will be the output of a function or logical test. For example, we might want to identify fish with a fork length > 300mm.
+
+```{r}
+
+# identify fish with fork length > threshold
+fork_length > 300
+
+```
+We can use this to subset our vector directly.
+
+```{r}
+
+fork_length[c(fork_length > 300)]
+
+```
+There are a series of `boolean expressions`^[logical statements that are either true or false] we can use for subsetting vectors. Most of them you are probaly already familiar with because math.
+
+* `>` and `<` (greater/less than)
+* `=>` and `=<` (equal to or greater/less than)
+* `==` (equal to) and `!=` (is not equal to)
+
+You can combine to **boolean expressions** using `&`, (**both** conditions must be met) and `|` (at least one condition must be met).
+
+`r question_begin(label = "ques:R-5")`
+
+Let's give this a whirrl.
+
+Subset the `fork_length` vector to 
+
+* contain only values equal to 234
+* contain all values but 948
+* contain all values larger than 230 but smaller than 900
+* contain all values smaller than 250 or larger that 900
+
+`r question_end()`
+
+R is set apart from other programming languages because it was designed to analyze data^[some people will argue that it is a 'statistical language' rather than a true programming language ... don't listen to them!] it has straightfoward ways to deal with missing data (`NA` or `na` values) because those are quite common in real world data sets.
+
+Let's create a vector with a missing value.
+
+```{r}
+
+total_length <- c(560, NA, 1021, 250)
+
+```
+
+Let's say we want to calculate the mean value.
+
+```{r}
+
+mean(total_length)
+
+```
+Most functions will return `NA` when doing operations on objects with missing values. As such, many functions include an argument to omit missing values.
+
+```{r}
+
+mean(total_length, na.rm = TRUE)
+
+```
+
+Other functions that are helpful to deal with missing values are `is.na()`, `na.omit()`, and `complete.cases()`.
+
+`r msmbstyle::question(label = "ques:R-6", text = "Run each of these functions on our total_length vector and describe what they do.")` 
+
+
+## Data frames (data types II)
+
+Recall that **atomic vectors** are *linear* vectors of a simple type, essentially they are one dimensional. Frequently we will be using data frames (`data.frame`) which you can think of as consisting of several vectors of the same length where each vector becomes a column and the elements are the rows.
+
+Let's create a new object that is a dataframe with three columns containing information on species, fork length, and total length.
+
+```{r}
+
+# combine vectors into data frame
+catch <- data.frame(species, fork_length, total_length)
+
+```
+
+You should now see a new object in your `Global Environment` and you will now also see that there are two categories of objects `Data` and `Values`. You will see that the `data.frame` is described as having 4 obs (observations, those are your rows) of 3 variables (those are your columns). If you click on the little blue arrow it will give you additional information on each column - note that because each column is essentially a vector, each one must consist of a single data type which is also indicated.
+
+Calling the `str()` will give you the same information.
+
+```{r}
+
+str(catch)
+
+```
+
+You can further inspect the `data.frame` by clicking on the little white box on the right which will open a tab in the top left panel next to your R script. You can also always view a `data.frame` by calling the `View()` function.
+
+```{r}
+
+View(catch)
+
+```
+
+This can be a helpful way to explore your `data.frame`, for example, clicking on the headers will sort the data frame by that column. Usually we won't build or `data.frames` by hand, rather we will read them in from e.g. a tab-delimited text file - but more on that later.
