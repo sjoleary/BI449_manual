@@ -68,7 +68,7 @@ You are encouraged to work collaboratively both during/outside of class times bu
 
 ### Due Friday, Aug. 25th {-}
 
-Complete the `IntroR` activity and upload the knitted `*.html` file through canvas.
+Complete the `IntroR` activity and compile a report using the little notebook icon in the `Rscript` panel and submit the resulting `*.html` file through canvas.
 
 
 <br>

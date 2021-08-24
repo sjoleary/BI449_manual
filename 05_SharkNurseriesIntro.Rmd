@@ -37,11 +37,11 @@ After completing this activity you should be able to
 
 For each of our modules we will have a project-folder with an `Rproject`, `*.Rmd`-files, and sub-directories for data, scripts, and results as described in our `Rproject` Tutorial. You should create a directory on your Desktop or Documents folder on your laptop (name it something like `BI449`) as a home directory for all of our project folders this semester. 
 
-Download the [SharkNurseries]() project folder. Once you have downloaded it, unzip the project directory into your `BI449` directory. You can open the `Rproj` for this module either by double clicking on it which will launch `Rstudio` or by opening `Rstudio` and then using `File > Open Project` or by clicking on the `Rproject` icon in the top right of your program window and selecting `Open Project`. 
+Download the [SharkNurseries](https://drive.google.com/drive/folders/1FexsfMkoBfPEeAkOCd2ZQrQqVBOF4WOR?usp=sharing) project folder. Once you have downloaded it, unzip the project directory into your `BI449` directory. You can open the `Rproj` for this module either by double clicking on it which will launch `Rstudio` or by opening `Rstudio` and then using `File > Open Project` or by clicking on the `Rproject` icon in the top right of your program window and selecting `Open Project`. 
 
 Once you have opened a project you should see the project name in the top right corner^[Pro tip: If you run into issues where an Rmarkdown won't render or file paths aren't working (especially if things were working previously) one of your first steps should be to double check that the correct `Rproj` is loaded.].
 
-You should have a `SharkNurseries.Rmd` in your project directory. Use that file to work through this tutorial - you will hand in your rendered ("knitted") rmarkdown file as your homework assignment. So, first thing in the `YAML` header, change the author to your name. You will use this `Rmarkdown` file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set^[You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn't commented in the manual ... you may of course add as many comments as you need to be able to recall what you did].
+You should have a `SharkNurseriesIntro.Rmd` in your project directory. Use that file to work through this tutorial - you will hand in your rendered ("knitted") rmarkdown file as your homework assignment. So, first thing in the `YAML` header, change the author to your name. You will use this `Rmarkdown` file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set^[You should do this whether you are adding code yourself or using code from our manual, even if it isn't commented in the manual ... you may of course add as many comments as you need to be able to recall what you did].
 
 
 ## Essential fish habitat: Shark Nurseries
@@ -100,7 +100,7 @@ This study wanted to answer four questions to further understand whether these l
 
 ## Explore the data set
 
-There should be a an excel file in the `data` folder of your project directory named `catch.xls`. Go ahead and open the file in excel.
+There should be a an excel file in the `data` folder of your project directory named `longline_catchdata.xlsx`. Go ahead and open the file in excel.
 
 `r msmbstyle::question(label = "ques:sh-3", text = "Take a look at the excel file and describe how you would figure out what the dimensions are (how many rows? columns?) and see if you identifying what information is contained in each column.")`
 
