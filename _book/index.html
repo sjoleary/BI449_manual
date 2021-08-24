@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Overview | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-08-23" />
+
+
+<meta name="description" content="Overview | Data Science for the Natural Environment (FA21)">
+
+<title>Overview | Data Science for the Natural Environment (FA21)</title>
+
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/accessible-code-block/empty-anchor.js"></script>
+
+
+
+
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a id="active-page" href="index.html">Overview</a><ul class="toc-sections">
+<li class="toc"><a href="#course-format">Course Format</a></li>
+<li class="toc"><a href="#homework-assignments">Homework assignments</a></li>
+</ul>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors-oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html.frames"><span class="toc-section-number">6</span> Intro to <code>data.frames</code></a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!--bookdown:title:end--><!--bookdown:title:start--><html><body><div id="overview" class="section level1 unnumbered">
+<h1>Overview</h1>
+<p>Welcome to our lab manual for <code>Data Science for the Natural Environment (Fall 2021)</code> - it will be continuously updated throughout the semester. For the most part an electronic copy (on a laptop or tablet) is sufficient, at times you may be instructed to print a data or worksheet for lab.</p>
+<div id="course-format" class="section level2 unnumbered">
+<h2>Course Format<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('course-format')" onmouseout="reset_tooltip('course-format-tooltip')"><span class="tooltiptext" id="course-format-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>This is a lecture/lab course meeting three times a week (TR 11:10 – 12:25, W 13:30 – 15:55). Key concepts will be introduced in reading assignments, short ‘prelab’-type tutorials, or exercises that you will be expected to complete before class.</p>
+<p>While lecture/lab time will incorporate brief refreshers and more in-depth demonstrations of some of the more complex topics, the focus will be on applying the concepts and ‘learning by doing’ by directly applying new skills to case studies and data sets from ecology, environmental science and public health</p>
+<p><strong>BYOD: Bring your own device (to lab)</strong></p>
+<p>You are required to bring your laptop for use during lab; a tablet will not be sufficient to participate though you are welcome to bring an additional device to have an extra screen to follow along an electronic version of the lab manual. Make sure to have a power cable and/or fully charged battery!</p>
+<p><strong>Course Materials</strong></p>
+<p>Readings will primarily assigned from <a href="https://r4ds.had.co.nz/index.html">Wickham, H., &amp; Grolemund, G. (2016). R for data science: import, tidy, transform, visualize, and model data. " O’Reilly Media, Inc.".</a></p>
+<p><br></p>
+</div>
+<div id="homework-assignments" class="section level2 unnumbered">
+<h2>Homework assignments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('homework-assignments')" onmouseout="reset_tooltip('homework-assignments-tooltip')"><span class="tooltiptext" id="homework-assignments-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>You will spend a significant portion of lecture/lab time working on exercises and engaging with your peers and the instructor on an individual basis to troubleshoot, clarify misunderstandings, and discuss alternative approaches to problem solve.</p>
+<p>Most of the exercises will be completed during lab/lecture time though occasionally you will be instructed to complete an exercise outside of. Once a module is complete you will have two days to review, synthesize, clean up/complete your code and answers and turn in the knitted document (<code>*.html</code>) through <code>Canvas</code><label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> For example, if we wrap up a module on a Tuesday your homework will be due Thursday at 11:59pm</span>. No late or incomplete homework will be accepted or receive credit.</p>
+<p>You are encouraged to work collaboratively both during/outside of class times but everyone should be submitting their own work. If you worked closely with a certain person please make a note at the beginning of your document.</p>
+<div id="due-friday-aug.-25th" class="section level3 unnumbered">
+<h3>Due Friday, Aug. 25th<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('due-friday-aug.-25th')" onmouseout="reset_tooltip('due-friday-aug.-25th-tooltip')"><span class="tooltiptext" id="due-friday-aug.-25th-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Complete the <code>IntroR</code> activity and upload the knitted <code>*.html</code> file through canvas.</p>
+<p><br></p>
+</div>
+<div id="due-wednesday-aug.-25th-1pm" class="section level3 unnumbered">
+<h3>Due Wednesday, Aug. 25th (1pm)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('due-wednesday-aug.-25th-1pm')" onmouseout="reset_tooltip('due-wednesday-aug.-25th-1pm-tooltip')"><span class="tooltiptext" id="due-wednesday-aug.-25th-1pm-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Introduce yourself in the <code>#general</code> slack channel:</p>
+<ul>
+<li>Give your name, major, year</li>
+<li>Tell us what you are hoping to get out of this class<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> If it’s ‘check it off my list to graduate’ - that’s fine, we’ll try to make this class more than a check mark!</span>.</li>
+<li>Let us know how much experience you have with data analysis and coding.</li>
+</ul>
+</div>
+</div>
+</div></body></html>
+
+<p style="text-align: center;">
+<a href="what-even-is-data-science.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-08-23
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>
