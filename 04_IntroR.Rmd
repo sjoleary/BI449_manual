@@ -112,7 +112,7 @@ fork_length_mm <- 567
 `r msmbstyle::question(label = "ques:R-1", text = "Create a new object with the fork length in centimeters. Then change then change the value of our fork length in millimeters object to 50. What do you think the value of fork_length_mm will be now?")`
 
 
-**Some thoughts on naming things**^[You will soon discover that coding is 90% naming things.]
+**More thoughts on naming things**^[You will soon discover that coding is 90% naming things.]
 
 Theoretically, we can name objects anything we want - but before that gets out of hand let's think about some guidelines for naming objects.
 

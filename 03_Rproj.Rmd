@@ -197,4 +197,4 @@ output:
 ---
 ```
 
-For being so simple, `Rmarkdown` is quite powerful - how powerful you ask? Both this lab manual and our course website were written in `Rmarkdown`.
+For being so simple, `Rmarkdown` is quite powerful - how powerful you ask? This lab manual was written in `Rmarkdown`.
