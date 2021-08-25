@@ -169,7 +169,8 @@ function reset_tooltip(id) {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="catch-data-analysis" class="section level1">
+<html><body>
+<div id="catch-data-analysis" class="section level1">
 <h1>
 <span class="header-section-number">8</span> Catch data analysis</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -321,7 +322,7 @@ Determine how many individuals have information on their life history stage.
 ► Question 3
 </p>
 <div class="question-body">
-<p>For example, Carlson and Baremore 2005 <span class="citation">(<span class="citeproc-not-found" data-reference-id="Carlson2005"><strong>???</strong></span>)</span> determined the following length/history stage relationships for spinner sharks (<em>C. brevipinna</em>)</p>
+<p>For example, Carlson and Baremore 2005 <span class="citation">(Carlson and Baremore <a href="#ref-Carlson2005" role="doc-biblioref">2005</a>)</span> determined the following length/history stage relationships for spinner sharks (<em>C. brevipinna</em>)</p>
 <ul>
 <li>YOY
 <ul>
@@ -942,13 +943,6 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="catch-data-analysis.html#cb13-1"></a>elasmos_set &lt;-<span class="st"> </span>elasmos_set <span class="op">%&gt;%</span></span>
 <span id="cb13-2"><a href="catch-data-analysis.html#cb13-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">CPUE =</span> n<span class="op">/</span>Hook_Hours)</span></code></pre></div>
 <p>And from that we can easily calculate mean and standard deviation CPUE of catching sharks by site.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="catch-data-analysis.html#cb14-1"></a><span class="kw">kable</span>(</span>
-<span id="cb14-2"><a href="catch-data-analysis.html#cb14-2"></a>  elasmos_set <span class="op">%&gt;%</span></span>
-<span id="cb14-3"><a href="catch-data-analysis.html#cb14-3"></a><span class="st">    </span><span class="kw">group_by</span>(Site) <span class="op">%&gt;%</span></span>
-<span id="cb14-4"><a href="catch-data-analysis.html#cb14-4"></a><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_CPUE =</span> <span class="kw">mean</span>(CPUE),</span>
-<span id="cb14-5"><a href="catch-data-analysis.html#cb14-5"></a>            <span class="dt">std_CPUE =</span> <span class="kw">sd</span>(CPUE)),</span>
-<span id="cb14-6"><a href="catch-data-analysis.html#cb14-6"></a>  <span class="dt">caption =</span> <span class="st">"mean +/- sd CPUE"</span></span>
-<span id="cb14-7"><a href="catch-data-analysis.html#cb14-7"></a>)</span></code></pre></div>
 <p><!--
 <caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-18">Table 8.3: </span>mean +/- sd CPUE</span><!--</caption>--></p>
 <table>
@@ -976,16 +970,16 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 </tbody>
 </table>
 <p>We are going to perform a Kruskal-Wallis rank sum test to determine if there is significant heterogeneity among sites<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> You are probably more familiar with the framework of using an ANOVA to test for significant heterogeneity and pairwise t-tests to test for equality of means of a set of values. KW is similar but is a non-parametric approach and does not make assumptions about the distribution of values.</span>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="catch-data-analysis.html#cb15-1"></a><span class="co"># KW to test for significant heterogeneity</span></span>
-<span id="cb15-2"><a href="catch-data-analysis.html#cb15-2"></a><span class="kw">kruskal.test</span>(CPUE <span class="op">~</span><span class="st"> </span>Site, <span class="dt">data =</span> elasmos_set)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="catch-data-analysis.html#cb14-1"></a><span class="co"># KW to test for significant heterogeneity</span></span>
+<span id="cb14-2"><a href="catch-data-analysis.html#cb14-2"></a><span class="kw">kruskal.test</span>(CPUE <span class="op">~</span><span class="st"> </span>Site, <span class="dt">data =</span> elasmos_set)</span></code></pre></div>
 <pre><code>## 
 ##  Kruskal-Wallis rank sum test
 ## 
 ## data:  CPUE by Site
 ## Kruskal-Wallis chi-squared = 12.325, df = 2, p-value = 0.002106</code></pre>
 <p>And we will follow that using a Dunn’s test for pairwise comparisons.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="catch-data-analysis.html#cb17-1"></a><span class="co"># post-hoc Dunn test</span></span>
-<span id="cb17-2"><a href="catch-data-analysis.html#cb17-2"></a><span class="kw">dunnTest</span>(CPUE <span class="op">~</span><span class="st"> </span>Site, <span class="dt">data =</span> elasmos_set, <span class="dt">method =</span> <span class="st">"bh"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="catch-data-analysis.html#cb16-1"></a><span class="co"># post-hoc Dunn test</span></span>
+<span id="cb16-2"><a href="catch-data-analysis.html#cb16-2"></a><span class="kw">dunnTest</span>(CPUE <span class="op">~</span><span class="st"> </span>Site, <span class="dt">data =</span> elasmos_set, <span class="dt">method =</span> <span class="st">"bh"</span>)</span></code></pre></div>
 <pre><code>##                         Comparison          Z      P.unadj       P.adj
 ## 1 Aransas_Bay - Corpus_Christi_Bay -3.3553910 0.0007925288 0.002377586
 ## 2        Aransas_Bay - Redfish_Bay -0.7980727 0.4248282807 0.424828281
@@ -1038,60 +1032,56 @@ Choose one species and calculate the CPUE per set. For convenience convert CPUE 
 </tr></tbody>
 </table>
 <p>We actually want to have this information for all species, rather than create individual <code>data.frame</code>s for each species and then combine those using <code>bind_rows()</code>, I will show you a more efficient way of coding this using a <code>for loop</code><label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> There are a few other ways of during this but for now let’s just stick to the fact that this is an efficient way to get results.</span>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="catch-data-analysis.html#cb19-1"></a><span class="co"># create empty list</span></span>
-<span id="cb19-2"><a href="catch-data-analysis.html#cb19-2"></a>species_CPUE &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
-<span id="cb19-3"><a href="catch-data-analysis.html#cb19-3"></a></span>
-<span id="cb19-4"><a href="catch-data-analysis.html#cb19-4"></a><span class="co"># calculate hook hours for each species per site</span></span>
-<span id="cb19-5"><a href="catch-data-analysis.html#cb19-5"></a><span class="cf">for</span>(species <span class="cf">in</span> <span class="kw">unique</span>(elasmos<span class="op">$</span>Species)){</span>
-<span id="cb19-6"><a href="catch-data-analysis.html#cb19-6"></a>  </span>
-<span id="cb19-7"><a href="catch-data-analysis.html#cb19-7"></a>  species_CPUE[[species]] &lt;-<span class="st"> </span>elasmos <span class="op">%&gt;%</span></span>
-<span id="cb19-8"><a href="catch-data-analysis.html#cb19-8"></a><span class="st">    </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> </span>species) <span class="op">%&gt;%</span></span>
-<span id="cb19-9"><a href="catch-data-analysis.html#cb19-9"></a><span class="st">    </span><span class="kw">count</span>(Set_ID) <span class="op">%&gt;%</span></span>
-<span id="cb19-10"><a href="catch-data-analysis.html#cb19-10"></a><span class="st">    </span><span class="kw">full_join</span>(set_meta) <span class="op">%&gt;%</span></span>
-<span id="cb19-11"><a href="catch-data-analysis.html#cb19-11"></a><span class="st">    </span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">n =</span> <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb19-12"><a href="catch-data-analysis.html#cb19-12"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">CPUE =</span> n<span class="op">/</span>Hook_Hours,</span>
-<span id="cb19-13"><a href="catch-data-analysis.html#cb19-13"></a>           <span class="dt">CPUE_1000 =</span> CPUE <span class="op">*</span><span class="st"> </span><span class="dv">1000</span>)</span>
-<span id="cb19-14"><a href="catch-data-analysis.html#cb19-14"></a></span>
-<span id="cb19-15"><a href="catch-data-analysis.html#cb19-15"></a>}</span>
-<span id="cb19-16"><a href="catch-data-analysis.html#cb19-16"></a></span>
-<span id="cb19-17"><a href="catch-data-analysis.html#cb19-17"></a><span class="co"># combine data frames in list into single </span></span>
-<span id="cb19-18"><a href="catch-data-analysis.html#cb19-18"></a>CPUE &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(species_CPUE, <span class="dt">.id =</span> <span class="st">"Species"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="catch-data-analysis.html#cb18-1"></a><span class="co"># create empty list</span></span>
+<span id="cb18-2"><a href="catch-data-analysis.html#cb18-2"></a>species_CPUE &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
+<span id="cb18-3"><a href="catch-data-analysis.html#cb18-3"></a></span>
+<span id="cb18-4"><a href="catch-data-analysis.html#cb18-4"></a><span class="co"># calculate hook hours for each species per site</span></span>
+<span id="cb18-5"><a href="catch-data-analysis.html#cb18-5"></a><span class="cf">for</span>(species <span class="cf">in</span> <span class="kw">unique</span>(elasmos<span class="op">$</span>Species)){</span>
+<span id="cb18-6"><a href="catch-data-analysis.html#cb18-6"></a>  </span>
+<span id="cb18-7"><a href="catch-data-analysis.html#cb18-7"></a>  species_CPUE[[species]] &lt;-<span class="st"> </span>elasmos <span class="op">%&gt;%</span></span>
+<span id="cb18-8"><a href="catch-data-analysis.html#cb18-8"></a><span class="st">    </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> </span>species) <span class="op">%&gt;%</span></span>
+<span id="cb18-9"><a href="catch-data-analysis.html#cb18-9"></a><span class="st">    </span><span class="kw">count</span>(Set_ID) <span class="op">%&gt;%</span></span>
+<span id="cb18-10"><a href="catch-data-analysis.html#cb18-10"></a><span class="st">    </span><span class="kw">full_join</span>(set_meta) <span class="op">%&gt;%</span></span>
+<span id="cb18-11"><a href="catch-data-analysis.html#cb18-11"></a><span class="st">    </span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">n =</span> <span class="dv">0</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb18-12"><a href="catch-data-analysis.html#cb18-12"></a><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">CPUE =</span> n<span class="op">/</span>Hook_Hours,</span>
+<span id="cb18-13"><a href="catch-data-analysis.html#cb18-13"></a>           <span class="dt">CPUE_1000 =</span> CPUE <span class="op">*</span><span class="st"> </span><span class="dv">1000</span>)</span>
+<span id="cb18-14"><a href="catch-data-analysis.html#cb18-14"></a></span>
+<span id="cb18-15"><a href="catch-data-analysis.html#cb18-15"></a>}</span>
+<span id="cb18-16"><a href="catch-data-analysis.html#cb18-16"></a></span>
+<span id="cb18-17"><a href="catch-data-analysis.html#cb18-17"></a><span class="co"># combine data frames in list into single </span></span>
+<span id="cb18-18"><a href="catch-data-analysis.html#cb18-18"></a>CPUE &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(species_CPUE, <span class="dt">.id =</span> <span class="st">"Species"</span>)</span></code></pre></div>
 <p>Similarly, we would want to run KW tests to determine if there are significant differences among sites.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="catch-data-analysis.html#cb20-1"></a><span class="co"># create empty dataframe for results</span></span>
-<span id="cb20-2"><a href="catch-data-analysis.html#cb20-2"></a>results &lt;-<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">data.frame</span>(<span class="kw">matrix</span>(<span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">0</span>)), </span>
-<span id="cb20-3"><a href="catch-data-analysis.html#cb20-3"></a>                    <span class="kw">c</span>(<span class="st">"Species"</span>, <span class="st">"pvalue"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb20-4"><a href="catch-data-analysis.html#cb20-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Species =</span> <span class="kw">as.character</span>(Species),</span>
-<span id="cb20-5"><a href="catch-data-analysis.html#cb20-5"></a>         <span class="dt">pvalue =</span> <span class="kw">as.numeric</span>(pvalue))</span>
-<span id="cb20-6"><a href="catch-data-analysis.html#cb20-6"></a></span>
-<span id="cb20-7"><a href="catch-data-analysis.html#cb20-7"></a><span class="cf">for</span>(species <span class="cf">in</span> <span class="kw">unique</span>(CPUE<span class="op">$</span>Species)){</span>
-<span id="cb20-8"><a href="catch-data-analysis.html#cb20-8"></a>  </span>
-<span id="cb20-9"><a href="catch-data-analysis.html#cb20-9"></a>  <span class="co"># filter CPUE per species</span></span>
-<span id="cb20-10"><a href="catch-data-analysis.html#cb20-10"></a>  tmp &lt;-<span class="st"> </span>CPUE <span class="op">%&gt;%</span></span>
-<span id="cb20-11"><a href="catch-data-analysis.html#cb20-11"></a><span class="st">    </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> </span>species)</span>
-<span id="cb20-12"><a href="catch-data-analysis.html#cb20-12"></a>  </span>
-<span id="cb20-13"><a href="catch-data-analysis.html#cb20-13"></a>  <span class="co"># KW to test for significant heterogeneity</span></span>
-<span id="cb20-14"><a href="catch-data-analysis.html#cb20-14"></a>  KW &lt;-<span class="st"> </span><span class="kw">kruskal.test</span>(CPUE <span class="op">~</span><span class="st"> </span>Site, <span class="dt">data =</span> tmp)</span>
-<span id="cb20-15"><a href="catch-data-analysis.html#cb20-15"></a>  </span>
-<span id="cb20-16"><a href="catch-data-analysis.html#cb20-16"></a>  <span class="co"># extract p-value</span></span>
-<span id="cb20-17"><a href="catch-data-analysis.html#cb20-17"></a>  df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"Species"</span> =<span class="st"> </span>species,</span>
-<span id="cb20-18"><a href="catch-data-analysis.html#cb20-18"></a>                   <span class="st">"pvalue"</span> =<span class="st"> </span><span class="kw">as.numeric</span>(KW<span class="op">$</span>p.value))</span>
-<span id="cb20-19"><a href="catch-data-analysis.html#cb20-19"></a>  </span>
-<span id="cb20-20"><a href="catch-data-analysis.html#cb20-20"></a>  results &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(results, df)</span>
-<span id="cb20-21"><a href="catch-data-analysis.html#cb20-21"></a></span>
-<span id="cb20-22"><a href="catch-data-analysis.html#cb20-22"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="catch-data-analysis.html#cb19-1"></a><span class="co"># create empty dataframe for results</span></span>
+<span id="cb19-2"><a href="catch-data-analysis.html#cb19-2"></a>results &lt;-<span class="st"> </span><span class="kw">setNames</span>(<span class="kw">data.frame</span>(<span class="kw">matrix</span>(<span class="dt">ncol =</span> <span class="dv">2</span>, <span class="dt">nrow =</span> <span class="dv">0</span>)), </span>
+<span id="cb19-3"><a href="catch-data-analysis.html#cb19-3"></a>                    <span class="kw">c</span>(<span class="st">"Species"</span>, <span class="st">"pvalue"</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb19-4"><a href="catch-data-analysis.html#cb19-4"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Species =</span> <span class="kw">as.character</span>(Species),</span>
+<span id="cb19-5"><a href="catch-data-analysis.html#cb19-5"></a>         <span class="dt">pvalue =</span> <span class="kw">as.numeric</span>(pvalue))</span>
+<span id="cb19-6"><a href="catch-data-analysis.html#cb19-6"></a></span>
+<span id="cb19-7"><a href="catch-data-analysis.html#cb19-7"></a><span class="cf">for</span>(species <span class="cf">in</span> <span class="kw">unique</span>(CPUE<span class="op">$</span>Species)){</span>
+<span id="cb19-8"><a href="catch-data-analysis.html#cb19-8"></a>  </span>
+<span id="cb19-9"><a href="catch-data-analysis.html#cb19-9"></a>  <span class="co"># filter CPUE per species</span></span>
+<span id="cb19-10"><a href="catch-data-analysis.html#cb19-10"></a>  tmp &lt;-<span class="st"> </span>CPUE <span class="op">%&gt;%</span></span>
+<span id="cb19-11"><a href="catch-data-analysis.html#cb19-11"></a><span class="st">    </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> </span>species)</span>
+<span id="cb19-12"><a href="catch-data-analysis.html#cb19-12"></a>  </span>
+<span id="cb19-13"><a href="catch-data-analysis.html#cb19-13"></a>  <span class="co"># KW to test for significant heterogeneity</span></span>
+<span id="cb19-14"><a href="catch-data-analysis.html#cb19-14"></a>  KW &lt;-<span class="st"> </span><span class="kw">kruskal.test</span>(CPUE <span class="op">~</span><span class="st"> </span>Site, <span class="dt">data =</span> tmp)</span>
+<span id="cb19-15"><a href="catch-data-analysis.html#cb19-15"></a>  </span>
+<span id="cb19-16"><a href="catch-data-analysis.html#cb19-16"></a>  <span class="co"># extract p-value</span></span>
+<span id="cb19-17"><a href="catch-data-analysis.html#cb19-17"></a>  df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="st">"Species"</span> =<span class="st"> </span>species,</span>
+<span id="cb19-18"><a href="catch-data-analysis.html#cb19-18"></a>                   <span class="st">"pvalue"</span> =<span class="st"> </span><span class="kw">as.numeric</span>(KW<span class="op">$</span>p.value))</span>
+<span id="cb19-19"><a href="catch-data-analysis.html#cb19-19"></a>  </span>
+<span id="cb19-20"><a href="catch-data-analysis.html#cb19-20"></a>  results &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(results, df)</span>
+<span id="cb19-21"><a href="catch-data-analysis.html#cb19-21"></a></span>
+<span id="cb19-22"><a href="catch-data-analysis.html#cb19-22"></a>}</span></code></pre></div>
 <p>Let’s calculate mean CPUE per species and site, turn that into a wide table for easier comparison and add the p-values.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="catch-data-analysis.html#cb21-1"></a><span class="kw">kable</span>(</span>
-<span id="cb21-2"><a href="catch-data-analysis.html#cb21-2"></a>  CPUE <span class="op">%&gt;%</span></span>
-<span id="cb21-3"><a href="catch-data-analysis.html#cb21-3"></a><span class="st">    </span><span class="kw">group_by</span>(Species, Site) <span class="op">%&gt;%</span></span>
-<span id="cb21-4"><a href="catch-data-analysis.html#cb21-4"></a><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_CPUE =</span> <span class="kw">mean</span>(CPUE_<span class="dv">1000</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb21-5"><a href="catch-data-analysis.html#cb21-5"></a><span class="st">    </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> Site, <span class="dt">values_from =</span> mean_CPUE) <span class="op">%&gt;%</span></span>
-<span id="cb21-6"><a href="catch-data-analysis.html#cb21-6"></a><span class="st">    </span><span class="kw">left_join</span>(results) <span class="op">%&gt;%</span></span>
-<span id="cb21-7"><a href="catch-data-analysis.html#cb21-7"></a><span class="st">    </span><span class="kw">arrange</span>(Species),</span>
-<span id="cb21-8"><a href="catch-data-analysis.html#cb21-8"></a>  <span class="dt">digits =</span> <span class="dv">2</span>,</span>
-<span id="cb21-9"><a href="catch-data-analysis.html#cb21-9"></a>  <span class="dt">caption =</span> <span class="st">"Catch per unit effort (per 1000 hook hours) for each species by site."</span></span>
-<span id="cb21-10"><a href="catch-data-analysis.html#cb21-10"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="catch-data-analysis.html#cb20-1"></a>CPUE_sign &lt;-<span class="st"> </span>CPUE <span class="op">%&gt;%</span></span>
+<span id="cb20-2"><a href="catch-data-analysis.html#cb20-2"></a><span class="st">    </span><span class="kw">group_by</span>(Species, Site) <span class="op">%&gt;%</span></span>
+<span id="cb20-3"><a href="catch-data-analysis.html#cb20-3"></a><span class="st">    </span><span class="kw">summarize</span>(<span class="dt">mean_CPUE =</span> <span class="kw">mean</span>(CPUE_<span class="dv">1000</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb20-4"><a href="catch-data-analysis.html#cb20-4"></a><span class="st">    </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> Site, <span class="dt">values_from =</span> mean_CPUE) <span class="op">%&gt;%</span></span>
+<span id="cb20-5"><a href="catch-data-analysis.html#cb20-5"></a><span class="st">    </span><span class="kw">left_join</span>(results) <span class="op">%&gt;%</span></span>
+<span id="cb20-6"><a href="catch-data-analysis.html#cb20-6"></a><span class="st">    </span><span class="kw">arrange</span>(Species)</span></code></pre></div>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-24">Table 8.5: </span>Catch per unit effort (per 1000 hook hours) for each species by site.</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-25">Table 8.5: </span>Catch per unit effort (per 1000 hook hours) for each species by site.</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="left">Species</th>
@@ -1342,8 +1332,21 @@ Briefly describe the results comparing CPUE per life history stage and site and 
 </div>
 </div>
 
+<div id="refs" class="references">
+<div>
+<p>Carlson, John K., and Ivy E. Baremore. 2005. “Growth dynamics of the spinner shark (Carcharhinus brevipinna) off the United States southeast and Gulf of Mexico coasts: A comparison of methods.” <em>Fishery Bulletin</em> 103 (2): 280–91. <a href="http://aquaticcommons.org/9614/">http://aquaticcommons.org/9614/</a>.</p>
 </div>
-</div></body></html>
+</div>
+</div>
+</div>
+<h3>References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('NA')" onmouseout="reset_tooltip('NA-tooltip')"><span class="tooltiptext" id="NA-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<div id="refs" class="references">
+<div id="ref-Carlson2005">
+<p>Carlson, John K., and Ivy E. Baremore. 2005. “Growth dynamics of the spinner shark (Carcharhinus brevipinna) off the United States southeast and Gulf of Mexico coasts: A comparison of methods.” <em>Fishery Bulletin</em> 103 (2): 280–91. <a href="http://aquaticcommons.org/9614/">http://aquaticcommons.org/9614/</a>.</p>
+</div>
+</div>
+</body></html>
 
 <p style="text-align: center;">
 <a href="welcome-to-the-tidyverse.html"><button class="btn btn-default">Previous</button></a>

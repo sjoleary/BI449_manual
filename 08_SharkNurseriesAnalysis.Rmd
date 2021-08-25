@@ -378,7 +378,7 @@ elasmos_set <- elasmos_set %>%
 
 And from that we can easily calculate mean and standard deviation CPUE of catching sharks by site.
 
-```{r}
+```{r echo=FALSE}
 
 kable(
   elasmos_set %>%
@@ -500,13 +500,19 @@ Let's calculate mean CPUE per species and site, turn that into a wide table for 
 
 ```{r}
 
-kable(
-  CPUE %>%
+CPUE_sign <- CPUE %>%
     group_by(Species, Site) %>%
     summarize(mean_CPUE = mean(CPUE_1000)) %>%
     pivot_wider(names_from = Site, values_from = mean_CPUE) %>%
     left_join(results) %>%
-    arrange(Species),
+    arrange(Species)
+
+```
+
+```{r echo=FALSE}
+
+kable(
+  CPUE_sign,
   digits = 2,
   caption = "Catch per unit effort (per 1000 hook hours) for each species by site."
 )

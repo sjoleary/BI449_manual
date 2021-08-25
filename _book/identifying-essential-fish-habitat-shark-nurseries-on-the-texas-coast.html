@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-08-23" />
+<meta name="date" content="2021-08-25" />
 
 
 <meta name="description" content="5 Identifying essential fish habitat: Shark Nurseries on the Texas coast | Data Science for the Natural Environment (FA21)">
@@ -93,7 +93,7 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#explore-the-data-set"> Explore the data set</a></li>
 <li class="toc"><a href="#export-as-text-file"> Export as text file</a></li>
 </ul>
-<a href="intro-to-data-frames.html.frames"><span class="toc-section-number">6</span> Intro to <code>data.frames</code></a>
+<a href="intro-to-data-frames.html.frames"><span class="toc-section-number">6</span> Intro to data.frames</a>
 <a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
 <a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
 </div>
@@ -116,9 +116,9 @@ function reset_tooltip(id) {
 <li>understand how differences in methodology can affect a data set.</li>
 </ul>
 <p>For each of our modules we will have a project-folder with an <code>Rproject</code>, <code>*.Rmd</code>-files, and sub-directories for data, scripts, and results as described in our <code>Rproject</code> Tutorial. You should create a directory on your Desktop or Documents folder on your laptop (name it something like <code>BI449</code>) as a home directory for all of our project folders this semester.</p>
-<p>Download the <a href="">SharkNurseries</a> project folder. Once you have downloaded it, unzip the project directory into your <code>BI449</code> directory. You can open the <code>Rproj</code> for this module either by double clicking on it which will launch <code>Rstudio</code> or by opening <code>Rstudio</code> and then using <code>File &gt; Open Project</code> or by clicking on the <code>Rproject</code> icon in the top right of your program window and selecting <code>Open Project</code>.</p>
+<p>Download the <a href="https://drive.google.com/drive/folders/1FexsfMkoBfPEeAkOCd2ZQrQqVBOF4WOR?usp=sharing">SharkNurseries</a> project folder. Once you have downloaded it, unzip the project directory into your <code>BI449</code> directory. You can open the <code>Rproj</code> for this module either by double clicking on it which will launch <code>Rstudio</code> or by opening <code>Rstudio</code> and then using <code>File &gt; Open Project</code> or by clicking on the <code>Rproject</code> icon in the top right of your program window and selecting <code>Open Project</code>.</p>
 <p>Once you have opened a project you should see the project name in the top right corner<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> Pro tip: If you run into issues where an Rmarkdown won’t render or file paths aren’t working (especially if things were working previously) one of your first steps should be to double check that the correct <code>Rproj</code> is loaded.</span>.</p>
-<p>You should have a <code>SharkNurseries.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
+<p>You should have a <code>SharkNurseriesIntro.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> You should do this whether you are adding code yourself or using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
 <div id="essential-fish-habitat-shark-nurseries" class="section level2">
 <h2>
 <span class="header-section-number">5.1</span> Essential fish habitat: Shark Nurseries<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('essential-fish-habitat-shark-nurseries')" onmouseout="reset_tooltip('essential-fish-habitat-shark-nurseries-tooltip')"><span class="tooltiptext" id="essential-fish-habitat-shark-nurseries-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -205,7 +205,7 @@ Discuss whether or not you would expect to get similar results from both studies
 <h2>
 <span class="header-section-number">5.3</span> Explore the data set<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('explore-the-data-set')" onmouseout="reset_tooltip('explore-the-data-set-tooltip')"><span class="tooltiptext" id="explore-the-data-set-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>There should be a an excel file in the <code>data</code> folder of your project directory named <code>catch.xls</code>. Go ahead and open the file in excel.</p>
+<p>There should be a an excel file in the <code>data</code> folder of your project directory named <code>longline_catchdata.xlsx</code>. Go ahead and open the file in excel.</p>
 <div id="ques:sh-3" class="question">
 <p class="question-begin">
 ► Question 3
@@ -325,7 +325,7 @@ Go ahead and save a csv and tab-delimited formatted version of our data set in y
 <a href="intro-to-data-frames.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-08-23
+2021-08-25
  using 
 R version 4.0.2 (2020-06-22)
 </p>
