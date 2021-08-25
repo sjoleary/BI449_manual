@@ -204,7 +204,6 @@ function reset_tooltip(id) {
 </h2>
 <p>Let’s start by reading in the data set we will use for this analysis.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="catch-data-analysis.html#cb3-1"></a>elasmos &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/longline_elasmobranchs.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code></pre></div>
-<p><label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> Pro tip: you can use <code>replace(is.na(.), 0)</code> to replace <code>NA</code> values in all columns with a <code>0</code>.</span></p>
 <div id="ques:shn-1" class="question">
 <p class="question-begin">
 ► Question 1
@@ -218,6 +217,7 @@ Produce a table that contains the number of times a species was caught at each s
 </p>
 </div>
 </div>
+<p>Your table should look something like this.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> Pro tip: you can use <code>replace(is.na(.), 0)</code> to replace <code>NA</code> values in all columns with a <code>0</code>.</span></p>
 <p><!--
 <caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-5">Table 8.1: </span>Number of individuals per caught per site and overall across all sites and years.</span><!--</caption>--></p>
 <table>
@@ -671,9 +671,9 @@ Briefly describe your results to compare total catch across sites accounting for
 </p>
 </div>
 </div>
-<div id="ques:shn-4" class="question">
+<div id="ques:shnn-4" class="question">
 <p class="question-begin">
-► Question 5
+► Question 6
 </p>
 <div class="question-body">
 <p>
@@ -805,7 +805,7 @@ Subset your data to contain only YOY and generate a table to investigate whether
 </h2>
 <div id="ques:shn-5" class="question">
 <p class="question-begin">
-► Question 6
+► Question 7
 </p>
 <div class="question-body">
 <p>
@@ -819,7 +819,7 @@ Consider disadvantages of using absolute counts of occurence to compare composit
 <p>Catch-per-unit-effort (CPUE) is a indirect measure of abundance. Essentially, it is a way to measure relative abundance and be able to account for differences in sampling effort - the key is defining how you will measure “effort”.</p>
 <div id="ques:shn-6" class="question">
 <p class="question-begin">
-► Question 7
+► Question 8
 </p>
 <div class="question-body">
 <p>
@@ -836,7 +836,7 @@ Briefly discuss what measures we could use to determine effort.
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="catch-data-analysis.html#cb8-1"></a>set_meta &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/set_data.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code></pre></div>
 <div id="ques:shn-7" class="question">
 <p class="question-begin">
-► Question 8
+► Question 9
 </p>
 <div class="question-body">
 <p>
@@ -863,7 +863,7 @@ Take a quick look at the data set to determine what columns are included and wha
 <p>Next we need to count the number of sharks caught per set.</p>
 <div id="ques:shn-8" class="question">
 <p class="question-begin">
-► Question 9
+► Question 10
 </p>
 <div class="question-body">
 <p>
@@ -889,7 +889,7 @@ If we look at our elasmo data.frame you will notice that we have a column called
 </div>
 <div id="ques:shn-9" class="question">
 <p class="question-begin">
-► Question 10
+► Question 11
 </p>
 <div class="question-body">
 <p>
@@ -915,7 +915,7 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 <p>Now we have two <code>data.frame</code>s one contains the information on how many sharks were caught per set and a second one that contains information about the set, including hook hours. This means that our next step will need to be to combine these two data sets.</p>
 <div id="ques:shn-10" class="question">
 <p class="question-begin">
-► Question 11
+► Question 12
 </p>
 <div class="question-body">
 <p>Earlier we learned about <code>bind_rows()</code> which allows us to combine two <code>data.frame</code>s that contain identical columns, i.e. row-wise. There is an equivalent function called <code>bind_columns()</code> which allows us to combine <code>data.frame</code>s column-wise.</p>
@@ -992,7 +992,7 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 ## 3 Corpus_Christi_Bay - Redfish_Bay  2.5669868 0.0102586520 0.015387978</code></pre>
 <div id="ques:shn-11" class="question">
 <p class="question-begin">
-► Question 12
+► Question 13
 </p>
 <div class="question-body">
 <p>
@@ -1006,7 +1006,7 @@ Briefly describe your results and discuss what this result could mean for our ov
 <p>Of course, we are interested how CPUE compares across species and sites.</p>
 <div id="ques:shn-12" class="question">
 <p class="question-begin">
-► Question 13
+► Question 14
 </p>
 <div class="question-body">
 <p>
@@ -1180,7 +1180,7 @@ Choose one species and calculate the CPUE per set. For convenience convert CPUE 
 </div>
 <div id="ques:shn-13" class="question">
 <p class="question-begin">
-► Question 14
+► Question 15
 </p>
 <div class="question-body">
 <p>
@@ -1330,7 +1330,7 @@ Briefly describe the results comparing CPUE per species and site and relate that
 </table>
 <div id="ques:shn-14" class="question">
 <p class="question-begin">
-► Question 15
+► Question 16
 </p>
 <div class="question-body">
 <p>

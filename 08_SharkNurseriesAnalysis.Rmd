@@ -88,9 +88,11 @@ elasmos <- read_delim("data/longline_elasmobranchs.txt", delim = "\t")
 
 ```
 
-^[Pro tip: you can use `replace(is.na(.), 0)` to replace `NA` values in all columns with a `0`.]
+
 
 `r msmbstyle::question(label = "ques:shn-1", text = "Produce a table that contains the number of times a species was caught at each site and overall during the long-lining survey and give a brief description of the pattern(s) you see. Briefly, compare the list of species that were caught to the species identified in the longterm TWPD gill net monitoring program.")`
+
+Your table should look something like this. ^[Pro tip: you can use `replace(is.na(.), 0)` to replace `NA` values in all columns with a `0`.]
 
 ```{r echo=FALSE}
 
@@ -251,7 +253,7 @@ kable(
 
 `r msmbstyle::question(label = "ques:shn-4", text = "Briefly describe your results to compare total catch across sites accounting for differences in life history stage.")`
 
-`r msmbstyle::question(label = "ques:shn-4", text = "Subset your data to contain only YOY and generate a table to investigate whether they were caught across all years sampling occured. Summarize your results in 2-3 sentences.")`
+`r msmbstyle::question(label = "ques:shnn-4", text = "Subset your data to contain only YOY and generate a table to investigate whether they were caught across all years sampling occured. Summarize your results in 2-3 sentences.")`
 
 ```{r echo=FALSE}
 
