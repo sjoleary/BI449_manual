@@ -75,3 +75,8 @@ tab:unnamed-chunk-9
 tab:unnamed-chunk-17
 tab:unnamed-chunk-20
 tab:unnamed-chunk-23
+tab:unnamed-chunk-5
+tab:unnamed-chunk-10
+tab:unnamed-chunk-18
+tab:unnamed-chunk-21
+tab:unnamed-chunk-24

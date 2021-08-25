@@ -37,7 +37,6 @@ options(htmltools.dir.version = FALSE)
 
 # Intro to data.frames
 
-
 **Learning Objectives**
 
 After completing this tutorial you should be able to

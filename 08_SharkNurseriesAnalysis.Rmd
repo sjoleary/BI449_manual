@@ -21,8 +21,14 @@ editor_options:
 ```{r include=FALSE}
 
 library(msmbstyle)
+
 # invalidate cache when the tufte version changes
-knitr::opts_chunk$set(tidy = FALSE, cache.extra = packageVersion('msmbstyle'))
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  message = FALSE,
+	warning = FALSE,
+  cache.extra = packageVersion('msmbstyle'))
+
 options(htmltools.dir.version = FALSE)
 
 ```
@@ -47,11 +53,24 @@ Now that you've got your basic data wrangling skills down, let's see what we can
 
 We are going to stick to the first two questions to practice our data wrangling skills (and possibly pick up a few new ones ...)
 
-As always, let's start by loading our packages.
+You should have a `NurseryAnalysis.Rmd` in your project directory. Use that file to work through this tutorial - you will hand in your rendered ("knitted") rmarkdown file as your homework assignment. So, first thing in the `YAML` header, change the author to your name. You will use this `Rmarkdown` file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set^[You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn't commented in the manual ... you may of course add as many comments as you need to be able to recall what you did].
+
+As always, let's start by loading our packages needed for this analysis.
+
+We are missing one package that we will need to install the first time, it contains a specialized function that we will need down the line.
 
 ```{r}
 
-# load libraries (make sure you have installed them first)
+# install packages
+# install.packages("FSA")
+
+```
+
+Now let's load our packages.
+
+```{r}
+
+# load libraries
 library(knitr)
 library(tidyverse)
 library(FSA)
@@ -69,7 +88,9 @@ elasmos <- read_delim("data/longline_elasmobranchs.txt", delim = "\t")
 
 ```
 
-`r msmbstyle::question(label = "ques:shn-1", text = "Produce a table that contains the number of times a species was caught at each site and overall during the long-lining survey and give a brief description of the pattern(s) you see. Briefly, compare the list of species that were caught to the species identified in the longterm TWPD gill net monitoring program.")`^[Pro tip: you can use `replace(is.na(.), 0)` to replace `NA` values in all columns with a `0`.]
+^[Pro tip: you can use `replace(is.na(.), 0)` to replace `NA` values in all columns with a `0`.]
+
+`r msmbstyle::question(label = "ques:shn-1", text = "Produce a table that contains the number of times a species was caught at each site and overall during the long-lining survey and give a brief description of the pattern(s) you see. Briefly, compare the list of species that were caught to the species identified in the longterm TWPD gill net monitoring program.")`
 
 ```{r echo=FALSE}
 
@@ -91,9 +112,9 @@ We are not only interested in which species we can observe at each site, we also
 
 Another way to determine the life history stage is to used previously information on length-at-maturity and how quickly YOY grow during their first year of life. This information is species-specific and has been determined for various species using life-history studies that rely on data sets that contain information on size, level of maturity and age^[Sharks can be aged using their vertebrae similar to how we can use growth rings on trees to age them.].
 
-`r msmbstyle::question_begin()`
+`r msmbstyle::question_begin(label = "ques:missed")`
 
-For example, Carlson and Baremore 2005 determine the following length/history stage relationships for spinner sharks (*C. brevipinna*)
+For example, Carlson and Baremore 2005 [@Carlson2005] determined the following length/history stage relationships for spinner sharks (*C. brevipinna*)
 
 * YOY
   + females < 844mm
@@ -230,9 +251,9 @@ kable(
 
 `r msmbstyle::question(label = "ques:shn-4", text = "Briefly describe your results to compare total catch across sites accounting for differences in life history stage.")`
 
-Specifically for YOY let's take a look on whether we catch them across all months that sampling occurred.
+`r msmbstyle::question(label = "ques:shn-4", text = "Subset your data to contain only YOY and generate a table to investigate whether they were caught across all years sampling occured. Summarize your results in 2-3 sentences.")`
 
-```{r}
+```{r echo=FALSE}
 
 kable(
   elasmos %>%

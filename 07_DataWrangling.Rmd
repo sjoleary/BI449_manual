@@ -35,8 +35,6 @@ options(htmltools.dir.version = FALSE)
 
 # Welcome to the tidyverse
 
-**Date**: 8/26/2020
-
 **Learning Objectives**
 
 After completing this tutorial you should
@@ -48,6 +46,8 @@ After completing this tutorial you should
 * use `mutate()` to add new columns.
 * use `group_by()` to group rows.
 * use `summarize()` to calculate summary statistics.
+
+You should have a `DataWrangling.Rmd` in your project directory. Use that file to work through this tutorial - you will hand in your rendered ("knitted") rmarkdown file as your homework assignment. So, first thing in the `YAML` header, change the author to your name. You will use this `Rmarkdown` file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set^[You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn't commented in the manual ... you may of course add as many comments as you need to be able to recall what you did].
 
 As always, let's start by loading our packages needed for this analysis.
 
@@ -61,7 +61,7 @@ library(tidyverse)
 
 ## Data Wrangling
 
-Now that we have a data frame to play with, let's explore some data wrangling options using `dplyr`. The `d` stands for `data` and the `plyr` stands for `plyers` - this package is designed to manipulate data frames^[This is also known as `data wrangling`, manipulating is not a negative thing in this case it means you can clean up and format the data in appropriate way to fit the questions you are asking and allow to to display the information in a hepful way; you will also see this described as data transformation.]. We are going to focus on the central actions (`verbs`) that will allow you to manipulate the data frame.
+Now that we have a data frame to play with, let's explore some data wrangling options using `dplyr`. The `d` stands for `data` and the `plyr` stands for `plyers` - this package is designed to manipulate data frames^[This is also known as `data wrangling`, manipulating is not a negative thing in this case it means you can clean up and format the data in appropriate way to fit the questions you are asking and allow to to display the information in a helpful way; you will also see this described as data transformation.]. We are going to focus on the central actions (`verbs`) that will allow you to manipulate the data frame.
 
 We will compare using excel vs R (or another coding language) down the line but here are some of the main advantages to using code -
 
@@ -69,7 +69,9 @@ We will compare using excel vs R (or another coding language) down the line but 
 * You can manipulate data sets too large to easily handle in Excel.
 * If you update your data set or have a second identically formatted data set you just have to re-run the code.
 
-Be sure to record all the steps (code chunks) in your Rmarkdown - both the examples given here and the applications you will be asked to make. You can copy and paste, but you will find that writing out the code will help you get more used to syntax, how autocomplete etc. works. Make use of the fact that you can add headers, text etc. + code chunks. Be sure to comment your code. These are central concepts that you will use and reuse throughout the semester so you will likely want to refer back to this document. 
+Be sure to record all the steps (code chunks) in your Rmarkdown - both the examples given here and the applications you will be asked to make. You can copy and paste, but you will find that writing out the code will help you get more used to syntax, how autocomplete etc. works. Make use of the fact that you can add headers, text etc. + code chunks. Be sure to comment your code. 
+
+These are central concepts that you will use and reuse throughout the semester so you will likely want to refer back to this document. A good way to create a "cheatsheet" would be to for example for each function write a short description of what it does in general (refer to this manual) before each code chunk, then make your comment in the code specific to your example. Similarly use normal text to refer to the question numbers in this manual as you work through the problem sets.
 
 
 ## Selecting and organizing columns
