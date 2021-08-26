@@ -66,7 +66,7 @@ Most of the exercises will be completed during lab/lecture time though occasiona
 
 You are encouraged to work collaboratively both during/outside of class times but everyone should be submitting their own work. If you worked closely with a certain person please make a note at the beginning of your document.
 
-### Due Friday, Aug. 25th {-}
+### Due Saturday, Aug. 25th {-}
 
 Complete the `IntroR` activity and compile a report using the little notebook icon in the `Rscript` panel and submit the resulting `*.html` file through canvas.
 
