@@ -116,10 +116,10 @@ Now that we're looking at the data set we might as well take a stab at the first
 
 Use your excel skills to create sets of summary tables
 
-* Total catch:
+* Total catch by site:
     + total number of individuals per elasmobranch species caught at each site (across all years).
     + relative abundance of each elasmobranch species caught per site.
-* Relative abundance:
+* Differences in catch across sites and years:
     + total number of individuals per elasmobranch species per site and year.
     + relative abundance per of each elasmobranch species per site and year.
 * Summary stats size:

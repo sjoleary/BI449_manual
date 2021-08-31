@@ -72,7 +72,7 @@ library(tidyverse)
 ```{r eval=FALSE}
 
 # read catch data
-catch <- read_delim("data/longline_catchdata.csv", delim = "\t")
+catch <- read_delim("data/longline_catchdata.csv", delim = ",")
 
 catch %>%
   distinct(Species)
