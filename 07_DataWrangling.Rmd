@@ -260,7 +260,7 @@ catch %>%
 
 ```
 
-`r msmbstyle::question(label = "ques:tidy-11", text = "How would you subset a data frame to contain only entries for different species in the genus Charcharhinus aka the sharky-sharks? There are four species in the data set - Carcharhinus_leucas, Carcharhinus_brevipinna, Carcharhinus_limbatus, Carcharhinus_porosus.")`
+`r msmbstyle::question(label = "ques:tidy-11", text = "How would you subset a data frame to contain only entries for different species in the genus Carcharhinus aka the sharky-sharks? There are four species in the data set - Carcharhinus_leucas, Carcharhinus_brevipinna, Carcharhinus_limbatus, Carcharhinus_porosus.")`
 
 For numbers you likely aren't just searching for exact matches, you also want to be able to set threshold values and select everything above or below. For example, you can select all rows with values greater than a certain value using `>`.
 
@@ -282,7 +282,7 @@ catch %>%
 
 ```
 
-`r msmbstyle::question(label = "ques:tidy-13", text = "How would you subset a data frame to contain only entries for different species in the genus Charcharhinus that have a forklength larger than 500 cm?")`
+`r msmbstyle::question(label = "ques:tidy-13", text = "How would you subset a data frame to contain only entries for different species in the genus Carcharhinus that have a forklength larger than 500 cm?")`
 
 Instead of entries having to fulfill two (or more) requirements, you might have a situation where you only want to retain rows that fulfill one or another argument. For example, if you wanted all entries that are either gafftops or a fork length smaller than 300 cm you could use the following code^[When you are combining arguments you use `&` to say "it must fulfill this **AND** this" or `|` (called the pipe) to say "it must fulfill this **OR** that.]:
 
