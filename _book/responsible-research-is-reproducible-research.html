@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="10 Responsible Research is Reproducible Research | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-09-08" />
+
+
+<meta name="description" content="10 Responsible Research is Reproducible Research | Data Science for the Natural Environment (FA21)">
+
+<title>10 Responsible Research is Reproducible Research | Data Science for the Natural Environment (FA21)</title>
+
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/accessible-code-block/empty-anchor.js"></script>
+
+
+
+
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors-oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a id="active-page" href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a><ul class="toc-sections">
+<li class="toc"><a href="#what-even-are-these-methods-you-speak-of"> What even are these ‘Methods’ you speak of?</a></li>
+<li class="toc"><a href="#tools-of-the-trade"> Tools of the trade</a></li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div id="responsible-research-is-reproducible-research" class="section level1">
+<h1>
+<span class="header-section-number">10</span> Responsible Research is Reproducible Research</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this set of activities you should be able to</p>
+<ul>
+<li>Define three consecutive steps in data analysis/methods as
+<ul>
+<li>Acquiring data</li>
+<li>Processing data</li>
+<li>Analyzing data</li>
+</ul>
+</li>
+<li>Compare and contrast effects of using programs such as excel/other point &amp; click programs compared to scripting languages for data analysis on reproducibility</li>
+<li>Recognize that employing tools for analysis differ in how reliable, accessible, and verifiable they are and how this limits how conducive they are for reproducible research.</li>
+</ul>
+<p>You should have a <code>ReprodRes.Rmd</code> in your project directory. Use that file to work through this set of activties - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. For this module there will not be any coding involved (no code chunks!) instead you should work a little bit on your <code>Rmarkdown</code> skills.</p>
+<p>In your document try using some of the formatting skills:</p>
+<p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;">You have various resources at your disposal, including the <code>Rmarkdown</code> <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">cheatsheet</a> you received a handout for and <a href="https://r4ds.had.co.nz/r-markdown.html">Chapter 27</a> in our Textbook. The easiest way to learn <code>Rmarkdown</code> is to try out the syntax and then <code>knit</code> your document to see if it turns out as you think it should!</span></span></p>
+<ul>
+<li>Use different level headers to structure your document</li>
+<li>include something in <strong>bold</strong> and something in <em>italics</em>.</li>
+<li>add numbered and unordered bullet points (maybe even try adding multiple levels if you’re feeling adventurous).</li>
+</ul>
+<p>For these activities we will do all the computing (thinking) with our own brains … so let’s dive straight in!</p>
+<div id="what-even-are-these-methods-you-speak-of" class="section level2">
+<h2>
+<span class="header-section-number">10.1</span> What even are these ‘Methods’ you speak of?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('what-even-are-these-methods-you-speak-of')" onmouseout="reset_tooltip('what-even-are-these-methods-you-speak-of-tooltip')"><span class="tooltiptext" id="what-even-are-these-methods-you-speak-of-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div id="ques:RR2-0" class="question">
+<p class="question-begin">
+► Question 1
+</p>
+<div class="question-body">
+<p>Think back on scientific papers you have read or lab reports you have written and list the main sections of the typical format you encounter.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-0" class="question">
+<p class="question-begin">
+► Question 1
+</p>
+<div class="question-body">
+<p>Give a brief description of what the “Methods” or “Method &amp; Materials” section of a scientific paper or report contains and assess whether or not you think this section generally meets the standard you have just laid out.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-0" class="question">
+<p class="question-begin">
+► Question 1
+</p>
+<div class="question-body">
+<p>One framework to categorize components of the “methods” of a study is to place them into three steps that build on each other.</p>
+<ol style="list-style-type: decimal">
+<li>Acquire data</li>
+<li>Process data</li>
+<li>Analyze data</li>
+</ol>
+<p>Use the example of our recent (re)analysis of the Shark Nursery study to describe what each of these steps entails.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="tools-of-the-trade" class="section level2">
+<h2>
+<span class="header-section-number">10.2</span> Tools of the trade<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('tools-of-the-trade')" onmouseout="reset_tooltip('tools-of-the-trade-tooltip')"><span class="tooltiptext" id="tools-of-the-trade-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The tools used to analyze data vary from specialized programs designed for very specific tasks, to spreadsheet application programs like Excel which has found widespread application beyond it origins that were mainly focused on managing and organizing data (e.g. in an HR department for payroll!</p>
+<div id="ques:RR2-0" class="question">
+<p class="question-begin">
+► Question 1
+</p>
+<div class="question-body">
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>FunFact: Lotus123 is what launched IBM Personal Computers around the world … it was later pushed out by Excel and similar programs. My very first PC adventures included running Lotus123 off of big floppy disks.</p>
+<div class="figure">
+<img src="figures/lotus123.png" alt=""><p class="caption">Lotus123</p>
+</div>
+
+</div>
+</div></body></html>
+
+<p style="text-align: center;">
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><button class="btn btn-default">Previous</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-09-08
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

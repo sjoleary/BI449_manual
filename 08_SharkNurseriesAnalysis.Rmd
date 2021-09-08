@@ -155,7 +155,7 @@ Briefly describe what you think our approach should look like - even if you don'
 
 There are two approaches we can take.
 
-The first one would involve sub-setting your `data.frame` using `filter()` to contain only individuals that fulfill the conditions of specific length ranges that fit the ranges above for each life history stage and the add a new column with the correctly assigned life history stage^[Remember, you can use `&` and `|` to combine two conditions.
+The first one would involve sub-setting your `data.frame` using `filter()` to contain only individuals that fulfill the conditions of specific length ranges that fit the ranges above for each life history stage and the add a new column with the correctly assigned life history stage^[Remember, you can use `&` and `|` to combine two conditions].
 
 ```{r}
 
@@ -260,9 +260,10 @@ kable(
 kable(
   elasmos %>%
     filter(Estimated_Stage == "YOY") %>%
-    group_by(Site, Month, Species) %>%
+    group_by(Site, Year, Species) %>%
     count() %>%
-    pivot_wider(names_from = Month, values_from = n) %>%
+    arrange(Year) %>%
+    pivot_wider(names_from = Year, values_from = n) %>%
     replace(is.na(.), 0) %>%
     arrange(Site, Species)
 )
@@ -272,13 +273,13 @@ kable(
 
 ## Comparison of CPUE per species across sites
 
-`r msmbstyle::question(label = "ques:shn-5", text = "Consider disadvantages of using absolute counts of occurence to compare composition across sites. What measure could you use instead of absolute abundance to fix this issue?")`
+`r msmbstyle::question(label = "ques:shn-5", text = "Consider disadvantages of using absolute counts of occurence to compare composition across sites. What measure could you use instead of total catch to fix this issue?")`
 
 Catch-per-unit-effort (CPUE) is a indirect measure of abundance. Essentially, it is a way to measure relative abundance and be able to account for differences in sampling effort - the key is defining how you will measure "effort".
 
 `r msmbstyle::question(label = "ques:shn-6", text = "Briefly discuss what measures we could use to determine effort.")`
 
-We are going to calculate effort as "hook hours". To do this we need to know how many hooks were on the line per set^[A set means that baited hooks on leaders where attached to the mainline and that mainline was then "set" in the water for a given period of time before pulling it back in and determining which fish were caught on hooks.] and how long the entire line was in the water per set (this is called soak time), then we can easily calculate hook hours of each set as the number of hooks multiplied by the soak time. And then we can divide the number of e.g. sharks caught on a set ("catch) by hook hours ("effort") to calculate CPUE.
+We are going to calculate effort as "hook hours". To do this we need to know how many hooks were on the line per set^[A set means that baited hooks on leaders (individual lines) where attached to the main line and that main line was then "set" in the water for a given period of time before pulling it back in and determining which fish were caught on hooks.] and how long the entire line was in the water per set (this is called soak time), then we can easily calculate hook hours of each set as the number of hooks multiplied by the soak time. And then we can divide the number of e.g. sharks caught on a set ("catch) by hook hours ("effort") to calculate CPUE.
 
 Your `data` folder contains as tab-delimited file with set meta-data. This includes information that describes the set itself including date of the set, site, soak time, and location and also parameters describing the conditions of the set such as temperature, salinity, depth, and dissolved oxygen.
 
@@ -365,7 +366,7 @@ elasmos_set <- elasmos_set %>%
 
 ```
 
-Note the notation `elasmo_set <- left_join(elasmos_set, set_meta, by = "Set_ID")` will produce the same result.
+Note the notation `elasmo_set <- full_join(elasmos_set, set_meta, by = "Set_ID")` will produce the same result.
 
 Now we can calculate CPUE for sharks per site.
 

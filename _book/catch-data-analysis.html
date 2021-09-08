@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-08-26" />
+<meta name="date" content="2021-09-08" />
 
 
 <meta name="description" content="8 Catch data analysis | Data Science for the Natural Environment (FA21)">
@@ -160,6 +160,8 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#comparison-of-cpue-per-species-across-sites"> Comparison of CPUE per species across sites</a></li>
 <li class="toc"><a href="#comparison-of-cpue-for-different-life-history-stages"> Comparison of CPUE for different life history stages</a></li>
 </ul>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
 </div>
 </li>
 </ul>
@@ -379,7 +381,7 @@ Determine how many individuals have information on their life history stage.
 </p>
 <div id="sol-body-1" class="solution-body" style="display: none;">
 <p>There are two approaches we can take.</p>
-<p>The first one would involve sub-setting your <code>data.frame</code> using <code>filter()</code> to contain only individuals that fulfill the conditions of specific length ranges that fit the ranges above for each life history stage and the add a new column with the correctly assigned life history stage^[Remember, you can use <code>&amp;</code> and <code>|</code> to combine two conditions.</p>
+<p>The first one would involve sub-setting your <code>data.frame</code> using <code>filter()</code> to contain only individuals that fulfill the conditions of specific length ranges that fit the ranges above for each life history stage and the add a new column with the correctly assigned life history stage<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> Remember, you can use <code>&amp;</code> and <code>|</code> to combine two conditions</span>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="catch-data-analysis.html#cb4-1"></a><span class="co"># C. brevipinna, Carlson &amp; Baremore 2005</span></span>
 <span id="cb4-2"><a href="catch-data-analysis.html#cb4-2"></a></span>
 <span id="cb4-3"><a href="catch-data-analysis.html#cb4-3"></a>C.brevipinna_YOY &lt;-<span class="st"> </span><span class="kw">filter</span>(elasmos, Species<span class="op">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="op">&amp;</span><span class="st"> </span>Sex<span class="op">==</span><span class="st">"M"</span> <span class="op">&amp;</span><span class="st"> </span>FL<span class="op">&lt;=</span><span class="dv">812</span> <span class="op">|</span><span class="st"> </span>Species<span class="op">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="op">&amp;</span><span class="st"> </span>Sex<span class="op">==</span><span class="st">"F"</span> <span class="op">&amp;</span><span class="st"> </span>FL<span class="op">&lt;=</span><span class="dv">844</span> <span class="op">|</span><span class="st"> </span>Species<span class="op">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="op">&amp;</span><span class="st"> </span>Sex<span class="op">==</span><span class="st">"U"</span> <span class="op">&amp;</span><span class="st"> </span>FL<span class="op">&lt;=</span><span class="dv">844</span>) <span class="op">%&gt;%</span></span>
@@ -689,51 +691,41 @@ Subset your data to contain only YOY and generate a table to investigate whether
 <thead><tr class="header">
 <th align="left">Site</th>
 <th align="left">Species</th>
-<th align="right">5</th>
-<th align="right">6</th>
-<th align="right">7</th>
-<th align="right">8</th>
-<th align="right">9</th>
-<th align="right">10</th>
+<th align="right">2015</th>
+<th align="right">2016</th>
+<th align="right">2017</th>
+<th align="right">2018</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">Aransas_Bay</td>
 <td align="left">Carcharhinus_brevipinna</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">2</td>
-<td align="right">5</td>
-<td align="right">2</td>
+<td align="right">7</td>
 <td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">Aransas_Bay</td>
 <td align="left">Rhizoprionodon_terraenovae</td>
 <td align="right">0</td>
+<td align="right">0</td>
 <td align="right">1</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
 <td align="left">Corpus_Christi_Bay</td>
 <td align="left">Carcharhinus_brevipinna</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">9</td>
-<td align="right">10</td>
-<td align="right">9</td>
-<td align="right">17</td>
+<td align="right">6</td>
+<td align="right">16</td>
+<td align="right">23</td>
 </tr>
 <tr class="even">
 <td align="left">Corpus_Christi_Bay</td>
 <td align="left">Carcharhinus_leucas</td>
-<td align="right">0</td>
-<td align="right">3</td>
 <td align="right">1</td>
-<td align="right">0</td>
+<td align="right">3</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
@@ -744,17 +736,13 @@ Subset your data to contain only YOY and generate a table to investigate whether
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">Corpus_Christi_Bay</td>
 <td align="left">Rhizoprionodon_terraenovae</td>
 <td align="right">0</td>
+<td align="right">3</td>
 <td align="right">1</td>
-<td align="right">2</td>
-<td align="right">1</td>
-<td align="right">0</td>
 <td align="right">1</td>
 </tr>
 <tr class="odd">
@@ -764,34 +752,26 @@ Subset your data to contain only YOY and generate a table to investigate whether
 <td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">Redfish_Bay</td>
 <td align="left">Carcharhinus_brevipinna</td>
+<td align="right">1</td>
 <td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">2</td>
-<td align="right">6</td>
+<td align="right">3</td>
+<td align="right">4</td>
 </tr>
 <tr class="odd">
 <td align="left">Redfish_Bay</td>
 <td align="left">Rhizoprionodon_terraenovae</td>
-<td align="right">0</td>
 <td align="right">4</td>
-<td align="right">1</td>
+<td align="right">4</td>
 <td align="right">0</td>
-<td align="right">3</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">Redfish_Bay</td>
 <td align="left">Sphyrna_tiburo</td>
-<td align="right">0</td>
-<td align="right">0</td>
 <td align="right">1</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -810,7 +790,7 @@ Subset your data to contain only YOY and generate a table to investigate whether
 </p>
 <div class="question-body">
 <p>
-Consider disadvantages of using absolute counts of occurence to compare composition across sites. What measure could you use instead of absolute abundance to fix this issue?
+Consider disadvantages of using absolute counts of occurence to compare composition across sites. What measure could you use instead of total catch to fix this issue?
 </p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -831,7 +811,7 @@ Briefly discuss what measures we could use to determine effort.
 </p>
 </div>
 </div>
-<p>We are going to calculate effort as “hook hours”. To do this we need to know how many hooks were on the line per set<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> A set means that baited hooks on leaders where attached to the mainline and that mainline was then “set” in the water for a given period of time before pulling it back in and determining which fish were caught on hooks.</span> and how long the entire line was in the water per set (this is called soak time), then we can easily calculate hook hours of each set as the number of hooks multiplied by the soak time. And then we can divide the number of e.g. sharks caught on a set (“catch) by hook hours (”effort") to calculate CPUE.</p>
+<p>We are going to calculate effort as “hook hours”. To do this we need to know how many hooks were on the line per set<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> A set means that baited hooks on leaders (individual lines) where attached to the main line and that main line was then “set” in the water for a given period of time before pulling it back in and determining which fish were caught on hooks.</span> and how long the entire line was in the water per set (this is called soak time), then we can easily calculate hook hours of each set as the number of hooks multiplied by the soak time. And then we can divide the number of e.g. sharks caught on a set (“catch) by hook hours (”effort") to calculate CPUE.</p>
 <p>Your <code>data</code> folder contains as tab-delimited file with set meta-data. This includes information that describes the set itself including date of the set, site, soak time, and location and also parameters describing the conditions of the set such as temperature, salinity, depth, and dissolved oxygen.</p>
 <p>Let’s read in the data set.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="catch-data-analysis.html#cb8-1"></a>set_meta &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/set_data.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code></pre></div>
@@ -929,7 +909,7 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 <p>Having multiple tables containing data pertaining to the same question is referred to as <strong>relational data</strong> - we are interested in how the contents of a pair of table related to each other, not just the individual data sets. Combining two tables is called a <strong>join</strong>. In this case the type of join we want to execute is called a <strong>mutating join</strong> which means we can add new variables from one <code>data.frame</code> (<code>set_meta</code>) to matching observations in another (<code>elasmos_set</code>).</p>
 <p>In order to do that we need to have one column (the <strong>key</strong>) that way the function can match observations in one <code>data.frame</code> by that <strong>key</strong> and then copy the matching observations in the columns from the second <code>data.frame</code> across.</p>
 <p>When performing a <strong>join</strong>, new columns are added to the right. We will use the function <code>full_join()</code> which means that all the rows from the left and right <code>data.frame</code> will be retained - when we used <code>count()</code> that excluded sets where no sharks were caught, by using a <code>full_join()</code> we can add those back in.</p>
-<p>We currently do not have a matching column between the two data sets, so our first step will be to add a new column called <code>Set_ID</code> to our <code>set_meta</code> <code>data.frame</code>, then we can use <code>full_join()</code> to join the two tables. The argument <code>by</code> can be used to specify the column to use as the key. For our example here we have a column with the same name - in general, the function is “smart” enough to identify shared columns and so you do not necessarily have to specify it<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> You can pull up the help page using <code>?full_join</code> to learn how to join tables that have multiple columns in common or that might have a column in common though it is named differently between the two tables.</span>.</p>
+<p>We currently do not have a matching column between the two data sets, so our first step will be to add a new column called <code>Set_ID</code> to our <code>set_meta</code> <code>data.frame</code>, then we can use <code>full_join()</code> to join the two tables. The argument <code>by</code> can be used to specify the column to use as the key. For our example here we have a column with the same name - in general, the function is “smart” enough to identify shared columns and so you do not necessarily have to specify it<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> You can pull up the help page using <code>?full_join</code> to learn how to join tables that have multiple columns in common or that might have a column in common though it is named differently between the two tables.</span>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="catch-data-analysis.html#cb12-1"></a><span class="co"># add set id column</span></span>
 <span id="cb12-2"><a href="catch-data-analysis.html#cb12-2"></a>set_meta &lt;-<span class="st"> </span>set_meta <span class="op">%&gt;%</span></span>
 <span id="cb12-3"><a href="catch-data-analysis.html#cb12-3"></a><span class="st">  </span><span class="kw">unite</span>(Set_ID, Year, Month, Day, Set, <span class="dt">sep =</span> <span class="st">"_"</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</span>
@@ -938,7 +918,7 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 <span id="cb12-6"><a href="catch-data-analysis.html#cb12-6"></a>elasmos_set &lt;-<span class="st"> </span>elasmos_set <span class="op">%&gt;%</span></span>
 <span id="cb12-7"><a href="catch-data-analysis.html#cb12-7"></a><span class="st">  </span><span class="kw">full_join</span>(set_meta) <span class="op">%&gt;%</span></span>
 <span id="cb12-8"><a href="catch-data-analysis.html#cb12-8"></a><span class="st">  </span><span class="kw">replace_na</span>(<span class="kw">list</span>(<span class="dt">n =</span> <span class="dv">0</span>))</span></code></pre></div>
-<p>Note the notation <code>elasmo_set &lt;- left_join(elasmos_set, set_meta, by = "Set_ID")</code> will produce the same result.</p>
+<p>Note the notation <code>elasmo_set &lt;- full_join(elasmos_set, set_meta, by = "Set_ID")</code> will produce the same result.</p>
 <p>Now we can calculate CPUE for sharks per site.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="catch-data-analysis.html#cb13-1"></a>elasmos_set &lt;-<span class="st"> </span>elasmos_set <span class="op">%&gt;%</span></span>
 <span id="cb13-2"><a href="catch-data-analysis.html#cb13-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">CPUE =</span> n<span class="op">/</span>Hook_Hours)</span></code></pre></div>
@@ -969,7 +949,7 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 </tr>
 </tbody>
 </table>
-<p>We are going to perform a Kruskal-Wallis rank sum test to determine if there is significant heterogeneity among sites<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> You are probably more familiar with the framework of using an ANOVA to test for significant heterogeneity and pairwise t-tests to test for equality of means of a set of values. KW is similar but is a non-parametric approach and does not make assumptions about the distribution of values.</span>.</p>
+<p>We are going to perform a Kruskal-Wallis rank sum test to determine if there is significant heterogeneity among sites<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> You are probably more familiar with the framework of using an ANOVA to test for significant heterogeneity and pairwise t-tests to test for equality of means of a set of values. KW is similar but is a non-parametric approach and does not make assumptions about the distribution of values.</span>.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="catch-data-analysis.html#cb14-1"></a><span class="co"># KW to test for significant heterogeneity</span></span>
 <span id="cb14-2"><a href="catch-data-analysis.html#cb14-2"></a><span class="kw">kruskal.test</span>(CPUE <span class="op">~</span><span class="st"> </span>Site, <span class="dt">data =</span> elasmos_set)</span></code></pre></div>
 <pre><code>## 
@@ -1031,7 +1011,7 @@ Choose one species and calculate the CPUE per set. For convenience convert CPUE 
 <td align="right">1.76</td>
 </tr></tbody>
 </table>
-<p>We actually want to have this information for all species, rather than create individual <code>data.frame</code>s for each species and then combine those using <code>bind_rows()</code>, I will show you a more efficient way of coding this using a <code>for loop</code><label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> There are a few other ways of during this but for now let’s just stick to the fact that this is an efficient way to get results.</span>.</p>
+<p>We actually want to have this information for all species, rather than create individual <code>data.frame</code>s for each species and then combine those using <code>bind_rows()</code>, I will show you a more efficient way of coding this using a <code>for loop</code><label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> There are a few other ways of during this but for now let’s just stick to the fact that this is an efficient way to get results.</span>.</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="catch-data-analysis.html#cb18-1"></a><span class="co"># create empty list</span></span>
 <span id="cb18-2"><a href="catch-data-analysis.html#cb18-2"></a>species_CPUE &lt;-<span class="st"> </span><span class="kw">list</span>()</span>
 <span id="cb18-3"><a href="catch-data-analysis.html#cb18-3"></a></span>
@@ -1332,11 +1312,6 @@ Briefly describe the results comparing CPUE per life history stage and site and 
 </div>
 </div>
 
-<div id="refs" class="references">
-<div>
-<p>Carlson, John K., and Ivy E. Baremore. 2005. “Growth dynamics of the spinner shark (Carcharhinus brevipinna) off the United States southeast and Gulf of Mexico coasts: A comparison of methods.” <em>Fishery Bulletin</em> 103 (2): 280–91. <a href="http://aquaticcommons.org/9614/">http://aquaticcommons.org/9614/</a>.</p>
-</div>
-</div>
 </div>
 </div>
 <h3>References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('NA')" onmouseout="reset_tooltip('NA-tooltip')"><span class="tooltiptext" id="NA-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -1350,9 +1325,10 @@ Briefly describe the results comparing CPUE per life history stage and site and 
 
 <p style="text-align: center;">
 <a href="welcome-to-the-tidyverse.html"><button class="btn btn-default">Previous</button></a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-08-26
+2021-09-08
  using 
 R version 4.0.2 (2020-06-22)
 </p>

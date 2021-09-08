@@ -82,3 +82,16 @@ tab:unnamed-chunk-21
 tab:unnamed-chunk-24
 tab:unnamed-chunk-25
 intro-to-data-frames
+scientific-misconduct-and-the-reproducible-crisis
+frabrication-falsification-and-plagiarism-oh-my
+p-hacking-and-data-dredging
+you-keep-using-that-word-but
+responsible-research-is-reproducible-research
+frabrication-falsification-and-plagiarism-oh-my-1
+p-hacking-and-data-dredging-1
+you-keep-using-that-word-but-1
+what-even-are-these-methods-you-speak-of
+tools-of-the-trade
+impacts-of-flawed-data-analysis
+case-study-1
+case-study-2
