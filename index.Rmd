@@ -66,6 +66,15 @@ Most of the exercises will be completed during lab/lecture time though occasiona
 
 You are encouraged to work collaboratively both during/outside of class times but everyone should be submitting their own work. If you worked closely with a certain person please make a note at the beginning of your document.
 
+### Due Sunday, Sept. 12th {-}
+
+Complete [Chapter 7](https://bi449fa21.netlify.app/welcome-to-the-tidyverse.html) in our lab manual, make sure your code is properly commented and all questions have been answered. Submit your knitted html file through Canvas as HW04.
+
+Complete [Chapter 8](https://bi449fa21.netlify.app/catch-data-analysis.html) in our lab manual. Make sure your code is properly commented and you have answered all the questions. Most of your answers can be brief when describing results and drawing conclusions but still be sure to be comprehensive. Submit your knitted html file through Canvas as HW05.
+
+
+
+
 ### Due Friday, Sept. 3rd {-}
 
 Complete [Chapter 5](https://bi449fa21.netlify.app/identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html) in our lab manual. Remember, most of the answers to the questions can be brief, and we are skipping Q4. Write your assignment in `Rmarkdown` and then knit it and submit the html file.
