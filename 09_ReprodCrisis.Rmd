@@ -1,0 +1,164 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: TRUE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  message = FALSE,
+	warning = FALSE,
+  cache.extra = packageVersion('msmbstyle'))
+
+options(htmltools.dir.version = FALSE)
+
+```
+
+# Scientific misconduct and the reproducible crisis
+
+**Learning Objectives**
+
+After completing this set of activities you should be able to
+
+* Define what scientific misconduct is and describe common unethical practices that may or may not fall into that strict definition.
+* Define what the ‘reproducibility crisis’ is, common practices that are contributing, and understand how some fields/methodologies are more susceptible.
+* Distinguish between different definitions for reproducibility and replicability, and explain how they contribute to the confidence in scientific results being “correct” by the scientific community and public.
+
+
+After all that data wrangling and learning new functions and data science concepts we are going to take a step back and think a little bit about our workflow and what standards we should set for ourselves and others in terms of how we generatate and analyze data and who we communicate results.
+
+Go ahead and download the [Project Folder](https://drive.google.com/drive/folders/1DJRrb_S-iRGzEoaGzIqMukAeWp9o1mj3?usp=sharing) for this Module. Once you have downloaded it, unzip the project directory into your `BI449` directory. You can open the `Rproj` for this module either by double clicking on it which will launch `Rstudio` or by opening `Rstudio` and then using `File > Open Project` or by clicking on the `Rproject` icon in the top right of your program window and selecting `Open Project`. 
+
+Once you have opened a project you should see the project name in the top right corner^[Pro tip: If you run into issues where an Rmarkdown won't render or file paths aren't working (especially if things were working previously) one of your first steps should be to double check that the correct `Rproj` is loaded.].
+
+You should have a `ReprodCrisis.Rmd` in your project directory. Use that file to work through this tutorial - you will hand in your rendered ("knitted") rmarkdown file as your homework assignment. So, first thing in the `YAML` header, change the author to your name. You will use this `Rmarkdown` file to record your answers. For this module there will not be any coding involved (no code chunks!) instead you should work a little bit on your `Rmarkdown` skills.
+
+In your document try using some of the formatting skills:
+
+```{marginfigure}
+
+You have various resources at your disposal, including the `Rmarkdown` [cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf) you received a handout for and [Chapter 27](https://r4ds.had.co.nz/r-markdown.html) in our Textbook. The easiest way to learn `Rmarkdown` is to try out the syntax and then `knit` your document to see if it turns out as you think it should!
+
+```
+
+* Use different level headers to structure your document
+* include something in **bold** and something in *italics*.
+* add numbered and unordered bullet points (maybe even try adding multiple levels if you're feeling adventerous).
+
+For these activities we will do all the computing (thinking) with our own brains ... so let's dive straight in!
+
+
+## Frabrication, falsification, and plagiarism (oh my!)
+
+`r msmbstyle::question_begin(label="ques:RR1-01")`
+
+The National Science Foundation defines **scientific misconduct** in the categories of **fabrication**, **falsification**, and **plagiarism**. Give a brief definition of each term.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label="ques:RR1-02")`
+
+Take the set of descriptions that describe hypothetical^[hypothetical because not referring to a specific case study but these are very realistic scenarios of daily decision making during research.] scenarios of decision making during data generation and analysis. Classify each as either scientific misconduct according to NSF's definition or not.
+
+Identify scenarios that you are not sure of which category they fall into and be ready to discuss with the class.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label="ques:RR1-03")`
+
+Take your scenarios and rank them along a continuum of ethical to unethical. 
+
+Consider these aspects to establish your ranking:
+
+* are some unethical practices worse than others?
+* which scenarios do you think are more common than others?
+* do you think some are easy to get away with?
+* how easy do you think it is to detect if something like this has taken place?
+* whose responsibility is it to ensure unethical conduct does not take place during the research process?
+
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label="ques:RR1-04")`
+
+After discussion with the class identify at least five major categories of misconduct and unethical behavior and give an example for each. Briefly discuss why for some categories identifying misconduct and unethical conduct is more clear cut while for others it can be difficult to draw a definitive line.
+
+`r msmbstyle::question_end()`
+
+
+## P-hacking and data dredging
+
+`r msmbstyle::question_begin(label="ques:RR1-05")`
+
+Imagine you are a social scientist interested in how political parties impact the US economy. 
+
+First, develop a hypothesis of whether Democrats or Republicans being in office positively or negatively impacts the US economy. 
+
+Now, use real data going back to 1948 to investigate. To publish your data you would need a statistically significant result. Fortunately you can [hack your way to scientific glory using fivethirtyeight's interactive tool](https://projects.fivethirtyeight.com/p-hacking/). Describe how you were able to confirm your hypothesis by manipulating which group of politicians to include, how you measured economic performance and other options.
+
+Finally, formulate a second opposing theory and see if you can generate a statistically significant result for that^[Pro Tip: Find a p-hacking buddy and test alternate hypotheses and then swap your results!].
+
+`r msmbstyle::question_end()`
+
+Congratulations, you just became a successful p-hacker. The practices of **p-hacking** and **data dredging** have become increasing common in the era of big data.
+
+`r msmbstyle::question_begin(label="ques:RR1-06")`
+
+Briefly describe what the practices of **p-hacking** and **data-dredging** entail.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label="ques:RR1-07")`
+
+Briefly describe what the **reproducibility crisis** is and argue which fields of science you would expect to be more/less heavily impacted and how the increasing availability of large data sets and deployment of complex methods of analysis (including machine learning) have contributed.
+
+`r msmbstyle::question_end()`
+
+
+## You keep using that word, but ...
+
+`r msmbstyle::question_begin(label="ques:RR1-08")`
+
+**Replicability** and **reproducibility** of studies both generally refer to the practice of validating the results obtained by duplicating them. However, exact definitions of the terms  vary among fields of research. Briefly, argue how you would rank different levels of confidence in the results of a study based on whether it was been repeated with the same results using (combinations of) the same or different teams, the same or different experimental set-ups, and/or the same or different data set.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label="ques:RR1-09")`
+
+The National Science Foundation (NSF) defines "replicability" as "the ability of a researcher to duplicate the results ofa prior study if the same procedures rae followed but new data are collected". 
+
+Goodman et al [-@Goodman2016] propose a framework that defines three categories based on the goals as related to transparency & compete reporting of methods, producing new evidence and drawing the same conclusion. Briefly compare and contrast the categories of **methods reproducibility**, **results reproducibility**, and **inferential reproducibility**.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label="ques:RR1-10")`
+
+Briefly discuss how (lack of) reproducibility can undermine confidence in the scientific process from the general public and/or allow special interest groups to manipulate information to intentionally sow distrust.
+
+`r msmbstyle::question_end()`
+

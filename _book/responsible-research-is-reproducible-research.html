@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-08" />
+<meta name="date" content="2021-09-09" />
 
 
 <meta name="description" content="10 Responsible Research is Reproducible Research | Data Science for the Natural Environment (FA21)">
@@ -95,7 +95,9 @@ function reset_tooltip(id) {
 <a id="active-page" href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a><ul class="toc-sections">
 <li class="toc"><a href="#what-even-are-these-methods-you-speak-of"> What even are these ‘Methods’ you speak of?</a></li>
 <li class="toc"><a href="#tools-of-the-trade"> Tools of the trade</a></li>
+<li class="toc"><a href="#impacts-of-flawed-data-analysis"> Impacts of Flawed Data Analysis</a></li>
 </ul>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
 </div>
 </li>
 </ul>
@@ -134,7 +136,7 @@ function reset_tooltip(id) {
 <h2>
 <span class="header-section-number">10.1</span> What even are these ‘Methods’ you speak of?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('what-even-are-these-methods-you-speak-of')" onmouseout="reset_tooltip('what-even-are-these-methods-you-speak-of-tooltip')"><span class="tooltiptext" id="what-even-are-these-methods-you-speak-of-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<div id="ques:RR2-0" class="question">
+<div id="ques:RR2-01" class="question">
 <p class="question-begin">
 ► Question 1
 </p>
@@ -145,9 +147,9 @@ function reset_tooltip(id) {
 </p>
 </div>
 </div>
-<div id="ques:RR2-0" class="question">
+<div id="ques:RR2-02" class="question">
 <p class="question-begin">
-► Question 1
+► Question 2
 </p>
 <div class="question-body">
 <p>Give a brief description of what the “Methods” or “Method &amp; Materials” section of a scientific paper or report contains and assess whether or not you think this section generally meets the standard you have just laid out.</p>
@@ -156,9 +158,9 @@ function reset_tooltip(id) {
 </p>
 </div>
 </div>
-<div id="ques:RR2-0" class="question">
+<div id="ques:RR2-03" class="question">
 <p class="question-begin">
-► Question 1
+► Question 3
 </p>
 <div class="question-body">
 <p>One framework to categorize components of the “methods” of a study is to place them into three steps that build on each other.</p>
@@ -178,30 +180,211 @@ function reset_tooltip(id) {
 <h2>
 <span class="header-section-number">10.2</span> Tools of the trade<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('tools-of-the-trade')" onmouseout="reset_tooltip('tools-of-the-trade-tooltip')"><span class="tooltiptext" id="tools-of-the-trade-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>The tools used to analyze data vary from specialized programs designed for very specific tasks, to spreadsheet application programs like Excel which has found widespread application beyond it origins that were mainly focused on managing and organizing data (e.g. in an HR department for payroll!</p>
-<div id="ques:RR2-0" class="question">
+<p>Tiny history lesson Lotus123 is a what launched IBM Personal Computers into offices around the world …</p>
+<div class="figure">
+<img src="figures/lotus123.png" alt=""><p class="caption">Lotus123</p>
+</div>
+<p>My very first PC adventures included running Lotus123 off of big floppy disks. Microsoft developed Excel and the Office package and quickly PCs where not only in offices and homes around the world. Spreadsheet applications were initially focused mainly on managing and organizing data (think HR department and payroll) but increasingly complicated calculations were possible and soon Excel snuck its way into scientific research.</p>
+<p>Today, the tools used by scientists to analyze their data vary from highly specialized tools for very specific tasks (each with their own required data format), to large software packages like SAS and STATA Many of these tools have GUIs (graphic user interfaces) and are what is frequently referred to as “point &amp; click” or “WYSIWYG”<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> WYSISWG = What you see is what you get. Compare this to WYWIWYG = what you want is want you get.</span>.</p>
+<div id="ques:RR2-04" class="question">
 <p class="question-begin">
-► Question 1
+► Question 4
 </p>
 <div class="question-body">
+<p>Rely on your experience of having used programs like Excel, SAS/STATA, or other specialized programs in a statistics class or other lab courses you have taken to compare and contrast using those types of programs for data analysis to programing languages like R, Perl or Python. Discuss the benefits and drawbacks of both approaches.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
-<p>FunFact: Lotus123 is what launched IBM Personal Computers around the world … it was later pushed out by Excel and similar programs. My very first PC adventures included running Lotus123 off of big floppy disks.</p>
+</div>
+<div id="impacts-of-flawed-data-analysis" class="section level2">
+<h2>
+<span class="header-section-number">10.3</span> Impacts of Flawed Data Analysis<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('impacts-of-flawed-data-analysis')" onmouseout="reset_tooltip('impacts-of-flawed-data-analysis-tooltip')"><span class="tooltiptext" id="impacts-of-flawed-data-analysis-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div id="case-study-1" class="section level3">
+<h3>
+<span class="header-section-number">10.3.1</span> Case Study 1<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('case-study-1')" onmouseout="reset_tooltip('case-study-1-tooltip')"><span class="tooltiptext" id="case-study-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<div id="ques:RR2-05" class="question">
+<p class="question-begin">
+► Question 5
+</p>
+<div class="question-body">
+<p>Pull up this <a href="https://www.sciencedirect.com/science/article/pii/S0889159113001414">paper on the connection of CSF interleukin-6 and depression</a>. Quickly skim the abstract and summarize the main result. Do this before untoggling the solution button for part 2 of this question.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-1" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-1', 'sol-start-1')"></span>
+</p>
+<div id="sol-body-1" class="solution-body" style="display: none;">
+<p>Okay, fine - that was a little bit of a trick question; did you notice the retraction notice?</p>
+<p>You can access a <a href="https://www.sciencedirect.com/science/article/pii/S0889159113005424">more detailed version of the retraction here</a>. Read the retraction notice and briefly describe why the paper needed to be retracted.</p>
+<p>After the authors fixed their mistake they published a <a href="https://www.sciencedirect.com/science/article/pii/S0889159114001287">corrected version of the paper</a>. Compare the titles &amp; abstracts of the retracted and updated papers to determine if their mistakes had a significant impact on the reported results.</p>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-06" class="question">
+<p class="question-begin">
+► Question 6
+</p>
+<div class="question-body">
+<p>Give a brief summary of key lessons you have learned from the case study.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="case-study-2" class="section level3">
+<h3>
+<span class="header-section-number">10.3.2</span> Case Study 2<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('case-study-2')" onmouseout="reset_tooltip('case-study-2-tooltip')"><span class="tooltiptext" id="case-study-2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Before today’s class you should have completed these readings:</p>
+<ul>
+<li>Shariff et al 2016 “<a href="https://www.sciencedirect.com/science/article/pii/S0960982216306704?via%3Dihub">What is the association between religious affiliation and children’s altruism?</a>”</li>
+<li>Retraction notices of Decety et al. 2015 “<a href="https://www.sciencedirect.com/science/article/pii/S0960982215011677">RETRACTED: The Negative Association between Religiousness and Children’s Altriusm across the World</a>”</li>
+<li>Optional: <a href="https://www.vox.com/future-perfect/2019/10/3/20895240/study-typo-religion-children-generosity-retraction">How a study based on a typo made news everywhere - and the retraction didn’t</a>.</li>
+</ul>
+<div id="ques:RR2-07" class="question">
+<p class="question-begin">
+► Question 7
+</p>
+<div class="question-body">
+<p>Briefly discuss why the paper needed to be retracted; as part of your discussion compare and contrast the correspondence published by Shariff et al. to the retraction notice from the original authors Consider the following (and of course add anything else you noticed/think is important).</p>
+<ul>
+<li>Why was the paper retracted?</li>
+<li>What is the central statement being made in the correspondence/retraction notice?</li>
+<li>What is the tone of the correspondence/retraction notice?</li>
+<li>How could this mistake have been avoided?</li>
+<li>How could bias of both sets of authors/previous knowledge have played into the conclusions of the paper/noticing and identifying the mistakes (consider both sets of authors)?</li>
+</ul>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-08" class="question">
+<p class="question-begin">
+► Question 8
+</p>
+<div class="question-body">
+<p>The results of the initial study were widely published. By contrast, the retraction was not; matter of fact most people “doing their own research” on the interwebs are considerably more likely to come across an article describing the initial findings and we all know from personal experience how infrequently we look up the original study being described - so chances are they might never discover that the study has been retracted.</p>
+<p>Use this specific example to illustrate what <strong>Brandolini’s Law</strong> (i.e. the Bullshit Asymmetry Principle) is.</p>
 <div class="figure">
-<img src="figures/lotus123.png" alt=""><p class="caption">Lotus123</p>
+<img src="figures/BSasymmetry.png" alt=""><p class="caption">Brandolini’s Law</p>
+</div>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-09" class="question">
+<p class="question-begin">
+► Question 9
+</p>
+<div class="question-body">
+<p>Give a brief summary of key lessons you have learned from this case study.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="case-study-3" class="section level3">
+<h3>
+<span class="header-section-number">10.3.3</span> Case Study 3<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('case-study-3')" onmouseout="reset_tooltip('case-study-3-tooltip')"><span class="tooltiptext" id="case-study-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Before today’s class you should have completed key sections from <a href="https://academic.oup.com/cje/article/38/2/257/1714018?login=true">Herndon et al. 2014 “Does high public debt consistently stifle economic growth? A critique of Reinhart &amp; Rogoff”</a>:</p>
+<ul>
+<li>Section 1 (Introduction)</li>
+<li>Section 2 (Public impact and policy relevance)</li>
+<li>Introduction to section 3. (Replication) + Section Headers</li>
+<li>Section 4 (Conclusion)</li>
+</ul>
+<div id="ques:RR2-10" class="question">
+<p class="question-begin">
+► Question 10
+</p>
+<div class="question-body">
+<p>Briefly summarize the major points of criticism of the original paper.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-11" class="question">
+<p class="question-begin">
+► Question 11
+</p>
+<div class="question-body">
+<p>Briefly discuss the tools that were used for analysis and determine how they could have contributed to the flawed analysis being published (remember, it did get through peer-review!)</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-12" class="question">
+<p class="question-begin">
+► Question 12
+</p>
+<div class="question-body">
+<p>Recall our initial classification scientific misconduct along a continuum of “Responsible - Ethical - Unethical/Misconduct” and use that to compare the flawed analysis laid out here to the issues that were uncovered in the previous two case studies. Consider factors including content, when/why mistakes were uncovered, and intent.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-13" class="question">
+<p class="question-begin">
+► Question 13
+</p>
+<div class="question-body">
+<p>Consider the policy and decision-making implications of this (and the other two papers) and discuss if you think retracting the actual paper with mistakes in it is sufficient.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-14" class="question">
+<p class="question-begin">
+► Question 14
+</p>
+<div class="question-body">
+<p>Propose strategies that could be used to avoid flawed analysis demonstrated in this (and the other) case studies to be published in the first place and whose role it should be to “enforce” responsible conduct.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:RR2-15" class="question">
+<p class="question-begin">
+► Question 15
+</p>
+<div class="question-body">
+<p>Give a brief summary of key lessons you have learned from this case study.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
 </div>
 
+</div>
 </div>
 </div></body></html>
 
 <p style="text-align: center;">
 <a href="scientific-misconduct-and-the-reproducible-crisis.html"><button class="btn btn-default">Previous</button></a>
+<a href="project-management-revisited.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-08
+2021-09-09
  using 
 R version 4.0.2 (2020-06-22)
 </p>

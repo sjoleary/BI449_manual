@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-01" />
+<meta name="date" content="2021-09-09" />
 
 
 <meta name="description" content="7 Welcome to the tidyverse | Data Science for the Natural Environment (FA21)">
@@ -165,6 +165,9 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#producing-tidy-data-sets"> Producing tidy data sets</a></li>
 </ul>
 <a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
 </div>
 </li>
 </ul>
@@ -1210,6 +1213,7 @@ Briefly outline advantages to using tidy data sets.
 <p>This can be done using <code>pivot_wider()</code> which essentially works like <code>pivot_longer()</code> but in reverse. You designate which column is the key (<code>names_from =</code>), i.e. these will become the column names in the new table.</p>
 <p>Then you need to identify which column in your current data frame contains the values that should be filled out/spread into the columns that will be generated from your key (<code>values_from =</code>).</p>
 <p>Since we don’t have values for precaudal length, we probably want to use <code>filter()</code> to remove those rows first.</p>
+<p><label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle"><span class="marginnote"><span style="display: block;">More notes on naming things … recall, that we said that filenames should not contain spaces or special characters? We set similar rules for naming objects. Well, column names is a similar conundrum. Including spaces or species characters as a column name creates problems when we are using functions like <code>select()</code> to subset by column name or <code>mutate()</code> to create new columns based on exisiting columns. Similarly, if the column name is a number you will have problems. If you do have unconvential column names you can rename them using <code>rename()</code> or you can use backticks and either side of the name to indicate that it is a column name.</span></span></p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="welcome-to-the-tidyverse.html#cb61-1"></a>tidy_length <span class="op">%&gt;%</span></span>
 <span id="cb61-2"><a href="welcome-to-the-tidyverse.html#cb61-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>Measurement <span class="op">==</span><span class="st"> "PCL"</span>) <span class="op">%&gt;%</span></span>
 <span id="cb61-3"><a href="welcome-to-the-tidyverse.html#cb61-3"></a><span class="st">  </span><span class="kw">group_by</span>(Species, Measurement) <span class="op">%&gt;%</span></span>
@@ -1239,7 +1243,7 @@ Briefly outline advantages to using tidy data sets.
 </p>
 <div class="question-body">
 <p>
-Calculate the number of individuals per species caught per month in 2019 and present that data in a wide formate to make it easy to compare the number of species (species) per month (columns). As a bonus create an additional column with total catch of that species for 2019.
+Calculate the number of individuals per species caught per month in 2018 and present that data in a wide formate to make it easy to compare the number of species (species) per month (columns). As a bonus create an additional column with total catch of that species for 2018.
 </p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1255,7 +1259,7 @@ Calculate the number of individuals per species caught per month in 2019 and pre
 <a href="catch-data-analysis.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-01
+2021-09-09
  using 
 R version 4.0.2 (2020-06-22)
 </p>

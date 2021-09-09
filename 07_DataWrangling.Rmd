@@ -573,6 +573,7 @@ tidy_length %>%
   summarize(mean = mean(Length, na.rm = TRUE))
 
 ```
+
 Despite all the advantages of tidy data sets you can see from the table above that frequently when we are presenting results in a table it may be advantageous in terms of layout to have a non-tidy format. 
 
 This can be done using `pivot_wider()` which essentially works like `pivot_longer()` but in reverse. You designate which column is the key (`names_from = `), i.e. these will become the column names in the new table.
@@ -580,6 +581,12 @@ This can be done using `pivot_wider()` which essentially works like `pivot_longe
 Then you need to identify which column in your current data frame contains the values that should be filled out/spread into the columns that will be generated from your key (`values_from =`).
 
 Since we don't have values for precaudal length, we probably want to use `filter()` to remove those rows first.
+
+```{marginfigure}
+
+More notes on naming things ... recall, that we said that filenames should not contain spaces or special characters? We set similar rules for naming objects. Well, column names is a similar conundrum. Including spaces or species characters as a column name creates problems when we are using functions like `select()` to subset by column name or `mutate()` to create new columns based on exisiting columns. Similarly, if the column name is a number you will have problems. If you do have unconvential column names you can rename them using `rename()` or you can use backticks and either side of the name to indicate that it is a column name.
+
+```
 
 ```{r}
 
@@ -591,4 +598,5 @@ tidy_length %>%
 
 ```
 
-`r msmbstyle::question(label = "ques:tidy-29", text = "Calculate the number of individuals per species caught per month in 2019 and present that data in a wide formate to make it easy to compare the number of species (species) per month (columns). As a bonus create an additional column with total catch of that species for 2019.")`
+`r msmbstyle::question(label = "ques:tidy-29", text = "Calculate the number of individuals per species caught per month in 2018 and present that data in a wide formate to make it easy to compare the number of species (species) per month (columns). As a bonus create an additional column with total catch of that species for 2018.")`
+

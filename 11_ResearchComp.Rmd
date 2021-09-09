@@ -1,0 +1,96 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: TRUE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  message = FALSE,
+	warning = FALSE,
+  cache.extra = packageVersion('msmbstyle'))
+
+options(htmltools.dir.version = FALSE)
+
+```
+
+# Project Management Revisited
+
+**Learning Objectives**
+
+After completing this set of activities you should be able to
+
+* Describe the benefits of a workflow that is organized, reproducible, and shareable
+* Identify essential components of a reproducible research compendium
+  + all raw data
+  + metadata describing data/sources
+  + code to extract, transform/load data, generate visualizations, and run analysis/fit models
+
+
+You should have a `ReprodRes.Rmd` in your project directory. Use that file to work through this set of activties - you will hand in your rendered ("knitted") rmarkdown file as your homework assignment. So, first thing in the `YAML` header, change the author to your name. You will use this `Rmarkdown` file to record your answers. For this module there will not be any coding involved (no code chunks!) instead you should work a little bit on your `Rmarkdown` skills.
+
+In your document try using some of the formatting skills:
+
+```{marginfigure}
+
+You have various resources at your disposal, including the `Rmarkdown` [cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf) you received a handout for and [Chapter 27](https://r4ds.had.co.nz/r-markdown.html) in our Textbook. The easiest way to learn `Rmarkdown` is to try out the syntax and then `knit` your document to see if it turns out as you think it should!
+
+```
+
+* Use different level headers to structure your document
+* include something in **bold** and something in *italics*.
+* add numbered and unordered bullet points (maybe even try adding multiple levels if you're feeling adventurous).
+
+For these activities we will do all the computing (thinking) with our own brains ... so let's dive straight in!
+
+## An organized, reproducible and shareable workflow
+
+In [Chapter 3](https://bi449fa21.netlify.app/project-management-and-rmarkdown-basics.html) of our labmanual you were introduced to Project management and Rmarkdown Basics. We said that the goal of open science and reproducible research is to make scientific methods, data, and results more transparent, available and reproducible. In that section, you were introduced to `Rprojects` and `Rmarkdown` and the structure of our Project Folders for this semester with the reasoning that this structure would allow you to establish a reproducible workflow that is organized, reproducible, and shareable.
+
+`r msmbstyle::question_begin(label="ques:RR3-01")`
+
+Briefly discuss the advantages of designing a workflow that fulfills the three-fold goal of being organized, reproducible, and shareable.
+
+`r msmbstyle::question_end()`
+
+## Research Compendium
+
+`r msmbstyle::question_begin(label="ques:RR3-02")`
+
+Briefly define what a research compendium is including central components/principles to be effective, then assess whether our project folder fulfills these criteria.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label="ques:RR3-03")`
+
+Check out the [Research Compendium](https://github.com/dgs108/TX_EFH) for the Shark Nursery study that we reproduced in our last module and determine if it fulfills the criteria we have set for a "good" research compendium.
+
+`r msmbstyle::question_end()`
+
+
+
+
+
+
+
+

@@ -95,3 +95,7 @@ tools-of-the-trade
 impacts-of-flawed-data-analysis
 case-study-1
 case-study-2
+case-study-3
+project-management-revisited
+an-organized-reproducible-and-shareable-workflow
+research-compendium
