@@ -73,8 +73,6 @@ Complete [Chapter 7](https://bi449fa21.netlify.app/welcome-to-the-tidyverse.html
 Complete [Chapter 8](https://bi449fa21.netlify.app/catch-data-analysis.html) in our lab manual. Make sure your code is properly commented and you have answered all the questions. Most of your answers can be brief when describing results and drawing conclusions but still be sure to be comprehensive. Submit your knitted html file through Canvas as HW05.
 
 
-
-
 ### Due Friday, Sept. 3rd {-}
 
 Complete [Chapter 5](https://bi449fa21.netlify.app/identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html) in our lab manual. Remember, most of the answers to the questions can be brief, and we are skipping Q4. Write your assignment in `Rmarkdown` and then knit it and submit the html file.
