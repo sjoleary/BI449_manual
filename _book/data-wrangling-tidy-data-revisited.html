@@ -208,6 +208,13 @@ function reset_tooltip(id) {
 ## 6 Evangeli~     575       869      1064       982       881      1486        949
 ## # ... with 3 more variables: $100-150k &lt;dbl&gt;, &gt;150k &lt;dbl&gt;,
 ## #   Don't know/refused &lt;dbl&gt;</code></pre>
+<p>Remember, a tidy data set has three interrelated rules</p>
+<ol style="list-style-type: decimal">
+<li>Every variable has its own column.</li>
+<li>Every observation has its own row</li>
+<li>Every value has its own cell.</li>
+</ol>
+<p>To tidy a data set you first want to take a look at your data and determine what the observations, variables, and values are. One of the most typical issues we find are that some of the column names are actually values, we might also have some columns that are redundant, or columns that contain more than one value.</p>
 <div id="ques:t1" class="question">
 <p class="question-begin">
 ► Question 1
@@ -351,9 +358,9 @@ function reset_tooltip(id) {
 ► Solution<span id="sol-start-4" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-4', 'sol-start-4')"></span>
 </p>
 <div id="sol-body-4" class="solution-body" style="display: none;">
-<p>Previously we used column position to gather, we can also use column names. We can also use the argument <code>values_drop_na = TRUE</code> to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are <code>NA</code>. By enabling the <code>values_drop_na</code> option it saves us a step of having to use <code>filter()</code> to get rid of those unneccesarry rows.</p>
+<p>Previously, we used column position to gather, we can also use column names. We can also use the argument <code>values_drop_na = TRUE</code> to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are <code>NA</code>. By enabling the <code>values_drop_na</code> option it saves us a step of having to use <code>filter()</code> to get rid of those unnecessary rows.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-wrangling-tidy-data-revisited.html#cb8-1"></a>tidy &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span></span>
-<span id="cb8-2"><a href="data-wrangling-tidy-data-revisited.html#cb8-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"week"</span>, <span class="dt">values_to =</span> <span class="st">"rank"</span>, wk1<span class="op">:</span>wk76)</span>
+<span id="cb8-2"><a href="data-wrangling-tidy-data-revisited.html#cb8-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"week"</span>, <span class="dt">values_to =</span> <span class="st">"rank"</span>, wk1<span class="op">:</span>wk76, <span class="dt">values_drop_na =</span> <span class="ot">FALSE</span>)</span>
 <span id="cb8-3"><a href="data-wrangling-tidy-data-revisited.html#cb8-3"></a></span>
 <span id="cb8-4"><a href="data-wrangling-tidy-data-revisited.html#cb8-4"></a><span class="kw">head</span>(tidy)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
@@ -390,7 +397,8 @@ function reset_tooltip(id) {
 ► Solution<span id="sol-start-5" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-5', 'sol-start-5')"></span>
 </p>
 <div id="sol-body-5" class="solution-body" style="display: none;">
-<p>Previously we used column position to gather, we can also use column names. We can also use the argument <code>values_drop_na = TRUE</code> to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are <code>NA</code>. By enabling the <code>values_drop_na</code> option it saves us a step of having to use <code>filter()</code> to get rid of those unneccesarry rows.</p>
+<p>Previously we used column position to gather, we can also use column names to indicate which columns are being gathered into a key-value pair.</p>
+<p>Helpful argument of <code>pivot_longer()</code> that we haven’t explored yet is <code>values_drop_na = TRUE</code> to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are <code>NA</code>. By enabling the <code>values_drop_na</code> option it saves us a step of having to use <code>filter()</code> to get rid of those unnecessary rows.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="data-wrangling-tidy-data-revisited.html#cb10-1"></a>tidy <span class="op">%&gt;%</span></span>
 <span id="cb10-2"><a href="data-wrangling-tidy-data-revisited.html#cb10-2"></a><span class="st">  </span><span class="kw">arrange</span>(artist, track, week) <span class="op">%&gt;%</span></span>
 <span id="cb10-3"><a href="data-wrangling-tidy-data-revisited.html#cb10-3"></a><span class="st">  </span><span class="kw">head</span>()</span></code></pre></div>
@@ -464,13 +472,6 @@ function reset_tooltip(id) {
 ## #   newrel_f5564 &lt;int&gt;, newrel_f65 &lt;int&gt;</code></pre>
 <p>Is this a tidy data set?</p>
 <p>Nope - this is a typical, real-life messy data set… so, let’s tidy it up.</p>
-<p>Remember, a tidy data set has three interrelated rules</p>
-<ol style="list-style-type: decimal">
-<li>Every variable has its own column.</li>
-<li>Every observation has its own row</li>
-<li>Every value has its own cell.</li>
-</ol>
-<p>To tidy a data set you first want to take a look at your data and determine what the observations, variables, and values are. One of the most typical issues we find are that some of the column names are actually values, we might also have some columns that are redundant, or columns that contain more than one value.</p>
 <div id="ques:t6" class="question">
 <p class="question-begin">
 ► Question 6

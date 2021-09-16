@@ -74,6 +74,14 @@ head(relig_income)
 
 ```
 
+Remember, a tidy data set has three interrelated rules
+
+1. Every variable has its own column.
+2. Every observation has its own row
+3. Every value has its own cell.
+
+To tidy a data set you first want to take a look at your data and determine what the observations, variables, and values are. One of the most typical issues we find are that some of the column names are actually values, we might also have some columns that are redundant, or columns that contain more than one value.
+
 `r msmbstyle::question_begin(label = "ques:t1")`
 
 Use `View(df)` to take a closer the data set. Is it a tidy data set? Can you identify redundant columns? Are there columns that are likely values instead of variables? What variables can you identify that are already correctly formatted as columns?
@@ -150,12 +158,12 @@ What should our tidy data set look like conceptually (what variables should be i
 
 `r msmbstyle::solution_begin()`
 
-Previously we used column position to gather, we can also use column names. We can also use the argument `values_drop_na = TRUE` to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are `NA`. By enabling the `values_drop_na` option it saves us a step of having to use `filter()` to get rid of those unneccesarry rows.
+Previously, we used column position to gather, we can also use column names. We can also use the argument `values_drop_na = TRUE` to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are `NA`. By enabling the `values_drop_na` option it saves us a step of having to use `filter()` to get rid of those unnecessary rows.
 
 ```{r}
 
 tidy <- df %>%
-  pivot_longer(names_to = "week", values_to = "rank", wk1:wk76)
+  pivot_longer(names_to = "week", values_to = "rank", wk1:wk76, values_drop_na = FALSE)
 
 head(tidy)
 
@@ -175,7 +183,9 @@ How could you sort the data set by
 
 `r msmbstyle::solution_begin()`
 
-Previously we used column position to gather, we can also use column names. We can also use the argument `values_drop_na = TRUE` to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are `NA`. By enabling the `values_drop_na` option it saves us a step of having to use `filter()` to get rid of those unneccesarry rows.
+Previously we used column position to gather, we can also use column names to indicate which columns are being gathered into a key-value pair. 
+
+Helpful argument of `pivot_longer()` that we haven't explored yet is `values_drop_na = TRUE` to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are `NA`. By enabling the `values_drop_na` option it saves us a step of having to use `filter()` to get rid of those unnecessary rows.
 
 ```{r}
 
@@ -189,6 +199,7 @@ tidy %>%
 ```
 
 `r msmbstyle::solution_end()`
+
 
 ## Round 3
 
@@ -209,13 +220,6 @@ Is this a tidy data set?
 
 Nope - this is a typical, real-life messy data set... so, let's tidy it up.
 
-Remember, a tidy data set has three interrelated rules
-
-1. Every variable has its own column.
-2. Every observation has its own row
-3. Every value has its own cell.
-
-To tidy a data set you first want to take a look at your data and determine what the observations, variables, and values are. One of the most typical issues we find are that some of the column names are actually values, we might also have some columns that are redundant, or columns that contain more than one value.
 
 `r msmbstyle::question_begin(label = "ques:t6")`
 
