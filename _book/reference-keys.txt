@@ -99,3 +99,7 @@ case-study-3
 project-management-revisited
 an-organized-reproducible-and-shareable-workflow
 research-compendium
+data-wrangling-tidy-data-revisited
+round-1
+round-2
+round-3

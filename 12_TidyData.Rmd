@@ -1,0 +1,341 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: TRUE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(
+  tidy = FALSE, 
+  message = FALSE,
+	warning = FALSE,
+  cache.extra = packageVersion('msmbstyle'))
+
+options(htmltools.dir.version = FALSE)
+
+```
+
+# Data Wrangling & Tidy data Revisited
+
+**Learning Objectives**
+
+After completing this set of activities you should be able to
+
+* confidently distinguish between tidy and non-tidy data sets
+* confidently use `pivot_longer()` and `pivot_wider()` to convert between tidy (long) and non-tidy (wide) data frames
+
+
+Download the files I have dropped in the `#hwassignments` channel on slack and put them in your `data` folder (`.../02_ReproducibleResearch/data/`).
+
+Then use `File > New File > R Script` or `Ctrl + Shift + N` to open an `R script` to document the code you are about to write as you practice some of your data wrangling and tidying skills ^[Remember, `R scripts` are "all code" compared to `Rmarkdown` files that are a combination of plan text and code chunks.]. 
+
+Save your `R script` as `tidy.R` and at the top of your script start by loading the tidyverse packages.
+
+```{r}
+
+library(tidyverse)
+
+```
+
+As always - Comment your code!
+
+
+## Round 1
+
+The `tidyverse` set of R packages includes a few data sets we can use to play around with and sharpen our skills.
+
+A typical messy/non-tidy data set is formatted for presentation as opposed to analysis. This means that we frequently find variables both in rows and in columns, and some of our columns headers are actually values not variable names.
+
+Load a data set into your environment which contains information on income and religious affiliation for the US and take a look at the contents using `head()` and `View()`
+
+```{r}
+
+df <- relig_income
+
+head(relig_income)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:t1")`
+
+Use `View(df)` to take a closer the data set. Is it a tidy data set? Can you identify redundant columns? Are there columns that are likely values instead of variables? What variables can you identify that are already correctly formatted as columns?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+* variables: 
+  + `religion` is definitely a variable
+* all other column names appear to be values indicating income
+* values in the cells apart from the religion column are frequency of observing a combination of religion and income.
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:t2")`
+
+What should our tidy data set look like conceptually (what variables should be included). What function can you use to make this a tidy data set?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+```{r}
+
+tidy <- df %>%
+  pivot_longer(names_to = "income", values_to = "frequency", 2:11)
+
+head(tidy)
+
+```
+
+`r msmbstyle::solution_end()`
+
+
+## Round 2
+
+Load a new data frame - this one contains information on the data a song first entered the billboard top 100 and then tracks the rank for each successive week. 
+
+This format is convenient for data entry - but is it tidy?
+
+```{r}
+
+df <- billboard
+
+head(df)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:t3")`
+
+Use `View(df)` to take a closer the data set. Is it a tidy data set? Can you identify redundant columns? Are there columns that are likely values instead of variables? What variables can you identify that are already correctly formatted as columns?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+* variables: 
+  + `artist`, `track`, and `date.entered` are definitely variables
+* all other column names appear to be values indicating the week
+* values in the cells of columns named `wkxx` are ranks.
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:t4")`
+
+What should our tidy data set look like conceptually (what variables should be included). What function can you use to make this a tidy data set?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+Previously we used column position to gather, we can also use column names. We can also use the argument `values_drop_na = TRUE` to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are `NA`. By enabling the `values_drop_na` option it saves us a step of having to use `filter()` to get rid of those unneccesarry rows.
+
+```{r}
+
+tidy <- df %>%
+  pivot_longer(names_to = "week", values_to = "rank", wk1:wk76)
+
+head(tidy)
+
+```
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:t5")`
+
+How could you sort the data set by
+
+* artist, track, week?
+* date, rank?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+Previously we used column position to gather, we can also use column names. We can also use the argument `values_drop_na = TRUE` to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are `NA`. By enabling the `values_drop_na` option it saves us a step of having to use `filter()` to get rid of those unneccesarry rows.
+
+```{r}
+
+tidy %>%
+  arrange(artist, track, week) %>%
+  head()
+
+tidy %>%
+  arrange(date.entered, rank)
+
+```
+
+`r msmbstyle::solution_end()`
+
+## Round 3
+
+You can load the `who` data set which contains tuberculosis (TB) cases by year, country, age, sex, and method diagnosed from the [2014 WHO Report](http://www.who.int/tb/country/data/download/en/).
+
+Start by loading the data set into your environment and taking a quick look at the information contained.
+
+```{r}
+
+# load data set
+df <- who
+
+head(who)
+
+```
+
+Is this a tidy data set?
+
+Nope - this is a typical, real-life messy data set... so, let's tidy it up.
+
+Remember, a tidy data set has three interrelated rules
+
+1. Every variable has its own column.
+2. Every observation has its own row
+3. Every value has its own cell.
+
+To tidy a data set you first want to take a look at your data and determine what the observations, variables, and values are. One of the most typical issues we find are that some of the column names are actually values, we might also have some columns that are redundant, or columns that contain more than one value.
+
+`r msmbstyle::question_begin(label = "ques:t6")`
+
+Use `View(df)` to take a closer the data set. Can you identify redundant columns? Are there columns that are likely values instead of variables? What variables can you identify that are already columns.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+* variables: 
+  + `year` is definitely a variable
+  + `country`, `iso2`, and `iso3` all specify country in different ways 
+* all others appear to be values.
+
+`r msmbstyle::solution_end()`
+
+Our first step should be to gather all the columns that appear to be values^[whenever you're not entirely sure what the variable is, a good name for that column is `key`.], we know from the description of the data set that our values that are recorded in the data set are case numbers so let's call our column containing the values currently in those columns `cases`. You've also noticed that there are a lot of `NA` values so we will drop those when we pivot the table.
+
+```{r}
+
+tidy <- df %>%
+  pivot_longer(names_to = "key", values_to = "cases", cols = 5:60, values_drop_na = TRUE)
+
+head(tidy)
+
+```
+
+Note the difference in dimensions between `df` and `tidy`.
+
+Okay, so what gives with those values in the format of `new_ep_f014` etc?
+
+If you where to go to the documentation (meta-data) for this data set you would find that each of these codes for several pieces of information.
+
+* first three letters indicates whether these are old or new TB cases (all of ours are new).
+* the next two letters describe the type of TB (e.g. `rel` is relapse).
+* sixth letter is the sex of TB patient.
+* remaining numbers are the age group (e.g. 014 is 0 - 14)
+
+`r msmbstyle::question_begin(label = "ques:t7")`
+
+If the definition of a tidy data set is that each column is a single variable, what should our next step be? What function would you use to achieve this?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+Correct, we must separate this column into multiple columns using `separate()` ^[There is an unhelpful formatting issue where instead of `new_rel` (easy to separate, and other entries have this format with the underscore) the entries are `newrel` so we will add a line of code using a function from the `stringr` package to fix that first.]
+
+Because the values are not consistently separated using an `_`, we  have to use a two step process where we first create new column called `sexagegrp` and the separate that into `sex` and `agegrp` using positional information.
+
+```{r}
+
+tidy <- tidy %>%
+  mutate(key = str_replace(key, "newrel", "new_rel")) %>%
+  separate(key, into = c("new", "type", "sexage"), sep = "_") %>%
+  separate(sexage, into = c("sex", "age"), sep = 1)
+  
+head(tidy)
+
+```
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:t8")`
+
+Now we should consider whether there are unnecessary columns we can drop. Can you identify columns that are redundant or don't carry necessary information? What function can we use to drop them?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+Exactly, `select()` can be used to remove columns, we don't need the column `new` since that is identical for all observations and we don't need three columns describing country information.
+
+```{r}
+
+tidy <- tidy %>%
+  select(-new, -iso2, -iso3)
+
+head(tidy)
+
+```
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:t9")`
+
+Create a new data frame that contains TB cases for the United States the year 2000 for women. 
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r}
+
+tidy %>%
+  filter(country == "United States of America" & year >= 1990 & year <= 2000 & sex == "f") %>%
+  head()
+
+```
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:t10")`
+
+Create a table for easier comparison of cases across age groups by year. What would that table need to look like? What function(s) will you use.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+We pivot!
+
+```{r}
+
+tidy %>%
+  filter(country == "United States of America" & year >= 1990 & year <= 2000 & sex == "f") %>%
+  pivot_wider(names_from = "age", values_from = cases)
+
+```
+
+`r msmbstyle::solution_end()`
