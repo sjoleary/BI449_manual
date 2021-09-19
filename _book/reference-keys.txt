@@ -103,3 +103,16 @@ data-wrangling-tidy-data-revisited
 round-1
 round-2
 round-3
+climate-change
+current-rates-of-air-temperature-change
+rate-of-change-of-atmospheric-co2
+comparison-of-current-and-pre-historic-rates-of-change
+acknowledgments-1
+visualization
+a-grammar-of-graphics
+building-plots
+faceting-plots
+customizing-plots
+arranging-plots
+exporting-plots
+more-plots

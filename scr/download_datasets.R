@@ -41,3 +41,6 @@ write_delim(ice_antarctic, "data/antarctic_ice.txt", delim = "\t")
 # NOAA Hurricane Research Division HURDAT2 hurricane data
 # ACE is accumulated cyclone energy
 hurricane <- get_hurricanes()
+
+write_delim(hurricane, "data/hurricanes.txt", delim = "\t")
+
