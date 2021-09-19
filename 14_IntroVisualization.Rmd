@@ -204,7 +204,7 @@ Some exploring will also lead you to various color pallets, Wes Anderson fan? Yo
 
 Previously, we also used `geom_smooth()` to add a layer with a linear regression. If you take a look at the arguments for this function using `?geom_smooth` you will see that this has additional arguments apart from the mapping aesthetics like choosing the type of regression, whether or not the confidence interval is shown etc. Let's say we want to add a red, dashed regression line without the confidence interval.
 
-```{r}
+```{r fig.cap="Testing... "}
 
 ggplot(data = temperature, aes(x = Year, y = `J-D`)) +
   geom_line(color = "darkblue", size = 1) +
@@ -720,7 +720,7 @@ Create a bar plot showing the ACE for each year. Chose a theme and customize the
 
 Bonus: Tru to figure out how to use `geom_hline()` to add a horizontal line indicating the mean ACE for the recorded time period.
 
-```{r eval=FALSE, include=FALSE}
+```{r plot-14, eval=FALSE, include=FALSE}
 
 ggplot(hurricane, aes(x = Year, y = RevisedACE)) +
   geom_bar(stat = "identity", color = "darkorange", fill = "darkorange") +
@@ -737,5 +737,7 @@ Write a short description for each figure summarizing the key results displayed 
 `r msmbstyle::question_begin(label = "ques:Vis-")`
 
 Choose five of the plots we have generated in this channel and combine them into a single plot using `patchwork`; include at least two columns and two rows in your layout. 
+
+Bonus: You can use `fig.height=` and `fig.width=` in the first line starting a new code to specify the dimensions of the output of a figure in the knitted document. When you initially knit your Rmarkdown file you will find that the default dimensions will not format your you multi-panel plot in a way that does not make it super legible. Manipulate these parameters and re-knit your html to display your figure in an appropriate way.
 
 `r msmbstyle::question_end()`

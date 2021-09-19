@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-09" />
+<meta name="date" content="2021-09-18" />
 
 
 <meta name="description" content="9 Scientific misconduct and the reproducible crisis | Data Science for the Natural Environment (FA21)">
@@ -25,8 +25,81 @@
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
 <script src="libs/accessible-code-block/empty-anchor.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 
@@ -98,6 +171,9 @@ function reset_tooltip(id) {
 </ul>
 <a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
 <a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 </div>
 </li>
 </ul>
@@ -120,10 +196,10 @@ function reset_tooltip(id) {
 </ul>
 <p>After all that data wrangling and learning new functions and data science concepts we are going to take a step back and think a little bit about our workflow and what standards we should set for ourselves and others in terms of how we generatate and analyze data and who we communicate results.</p>
 <p>Go ahead and download the <a href="https://drive.google.com/drive/folders/1DJRrb_S-iRGzEoaGzIqMukAeWp9o1mj3?usp=sharing">Project Folder</a> for this Module. Once you have downloaded it, unzip the project directory into your <code>BI449</code> directory. You can open the <code>Rproj</code> for this module either by double clicking on it which will launch <code>Rstudio</code> or by opening <code>Rstudio</code> and then using <code>File &gt; Open Project</code> or by clicking on the <code>Rproject</code> icon in the top right of your program window and selecting <code>Open Project</code>.</p>
-<p>Once you have opened a project you should see the project name in the top right corner<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> Pro tip: If you run into issues where an Rmarkdown won’t render or file paths aren’t working (especially if things were working previously) one of your first steps should be to double check that the correct <code>Rproj</code> is loaded.</span>.</p>
+<p>Once you have opened a project you should see the project name in the top right corner<label for="tufte-sn-46" class="margin-toggle sidenote-number">46</label><input type="checkbox" id="tufte-sn-46" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">46</span> Pro tip: If you run into issues where an Rmarkdown won’t render or file paths aren’t working (especially if things were working previously) one of your first steps should be to double check that the correct <code>Rproj</code> is loaded.</span>.</p>
 <p>You should have a <code>ReprodCrisis.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. For this module there will not be any coding involved (no code chunks!) instead you should work a little bit on your <code>Rmarkdown</code> skills.</p>
 <p>In your document try using some of the formatting skills:</p>
-<p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;">You have various resources at your disposal, including the <code>Rmarkdown</code> <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">cheatsheet</a> you received a handout for and <a href="https://r4ds.had.co.nz/r-markdown.html">Chapter 27</a> in our Textbook. The easiest way to learn <code>Rmarkdown</code> is to try out the syntax and then <code>knit</code> your document to see if it turns out as you think it should!</span></span></p>
+<p><label for="tufte-mn-7" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-7" class="margin-toggle"><span class="marginnote"><span style="display: block;">You have various resources at your disposal, including the <code>Rmarkdown</code> <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">cheatsheet</a> you received a handout for and <a href="https://r4ds.had.co.nz/r-markdown.html">Chapter 27</a> in our Textbook. The easiest way to learn <code>Rmarkdown</code> is to try out the syntax and then <code>knit</code> your document to see if it turns out as you think it should!</span></span></p>
 <ul>
 <li>Use different level headers to structure your document</li>
 <li>include something in <strong>bold</strong> and something in <em>italics</em>.</li>
@@ -136,7 +212,7 @@ function reset_tooltip(id) {
 </h2>
 <div id="ques:RR1-01" class="question">
 <p class="question-begin">
-► Question 1
+► Question 73
 </p>
 <div class="question-body">
 <p>The National Science Foundation defines <strong>scientific misconduct</strong> in the categories of <strong>fabrication</strong>, <strong>falsification</strong>, and <strong>plagiarism</strong>. Give a brief definition of each term.</p>
@@ -147,10 +223,10 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR1-02" class="question">
 <p class="question-begin">
-► Question 2
+► Question 74
 </p>
 <div class="question-body">
-<p>Take the set of descriptions that describe hypothetical<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> hypothetical because not referring to a specific case study but these are very realistic scenarios of daily decision making during research.</span> scenarios of decision making during data generation and analysis. Classify each as either scientific misconduct according to NSF’s definition or not.</p>
+<p>Take the set of descriptions that describe hypothetical<label for="tufte-sn-47" class="margin-toggle sidenote-number">47</label><input type="checkbox" id="tufte-sn-47" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">47</span> hypothetical because not referring to a specific case study but these are very realistic scenarios of daily decision making during research.</span> scenarios of decision making during data generation and analysis. Classify each as either scientific misconduct according to NSF’s definition or not.</p>
 <p>Identify scenarios that you are not sure of which category they fall into and be ready to discuss with the class.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -159,7 +235,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR1-03" class="question">
 <p class="question-begin">
-► Question 3
+► Question 75
 </p>
 <div class="question-body">
 <p>Take your scenarios and rank them along a continuum of ethical to unethical.</p>
@@ -178,7 +254,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR1-04" class="question">
 <p class="question-begin">
-► Question 4
+► Question 76
 </p>
 <div class="question-body">
 <p>After discussion with the class identify at least five major categories of misconduct and unethical behavior and give an example for each. Briefly discuss why for some categories identifying misconduct and unethical conduct is more clear cut while for others it can be difficult to draw a definitive line.</p>
@@ -194,13 +270,13 @@ function reset_tooltip(id) {
 </h2>
 <div id="ques:RR1-05" class="question">
 <p class="question-begin">
-► Question 5
+► Question 77
 </p>
 <div class="question-body">
 <p>Imagine you are a social scientist interested in how political parties impact the US economy.</p>
 <p>First, develop a hypothesis of whether Democrats or Republicans being in office positively or negatively impacts the US economy.</p>
 <p>Now, use real data going back to 1948 to investigate. To publish your data you would need a statistically significant result. Fortunately you can <a href="https://projects.fivethirtyeight.com/p-hacking/">hack your way to scientific glory using fivethirtyeight’s interactive tool</a>. Describe how you were able to confirm your hypothesis by manipulating which group of politicians to include, how you measured economic performance and other options.</p>
-<p>Finally, formulate a second opposing theory and see if you can generate a statistically significant result for that<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> Pro Tip: Find a p-hacking buddy and test alternate hypotheses and then swap your results!</span>.</p>
+<p>Finally, formulate a second opposing theory and see if you can generate a statistically significant result for that<label for="tufte-sn-48" class="margin-toggle sidenote-number">48</label><input type="checkbox" id="tufte-sn-48" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">48</span> Pro Tip: Find a p-hacking buddy and test alternate hypotheses and then swap your results!</span>.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -209,7 +285,7 @@ function reset_tooltip(id) {
 <p>Congratulations, you just became a successful p-hacker. The practices of <strong>p-hacking</strong> and <strong>data dredging</strong> have become increasing common in the era of big data.</p>
 <div id="ques:RR1-06" class="question">
 <p class="question-begin">
-► Question 6
+► Question 78
 </p>
 <div class="question-body">
 <p>Briefly describe what the practices of <strong>p-hacking</strong> and <strong>data-dredging</strong> entail.</p>
@@ -220,7 +296,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR1-07" class="question">
 <p class="question-begin">
-► Question 7
+► Question 79
 </p>
 <div class="question-body">
 <p>Briefly describe what the <strong>reproducibility crisis</strong> is and argue which fields of science you would expect to be more/less heavily impacted and how the increasing availability of large data sets and deployment of complex methods of analysis (including machine learning) have contributed.</p>
@@ -236,7 +312,7 @@ function reset_tooltip(id) {
 </h2>
 <div id="ques:RR1-08" class="question">
 <p class="question-begin">
-► Question 8
+► Question 80
 </p>
 <div class="question-body">
 <p><strong>Replicability</strong> and <strong>reproducibility</strong> of studies both generally refer to the practice of validating the results obtained by duplicating them. However, exact definitions of the terms vary among fields of research. Briefly, argue how you would rank different levels of confidence in the results of a study based on whether it was been repeated with the same results using (combinations of) the same or different teams, the same or different experimental set-ups, and/or the same or different data set.</p>
@@ -247,7 +323,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR1-09" class="question">
 <p class="question-begin">
-► Question 9
+► Question 81
 </p>
 <div class="question-body">
 <p>The National Science Foundation (NSF) defines “replicability” as “the ability of a researcher to duplicate the results ofa prior study if the same procedures rae followed but new data are collected”.</p>
@@ -259,7 +335,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR1-10" class="question">
 <p class="question-begin">
-► Question 10
+► Question 82
 </p>
 <div class="question-body">
 <p>Briefly discuss how (lack of) reproducibility can undermine confidence in the scientific process from the general public and/or allow special interest groups to manipulate information to intentionally sow distrust.</p>
@@ -285,7 +361,7 @@ function reset_tooltip(id) {
 <a href="responsible-research-is-reproducible-research.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-09
+2021-09-18
  using 
 R version 4.0.2 (2020-06-22)
 </p>

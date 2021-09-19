@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-09" />
+<meta name="date" content="2021-09-18" />
 
 
 <meta name="description" content="2 Installing R/Rstudio | Data Science for the Natural Environment (FA21)">
@@ -25,6 +25,14 @@
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
 <script src="libs/accessible-code-block/empty-anchor.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -163,6 +171,9 @@ function reset_tooltip(id) {
 <a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
 <a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
 <a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 </div>
 </li>
 </ul>
@@ -288,7 +299,7 @@ function reset_tooltip(id) {
 <h3>
 <span class="header-section-number">2.2.3</span> Customize Rstudio<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('customize-rstudio')" onmouseout="reset_tooltip('customize-rstudio-tooltip')"><span class="tooltiptext" id="customize-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>There are several options to customize Rstudio including setting a theme, and other formatting preferences. You can access this using <code>Tools &gt; Global Options</code>. I recommend using a dark theme (it’s a lot easier on the eyes) and keeping the panes in the same positions as described because it will make troubleshooting a lot easier<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> “You should see xx in the top left” is a lot more helpful if your top left looks like my top left!</span>.</p>
+<p>There are several options to customize Rstudio including setting a theme, and other formatting preferences. You can access this using <code>Tools &gt; Global Options</code>. I recommend using a dark theme (it’s a lot easier on the eyes) and keeping the panes in the same positions as described because it will make troubleshooting a lot easier<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> “You should see xx in the top left” is a lot more helpful if your top left looks like my top left!</span>.</p>
 </div>
 </div>
 <div id="installing-and-using-packages-in-r" class="section level2">
@@ -299,22 +310,22 @@ function reset_tooltip(id) {
 <h3>
 <span class="header-section-number">2.3.1</span> Install a package<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('install-a-package')" onmouseout="reset_tooltip('install-a-package-tooltip')"><span class="tooltiptext" id="install-a-package-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<p>Think of R packages as tool kit comprising a set of functions (tools) to perform specific tasks. <code>R</code> comes with a set of packages already installed that gives you base <code>R</code> functions; you can view these and determine which have been loaded in the <code>Packages</code> tab in the bottom right pane. For other tasks we will need additional packages.<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> Most <code>R</code> packages are found in the <a href="https://cran.r-project.org/">CRAN repository</a> and on <a href="https://www.bioconductor.org/">Bioconducter</a>, developmental packages are available on <a href="https://github.com/">github</a>.</span></p>
+<p>Think of R packages as tool kit comprising a set of functions (tools) to perform specific tasks. <code>R</code> comes with a set of packages already installed that gives you base <code>R</code> functions; you can view these and determine which have been loaded in the <code>Packages</code> tab in the bottom right pane. For other tasks we will need additional packages.<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> Most <code>R</code> packages are found in the <a href="https://cran.r-project.org/">CRAN repository</a> and on <a href="https://www.bioconductor.org/">Bioconducter</a>, developmental packages are available on <a href="https://github.com/">github</a>.</span></p>
 <p>A central group of packages for data wrangling and processing form the <a href="https://www.tidyverse.org/">tidyverse</a>, described as “… an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.” - We are going to heavily rely on core functions from the tidyverse to wrangle, summarize, and analyze data.</p>
 <p>When you install packages they will be downloaded and installed onto your computer. Determine what your default path is using <code>.libPaths()</code> and change if necessary.</p>
 <p>The easiest way to install packages is to use the <code>install.packages()</code> function. Use the <code>R</code> console to install some libraries to get us started (we will install other libraries as needed for other labs).</p>
 <p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;">Using <code>#</code> in an R script allows you to insert comments that are ignored by R when executing your code. Use comments to document your code, future you will thank you!</span></span></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="installing-rrstudio.html#cb1-1"></a><span class="co"># install the rmarkdown package</span></span>
-<span id="cb1-2"><a href="installing-rrstudio.html#cb1-2"></a><span class="kw">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
-<span id="cb1-3"><a href="installing-rrstudio.html#cb1-3"></a></span>
-<span id="cb1-4"><a href="installing-rrstudio.html#cb1-4"></a><span class="co"># install central packages in the tidyverse</span></span>
-<span id="cb1-5"><a href="installing-rrstudio.html#cb1-5"></a><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb1-6"><a href="installing-rrstudio.html#cb1-6"></a></span>
-<span id="cb1-7"><a href="installing-rrstudio.html#cb1-7"></a><span class="co"># install additional packages</span></span>
-<span id="cb1-8"><a href="installing-rrstudio.html#cb1-8"></a><span class="kw">install.packages</span>(<span class="st">"plyr"</span>, <span class="st">"ggthemes"</span>, <span class="st">"patchwork"</span>, <span class="st">"glue"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="installing-rrstudio.html#cb17-1"></a><span class="co"># install the rmarkdown package</span></span>
+<span id="cb17-2"><a href="installing-rrstudio.html#cb17-2"></a><span class="kw">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
+<span id="cb17-3"><a href="installing-rrstudio.html#cb17-3"></a></span>
+<span id="cb17-4"><a href="installing-rrstudio.html#cb17-4"></a><span class="co"># install central packages in the tidyverse</span></span>
+<span id="cb17-5"><a href="installing-rrstudio.html#cb17-5"></a><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb17-6"><a href="installing-rrstudio.html#cb17-6"></a></span>
+<span id="cb17-7"><a href="installing-rrstudio.html#cb17-7"></a><span class="co"># install additional packages</span></span>
+<span id="cb17-8"><a href="installing-rrstudio.html#cb17-8"></a><span class="kw">install.packages</span>(<span class="st">"plyr"</span>, <span class="st">"ggthemes"</span>, <span class="st">"patchwork"</span>, <span class="st">"glue"</span>)</span></code></pre></div>
 <p>Let’s check if you were able to successfully install those packages.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="installing-rrstudio.html#cb2-1"></a><span class="co"># load library</span></span>
-<span id="cb2-2"><a href="installing-rrstudio.html#cb2-2"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="installing-rrstudio.html#cb18-1"></a><span class="co"># load library</span></span>
+<span id="cb18-2"><a href="installing-rrstudio.html#cb18-2"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
 <p>If you don’t see any error messages in the console along the lines of <code>there is no package called ...</code> you are all set. If you look in the <code>packages</code> tab in the lower right panel you should also see that packages such as <code>dplyr</code> and <code>tidyr</code> (two of the central <code>tidyverse</code> packages) now have a little check box next to them.</p>
 </div>
 <div id="updating-r-packages" class="section level3">
@@ -333,7 +344,7 @@ function reset_tooltip(id) {
 <a href="project-management-and-rmarkdown-basics.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-09
+2021-09-18
  using 
 R version 4.0.2 (2020-06-22)
 </p>

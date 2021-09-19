@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-09" />
+<meta name="date" content="2021-09-18" />
 
 
 <meta name="description" content="10 Responsible Research is Reproducible Research | Data Science for the Natural Environment (FA21)">
@@ -25,8 +25,81 @@
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
 <script src="libs/accessible-code-block/empty-anchor.js"></script>
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 
@@ -98,6 +171,9 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#impacts-of-flawed-data-analysis"> Impacts of Flawed Data Analysis</a></li>
 </ul>
 <a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 </div>
 </li>
 </ul>
@@ -125,7 +201,7 @@ function reset_tooltip(id) {
 </ul>
 <p>You should have a <code>ReprodRes.Rmd</code> in your project directory. Use that file to work through this set of activties - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. For this module there will not be any coding involved (no code chunks!) instead you should work a little bit on your <code>Rmarkdown</code> skills.</p>
 <p>In your document try using some of the formatting skills:</p>
-<p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;">You have various resources at your disposal, including the <code>Rmarkdown</code> <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">cheatsheet</a> you received a handout for and <a href="https://r4ds.had.co.nz/r-markdown.html">Chapter 27</a> in our Textbook. The easiest way to learn <code>Rmarkdown</code> is to try out the syntax and then <code>knit</code> your document to see if it turns out as you think it should!</span></span></p>
+<p><label for="tufte-mn-8" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-8" class="margin-toggle"><span class="marginnote"><span style="display: block;">You have various resources at your disposal, including the <code>Rmarkdown</code> <a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">cheatsheet</a> you received a handout for and <a href="https://r4ds.had.co.nz/r-markdown.html">Chapter 27</a> in our Textbook. The easiest way to learn <code>Rmarkdown</code> is to try out the syntax and then <code>knit</code> your document to see if it turns out as you think it should!</span></span></p>
 <ul>
 <li>Use different level headers to structure your document</li>
 <li>include something in <strong>bold</strong> and something in <em>italics</em>.</li>
@@ -138,7 +214,7 @@ function reset_tooltip(id) {
 </h2>
 <div id="ques:RR2-01" class="question">
 <p class="question-begin">
-► Question 1
+► Question 83
 </p>
 <div class="question-body">
 <p>Think back on scientific papers you have read or lab reports you have written and list the main sections of the typical format you encounter.</p>
@@ -149,7 +225,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-02" class="question">
 <p class="question-begin">
-► Question 2
+► Question 84
 </p>
 <div class="question-body">
 <p>Give a brief description of what the “Methods” or “Method &amp; Materials” section of a scientific paper or report contains and assess whether or not you think this section generally meets the standard you have just laid out.</p>
@@ -160,7 +236,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-03" class="question">
 <p class="question-begin">
-► Question 3
+► Question 85
 </p>
 <div class="question-body">
 <p>One framework to categorize components of the “methods” of a study is to place them into three steps that build on each other.</p>
@@ -185,10 +261,10 @@ function reset_tooltip(id) {
 <img src="figures/lotus123.png" alt=""><p class="caption">Lotus123</p>
 </div>
 <p>My very first PC adventures included running Lotus123 off of big floppy disks. Microsoft developed Excel and the Office package and quickly PCs where not only in offices and homes around the world. Spreadsheet applications were initially focused mainly on managing and organizing data (think HR department and payroll) but increasingly complicated calculations were possible and soon Excel snuck its way into scientific research.</p>
-<p>Today, the tools used by scientists to analyze their data vary from highly specialized tools for very specific tasks (each with their own required data format), to large software packages like SAS and STATA Many of these tools have GUIs (graphic user interfaces) and are what is frequently referred to as “point &amp; click” or “WYSIWYG”<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> WYSISWG = What you see is what you get. Compare this to WYWIWYG = what you want is want you get.</span>.</p>
+<p>Today, the tools used by scientists to analyze their data vary from highly specialized tools for very specific tasks (each with their own required data format), to large software packages like SAS and STATA Many of these tools have GUIs (graphic user interfaces) and are what is frequently referred to as “point &amp; click” or “WYSIWYG”<label for="tufte-sn-49" class="margin-toggle sidenote-number">49</label><input type="checkbox" id="tufte-sn-49" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">49</span> WYSISWG = What you see is what you get. Compare this to WYWIWYG = what you want is want you get.</span>.</p>
 <div id="ques:RR2-04" class="question">
 <p class="question-begin">
-► Question 4
+► Question 86
 </p>
 <div class="question-body">
 <p>Rely on your experience of having used programs like Excel, SAS/STATA, or other specialized programs in a statistics class or other lab courses you have taken to compare and contrast using those types of programs for data analysis to programing languages like R, Perl or Python. Discuss the benefits and drawbacks of both approaches.</p>
@@ -208,7 +284,7 @@ function reset_tooltip(id) {
 </h3>
 <div id="ques:RR2-05" class="question">
 <p class="question-begin">
-► Question 5
+► Question 87
 </p>
 <div class="question-body">
 <p>Pull up this <a href="https://www.sciencedirect.com/science/article/pii/S0889159113001414">paper on the connection of CSF interleukin-6 and depression</a>. Quickly skim the abstract and summarize the main result. Do this before untoggling the solution button for part 2 of this question.</p>
@@ -219,9 +295,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-1" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-1', 'sol-start-1')"></span>
+► Solution<span id="sol-start-12" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-12', 'sol-start-12')"></span>
 </p>
-<div id="sol-body-1" class="solution-body" style="display: none;">
+<div id="sol-body-12" class="solution-body" style="display: none;">
 <p>Okay, fine - that was a little bit of a trick question; did you notice the retraction notice?</p>
 <p>You can access a <a href="https://www.sciencedirect.com/science/article/pii/S0889159113005424">more detailed version of the retraction here</a>. Read the retraction notice and briefly describe why the paper needed to be retracted.</p>
 <p>After the authors fixed their mistake they published a <a href="https://www.sciencedirect.com/science/article/pii/S0889159114001287">corrected version of the paper</a>. Compare the titles &amp; abstracts of the retracted and updated papers to determine if their mistakes had a significant impact on the reported results.</p>
@@ -232,7 +308,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-06" class="question">
 <p class="question-begin">
-► Question 6
+► Question 88
 </p>
 <div class="question-body">
 <p>Give a brief summary of key lessons you have learned from the case study.</p>
@@ -254,7 +330,7 @@ function reset_tooltip(id) {
 </ul>
 <div id="ques:RR2-07" class="question">
 <p class="question-begin">
-► Question 7
+► Question 89
 </p>
 <div class="question-body">
 <p>Briefly discuss why the paper needed to be retracted; as part of your discussion compare and contrast the correspondence published by Shariff et al. to the retraction notice from the original authors Consider the following (and of course add anything else you noticed/think is important).</p>
@@ -272,7 +348,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-08" class="question">
 <p class="question-begin">
-► Question 8
+► Question 90
 </p>
 <div class="question-body">
 <p>The results of the initial study were widely published. By contrast, the retraction was not; matter of fact most people “doing their own research” on the interwebs are considerably more likely to come across an article describing the initial findings and we all know from personal experience how infrequently we look up the original study being described - so chances are they might never discover that the study has been retracted.</p>
@@ -287,7 +363,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-09" class="question">
 <p class="question-begin">
-► Question 9
+► Question 91
 </p>
 <div class="question-body">
 <p>Give a brief summary of key lessons you have learned from this case study.</p>
@@ -310,7 +386,7 @@ function reset_tooltip(id) {
 </ul>
 <div id="ques:RR2-10" class="question">
 <p class="question-begin">
-► Question 10
+► Question 92
 </p>
 <div class="question-body">
 <p>Briefly summarize the major points of criticism of the original paper.</p>
@@ -321,7 +397,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-11" class="question">
 <p class="question-begin">
-► Question 11
+► Question 93
 </p>
 <div class="question-body">
 <p>Briefly discuss the tools that were used for analysis and determine how they could have contributed to the flawed analysis being published (remember, it did get through peer-review!)</p>
@@ -332,7 +408,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-12" class="question">
 <p class="question-begin">
-► Question 12
+► Question 94
 </p>
 <div class="question-body">
 <p>Recall our initial classification scientific misconduct along a continuum of “Responsible - Ethical - Unethical/Misconduct” and use that to compare the flawed analysis laid out here to the issues that were uncovered in the previous two case studies. Consider factors including content, when/why mistakes were uncovered, and intent.</p>
@@ -343,7 +419,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-13" class="question">
 <p class="question-begin">
-► Question 13
+► Question 95
 </p>
 <div class="question-body">
 <p>Consider the policy and decision-making implications of this (and the other two papers) and discuss if you think retracting the actual paper with mistakes in it is sufficient.</p>
@@ -354,7 +430,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-14" class="question">
 <p class="question-begin">
-► Question 14
+► Question 96
 </p>
 <div class="question-body">
 <p>Propose strategies that could be used to avoid flawed analysis demonstrated in this (and the other) case studies to be published in the first place and whose role it should be to “enforce” responsible conduct.</p>
@@ -365,7 +441,7 @@ function reset_tooltip(id) {
 </div>
 <div id="ques:RR2-15" class="question">
 <p class="question-begin">
-► Question 15
+► Question 97
 </p>
 <div class="question-body">
 <p>Give a brief summary of key lessons you have learned from this case study.</p>
@@ -384,7 +460,7 @@ function reset_tooltip(id) {
 <a href="project-management-revisited.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-09
+2021-09-18
  using 
 R version 4.0.2 (2020-06-22)
 </p>

@@ -68,7 +68,7 @@ You are encouraged to work collaboratively both during/outside of class times bu
 
 ### Due Sunday, Sept. 19th {-}
 
-Complete [Chapter 9](hhttps://bi449fa21.netlify.app/scientific-misconduct-and-the-reproducible-crisis.html) in our lab manual, no code chunks but be sure to read the `Rmarkdown` challenge and include that in your document. Submit your knitted html file through Canvas as HW09[I've updated the HW assignment numbers to match the chapter numbers so we've skipped a few.].
+Complete [Chapter 9](hhttps://bi449fa21.netlify.app/scientific-misconduct-and-the-reproducible-crisis.html) in our lab manual, no code chunks but be sure to read the `Rmarkdown` challenge and include that in your document. Submit your knitted html file through Canvas as HW09^[I've updated the HW assignment numbers to match the chapter numbers so we've skipped a few.].
 
 Complete [Chapter 10](https://bi449fa21.netlify.app/responsible-research-is-reproducible-research.html) in our lab manual; no code chunks but be sure to read the `Rmarkdown` challenge and include that in your document. Submit your knitted html file through Canvas as HW10
 

@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-18" />
+<meta name="date" content="2021-09-19" />
 
 
 <meta name="description" content="14 Visualization | Data Science for the Natural Environment (FA21)">
@@ -292,7 +292,13 @@ ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
 <span id="cb10-2"><a href="visualization.html#cb10-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">"darkblue"</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
 <span id="cb10-3"><a href="visualization.html#cb10-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">color =</span> <span class="st">"darkblue"</span>, <span class="dt">fill =</span> <span class="st">"white"</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
 <span id="cb10-4"><a href="visualization.html#cb10-4"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">stat =</span> <span class="st">"smooth"</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">"red"</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>, <span class="dt">size =</span> <span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<div class="figure">
+<span id="fig:unnamed-chunk-11"></span>
+<p class="caption marginnote shownote">
+Figure 14.1: Testing…
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-11-1.png" alt="Testing... " width="672">
+</div>
 <p>Admittedly, this plot is starting to look a little bit ridiculous. Maybe we should think of alternative options for visualizing this data to explore some additional <code>ggplot</code> options.</p>
 <p>Another way to visualize this data would be using a bar plot<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> Can we appreciate for a second how easy it was to change how the same data is plotted? If you were using excel you would have had to insert a new plot, define what data you wanted to plot, relabel the axis, etc. Here all you had to do was change a single line of code</span>.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="visualization.html#cb11-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> temperature, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>)) <span class="op">+</span></span>
@@ -534,7 +540,7 @@ ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
 <p>Increasing global temperatures are effecting change across the different components of the climate system. There are several data sets in your <code>data</code> folder. Read in each data set as a data frame, use <code>View()</code> to take a look at what information is contained in the data set and the use your new found visualization skills to plot the data using <code>ggplot</code>.</p>
 <div id="ques:Vis-" class="question">
 <p class="question-begin">
-► Question 1
+► Question 14.1
 </p>
 <div class="question-body">
 <p>Increasing atmospheric temperatures result in land ice melting and the ocean heat content rising. The latter leads to thermal expansion which together with the increase freshwater inflow results in rising sea levels.</p>
@@ -553,7 +559,7 @@ ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
 </div>
 <div id="ques:Vis-" class="question">
 <p class="question-begin">
-► Question 1
+► Question 14.1
 </p>
 <div class="question-body">
 <p>Our next data set is from the <a href="https://nsidc.org/data/seaice_index/archives">National Snow and Ice Data Center</a> and contains the Arcitc (Northern Hemisphere) July sea ice extent.</p>
@@ -569,7 +575,7 @@ ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
 </div>
 <div id="ques:Vis-" class="question">
 <p class="question-begin">
-► Question 1
+► Question 14.1
 </p>
 <div class="question-body">
 <p>Let’s take a look at the equivalent data set depicting sea ice extent in the Antarctic (Southern Hemisphere.)</p>
@@ -585,7 +591,7 @@ ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
 </div>
 <div id="ques:Vis-" class="question">
 <p class="question-begin">
-► Question 1
+► Question 14.1
 </p>
 <div class="question-body">
 <p>One more data set. This one is from the NOAA Hurricane Research Division. While interpreting the observed patterns in sea level and ice extent and modeling future projections is pretty straightforward. For this coding challenge you will need to combine your data wrangling and visualization skills!</p>
@@ -607,10 +613,11 @@ ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
 </div>
 <div id="ques:Vis-" class="question">
 <p class="question-begin">
-► Question 1
+► Question 14.1
 </p>
 <div class="question-body">
 <p>Choose five of the plots we have generated in this channel and combine them into a single plot using <code>patchwork</code>; include at least two columns and two rows in your layout.</p>
+<p>Bonus: You can use <code>fig.height=</code> and <code>fig.width=</code> in the first line starting a new code to specify the dimensions of the output of a figure in the knitted document. When you initially knit your Rmarkdown file you will find that the default dimensions will not format your you multi-panel plot in a way that does not make it super legible. Manipulate these parameters and re-knit your html to display your figure in an appropriate way.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -624,7 +631,7 @@ ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
 <a href="climate-change.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-18
+2021-09-19
  using 
 R version 4.0.2 (2020-06-22)
 </p>
