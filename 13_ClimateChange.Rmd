@@ -180,7 +180,7 @@ ggplot(temperature, aes(x = Year, y = `J-D`)) +
 ```
 
 
-```{r caption="Annual mean global surface temperature relative to 1951-1980 average.", echo=FALSE}
+```{r caption="Change in annual mean global surface temperature from 1880 - 2021 relative to 1951-1980 average.", echo=FALSE}
 
 ggplot(temperature, aes(x = Year, y = `J-D`)) +
   geom_line(color = "blue", size = 1) +
@@ -211,7 +211,7 @@ ggplot(temperature, aes(x = Year, y = as.numeric(`J-D`))) +
 
 ```
 
-```{r}
+```{r fig.cap="Linear regression (red) for change in annual mean global surface anomaly from 1880-2021 (blue). Temperature anomaly measured relative to 1951-1980.", echo=FALSE}
 
 ggplot(temperature, aes(x = Year, y = as.numeric(`J-D`))) +
   geom_line(color = "blue", size = 1) +
@@ -301,7 +301,7 @@ head(CO2)
 
 `r msmbstyle::question(label = "ques:cch-16", text = "Compare your results of rates of change of average global temperature and atmospheric CO2 and explain the phenomenon that can be used to explain this.")`
 
-```{r fig.width=10, fig.height=5, echo=FALSE}
+```{r fig.cap="Comparison of increase in mean global temperature anomaly relative to 1951-1980 (left) and increase in mean atmospheric CO2 concenttrations (right panel) measured a Mauna Loa Observatory. Regression lines indicating temporal trend included in red.", fig.height=4, echo=FALSE}
 
 p1 <- temperature %>%
   filter(Year >= 1959) %>%
@@ -367,11 +367,23 @@ vostok_temp <- read_table2("data/vostok_temp.txt",
 
 Now we can create a plot of the temperature data over time. The age is recorded as years before present. For better visualization we will convert this to "thousand years ago" by dividing that number by 1,000.
 
-```{r fig.height=6, fig.width=15}
+```{r fig.cap="", fig.height=6, eval=FALSE}
 
 ggplot(vostok_temp, aes(x = age_ice/1000, y = temperature)) +
   geom_line(color = "blue", size = 1) +
   labs(x = "thousand years before present", y = "Temperature variation [C]",
+       title = "Temperature variation during glacial/interglacial periods",
+       caption = "Data: Carbon Dioxide Information Analysis Center (CDIAC)")
+
+```
+
+
+```{r fig.cap="Temperature variation during glacial/interglacial periods derived from air bubbles in Vostock ice cores.", fig.height=6, echo=FALSE}
+
+ggplot(vostok_temp, aes(x = age_ice/1000, y = temperature)) +
+  geom_line(color = "blue", size = 1) +
+  labs(x = "thousand years before present", y = "Temperature variation [C]",
+       title = "Temperature variation during glacial/interglacial periods",
        caption = "Data: Carbon Dioxide Information Analysis Center (CDIAC)") +
   theme_standard
 
@@ -397,7 +409,9 @@ Now add a trend line to our ice core temperature data and run a linear regressio
 
 `r msmbstyle::solution_begin()`
 
-```{r}
+Plot temperature data derived from vostok ice cores.
+
+```{r eval=FALSE}
 
 ggplot(vostok_temp, aes(x = age_ice/1000, y = temperature)) +
   geom_line(color = "blue", size = 1) +
@@ -406,16 +420,9 @@ ggplot(vostok_temp, aes(x = age_ice/1000, y = temperature)) +
        title = "Temperature derived from Vostok ice core, Antarctica.",
        caption = "Data: Carbon Dioxide Information Analysis Center (CDIAC)")
 
-# fit linear regression
-score_model <- lm(temperature ~ age_ice, data = vostok_temp)
-
-# view summary of results
-summary(score_model)
-
 ```
 
-
-```{r caption = "Temperature derived from Vostok ice core, Antarctica.", fig.height=6, fig.width=10, eval=FALSE}
+```{r caption = "Change in temperature during glacial/interglacial periods derived from Vostok ice cores (blue) with fitted linear regression (red).", fig.height=6, fig.width=10, echo=FALSE}
 
 ggplot(vostok_temp, aes(x = age_ice/1000, y = temperature)) +
   geom_line(color = "blue", size = 1) +
@@ -427,13 +434,27 @@ ggplot(vostok_temp, aes(x = age_ice/1000, y = temperature)) +
 
 ```
 
+And fit linear regression.
+
+```{r}
+
+# fit linear regression
+score_model <- lm(temperature ~ age_ice, data = vostok_temp)
+
+# view summary of results
+summary(score_model)
+
+```
+
+*Remember, when you "argue" an answer you need to state your conclusion and then support that statement.*
+
 `r msmbstyle::solution_end()`
 
 In order to determine if the currently observed rate of change is "unprecedented" or not, let's identify past time periods with the fastest rate of change and calculate them.
 
 To do this I will show you a little trick to plot an interactive figure.
 
-```{r fig.height=6, fig.width=10}
+```{r fig.height=6}
 
 p1 <- ggplot(vostok_temp, aes(x = age_ice/1000, y = temperature)) +
   geom_line(color = "blue", size = .75) +
@@ -465,7 +486,7 @@ ggplot(vostok_temp_subset, aes(x = age_ice/1000, y = temperature)) +
 
 ```
 
-```{r echo=FALSE}
+```{r fig.cap="Temperature trends (linear regression, red) recorded in Vostok ice core for time period from approx. 138 - 128 kyrs before present.", echo=FALSE}
 
 # define time range
 min_year_vostok <- 128357
@@ -479,7 +500,7 @@ ggplot(vostok_temp_subset, aes(x = age_ice/1000, y = temperature)) +
   geom_line(color = "blue", size = 1) +
   geom_smooth(method = "lm", color = "red", se = FALSE) +
   labs(x = "thousand years before present", y = "Temperature variation [C]",
-       title = "Temperature change recorded in Vostok ice core (128357 - 138193 years ago).",
+       title = "Temperature change recorded in Vostok ice core.",
        caption = "Data: Carbon Dioxide Information Analysis Center (CDIAC)") +
   theme_standard
 
@@ -497,7 +518,7 @@ summary(score_model)
 
 ```
 
-`r msmbstyle::question(label = "ques:cch-21", text = "Identify two more ranges with increasing temperatures and determine the rate of change during that time period.")`
+`r msmbstyle::question(label = "ques:cch-21", text = "Identify two more ranges with increasing temperatures and determine the rate of change during that time period. Pro tip: Identify another time range - then ask the person next to you what time period they ran.")`
 
 Now, let's take a look at past patterns of changes in atmospheric CO<sub>2</sub> over time.
 
@@ -533,7 +554,7 @@ vostok_ice <- read_delim("data/vostok_ice.txt", delim = "\t",
 
 ## Acknowledgments
 
-This tutorial is based on the EDDIE Climate Change Module^[O'Reilly, C.M., D.C. Richardson, and R.D. Gougis. 15 March 2017. Project EDDIE: Climate Change. Project EDDIE Module 8, Version 1.]
+These activities are based on the EDDIE Climate Change Module^[O'Reilly, C.M., D.C. Richardson, and R.D. Gougis. 15 March 2017. Project EDDIE: Climate Change. Project EDDIE Module 8, Version 1.]
 
 
 

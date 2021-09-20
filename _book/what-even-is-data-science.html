@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-18" />
+<meta name="date" content="2021-09-19" />
 
 
 <meta name="description" content="1 What even is data science? | Data Science for the Natural Environment (FA21)">
@@ -165,7 +165,7 @@ function reset_tooltip(id) {
 </ul>
 <a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
 <a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
-<a href="r-functions-objects-vectors-oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
 <a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
 <a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
 <a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
@@ -203,7 +203,7 @@ function reset_tooltip(id) {
 <p>Data are qualitative and quantitative observations that are measured and collected.</p>
 <div id="ques:ds-1" class="question">
 <p class="question-begin">
-► Question 1
+► Question 1.1
 </p>
 <div class="question-body">
 <p>
@@ -219,7 +219,7 @@ Data fall in two distinct categories, categorical and numerical data. Briefly co
 <p>We integrate knowledge across disciplines to gain <strong>insight</strong> and <strong>wisdom</strong> to further understanding of problems and derive actionable solutions. This culminates in the decision-making process resulting in change.</p>
 <div id="ques:ds-2" class="question">
 <p class="question-begin">
-► Question 2
+► Question 1.2
 </p>
 <div class="question-body">
 <p>
@@ -253,14 +253,14 @@ The science council defines science as the pursuit and application of knowledge 
 <p>Will Sasquatch by impacted by climate change?</p>
 </blockquote>
 <p>Specifically, climate change could result in a shift in habitat availability, i.e. should we expect a species extinction because of habitat loss or a range expansion or range shift?</p>
-<p>To do this we need to generate a species distribution model (SDM) for the Sasquatch, a large, hairy, bipedal ape-like creature found (or is it?) throughout North America<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> I suppose, technically, since we were venturing into cryptozoology here it is not a species, but rather a cryptid distribution model</span>, i.e. first we need to understand where Sasquatch are currently distributed to then assess how that might change in the future.</p>
+<p>To do this we need to generate a species distribution model (SDM) for the Sasquatch, a large, hairy, bipedal ape-like creature found (or is it?) throughout North America<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> I suppose, technically, since we were venturing into cryptozoology here it is not a species, but rather a cryptid distribution model</span>, i.e. first we need to understand where Sasquatch are currently distributed to then assess how that might change in the future.</p>
 </div>
 <div id="get-occurrence-data" class="section level3">
 <h3>
 <span class="header-section-number">1.3.2</span> Get occurrence data<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('get-occurrence-data')" onmouseout="reset_tooltip('get-occurrence-data-tooltip')"><span class="tooltiptext" id="get-occurrence-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>The first thing we need for any SDM is a data set documenting species occurrence, i.e. geo-coded observations of a given species in the wild.</p>
-<p>Four our purposes, we turn to the Bigfoot Field Researchers Organization (<a href="https://www.bfro.net/">BFRO</a>), founded in 1995 as the “<em>only scientific research organization exploring the Bigfoot/Sasquatch mystery</em>”. You can turn to their website for answers on important <a href="https://www.bfro.net/gdb/show_FAQ.asp?id=405">FAQs</a>, including ‘Do Bigfoot Sasquatch bury their dead?’, ‘Where is the physical evidence?’, ‘Wasn’t this all shown to be a fake?, and ’Why do you want scientists to recognize the Sasquatch as a species? Isn’t it better to just leave them alone?’. Their main focus though is on compiling reports of sightings and investigating them. In other words, they have a database full of geo-coded reported sightings<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> And even better, it has already been downloaded and wrangled and is accessible (with sightings through 2018) right <a href="https://data.world/timothyrenner/bfro-sightings-data">here</a>.</span>.</p>
+<p>Four our purposes, we turn to the Bigfoot Field Researchers Organization (<a href="https://www.bfro.net/">BFRO</a>), founded in 1995 as the “<em>only scientific research organization exploring the Bigfoot/Sasquatch mystery</em>”. You can turn to their website for answers on important <a href="https://www.bfro.net/gdb/show_FAQ.asp?id=405">FAQs</a>, including ‘Do Bigfoot Sasquatch bury their dead?’, ‘Where is the physical evidence?’, ‘Wasn’t this all shown to be a fake?, and ’Why do you want scientists to recognize the Sasquatch as a species? Isn’t it better to just leave them alone?’. Their main focus though is on compiling reports of sightings and investigating them. In other words, they have a database full of geo-coded reported sightings<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> And even better, it has already been downloaded and wrangled and is accessible (with sightings through 2018) right <a href="https://data.world/timothyrenner/bfro-sightings-data">here</a>.</span>.</p>
 <p>Let’s read in the data and then we can take a look at the information we can glean from this data set by looking at the column names.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="what-even-is-data-science.html#cb1-1"></a><span class="co"># read data</span></span>
 <span id="cb1-2"><a href="what-even-is-data-science.html#cb1-2"></a>occurrence &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/bfro_reports_geocoded.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code></pre></div>
@@ -304,16 +304,16 @@ The science council defines science as the pursuit and application of knowledge 
 <span id="cb3-27"><a href="what-even-is-data-science.html#cb3-27"></a><span class="co"># draw box around figure</span></span>
 <span id="cb3-28"><a href="what-even-is-data-science.html#cb3-28"></a><span class="kw">box</span>()</span></code></pre></div>
 <div class="figure">
-<span id="fig:unnamed-chunk-14"></span>
+<span style="display:block;" id="fig:unnamed-chunk-10"></span>
 <p class="caption marginnote shownote">
 Figure 1.1: Map of Sasquatch sighting in the United States based on the BFRO database (1950 - 2021).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-14-1.png" alt="Map of Sasquatch sighting in the United States based on the BFRO database (1950 - 2021)." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-10-1.png" alt="Map of Sasquatch sighting in the United States based on the BFRO database (1950 - 2021)." width="768">
 </div>
 <p>Here is an example of where domain knowledge comes in - while we are tidying and exploring the data set we need to assess whether there are artifacts our outlier data points that should be removed.</p>
 <div id="ques:ds-3" class="question">
 <p class="question-begin">
-► Question 3
+► Question 1.3
 </p>
 <div class="question-body">
 <p>
@@ -326,7 +326,7 @@ Give a brief descriptions of the spatial distribution of the occurrence of Sasqu
 </div>
 <div id="ques:ds-4" class="question">
 <p class="question-begin">
-► Question 4
+► Question 1.4
 </p>
 <div class="question-body">
 <p>
@@ -342,7 +342,7 @@ Discuss some possible explanations for the patterns you have observed to determi
 ► Solution<span id="sol-start-1" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-1', 'sol-start-1')"></span>
 </p>
 <div id="sol-body-1" class="solution-body" style="display: none;">
-<p>Good catch - those sightings in the middle of the ocean are probably errors in the geo-coding. Further, we don’t know how reliable the data for Alaska is as this data set is based on opportunistic sightings<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> Well, admittedly if you poke around the BFRO website you will find that people do plan expeditions.</span>.</p>
+<p>Good catch - those sightings in the middle of the ocean are probably errors in the geo-coding. Further, we don’t know how reliable the data for Alaska is as this data set is based on opportunistic sightings<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> Well, admittedly if you poke around the BFRO website you will find that people do plan expeditions.</span>.</p>
 <p>The data for for observations in the lower 48 seems much more reliable, so let’s restrict our data to those observations.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="what-even-is-data-science.html#cb4-1"></a><span class="co"># load and filter data</span></span>
 <span id="cb4-2"><a href="what-even-is-data-science.html#cb4-2"></a>occurrence &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/bfro_reports_geocoded.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>) <span class="op">%&gt;%</span></span>
@@ -382,11 +382,11 @@ Discuss some possible explanations for the patterns you have observed to determi
 <span id="cb4-36"><a href="what-even-is-data-science.html#cb4-36"></a><span class="co"># draw box around figure</span></span>
 <span id="cb4-37"><a href="what-even-is-data-science.html#cb4-37"></a><span class="kw">box</span>()</span></code></pre></div>
 <div class="figure">
-<span id="fig:unnamed-chunk-15"></span>
+<span style="display:block;" id="fig:unnamed-chunk-11"></span>
 <p class="caption marginnote shownote">
 Figure 1.2: Map of Sasquatch sighting in the lower 48 states based on the BFRO database as (1950 - 2021).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-15-1.png" alt="Map of Sasquatch sighting in the lower 48 states based on the BFRO database as (1950 - 2021)." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-11-1.png" alt="Map of Sasquatch sighting in the lower 48 states based on the BFRO database as (1950 - 2021)." width="768">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -405,7 +405,7 @@ Figure 1.2: Map of Sasquatch sighting in the lower 48 states based on the BFRO d
 <p>We are going to use the bioclim data set from <a href="https://www.climond.org/BioclimRegistry.aspx#Table1">CliMond</a>. Bioclim variables are commonly used for species distribution modeling as they are based on long-term trends (as opposed to e.g. the exact conditions when the species was observed).</p>
 <div id="ques:ds-5" class="question">
 <p class="question-begin">
-► Question 5
+► Question 1.5
 </p>
 <div class="question-body">
 <p>
@@ -432,11 +432,11 @@ Look up the descriptions of the <a href="https://www.climond.org/BioclimRegistry
 <p>Let’s plot the first bioclim variable (Bio01, annual mean temperature).</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="what-even-is-data-science.html#cb6-1"></a><span class="kw">plot</span>(predictors<span class="op">@</span>layers[[<span class="dv">1</span>]])</span></code></pre></div>
 <div class="figure">
-<span id="fig:unnamed-chunk-17"></span>
+<span style="display:block;" id="fig:unnamed-chunk-13"></span>
 <p class="caption marginnote shownote">
 Figure 1.3: Global distribution of annual mean temperature (1961 - 1990, centered on 1975).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-17-1.png" alt="Global distribution of annual mean temperature (1961 - 1990, centered on 1975)." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-13-1.png" alt="Global distribution of annual mean temperature (1961 - 1990, centered on 1975)." width="768">
 </div>
 <p>We see the pattern we would intuitively expect, with temperatures decreasing as you move poleward and being warmest around the poles.</p>
 <p>Let’s extract the values for each bioclim variable at our occurrence points (observations).</p>
@@ -460,7 +460,7 @@ Figure 1.3: Global distribution of annual mean temperature (1961 - 1990, centere
 ## [6,]              8.724987              10.20157             0.2807353</code></pre>
 <div id="ques:ds-6" class="question">
 <p class="question-begin">
-► Question 6
+► Question 1.6
 </p>
 <div class="question-body">
 <p>
@@ -479,8 +479,8 @@ Briefly state what these values represent.
 <p>Our next step is to fit a bioclim model to the data set we just generated.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="what-even-is-data-science.html#cb10-1"></a><span class="co"># fit bioclim model</span></span>
 <span id="cb10-2"><a href="what-even-is-data-science.html#cb10-2"></a>model.fit &lt;-<span class="st"> </span><span class="kw">bioclim</span>(presence)</span></code></pre></div>
-<p>The bioclim model is a classic climate-envelope-model<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> You may remember reading about this in your reading assignments.</span>.</p>
-<p>Briefly, the algorithm computes the similarity of locations by comparing the value of each environmental variables being used (our bioclim data set) to a distribution of that values at all locations with known presence<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> Also called the training sites; these are our occurrence points.</span>. The closer that value is to the median (50th percentile), the more suitable that location is assumed to be. Suitability scores are between 0 and 1, with 1 indicating a “perfect suitability”.)</p>
+<p>The bioclim model is a classic climate-envelope-model<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> You may remember reading about this in your reading assignments.</span>.</p>
+<p>Briefly, the algorithm computes the similarity of locations by comparing the value of each environmental variables being used (our bioclim data set) to a distribution of that values at all locations with known presence<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> Also called the training sites; these are our occurrence points.</span>. The closer that value is to the median (50th percentile), the more suitable that location is assumed to be. Suitability scores are between 0 and 1, with 1 indicating a “perfect suitability”.)</p>
 <p>In general, there is no distinction between the tails of the distribution (i.e. the 90th and 10th percentile are equivalent), though in some implementations you can specify those to be treated as distinct. As a result e.g. low levels of precipitation could be limiting but high levels would not be.</p>
 <p>Finally, we will use our suitability scores and the bioclim raster data set to generate a predictive map of the Sasquatch species distribution. This means that the algorithm will assign a suitability score to each pixel based on the model and create a new raster layer.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="what-even-is-data-science.html#cb11-1"></a><span class="co"># generate raster with predicted distribution</span></span>
@@ -500,15 +500,15 @@ Briefly state what these values represent.
 <span id="cb12-10"><a href="what-even-is-data-science.html#cb12-10"></a><span class="co"># draw box around it</span></span>
 <span id="cb12-11"><a href="what-even-is-data-science.html#cb12-11"></a><span class="kw">box</span>()</span></code></pre></div>
 <div class="figure">
-<span id="fig:unnamed-chunk-22"></span>
+<span style="display:block;" id="fig:unnamed-chunk-18"></span>
 <p class="caption marginnote shownote">
 Figure 1.4: Species distribution model for Sasquatch. Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-22-1.png" alt="Species distribution model for Sasquatch. Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-18-1.png" alt="Species distribution model for Sasquatch. Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability." width="768">
 </div>
 <div id="ques:ds-7" class="question">
 <p class="question-begin">
-► Question 7
+► Question 1.7
 </p>
 <div class="question-body">
 <p>
@@ -522,7 +522,7 @@ Give a brief description of the habitat suitability map, including the maximum p
 <p>Our highest habitat suitability values (probability of occurring) seem pretty low. One reason for this is that we used presence-only data.</p>
 <div id="ques:ds-8" class="question">
 <p class="question-begin">
-► Question 8
+► Question 1.8
 </p>
 <div class="question-body">
 <p>
@@ -535,7 +535,7 @@ The alternative to presence-only models is to have presence-absence data. Discus
 </div>
 <div id="ques:ds-9" class="question">
 <p class="question-begin">
-► Question 9
+► Question 1.9
 </p>
 <div class="question-body">
 <p>
@@ -593,15 +593,15 @@ A work-around of not having absence data is to generate pseudo-absence data. Thi
 <span id="cb15-10"><a href="what-even-is-data-science.html#cb15-10"></a><span class="co"># draw box around it</span></span>
 <span id="cb15-11"><a href="what-even-is-data-science.html#cb15-11"></a><span class="kw">box</span>()</span></code></pre></div>
 <div class="figure">
-<span id="fig:unnamed-chunk-25"></span>
+<span style="display:block;" id="fig:unnamed-chunk-21"></span>
 <p class="caption marginnote shownote">
 Figure 1.5: Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A1B). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-25-1.png" alt="Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A1B). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-21-1.png" alt="Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A1B). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability." width="768">
 </div>
 <div id="ques:ds-10" class="question">
 <p class="question-begin">
-► Question 10
+► Question 1.10
 </p>
 <div class="question-body">
 <p>
@@ -649,15 +649,15 @@ Give a brief description of the habitat suitability map, including the maximum p
 <span id="cb16-34"><a href="what-even-is-data-science.html#cb16-34"></a><span class="co"># draw box around it</span></span>
 <span id="cb16-35"><a href="what-even-is-data-science.html#cb16-35"></a><span class="kw">box</span>()</span></code></pre></div>
 <div class="figure">
-<span id="fig:unnamed-chunk-26"></span>
+<span style="display:block;" id="fig:unnamed-chunk-22"></span>
 <p class="caption marginnote shownote">
 Figure 1.6: Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A2). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-26-1.png" alt="Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A2). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-22-1.png" alt="Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A2). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability." width="768">
 </div>
 <div id="ques:ds-11" class="question">
 <p class="question-begin">
-► Question 11
+► Question 1.11
 </p>
 <div class="question-body">
 <p>
@@ -670,7 +670,7 @@ Briefly compare this model to the previous two. Comment on whether you expected 
 </div>
 <div id="ques:ds-12" class="question">
 <p class="question-begin">
-► Question 12
+► Question 1.12
 </p>
 <div class="question-body">
 <p>
@@ -707,7 +707,7 @@ Discuss whether you think bioclim variables are good models to predict a species
 <a href="installing-rrstudio.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-18
+2021-09-19
  using 
 R version 4.0.2 (2020-06-22)
 </p>

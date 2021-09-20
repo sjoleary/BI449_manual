@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-18" />
+<meta name="date" content="2021-09-19" />
 
 
 <meta name="description" content="6 Intro to data frames | Data Science for the Natural Environment (FA21)">
@@ -159,7 +159,7 @@ function reset_tooltip(id) {
 <a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
 <a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
 <a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
-<a href="r-functions-objects-vectors-oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
 <a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
 <a id="active-page" href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a><ul class="toc-sections">
 <li class="toc"><a href="#reading-data-into-r"> Reading data into R</a></li>
@@ -194,7 +194,7 @@ function reset_tooltip(id) {
 <li>inspect the contents of a data frame to summarize the content.</li>
 <li>write a <code>data.frame</code> to file.</li>
 </ul>
-<p>You should have a <code>DataFrames.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-26" class="margin-toggle sidenote-number">26</label><input type="checkbox" id="tufte-sn-26" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">26</span> You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
+<p>You should have a <code>DataFrames.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-27" class="margin-toggle sidenote-number">27</label><input type="checkbox" id="tufte-sn-27" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">27</span> You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
 <p>Let’s start by loading the packages we will need for this activity.</p>
 <div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="intro-to-data-frames.html#cb84-1"></a><span class="co"># load libraries</span></span>
 <span id="cb84-2"><a href="intro-to-data-frames.html#cb84-2"></a><span class="kw">library</span>(knitr)</span>
@@ -206,7 +206,7 @@ function reset_tooltip(id) {
 <p><code>library(tidyverse)</code> is actually loading a set of packages used for data science that share a common design philosophy, and “grammar”. One of the packages we loaded is called <code>readr</code> which contains functions for reading in and parsing files.</p>
 <div id="ques:df-1" class="question">
 <p class="question-begin">
-► Question 25
+► Question 6.1
 </p>
 <div class="question-body">
 <p>
@@ -237,7 +237,7 @@ Use ?read_delim to pull up the help page for the function we will using and expl
 <p>Execute the code. If you look over in your environment pane you should now see the object <code>catch</code>. This is your dataframe. Click on it, you should see the command <code>View(catch)</code> in your console and a tab <code>catch</code> appear in your top left pane.</p>
 <div id="ques:df-2" class="question">
 <p class="question-begin">
-► Question 26
+► Question 6.2
 </p>
 <div class="question-body">
 <p>
@@ -277,7 +277,7 @@ Based on how you read in the csv file how would you read in the tab-delimited ve
 </h2>
 <div id="ques:df-3" class="question">
 <p class="question-begin">
-► Question 27
+► Question 6.3
 </p>
 <div class="question-body">
 <p>There are several functions that you can use for a preliminary inspection of your data, including figuring out what dimensions it has and what information is contained in your data set.</p>
@@ -311,7 +311,7 @@ Based on how you read in the csv file how would you read in the tab-delimited ve
 ## 1 Aransas_Bay</code></pre>
 <div id="ques:df-4" class="question">
 <p class="question-begin">
-► Question 28
+► Question 6.4
 </p>
 <div class="question-body">
 <p>
@@ -359,7 +359,7 @@ How would you extract the 5th column from the third row?
 ## 1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015</code></pre>
 <div id="ques:df-5" class="question">
 <p class="question-begin">
-► Question 29
+► Question 6.5
 </p>
 <div class="question-body">
 <p>
@@ -706,7 +706,7 @@ How would you extract the entire 5th column?
 <p>Frequently, we will process raw data sets and then need to write intermediate or final results to file, for example to share them with collaborators. Here, the <code>readr</code> packages comes in handy.</p>
 <div id="ques:df-6" class="question">
 <p class="question-begin">
-► Question 30
+► Question 6.6
 </p>
 <div class="question-body">
 <p>
@@ -726,7 +726,7 @@ Create a subset of our data set consisting of the first 100 rows and containing 
 <a href="welcome-to-the-tidyverse.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-18
+2021-09-19
  using 
 R version 4.0.2 (2020-06-22)
 </p>

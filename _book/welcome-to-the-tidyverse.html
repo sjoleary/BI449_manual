@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-18" />
+<meta name="date" content="2021-09-19" />
 
 
 <meta name="description" content="7 Welcome to the tidyverse | Data Science for the Natural Environment (FA21)">
@@ -159,7 +159,7 @@ function reset_tooltip(id) {
 <a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
 <a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
 <a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
-<a href="r-functions-objects-vectors-oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
 <a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
 <a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
 <a id="active-page" href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a><ul class="toc-sections">
@@ -202,7 +202,7 @@ function reset_tooltip(id) {
 <li>use <code>group_by()</code> to group rows.</li>
 <li>use <code>summarize()</code> to calculate summary statistics.</li>
 </ul>
-<p>You should have a <code>DataWrangling.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-27" class="margin-toggle sidenote-number">27</label><input type="checkbox" id="tufte-sn-27" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">27</span> You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
+<p>You should have a <code>DataWrangling.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-28" class="margin-toggle sidenote-number">28</label><input type="checkbox" id="tufte-sn-28" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">28</span> You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
 <p>As always, let’s start by loading our packages needed for this analysis.</p>
 <div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="welcome-to-the-tidyverse.html#cb111-1"></a><span class="co"># load libraries (make sure you have installed them first)</span></span>
 <span id="cb111-2"><a href="welcome-to-the-tidyverse.html#cb111-2"></a><span class="kw">library</span>(knitr)</span>
@@ -211,7 +211,7 @@ function reset_tooltip(id) {
 <h2>
 <span class="header-section-number">7.1</span> Data Wrangling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('data-wrangling')" onmouseout="reset_tooltip('data-wrangling-tooltip')"><span class="tooltiptext" id="data-wrangling-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>Now that we have a data frame to play with, let’s explore some data wrangling options using <code>dplyr</code>. The <code>d</code> stands for <code>data</code> and the <code>plyr</code> stands for <code>plyers</code> - this package is designed to manipulate data frames<label for="tufte-sn-28" class="margin-toggle sidenote-number">28</label><input type="checkbox" id="tufte-sn-28" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">28</span> This is also known as <code>data wrangling</code>, manipulating is not a negative thing in this case it means you can clean up and format the data in appropriate way to fit the questions you are asking and allow to to display the information in a helpful way; you will also see this described as data transformation.</span>. We are going to focus on the central actions (<code>verbs</code>) that will allow you to manipulate the data frame.</p>
+<p>Now that we have a data frame to play with, let’s explore some data wrangling options using <code>dplyr</code>. The <code>d</code> stands for <code>data</code> and the <code>plyr</code> stands for <code>plyers</code> - this package is designed to manipulate data frames<label for="tufte-sn-29" class="margin-toggle sidenote-number">29</label><input type="checkbox" id="tufte-sn-29" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">29</span> This is also known as <code>data wrangling</code>, manipulating is not a negative thing in this case it means you can clean up and format the data in appropriate way to fit the questions you are asking and allow to to display the information in a helpful way; you will also see this described as data transformation.</span>. We are going to focus on the central actions (<code>verbs</code>) that will allow you to manipulate the data frame.</p>
 <p>We will compare using excel vs R (or another coding language) down the line but here are some of the main advantages to using code -</p>
 <ul>
 <li>You aren’t manipulating the raw data set - if you make a mistake or accidentally overwrite something you haven’t made any permanent damage.</li>
@@ -246,7 +246,7 @@ function reset_tooltip(id) {
 ## 6 Aransas_Bay Bagre_marinus</code></pre>
 <div id="ques:tidy-1" class="question">
 <p class="question-begin">
-► Question 31
+► Question 7.1
 </p>
 <div class="question-body">
 <p>
@@ -276,7 +276,7 @@ How would you select just Day, Month, and Year columns?
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-2" class="question">
 <p class="question-begin">
-► Question 32
+► Question 7.2
 </p>
 <div class="question-body">
 <p>
@@ -365,7 +365,7 @@ How would you eliminate hook size from the data set?
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-3" class="question">
 <p class="question-begin">
-► Question 33
+► Question 7.3
 </p>
 <div class="question-body">
 <p>In some cases, there might not be a distinct pattern that you can use to identify where to split the column content. In this case it may be more helpful to use the position (e.g. “split at”third character from the left") Look up the <code>separate()</code> function in the help and determine how you could split the Year column so you get two new columns by splitting off the last two digits (i.e. 2021 would be 20 and 21). Then eliminate the column containing the first two digits.</p>
@@ -393,7 +393,7 @@ How would you eliminate hook size from the data set?
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-4" class="question">
 <p class="question-begin">
-► Question 34
+► Question 7.4
 </p>
 <div class="question-body">
 <p>Create a data set with the following columns in this sequence</p>
@@ -434,7 +434,7 @@ How would you eliminate hook size from the data set?
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-8" class="question">
 <p class="question-begin">
-► Question 35
+► Question 7.5
 </p>
 <div class="question-body">
 <p>
@@ -483,7 +483,7 @@ How would sort your table by Sex?
 ## # ... with 1,501 more rows</code></pre>
 <div id="ques:tidy-9" class="question">
 <p class="question-begin">
-► Question 36
+► Question 7.6
 </p>
 <div class="question-body">
 <p>
@@ -494,7 +494,7 @@ How would you select only rows containing Scalloped Hammerheads (<em>Sphyrna lew
 </p>
 </div>
 </div>
-<p><label for="tufte-sn-29" class="margin-toggle sidenote-number">29</label><input type="checkbox" id="tufte-sn-29" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">29</span> Note: you need to use <code>==</code> (not <code>=</code> if you are looking for an exact match).</span></p>
+<p><label for="tufte-sn-30" class="margin-toggle sidenote-number">30</label><input type="checkbox" id="tufte-sn-30" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">30</span> Note: you need to use <code>==</code> (not <code>=</code> if you are looking for an exact match).</span></p>
 <p>If want all rows but Gafftop sailfish you can use a <code>!</code> to say “not that”.</p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="welcome-to-the-tidyverse.html#cb133-1"></a>catch <span class="op">%&gt;%</span></span>
 <span id="cb133-2"><a href="welcome-to-the-tidyverse.html#cb133-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>Species <span class="op">==</span><span class="st"> "Bagre_marinus"</span>)</span></code></pre></div>
@@ -514,7 +514,7 @@ How would you select only rows containing Scalloped Hammerheads (<em>Sphyrna lew
 ## # ... with 804 more rows</code></pre>
 <div id="ques:tidy-10" class="question">
 <p class="question-begin">
-► Question 37
+► Question 7.7
 </p>
 <div class="question-body">
 <p>
@@ -525,7 +525,7 @@ How would you create a dataframe without Scalloped Hammerheads (<em>Sphyrna lewi
 </p>
 </div>
 </div>
-<p>Sometimes you might want to select rows that match one of a set of values<label for="tufte-sn-30" class="margin-toggle sidenote-number">30</label><input type="checkbox" id="tufte-sn-30" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">30</span> Recall, the function <code>c()</code> (concatenate) creates a vector</span>.</p>
+<p>Sometimes you might want to select rows that match one of a set of values<label for="tufte-sn-31" class="margin-toggle sidenote-number">31</label><input type="checkbox" id="tufte-sn-31" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">31</span> Recall, the function <code>c()</code> (concatenate) creates a vector</span>.</p>
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="welcome-to-the-tidyverse.html#cb135-1"></a>catch <span class="op">%&gt;%</span></span>
 <span id="cb135-2"><a href="welcome-to-the-tidyverse.html#cb135-2"></a><span class="st">  </span><span class="kw">filter</span>(Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"Sciades_felis"</span>, <span class="st">"Bagre_marinus"</span>, <span class="st">"Synodus_foetens"</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2,166 x 12
@@ -561,7 +561,7 @@ How would you create a dataframe without Scalloped Hammerheads (<em>Sphyrna lewi
 ## # ... with 149 more rows</code></pre>
 <div id="ques:tidy-11" class="question">
 <p class="question-begin">
-► Question 38
+► Question 7.8
 </p>
 <div class="question-body">
 <p>
@@ -591,7 +591,7 @@ How would you subset a data frame to contain only entries for different species 
 ## # ... with 897 more rows</code></pre>
 <div id="ques:tidy-12" class="question">
 <p class="question-begin">
-► Question 39
+► Question 7.9
 </p>
 <div class="question-body">
 <p>
@@ -611,7 +611,7 @@ Create a data frame containing only entries with a forklength &lt; 300.
 ## 1 Corpus_Christi_Bay Sphyrna_lewini F     &lt;NA&gt;             192   210   280        15     3     6     7  2017</code></pre>
 <div id="ques:tidy-13" class="question">
 <p class="question-begin">
-► Question 40
+► Question 7.10
 </p>
 <div class="question-body">
 <p>
@@ -622,7 +622,7 @@ How would you subset a data frame to contain only entries for different species 
 </p>
 </div>
 </div>
-<p>Instead of entries having to fulfill two (or more) requirements, you might have a situation where you only want to retain rows that fulfill one or another argument. For example, if you wanted all entries that are either gafftops or a fork length smaller than 300 cm you could use the following code<label for="tufte-sn-31" class="margin-toggle sidenote-number">31</label><input type="checkbox" id="tufte-sn-31" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">31</span> When you are combining arguments you use <code>&amp;</code> to say “it must fulfill this <strong>AND</strong> this” or <code>|</code> (called the pipe) to say "it must fulfill this <strong>OR</strong> that.</span>:</p>
+<p>Instead of entries having to fulfill two (or more) requirements, you might have a situation where you only want to retain rows that fulfill one or another argument. For example, if you wanted all entries that are either gafftops or a fork length smaller than 300 cm you could use the following code<label for="tufte-sn-32" class="margin-toggle sidenote-number">32</label><input type="checkbox" id="tufte-sn-32" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">32</span> When you are combining arguments you use <code>&amp;</code> to say “it must fulfill this <strong>AND</strong> this” or <code>|</code> (called the pipe) to say "it must fulfill this <strong>OR</strong> that.</span>:</p>
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="welcome-to-the-tidyverse.html#cb143-1"></a>catch <span class="op">%&gt;%</span></span>
 <span id="cb143-2"><a href="welcome-to-the-tidyverse.html#cb143-2"></a><span class="st">  </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> "Sphyrna_lewini"</span> <span class="op">|</span><span class="st"> </span>FL <span class="op">&lt;</span><span class="st"> </span><span class="dv">300</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 409 x 12
@@ -641,7 +641,7 @@ How would you subset a data frame to contain only entries for different species 
 ## # ... with 399 more rows</code></pre>
 <div id="ques:tidy-14" class="question">
 <p class="question-begin">
-► Question 41
+► Question 7.11
 </p>
 <div class="question-body">
 <p>
@@ -672,7 +672,7 @@ How would you select fish that have a forklength either smaller than 200 cm or l
 <p>This is also an example of how we can use the pipe (<code>%&gt;%</code>) to string a bunch of commands, in this example we are saying “take the object catch, and then group rows by Species and then for each group retain only the maximum forklength value for that group and then ungroup them again.”</p>
 <div id="ques:tidy-15" class="question">
 <p class="question-begin">
-► Question 42
+► Question 7.12
 </p>
 <div class="question-body">
 <p>
@@ -696,7 +696,7 @@ How would you group rows by Species and then retain the individual caught on the
 <p>Notice how that dropped all the other columns. You can switch that off usiing <code>.keep_all = FALSE</code>.</p>
 <div id="ques:tidy-16" class="question">
 <p class="question-begin">
-► Question 43
+► Question 7.13
 </p>
 <div class="question-body">
 <p>
@@ -726,7 +726,7 @@ How would you produce a table with only one representative per species?
 ## # ... with 187 more rows</code></pre>
 <div id="ques:tidy-17" class="question">
 <p class="question-begin">
-► Question 44
+► Question 7.14
 </p>
 <div class="question-body">
 <p>
@@ -743,7 +743,7 @@ How would you produce a table showing all the species caught per station using d
 <span class="header-section-number">7.5</span> Adding new variables<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('adding-new-variables')" onmouseout="reset_tooltip('adding-new-variables-tooltip')"><span class="tooltiptext" id="adding-new-variables-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Turns out selecting columns and filtering based on content in rows is pretty straightforward. But frequently when we are processing our raw data sets we end up wanting to compute additional metrics or use the existing raw data to create new categories.</p>
-<p>The function <code>mutate()</code> can be used to create new columns - frequently based on columns already existing in the data frame. This is a very powerful function with endless possibilities, but we are going to stick to some of the basics for now<label for="tufte-sn-32" class="margin-toggle sidenote-number">32</label><input type="checkbox" id="tufte-sn-32" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">32</span> Rest assured if your answer is “Oh, could I …” the answer is “Yes”.</span>.</p>
+<p>The function <code>mutate()</code> can be used to create new columns - frequently based on columns already existing in the data frame. This is a very powerful function with endless possibilities, but we are going to stick to some of the basics for now<label for="tufte-sn-33" class="margin-toggle sidenote-number">33</label><input type="checkbox" id="tufte-sn-33" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">33</span> Rest assured if your answer is “Oh, could I …” the answer is “Yes”.</span>.</p>
 <p>Let’s say you wanted create a column that contained the difference between the fork length and the stretch total length:</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="welcome-to-the-tidyverse.html#cb151-1"></a>catch <span class="op">%&gt;%</span></span>
 <span id="cb151-2"><a href="welcome-to-the-tidyverse.html#cb151-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">difference =</span> STL <span class="op">-</span><span class="st"> </span>FL)</span></code></pre></div>
@@ -761,10 +761,10 @@ How would you produce a table showing all the species caught per station using d
 ##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015         73
 ## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015         89
 ## # ... with 2,315 more rows</code></pre>
-<p>You should now have a column called <code>difference</code> at the end of the data frame<label for="tufte-sn-33" class="margin-toggle sidenote-number">33</label><input type="checkbox" id="tufte-sn-33" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">33</span> Instead of <code>-</code> you can of course use <code>+</code> to add , <code>*</code> to multiple, and <code>/</code> to divide values when creating a new column.</span>.</p>
+<p>You should now have a column called <code>difference</code> at the end of the data frame<label for="tufte-sn-34" class="margin-toggle sidenote-number">34</label><input type="checkbox" id="tufte-sn-34" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">34</span> Instead of <code>-</code> you can of course use <code>+</code> to add , <code>*</code> to multiple, and <code>/</code> to divide values when creating a new column.</span>.</p>
 <div id="ques:tidy-18" class="question">
 <p class="question-begin">
-► Question 45
+► Question 7.15
 </p>
 <div class="question-body">
 <p>
@@ -795,7 +795,7 @@ How would you create a new column called ratio, that is the ratio of the fork to
 <p>You should know have a column called <code>unknown_sex</code> where if the animal that was caught was not sexed contains the value <code>TRUE</code>, if it was identified as male or female it would say <code>FALSE</code>.</p>
 <div id="ques:tidy-19" class="question">
 <p class="question-begin">
-► Question 46
+► Question 7.16
 </p>
 <div class="question-body">
 <p>
@@ -830,7 +830,7 @@ How would you create a new column called post_2017 that is TRUE if fish were cau
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-20" class="question">
 <p class="question-begin">
-► Question 47
+► Question 7.17
 </p>
 <div class="question-body">
 <p>
@@ -857,7 +857,7 @@ How would you create a new column called that contains the difference between th
 ## 1    406.  103.</code></pre>
 <div id="ques:tidy-21" class="question">
 <p class="question-begin">
-► Question 48
+► Question 7.18
 </p>
 <div class="question-body">
 <p>
@@ -868,7 +868,7 @@ How could you use summarize to get the maximum forklength?
 </p>
 </div>
 </div>
-<p><label for="tufte-sn-34" class="margin-toggle sidenote-number">34</label><input type="checkbox" id="tufte-sn-34" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">34</span> Hint: Remember earlier we used the function max() to get a maximum value.</span></p>
+<p><label for="tufte-sn-35" class="margin-toggle sidenote-number">35</label><input type="checkbox" id="tufte-sn-35" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">35</span> Hint: Remember earlier we used the function max() to get a maximum value.</span></p>
 <p>That’s cool but really we could have also just used</p>
 <div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="welcome-to-the-tidyverse.html#cb159-1"></a><span class="kw">mean</span>(catch<span class="op">$</span>FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 405.9179</code></pre>
@@ -894,7 +894,7 @@ How could you use summarize to get the maximum forklength?
 ## 14 Synodus_foetens               173       173     173    173  NA</code></pre>
 <div id="ques:tidy-22" class="question">
 <p class="question-begin">
-► Question 49
+► Question 7.19
 </p>
 <div class="question-body">
 <p>
@@ -907,7 +907,7 @@ If you look closely you should see that you are getting a few NA, NaN, -Inf, and
 </div>
 <div id="ques:tidy-23" class="question">
 <p class="question-begin">
-► Question 50
+► Question 7.20
 </p>
 <div class="question-body">
 <p>
@@ -935,7 +935,7 @@ How could you use summarize calculate a range of summary stats for the stretch t
 <span id="cb163-4"><a href="welcome-to-the-tidyverse.html#cb163-4"></a>  <span class="dt">caption =</span> <span class="st">"Summary statistics of forklength for each species."</span></span>
 <span id="cb163-5"><a href="welcome-to-the-tidyverse.html#cb163-5"></a>)</span></code></pre></div>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-114">Table 7.1: </span>Summary statistics of forklength for each species.</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-110">Table 7.1: </span>Summary statistics of forklength for each species.</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="left">Species</th>
@@ -1068,7 +1068,7 @@ How could you use summarize calculate a range of summary stats for the stretch t
 <p>We’ve already combined most of our <code>dplyr</code> verbs with <code>group_by()</code>. When you are wrangling data you will find that making use of the pipe (<code>%&gt;%</code>) to combine <code>select()</code>, <code>filter()</code>, <code>mutate()</code>, and <code>summarize()</code> as a series of commands will be necessary to get your data set in the correct format and further process it.</p>
 <div id="ques:tidy-24" class="question">
 <p class="question-begin">
-► Question 51
+► Question 7.21
 </p>
 <div class="question-body">
 <p>Copy this code into your <code>Rmarkdown</code> file and execute the code chunk. Then describe what each line is doing to manipulate the data frame.</p>
@@ -1102,10 +1102,10 @@ How could you use summarize calculate a range of summary stats for the stretch t
 </div>
 <div id="ques:tidy-25" class="question">
 <p class="question-begin">
-► Question 52
+► Question 7.22
 </p>
 <div class="question-body">
-<p>Generate the code that will manipulate the data frame as follows<label for="tufte-sn-35" class="margin-toggle sidenote-number">35</label><input type="checkbox" id="tufte-sn-35" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">35</span> some bullet points may require more than one line of code; you do not have to perform the steps in the sequence presented, play around a little bit to see how to code this more efficiently</span>:</p>
+<p>Generate the code that will manipulate the data frame as follows<label for="tufte-sn-36" class="margin-toggle sidenote-number">36</label><input type="checkbox" id="tufte-sn-36" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">36</span> some bullet points may require more than one line of code; you do not have to perform the steps in the sequence presented, play around a little bit to see how to code this more efficiently</span>:</p>
 <p>Challenge 1:</p>
 <ul>
 <li>order columns so Day, Month, Year, Set are at the beginning.</li>
@@ -1115,7 +1115,7 @@ How could you use summarize calculate a range of summary stats for the stretch t
 <p>Challenge 2:</p>
 <ul>
 <li>create a new variable called Set_ID consisting of Day, Month, Year, and Set number.</li>
-<li>determine the number of individuals per species per set<label for="tufte-sn-36" class="margin-toggle sidenote-number">36</label><input type="checkbox" id="tufte-sn-36" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">36</span> There is a function called <code>n()</code> that allows us to count rows fulfilling a specific condition</span>.</li>
+<li>determine the number of individuals per species per set<label for="tufte-sn-37" class="margin-toggle sidenote-number">37</label><input type="checkbox" id="tufte-sn-37" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">37</span> There is a function called <code>n()</code> that allows us to count rows fulfilling a specific condition</span>.</li>
 </ul>
 <p>Challenge 3:</p>
 <ul>
@@ -1136,7 +1136,7 @@ How could you use summarize calculate a range of summary stats for the stretch t
 <p>The last set up functions that we need to get comfortable with allow us to create tidy data sets.</p>
 <div id="ques:tidy-26" class="question">
 <p class="question-begin">
-► Question 53
+► Question 7.23
 </p>
 <div class="question-body">
 <p>
@@ -1149,7 +1149,7 @@ List the three characteristics of a tidy data set. Explain why a tidy data set i
 </div>
 <div id="ques:tidy-27" class="question">
 <p class="question-begin">
-► Question 54
+► Question 7.24
 </p>
 <div class="question-body">
 <p>
@@ -1183,7 +1183,7 @@ Take a look at our data set and argue whether or not it is a tidy data set. The 
 <span id="cb168-2"><a href="welcome-to-the-tidyverse.html#cb168-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"Measurement"</span>, <span class="dt">values_to =</span> <span class="st">"Length"</span>, <span class="dt">cols =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">7</span>)</span></code></pre></div>
 <div id="ques:tidy-28" class="question">
 <p class="question-begin">
-► Question 55
+► Question 7.25
 </p>
 <div class="question-body">
 <p>
@@ -1243,7 +1243,7 @@ Briefly outline advantages to using tidy data sets.
 ## 14 Synodus_foetens             173   185</code></pre>
 <div id="ques:tidy-29" class="question">
 <p class="question-begin">
-► Question 56
+► Question 7.26
 </p>
 <div class="question-body">
 <p>
@@ -1263,7 +1263,7 @@ Calculate the number of individuals per species caught per month in 2018 and pre
 <a href="catch-data-analysis.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-18
+2021-09-19
  using 
 R version 4.0.2 (2020-06-22)
 </p>

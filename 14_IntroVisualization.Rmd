@@ -47,7 +47,9 @@ After completing this tutorial you should be able to
 * describe what faceting is and apply this to a plot.
 * combine multiple plots in a multi-panel plot using `patchwork` and save plots to file.
 
-You should have a `IntroVisualization.Rmd` in your project directory. Use that file to work through this set of activities - you will hand in your rendered ("knitted") Rmarkdown file as your homework assignment. In the `YAML` header, change the author to your name and make your formatting decisions such as theme, including a table of contents etc. Apply your `Rmarkdown` skills to format your "report" that you will hand in. Code chunks should have comments^[You should do this regardless of whether you are adding code yourself or if you are using code from our manual, even if it isn't commented in the manual ... you may of course add as many comments as you need to be able to recall what you did.], add answers to questions in plain text (not as code in chunks), use headers intentionally, and of course you have options like bullet points etc. as well.
+You should have a `IntroVisualization.Rmd` in your project directory. Use that file to work through this set of activities - you will hand in your rendered ("knitted") Rmarkdown file as your homework assignment. In the `YAML` header, change the author to your name and make your formatting decisions such as theme, including a table of contents etc. Apply your `Rmarkdown` skills to format your "report" that you will hand in. Code chunks should have comments, add answers to questions in plain text (not as code in chunks), use headers intentionally, and of course you have options like bullet points etc. as well.
+
+The majority of this set of activities is exploring how to use `ggplot()` to generate different types of plots. Each plot involves at least two lines of code - as we go through each step record the code presented and include a comment specifying what each line of code does. Comments can be inserted either between lines or at the end of each line.
 
 Let's start by loading the packages we will need for this set of activities.
 
@@ -129,11 +131,11 @@ Essentiall, the minimum components needed to make a plot are
 
 Let's break down what is happening to get a better understanding of how these minimum components fit together to create individual plots.
 
-First, we use the `ggplot()` function to define the specific `data.frame` to use to build the plot using the `data` argument (`<DATA>`)^[Remember, that when we are using arguments in the specified sequence that they are defined you do not explicitly need to call them. We will specify `data = ` and `mapping = ` in our examples to understand what they represent but you will likely leave those out as you become more comfortable with `ggplot`.].
+First, we use the `ggplot()` function to define the specific `data.frame` to use to build the plot using the `data` argument (`<DATA>`)^[Remember, that when we are using arguments in the specified sequence that they are defined you do not explicitly need to call them.].
 
 In our example that would be
 
-```{r}
+```{r fig.cap="Empty canvas generated using ggplot() function."}
 
 ggplot(data = temperature)
 
@@ -145,19 +147,17 @@ That is because we still need to define an aesthetic mapping using the `aes()` f
 
 Here, we are selecting the variables that we want to plot (columns in our `data.frame`). At minimum we need to specify what columns we want to plot on the x and y axis, but we can also define variables (columns) we want to use to encode using color, shapes, size etc.
 
-```{r}
+```{r fig.cap="Coordinate system plotted after specifying mapping aesthetics, specifically which variables to plot on each axis."}
 
 ggplot(data = temperature, aes(x = Year, y = `J-D`))
 
 ```
 
-When we execute that code you will now get an empty coordinate system.
-
-Patience, young grasshopper, we have not yet defined the `geom`, i.e. what type of plot ("geometries", `<GEOM_FUNCTION>`) we want to use. For example, here we want generate a line plot (`geom_line()`).
+When we execute that code you will now get an empty coordinate system... This still seems like slim pickings but patience, young grasshopper, we have not yet defined the `geom`, i.e. what type of plot ("geometries", `<GEOM_FUNCTION>`) we want to use. For example, here we want generate a line plot (`geom_line()`).
 
 For `ggplot` we add layers using the `+` operator, which is a pipe (similar to `%>%`) which tells `R` "and now add this".
 
-```{r}
+```{r fig.cap="Line plot (geom_line()) showing global mean temperature anomalies relative to 1951-1980 average."}
 
 ggplot(data = temperature, aes(x = Year, y = `J-D`)) +
   geom_line()
@@ -170,7 +170,7 @@ One of the advantages of the layered framework of `ggplot2` is that we can plot 
 
 For example, we can plot a scatterplot and line plot in the same plot as such:
 
-```{r}
+```{r fig.cap="Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point()."}
 
 ggplot(data = temperature, aes(x = Year, y = `J-D`)) +
   geom_line() +
@@ -182,7 +182,7 @@ Now that you know how to generate a simple plot, let's think about how we can fu
 
 For example we can change the color, fill, size, and shape for each `geom` layer^[In this example we will use the arguments for individual geom functions to change how data points are represented using colors and shapes for each layer, we can also use `aes()` to set mapping aesthetics for the entire plots.].
 
-```{r}
+```{r fig.cap="Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point(), color and fill for lines and shapes have been modified."}
 
 ggplot(data = temperature, aes(x = Year, y = `J-D`)) +
   geom_line(color = "darkblue", size = 1) +
@@ -204,7 +204,7 @@ Some exploring will also lead you to various color pallets, Wes Anderson fan? Yo
 
 Previously, we also used `geom_smooth()` to add a layer with a linear regression. If you take a look at the arguments for this function using `?geom_smooth` you will see that this has additional arguments apart from the mapping aesthetics like choosing the type of regression, whether or not the confidence interval is shown etc. Let's say we want to add a red, dashed regression line without the confidence interval.
 
-```{r fig.cap="Testing... "}
+```{r fig.cap="Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point(), color and fill for lines and shapes have been modified. Trend line fitted using geom_smooth()."}
 
 ggplot(data = temperature, aes(x = Year, y = `J-D`)) +
   geom_line(color = "darkblue", size = 1) +
@@ -217,7 +217,7 @@ Admittedly, this plot is starting to look a little bit ridiculous. Maybe we shou
 
 Another way to visualize this data would be using a bar plot^[Can we appreciate for a second how easy it was to change how the same data is plotted? If you were using excel you would have had to insert a new plot, define what data you wanted to plot, relabel the axis, etc. Here all you had to do was change a single line of code].
 
-```{r}
+```{r fig.cap="Bar plot showing global mean temperature anomalies relative to 1951-1980 average."}
 
 ggplot(data = temperature, aes(x = Year, y = `J-D`)) +
   geom_bar(stat = "identity")
@@ -232,7 +232,7 @@ To do this, we need a column that encodes that information... that of course is 
 
 We can manipulate our `data.frame` using the `dplyr` functions we are already familiar with - we can then use the `%>%` pipe to pass the data argument to the `ggplot()` function^[When you do this, remember that you need to switch back to using the `+` operator once you are adding your geom layers.]
 
-```{r}
+```{r fig.cap="Bar plot showing global mean temperature anomalies relative to 1951-1980 average. Mapping aesthetics have been specified to color code according to variable included in the data set."}
 
 temperature %>%
   mutate(year_type = ifelse(`J-D` <=0, "colder", "hotter")) %>%
@@ -243,7 +243,7 @@ temperature %>%
 
 Anything that we add to the `ggplot()` layer as a mapping is a universal plot setting that will apply to all subsequent layers. You can override these global settings is you specify aesthetics like color, shape or size specifically in an separate layer. For example if we do the following, we will override our color coding even though we specified it in our `ggplot()` layer.
 
-```{r}
+```{r fig.cap="Bar plot showing global mean temperature anomalies relative to 1951-1980 average. Mapping aesthetics have been specified to color code according to variable included in the data set. Settings in geom_bar() override the general plot specifications."}
 
 temperature %>%
   mutate(year_type = ifelse(`J-D` <=0, "colder", "hotter")) %>%
@@ -254,9 +254,9 @@ temperature %>%
 
 Let's see what else we can visualize using `ggplot`. Recall from when you explored our temperature anomaly data set, that this data set also contains information for seasons and individual months.
 
-Let's take a look at the distribution of mean global winter temperatures (`DJF` = December, January, February) using a histogram, (`geom_histogram()`)^[Notice that we only need to define our x-axis to plot a histogram, this is because `ggplot2` will count how many observations fall into each bin for you ... this geom is a mixture of a geometry (bar plot) and a statistical transformation (binning data points into ranges and the plotting those as bar plots).].
+Let's take a look at the distribution of mean global winter temperatures (`DJF` = December, January, February) using a histogram, (`geom_histogram()`). Note that we only need to define our x-axis to plot a histogram, this is because `ggplot2` will count how many observations fall into each bin for you ... this geom is a mixture of a geometry (bar plot) and a statistical transformation (binning data points into ranges and the plotting those as bar plots).].
 
-```{r}
+```{r fig.cap="Histogram displaying distribution of mean global winter temperatures."}
 
 ggplot(temperature, aes(x = DJF)) +
   geom_histogram()
@@ -265,7 +265,7 @@ ggplot(temperature, aes(x = DJF)) +
 
 We can refine our plot by choosing our own binwidth and by manipulating fill and color.
 
-```{r}
+```{r fig.cap="Histogram displaying distribution of mean global winter temperatures with customized bin width and coloration."}
 
 ggplot(temperature, aes(x = SON)) +
   geom_histogram(binwidth = 0.05, color = "black", fill = "darkorange")
@@ -274,7 +274,7 @@ ggplot(temperature, aes(x = SON)) +
 
 For our example we might also want to add a vertical line (`geom_vline()`) to indicate 0 (i.e. the long-term global temperature mean calculated for 1951 - 1980).
 
-```{r}
+```{r fig.cap="Histogram displaying distribution of mean global winter temperatures with customized binwidth and coloration and added vertical line (red)."}
 
 
 ggplot(temperature, aes(x = SON)) +
@@ -300,7 +300,7 @@ tidy_season <- temperature %>%
 
 Now we can plot our seasons on the x-axis and the distribution of temperatures on the y-axis using `geom_boxplot()`.
 
-```{r}
+```{r fig.cap="Box plot comparing global mean temperature anomalies relative to 1951-1980 average for all four seasons."}
 
 ggplot(tidy_season, aes(x = season, y = temperature)) +
   geom_boxplot()
@@ -309,7 +309,7 @@ ggplot(tidy_season, aes(x = season, y = temperature)) +
 
 Again, you can add additional information using the mapping aesthetics to e.g. color code the boxes by season.
 
-```{r}
+```{r fig.cap="Box plot comparing global mean temperature anomalies relative to 1951-1980 average for all four seasons color-coded by season."}
 
 ggplot(tidy_season, aes(x = season, y = temperature, fill = season)) +
   geom_boxplot()
@@ -329,7 +329,7 @@ Here is how you can do it using `facet_grid()`.
 
 Now we can plot our data and using `facet_grid()` we can specify that we want individual panels by month in separate rows.
 
-```{r}
+```{r fig.cap="Change in temperature anomaly relative to long-term avarage per season (rows)", fig.height=9}
 
 ggplot(tidy_season, aes(x = Year, y = temperature)) +
   geom_bar(stat = "identity", fill = "darkorange", color = "darkorange") +
@@ -339,7 +339,7 @@ ggplot(tidy_season, aes(x = Year, y = temperature)) +
 
 You could also specify that you want the individual plots to be separated into columns.
 
-```{r}
+```{r fig.cap="Change in temperature anomaly relative to long-term avarage per season (columns)"}
 
 ggplot(tidy_season, aes(x = Year, y = temperature)) +
   geom_bar(stat = "identity", fill = "darkorange", color = "darkorange") +
@@ -353,7 +353,7 @@ You can also use this syntax if you are only faceting by one variable as we are 
 
 For example, to plot this faceted data set in rows, you would use the following syntax - 
 
-```{r}
+```{r fig.cap="Change in temperature anomaly relative to long-term avarage per season (rows)", fig.height=9}
 
 
 ggplot(tidy_season, aes(x = Year, y = temperature)) +
@@ -365,7 +365,7 @@ ggplot(tidy_season, aes(x = Year, y = temperature)) +
 
 And to plot this data set column-wise you would specify it like so -
 
-```{r}
+```{r fig.cap="Change in temperature anomaly relative to long-term avarage per season (columns)"}
 
 
 ggplot(tidy_season, aes(x = Year, y = temperature)) +
@@ -388,7 +388,7 @@ One of the first things we frequently want to changes is the axis labels. `ggplo
 
 For example we could customize our faceted figure to look like this:
 
-```{r}
+```{r fig.cap="Change in temperature anomaly relative to long-term avarage per season (rows)", fig.height=9}
 
 ggplot(tidy_season, aes(x = Year, y = temperature)) +
   geom_bar(stat = "identity", fill = "darkorange", color = "darkorange") +
@@ -404,7 +404,7 @@ Pretty much every component of a `ggplot` figure can be further customized using
 
 The default theme is `theme_grey()`.
 
-```{r}
+```{r fig.cap="Change in temperature anomaly relative to long-term avarage per season (rows)", fig.height=9}
 
 ggplot(tidy_season, aes(x = Year, y = temperature)) +
   geom_bar(stat = "identity", fill = "darkorange", color = "darkorange") +
@@ -419,14 +419,18 @@ ggplot(tidy_season, aes(x = Year, y = temperature)) +
 
 Here, we explicitly specified it using `theme_grey()`; if you do not specify a theme this is the theme that will be used for your plot. There are other themes that are part of the `ggplot` package that include `theme_bw()`, `theme_minimal()`, `theme_classic()` or `theme_light()`.
 
-Try one!
+`r msmbstyle::question_begin(label = "ques:Vis-1")`
+
+Re-plot the same figure using the four themese specified above.
+
+`r msmbstyle::question_end()`
 
 
 You will likely find a theme that you like but still want to make additional tweaks in that case `theme()` is your friend. 
 
 Let's go back to our bar plot of the global temperature anomaly to look at an example of likely the three most common things you will want to adjust which is the legend position, changing font size, color, turning x-axis labels by 90 degrees.
 
-```{r}
+```{r fig.cap="Change in mean global temperature relative to long-term avaerage with customized font sizes and legend positions."}
 
 temperature %>%
   mutate(year_type = ifelse(`J-D` <=0, "colder", "hotter")) %>%
@@ -458,7 +462,7 @@ But what if we want to generate individual plots that might fit together themati
 
 In our data folder there is a tab-delimited file with monthly mean CO2 concentrations (parts per million) from Maunua Loa. Let's read in that data set and create line plot with a regression line.
 
-```{r}
+```{r fig.cap="Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory from 1958 - 2021."}
 
 carbon <- read_delim("data/CO2_monthly.txt", delim = "\t")
 
@@ -475,7 +479,7 @@ ggplot(carbon, aes(x = date, y = average)) +
 
 We also have a data set from the Global Carbon Project downloaded from the [Our World in Data repository](https://github.com/owid/co2-data) that contains atmospheric CO2 emissions. We can plot that as a simple line plot with a regression.
 
-```{r}
+```{r fig.cap="Global atmospheric CO2 emissions."}
 
 emissions <- read_delim("data/emissions.txt", delim = "\t") %>%
   filter(iso_code == "OWID_WRL")
@@ -517,7 +521,7 @@ p2 <- ggplot(emissions, aes(x = year, y = co2)) +
 
 Now we can combine them side by side using a simple syntax.
 
-```{r}
+```{r fig.cap="Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory (left panel) and Global atmospheric CO2 emissions (right panel)."}
 
 p1 + p2
 
@@ -525,7 +529,7 @@ p1 + p2
 
 Similarly, we can plot them underneath each other like so -
 
-```{r}
+```{r fig.cap="Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory (top panel) and Global atmospheric CO2 emissions (bottom panel).", fig.height=7}
 
 p1 / p2
 
@@ -533,7 +537,7 @@ p1 / p2
 
 Oh, it gets better. Let's say we wanted to plot our global mean temperatures in the top row and our two emissions plots below.
 
-```{r}
+```{r fig.cap="Comparison of change in mean global temperature (top panel), atmospheric CO2 concentrations (bottom left), and atmospheric CO2 emissions (bottom right).", fig.height=11}
 
 p3 <- temperature %>%
   mutate(year_type = ifelse(`J-D` <=0, "colder", "hotter")) %>%
@@ -569,7 +573,7 @@ Finally, the `ggplot2` has a function called `ggsave()` that will allow you to d
 
 By default it will save the last plot that was plotted. If you specify the format in the file name (e.g. `*.svg`, `*.jpg`, `*.png`) it will automatically recognize the format^[Remember that we have designed our research compendium to keep raw and processed data, and results separate? Figures are considered results so you should always save them to the `results` folder.].
 
-```{r}
+```{r fig.cap="Change in mean global temperature realtive to long-term average."}
 
 temperature %>%
   mutate(year_type = ifelse(`J-D` <=0, "colder", "hotter")) %>%
@@ -600,7 +604,7 @@ Ready to take the training wheels off?
 
 Increasing global temperatures are effecting change across the different components of the climate system. There are several data sets in your `data` folder. Read in each data set as a data frame, use `View()` to take a look at what information is contained in the data set and the use your new found visualization skills to plot the data using `ggplot`.
 
-`r msmbstyle::question_begin(label = "ques:Vis-")`
+`r msmbstyle::question_begin(label = "ques:Vis-2")`
 
 Increasing atmospheric temperatures result in land ice melting and the ocean heat content rising. The latter leads to thermal expansion which together with the increase freshwater inflow results in rising sea levels.
 
@@ -622,7 +626,7 @@ Write a short description of your figure summarizing the key results displayed.
 
 Here's an example of what that could look like.
 
-```{r echo=FALSE}
+```{r fig.cap="Change in mean global coastal sea level using costal sea level tide gauges (blue) and satellite data (red).", echo=FALSE}
 
 ggplot(sealevel, aes(x = date, y = gmsl, color = method)) +
   geom_line() +
@@ -640,7 +644,7 @@ ggplot(sealevel, aes(x = date, y = gmsl, color = method)) +
 `r msmbstyle::question_end()`
 
 
-`r msmbstyle::question_begin(label = "ques:Vis-")`
+`r msmbstyle::question_begin(label = "ques:Vis-3")`
 
 Our next data set is from the [National Snow and Ice Data Center](https://nsidc.org/data/seaice_index/archives) and contains the Arcitc (Northern Hemisphere) July sea ice extent.
 
@@ -661,7 +665,7 @@ Write a short description of your figure summarizing the key results displayed.
 `r msmbstyle::question_end()`
 
 
-`r msmbstyle::question_begin(label = "ques:Vis-")`
+`r msmbstyle::question_begin(label = "ques:Vis-4")`
 
 Let's take a look at the equivalent data set depicting sea ice extent in the Antarctic (Southern Hemisphere.)
 
@@ -682,7 +686,7 @@ Write a short description of your figure summarizing the key results displayed.
 `r msmbstyle::question_end()`
 
 
-`r msmbstyle::question_begin(label = "ques:Vis-")`
+`r msmbstyle::question_begin(label = "ques:Vis-5")`
 
 One more data set. This one is from the NOAA Hurricane Research Division. While interpreting the observed patterns in sea level and ice extent and modeling future projections is pretty straightforward. For this coding challenge you will need to combine your data wrangling and visualization skills!
 
@@ -734,7 +738,7 @@ Write a short description for each figure summarizing the key results displayed 
 
 `r msmbstyle::question_end()`
 
-`r msmbstyle::question_begin(label = "ques:Vis-")`
+`r msmbstyle::question_begin(label = "ques:Vis-6")`
 
 Choose five of the plots we have generated in this channel and combine them into a single plot using `patchwork`; include at least two columns and two rows in your layout. 
 
