@@ -740,7 +740,7 @@ Write a short description for each figure summarizing the key results displayed 
 
 `r msmbstyle::question_begin(label = "ques:Vis-6")`
 
-Choose five of the plots we have generated in this channel and combine them into a single plot using `patchwork`; include at least two columns and two rows in your layout. 
+Choose five of the plots we have generated in this module and combine them into a single plot using `patchwork`; include at least two columns and two rows in your layout. 
 
 Bonus: You can use `fig.height=` and `fig.width=` in the first line starting a new code to specify the dimensions of the output of a figure in the knitted document. When you initially knit your Rmarkdown file you will find that the default dimensions will not format your you multi-panel plot in a way that does not make it super legible. Manipulate these parameters and re-knit your html to display your figure in an appropriate way.
 
