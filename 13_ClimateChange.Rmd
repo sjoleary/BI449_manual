@@ -41,7 +41,7 @@ After completing this tutorial you should be able to
 
 * analyze earth's global temperatures to determine if they are increasing
 * analyze CO<sub>2</sub> data to determine if atmospheric levels are increasing
-* correlate CO<sub>2</sub> and global temperature to determine relationship
+* compare rates of increase of CO<sub>2</sub> and global temperature
 * compare current trends of with rates of change during pre-historic periods using ice core data
 * interpret results to understand current climate change
 
@@ -55,12 +55,6 @@ You will use this `Rmarkdown` file to record your answers. So, per usual, first 
 
 Global change biology/ecology is an emerging field of research that is focused how changes in temperature and precipitation resulting from anthropogenic climate change will in turn alter the distribution, abundance, behavior, and physiology of on individual species, populations, communities, and ecosystems. In recent years, modeling has become increasingly sophisticated. Additionally, long-term and large-scale data sets are becoming increasingly available. This allows us to not only investigate impacts that can be observed now but also predict how different scenarios of global change will impact the biosphere. Typical lines of investigation include range shifts and invasions, how communities can be altered and the formation of new ones, impacts of urbanization, wildfires, and other natural catastrophes, loss of biodiversity, and changes in phenology along with understanding mechanisms of species/ecosystem resilience, and the interplay of biosphere, atmosphere, and hydrosphere. Many problems have both a temporal and spatial aspect making them especially complex and difficult to model. 
 
-Climate regimes are defined by patterns of temperature and precipitation. Global temperature is a function of how much energy the earth receives and stores which in turn is influenced by three major factors:
-
-1. The amount of energy received from the sun.
-2. Reflection of energy by earth's surface.
-3. Atmospheric composition (greenhouse gas effect).
-
 During this unit we will start by taking a look at past and present rates of change of global temperature and CO<sub>2</sub> concentrations. Then we will take a look at some additional data sets to sharpen our visualization skills. 
 
 Let's start by loading the packages we will need for this tutorial.
@@ -70,14 +64,42 @@ Let's start by loading the packages we will need for this tutorial.
 # load libraries
 library(knitr)             # kable() to make pretty tables
 library(tidyverse)         # includes readr, tidyr, and dplyr to wrangle data & ggplot to plot
-library(ggthemes)          # additional options for formatting plots
 library(plotly)            # makes interactive plots possible
-library(patchwork)         # allows us to combine plots
+library(patchwork)
 
 # turn of sci notation
 options(scipen=999)
 
 ```
+
+
+## Investigating Climate Change
+
+Climate regimes are defined by patterns of temperature and precipitation. Global temperature is a function of how much energy the earth receives and stores which in turn is influenced by three major factors:
+
+1. The amount of energy received from the sun.
+2. Reflection of energy by earth's surface.
+3. Atmospheric composition (greenhouse gas effect).
+
+The most recent [IPCC Asessement](https://www.ipcc.ch/assessment-report/ar6/) has made two very clear statements regarding climate change:
+
+1. Climate change “unequivocally” caused by humans.
+2. The impact of anthropogenic climate change is “unprecedented”.
+
+Based on their assessment of studies having looked at global warming and climate change to date, the global mean warming is estimated at 1.1°C compared to the pre-industrial record. Additionally, under every emission scenario and average warming of 1.5 °C is likely to be reached in in next 20 years. Finally, some effects such as melting glaciers, ice sheets and the permafrost have been deemed irreversible.
+
+Current climate change is concerning not (only) because of absolute warmth of the earth but due to rate at which it is occurring. What this means is that over the history of our planet there have been times at which temperatures have been higher but what is "unprecedented" is the **rate** of increase and impact that is having on our planet^[We will look at examples of that impact using various case studies.]
+
+The reason why the IPCC describes current climate change as **anthropogenic** is that increasing levels of atmospheric CO2 are driving the rapid increase in temperatures. Earth absorbs incoming solar radiation at its surface and emits long-wave radiation to maintain the energy balance at the surface. Only as small portion of that emitted radiation goes directly into space, most of it is absorbed by greenhouse gases (e.g. CO2) in the atmosphere. For the atmosphere to maintain its energy balance it emits radiation to space and back to earth. With increasing concentrations of GHG, the atmosphere absorbs and re-emits increasingly more energy. This creates an imbalance at earth's surface and as a response earth continues to emit more energy to re-balance the budget and as a result global temperatures increase.
+
+![The atmospheric energy budget (weather.gov)](figures/energy_balance.jpg)
+Before we get started let's consider what data sets we need to investigate whether rates of temperature increase are indeed "unprecedented", to identify patterns of atmospheric CO2 concentrations consistent with anthropogenically driven climate change, and what we would expect our results to look like if the IPCC assessment is indeed correct in their claims.
+
+* what variables/measurements do we need?
+* what comparisons do we need to be able to make to determine if the rate of temperature increase is unprecedented?
+* what would patterns consistent with anthropogenically driven climate change look like?
+
+We also need to consider limitations of our approach. In this case, we will need to consider whether our approach is investigating a causal or mechanistic effect in and of itself or if we are uncovering evidence consistent with a known mechanism/process.
 
 
 ## Current rates of air temperature change
@@ -96,7 +118,7 @@ The air temperature data we will be using is compiled by the Goddard Institute f
 to the section `Tables of Global and Hemispheric Monthly Means and Zonal Annual Means` and download the [`CSV`](https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv) version of the `Global-mean monthly seasonal, and annual means`.
 
 
-`r msmbstyle::question(label = "ques:cch-2", text = "This data is presented as temperature anomalies, i.e. as deviations from the corresponding 1951 - 1980 mean. Explain what this means and argue why this is a good way to present this data..")`
+`r msmbstyle::question(label = "ques:cch-2", text = "This data is presented as temperature anomalies, i.e. as deviations from the corresponding 1951 - 1980 mean. Explain what this means and argue why this is a good way to present this data.")`
 
 After you have downloaded the data set place it in your `data` folder in your project directory and read it into your `Global Environment`.
 
@@ -194,9 +216,9 @@ ggplot(temperature, aes(x = Year, y = `J-D`)) +
 
 `r msmbstyle::solution_end()`
 
-`r msmbstyle::question(label = "ques:cch-7", text = "Interpret the figure: Describe the change in the deviation of global temperature to the 1950-1980 mean. Include and explanation of what it means for values to be negative or positive.")`
+`r msmbstyle::question(label = "ques:cch-7", text = "Describe & interpret the figure: Describe the change in the deviation of global temperature to the 1950-1980 mean. Include and explanation of what it means for values to be negative or positive.")`
 
-This figure gives us a qualitative view of changing global temperatures. To quantitatively assess the rate of change, we can fit a linear regression as `y = b + mx`. With `m` as the slope and `b` as the intercept to determine the rate of change. 
+This figure gives us a qualitative view of changing global temperatures. To quantitatively assess the rate of change, we can fit a linear regression as `y = mx + b`. With `m` as the slope and `b` as the intercept to determine the rate of change. 
 
 For this example you would define the rate of change as the change in temperature divided by the change in time for a certain time period. A more general definition would be that you are calculating the **slope** of the line you have fit through the data as the change-in-y divided by the change-in-x^[If you compare the two figures you should see that fitting a linear regression is an oversimplification but it will allow us to make a quantitative comparison].
 
@@ -299,7 +321,7 @@ head(CO2)
 
 `r msmbstyle::question(label = "ques:cch-15", text = "Plot the change in CO2 over time and use a linear regression to determine the rate of change in atmospheric CO2 over the entire data set based on your analysis. Argue how confident you are in these results.")`
 
-`r msmbstyle::question(label = "ques:cch-16", text = "Compare your results of rates of change of average global temperature and atmospheric CO2 and explain the phenomenon that can be used to explain this.")`
+`r msmbstyle::question(label = "ques:cch-16", text = "Compare your results of rates of change of average global temperature and atmospheric CO2 and describe the phenomenon that can be used to explain this.")`
 
 ```{r fig.cap="Comparison of increase in mean global temperature anomaly relative to 1951-1980 (left) and increase in mean atmospheric CO2 concenttrations (right panel) measured a Mauna Loa Observatory. Regression lines indicating temporal trend included in red.", fig.height=4, echo=FALSE}
 
@@ -520,12 +542,12 @@ summary(score_model)
 
 `r msmbstyle::question(label = "ques:cch-21", text = "Identify two more ranges with increasing temperatures and determine the rate of change during that time period. Pro tip: Identify another time range - then ask the person next to you what time period they ran.")`
 
-Now, let's take a look at past patterns of changes in atmospheric CO<sub>2</sub> over time.
+Now, let's take a look at past patterns of changes in atmospheric CO<sub>2</sub> over time^[I dropped the vostok_ice.txt file in our slack channel, you will need to download it and move it into your data folder. Then you can use the code using read_delim() below to read it in.].
 
 ```{r eval=FALSE}
 
 # define url
-url <- "http://cdiac.ess-dive.lbl.gov/ftp/trends/CO<sub>2</sub>/vostok.icecore.CO<sub>2</sub>"
+url <- "http://cdiac.ess-dive.lbl.gov/ftp/trends/CO2/vostok.icecore.CO2"
 
 # download file
 download.file(url, "data/vostok_ice.txt")
@@ -533,15 +555,41 @@ download.file(url, "data/vostok_ice.txt")
 # load dataset
 vostok_ice <- read_delim("data/vostok_ice.txt", delim = "\t",
                      skip = 21,
-                     col_names = c("depth", "age_ice", "age_air", "CO<sub>2</sub>"))
+                     col_names = c("depth", "age_ice", "age_air", "CO2"))
 
 ```
 
-`r msmbstyle::question(label = "ques:cch-22", text = "Apply what you have learned identifying past periods of rapid temperature increase and calculating the rate of change and do the same for the CO<sub>2</sub> data set (select one time period with rapid increase).")`
+`r msmbstyle::question(label = "ques:cch-22", text = "Select one time period with rapid increase in CO2 concentrations and apply what you have learned identifying past periods of rapid temperature increase to calculating the rate of change.")`
 
-`r msmbstyle::question(label = "ques:cch-23", text = "Use your results to compare current changes (approx. 200 years) in atmospheric and CO2 concentrations and global temperature to pre-historic changes.")`
+## Final Conclusions
 
-`r msmbstyle::question(label = "ques:cch-24", text = "Interpret your results to assess whether recent changes in temperature are due to natural vs anthropogenic factors. For your answer consider both arguments that attribute the change to anthropogenic factors and natural fluctuations.")`
+Now it's time to put everything together. You might want to refer back to the beginning of this chapter when we looked at some background information about the IPCC report, the atmospheric energy budget, formulated our central questions, thought about what data sets when can use to answer our question, and the limitations of our approach.
+
+`r msmbstyle::question_begin(label = "ques:cch-23")`
+
+Before we summarize and then interpret our results, let's re-orient ourselves to what we've done with this analysis.
+
+* Write out the central question(s) we are asking.
+* List the data sets you used to investigate and what metric you calculated for each.
+
+`r msmbstyle::question_end()`
+
+Well-written papers frequently end their introduction section with a paragraph that summarizes what their study is investigating and how they are investigating that (set of) questions - it forms a "bridge" between the introduction that sets up relevant background information (why is my question important?) and the methods section which is a very detailed account of how data was acquired (experimental design), processed, and analyzed.
+
+If you read several of these paragraphs you will realize that they all contain a statement that follows a general formula along these lines:
+
+> In this study, we investigated [CENTRAL QUESTION OR HYPOTHESIS]. To do this we used [DESCRIPTION OF THE TYPE OF DATA SET GENERATED] to [METRICS THAT WERE CALCULATED].
+
+You should always be able to make a 2-3 sentence statement summarizing what you are investigating and how you did it, it's a good self-check that you know what you're trying to accomplish.
+
+
+`r msmbstyle::question(label = "ques:cch-24", text = "Use your results to compare current changes over the last approx. 200 years in atmospheric and CO2 concentrations and global temperature to pre-historic changes.")`
+
+*Be strategic in how you structure your answer to put together all the parts of our analysis. For example, start with temperature and compare the rate of change you calculate for recent times to the rate of change you calculated during the more distant past (glacials/interglacials)^[ Remember to include units!]. In include your own rate of change + the answers your classmates posted in the slack channel. Then make a statement about whether or not we are currently observing an "unprecedent" change. Then do the same for CO2 concentrations. At this point you are just summarizing and describing your results, you can make clear statements of whether or not rates are positive/negative (your variables are increasing/decreasing), and whether you see the same/opposite trends but you should not yet interpret what those results mean. This would be equivalent to the results section of a lab report or research paper.*
+
+`r msmbstyle::question(label = "ques:cch-25", text = "Interpret your results to assess whether recent changes in temperature are due to natural vs anthropogenic factors. For your answer consider both arguments that attribute the change to anthropogenic factors and natural fluctuations.")`
+
+*Now you are entering the interpretation/discussion component of your analysis. At this point your now what your key results are and you need to figure out what they mean; essentially you are finally getting around to answering those key questions you asked before designing your experiment/study. You are going to use your results as evidence for/support of your conclusion. This means that you need to demonstrate that your results are consistent with your conclusion. You also want to consider alternative explanations, limitations of your data etc. Of course, ideally you can exclude those based on e.g. evidence from other studies/data sets.*
 
 </br>
 
