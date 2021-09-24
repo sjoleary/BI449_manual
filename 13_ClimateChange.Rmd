@@ -92,7 +92,12 @@ Current climate change is concerning not (only) because of absolute warmth of th
 
 The reason why the IPCC describes current climate change as **anthropogenic** is that increasing levels of atmospheric CO2 are driving the rapid increase in temperatures. Earth absorbs incoming solar radiation at its surface and emits long-wave radiation to maintain the energy balance at the surface. Only as small portion of that emitted radiation goes directly into space, most of it is absorbed by greenhouse gases (e.g. CO2) in the atmosphere. For the atmosphere to maintain its energy balance it emits radiation to space and back to earth. With increasing concentrations of GHG, the atmosphere absorbs and re-emits increasingly more energy. This creates an imbalance at earth's surface and as a response earth continues to emit more energy to re-balance the budget and as a result global temperatures increase.
 
-![The atmospheric energy budget (weather.gov)](figures/energy_balance.jpg)
+<br>
+
+![The atmospheric energy budget source weather.gov](figures/energy_balance.jpg)
+
+<br>
+
 Before we get started let's consider what data sets we need to investigate whether rates of temperature increase are indeed "unprecedented", to identify patterns of atmospheric CO2 concentrations consistent with anthropogenically driven climate change, and what we would expect our results to look like if the IPCC assessment is indeed correct in their claims.
 
 * what variables/measurements do we need?

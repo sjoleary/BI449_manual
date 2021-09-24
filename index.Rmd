@@ -66,6 +66,25 @@ Most of the exercises will be completed during lab/lecture time though occasiona
 
 You are encouraged to work collaboratively both during/outside of class times but everyone should be submitting their own work. If you worked closely with a certain person please make a note at the beginning of your document.
 
+
+### Due Sunday, Sept. 26th {-}
+
+Complete [Chapter 13](https://bi449fa21.netlify.app/climate-change.html) in our lab manual. Now that you have gained additional `Rmarkdown skills`, use those to format your “report” that you will hand in. Code chunks should have comments, add answers to questions in plain text (not as code in chunks), use headers intentionally, and of course you have options like bullet points etc. as well. Make sure that your `html` file has knitted as expected before you upload it; this includes headers being correctly formatted, bullet points formatted etc. If it hasn't go back to the Rmarkdown file and fix them, re-knit and then upload.
+
+When you are in the process of learning how to write up your results (and trying to keep them separate from your interpretation/discussion) it is perfectly fine to start with a simple structure that is formulaic and more akin to bulleted declarative sentences than carefully, crafted prose. Sometimes it helps you actually write them out as bullet points.
+So an answer for Q13.24 could start like this ...
+
+* We compared rates of increase in the last 200 years for global mean temperature and atmospheric CO2 concentrations to data from the last approx. 800,000 years.
+* Over the last 200 years there is a significant relationship between time and temperature. The rate of temperature increase currently is ... C per year. For past time ranges rates of increase ranged from x - x (and then you could have subpoints with the time or a table for individual time ranges + rates).
+* Statement about whether rate of increase is higher (steeper) than in the past
+* Statement about current CO2 rate of increase + in the past.
+* Statement about whether current CO2 and temperature rate of increase show the same trend.
+
+Separating out individual components into bullet points helps you organize what components belong together. Once you get used to organizing your thoughts you will automatically start to transition into being able to write better descriptions of your results (regardless of whether tables or figures).
+
+Good communication starts with good organization of your thoughts, if you know what you want to say and how everything fits together chances are much higher that somebody else will be able to follow what you are trying to communicate to them.
+
+
 ### Due Sunday, Sept. 19th {-}
 
 Complete [Chapter 9](hhttps://bi449fa21.netlify.app/scientific-misconduct-and-the-reproducible-crisis.html) in our lab manual, no code chunks but be sure to read the `Rmarkdown` challenge and include that in your document. Submit your knitted html file through Canvas as HW09^[I've updated the HW assignment numbers to match the chapter numbers so we've skipped a few.].
