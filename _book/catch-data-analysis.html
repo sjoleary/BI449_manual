@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-23" />
+<meta name="date" content="2021-09-24" />
 
 
 <meta name="description" content="8 Catch data analysis | Data Science for the Natural Environment (FA21)">
@@ -390,9 +390,9 @@ Determine how many individuals have information on their life history stage.
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-33" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-33', 'sol-start-33')"></span>
+► Solution<span id="sol-start-7" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-7', 'sol-start-7')"></span>
 </p>
-<div id="sol-body-33" class="solution-body" style="display: none;">
+<div id="sol-body-7" class="solution-body" style="display: none;">
 <p>There are two approaches we can take.</p>
 <p>The first one would involve sub-setting your <code>data.frame</code> using <code>filter()</code> to contain only individuals that fulfill the conditions of specific length ranges that fit the ranges above for each life history stage and the add a new column with the correctly assigned life history stage<label for="tufte-sn-42" class="margin-toggle sidenote-number">42</label><input type="checkbox" id="tufte-sn-42" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">42</span> Remember, you can use <code>&amp;</code> and <code>|</code> to combine two conditions</span>.</p>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="catch-data-analysis.html#cb176-1"></a><span class="co"># C. brevipinna, Carlson &amp; Baremore 2005</span></span>
@@ -843,9 +843,9 @@ Take a quick look at the data set to determine what columns are included and wha
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-34" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-34', 'sol-start-34')"></span>
+► Solution<span id="sol-start-8" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-8', 'sol-start-8')"></span>
 </p>
-<div id="sol-body-34" class="solution-body" style="display: none;">
+<div id="sol-body-8" class="solution-body" style="display: none;">
 <p>Correct, a simple <code>mutate()</code> will do the trick.</p>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="catch-data-analysis.html#cb181-1"></a>set_meta &lt;-<span class="st"> </span>set_meta <span class="op">%&gt;%</span></span>
 <span id="cb181-2"><a href="catch-data-analysis.html#cb181-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Hook_Hours =</span> Hooks <span class="op">*</span><span class="st"> </span>Soak_Time)</span></code></pre></div>
@@ -870,9 +870,9 @@ If we look at our elasmo data.frame you will notice that we have a column called
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-35" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-35', 'sol-start-35')"></span>
+► Solution<span id="sol-start-9" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-9', 'sol-start-9')"></span>
 </p>
-<div id="sol-body-35" class="solution-body" style="display: none;">
+<div id="sol-body-9" class="solution-body" style="display: none;">
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="catch-data-analysis.html#cb182-1"></a>elasmos &lt;-<span class="st"> </span>elasmos <span class="op">%&gt;%</span></span>
 <span id="cb182-2"><a href="catch-data-analysis.html#cb182-2"></a><span class="st">  </span><span class="kw">unite</span>(Set_ID, Year, Month, Day, Set, <span class="dt">sep =</span> <span class="st">"_"</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span></span>
 <span id="cb182-3"><a href="catch-data-analysis.html#cb182-3"></a><span class="st">  </span><span class="kw">arrange</span>(Set_ID)</span></code></pre></div>
@@ -896,9 +896,9 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-36" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-36', 'sol-start-36')"></span>
+► Solution<span id="sol-start-10" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-10', 'sol-start-10')"></span>
 </p>
-<div id="sol-body-36" class="solution-body" style="display: none;">
+<div id="sol-body-10" class="solution-body" style="display: none;">
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="catch-data-analysis.html#cb183-1"></a>elasmos_set &lt;-<span class="st"> </span>elasmos <span class="op">%&gt;%</span></span>
 <span id="cb183-2"><a href="catch-data-analysis.html#cb183-2"></a><span class="st">  </span><span class="kw">count</span>(Set_ID)</span></code></pre></div>
 <p class="solution-end">
@@ -1006,9 +1006,9 @@ Choose one species and calculate the CPUE per set. For convenience convert CPUE 
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-37" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-37', 'sol-start-37')"></span>
+► Solution<span id="sol-start-11" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-11', 'sol-start-11')"></span>
 </p>
-<div id="sol-body-37" class="solution-body" style="display: none;">
+<div id="sol-body-11" class="solution-body" style="display: none;">
 <p>This is what that could look like for a single species.</p>
 <p><!--
 <caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-132">Table 8.4: </span>Catch per unit effort (1000 hook hours) for each site.</span><!--</caption>--></p>
@@ -1341,7 +1341,7 @@ Briefly describe the results comparing CPUE per life history stage and site and 
 <a href="scientific-misconduct-and-the-reproducible-crisis.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-23
+2021-09-24
  using 
 R version 4.0.2 (2020-06-22)
 </p>

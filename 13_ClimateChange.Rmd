@@ -94,7 +94,7 @@ The reason why the IPCC describes current climate change as **anthropogenic** is
 
 <br>
 
-![The atmospheric energy budget source weather.gov](figures/energy_balance.jpg)
+![The atmospheric energy budget source: weather.gov](figures/energy_balance.jpg)
 
 <br>
 
