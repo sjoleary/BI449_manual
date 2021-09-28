@@ -78,13 +78,15 @@ Exploratory analysis is an important component of data science as it not only gi
 
 The grammar of graphics breaks down the components of any visualization into seven components.
 
-* **Data** - the component of data set to visualize
-* **Aesthetics** including axes, plot positions, and encodings such as size, shape, color
-* **Scale** e.g normalizing values
-* **Geometric objects** including points, lines, bars, ... to represent data
-* **Statistics**, including confidence intervals, means, quantiles, ...
-* **Facets**, i.e. subplots based on multiple dimensions
+* **Data** is the component of data set to visualize^[You will see that this is either explicitly specified as the `data` argument (`ggplot(data = df)`), or you can just specify the data.frame or tibble to plot without typing in `data =` as `ggplot(df)`.].
+* **Mapping** or **Aesthetics** including variables to be plotted, plot positions (e.g. x or y axis), and encodings such as size, shape, color^[this is specified as the `mapping` argument using `aes()`. Again you can explicitly call the argument as `mapping = `, i.e. `ggplot(data = df, mapping = aes())`, or you can just specify the mapping aesthethics using `aes()` because you are using the arguments in the correct sequence `(ggplot(df, aes()))`.].
+* **Geometric objects** (or layers) are what you actually end up seeing in the visualization, e.g. points, lines, bars etc. to represent data. This can also include statistical transformations^[these functions will all start with `geom_*` or `stat_*`].
+* **Scale**s map the values in the aesthetic space you specified, this includes your scales for color, shape, and size, you can also explicitly specify scales for the x and y axis.
 * **Coordinate system**, e.g cartesian, polar, ...
+* **Facets**, i.e. subplots based on multiple dimensions.
+* **Statistics**, including confidence intervals, means, quantiles, may additionally be added to the plot.
+
+Additionally, you can create and use **themes** that control additional aspects of your your figure is displayed including font size, background color, etc.
 
 Until now you've probably thought of each plot type as it's own distinctive format (a scatter plot, a pie chart, etc) and have not considered that each plot can be broken down into these fundamental components, so at first this way of thinking of plots will likely not seem intuitive. 
 
