@@ -600,17 +600,22 @@ Check your results folder to see if you were successful!
 
 If you assign your plot to an object you can use the `plot` argument of the `ggsave()` function to export it. This also works for figures that consist of multiple panels combined using `patchwork`.
 
+
 ## More Plots!
 
 Ready to take the training wheels off? 
 
 Increasing global temperatures are effecting change across the different components of the climate system. There are several data sets in your `data` folder. Read in each data set as a data frame, use `View()` to take a look at what information is contained in the data set and the use your new found visualization skills to plot the data using `ggplot`.
 
+We have looked at rising mean global temperatures and discovered that rapidly increasing emissions and atmospheric concentrations of CO2 are consistent with increased concentrations of greenhouse gases driving temperature change.
+
+The effects of global warming are observed throughout components of the climate system including the atmosphere (increase in atmospheric temperatures), the hydrosphere (marine and freshwater systems), crysophere (land and sea ice), and lithosphere (earth's surface/crust). Let's look at a few data sets that illustrate the impact of rising temperatures.
+
 `r msmbstyle::question_begin(label = "ques:Vis-2")`
 
 Increasing atmospheric temperatures result in land ice melting and the ocean heat content rising. The latter leads to thermal expansion which together with the increase freshwater inflow results in rising sea levels.
 
-The first data set is from the NOAA Laboratory for Satellite Altimetry and contains records from coastal sea level tide gauges. Start by reading in the data set
+The first data set is from the NOAA Laboratory for Satellite Altimetry and contains records from coastal sea level tide gauges. Start by reading in the data set:
 
 ```{r}
 
@@ -618,15 +623,17 @@ sealevel <- read_delim("data/sealevel.txt", delim = "\t")
 
 ```
 
-Take a quick look at the data set using `Vew()` and briefly summarize what data is contained in this data set^[Include things like the number of columns, what data is contained in each sample, what time periods are included etc. Practice deducing these types of things from the context of the data set description above and by browsing the content.]
+Take a quick look at the data set using `View()` and briefly summarize what data is contained in this data set^[Include things like the number of columns, what data is contained in each sample, what time periods are included etc. Practice deducing these types of things from the context of the data set description above and by browsing the content.]
 
-Plot the change in means sea level over time as a line plot and color code the line(s) by method. Chose a theme and position your legend below the figure. Bonus: Figure out how to use `geom_hline()` to add a line at 0.
+Plot the change in mean sea level over time as a line plot and color code the line(s) by method (see column names). Chose a theme and position your legend below the figure. 
+
+Extra challenge^[YJust because it's extra doesno't mean it's optional ... you should be able to figure this out using the tool set you have and practicing reading the manual pages to learn how to use functions!]: Figure out how to use `geom_hline()` to add a line at 0.
 
 Comment each line of your ggplot code (you can add comments between the lines or at the end), remember to caption your figure, list your data source and and label your axis in a meaningful way.
 
 Write a short description of your figure summarizing the key results displayed.
 
-Here's an example of what that could look like.
+Here's an example of what tour final figure could look like.
 
 ```{r fig.cap="Change in mean global coastal sea level using costal sea level tide gauges (blue) and satellite data (red).", echo=FALSE}
 
@@ -648,7 +655,7 @@ ggplot(sealevel, aes(x = date, y = gmsl, color = method)) +
 
 `r msmbstyle::question_begin(label = "ques:Vis-3")`
 
-Our next data set is from the [National Snow and Ice Data Center](https://nsidc.org/data/seaice_index/archives) and contains the Arcitc (Northern Hemisphere) July sea ice extent.
+Our next data set is from the [National Snow and Ice Data Center](https://nsidc.org/data/seaice_index/archives) and contains the Arctic (Northern Hemisphere) July sea ice extent.
 
 ```{r}
 
@@ -656,9 +663,11 @@ ice_arctic <- read_delim("data/arctic_ice.txt", delim = "\t")
 
 ```
 
-Take a quick look at the data set using `Vew()` and briefly summarize what data is contained in this data set. Be specific.
+Take a quick look at the data set using `View()` and briefly summarize what data is contained in this data set. Be specific.
 
-Plot the change in ice extent over time as a line plot. Chose a theme. Add a linear regression and confidence interval. Bonus: Change the default colors of the regression line and the confidence interval.
+Plot the change in ice extent over time as a line plot. Chose a theme. Add a linear regression and confidence interval. 
+
+Extra Challenge: Change the default colors of the regression line and the confidence interval.
 
 Comment each line of your ggplot code (you can add comments between the lines or at the end), remember to caption your figure, list your data source and and label your axis in a meaningful way.
 
@@ -677,9 +686,11 @@ ice_arctic <- read_delim("data/antarctic_ice.txt", delim = "\t")
 
 ```
 
-Take a quick look at the data set using `Vew()` and briefly summarize what data is contained in this data set. Be specific.
+Take a quick look at the data set using `View()` and briefly summarize what data is contained in this data set. Be specific.
 
-Plot the change in ice extent over time as a line plot. Chose a theme. Add a linear regression and confidence interval. Bonus: Change the default colors of the regression line and the confidence interval.
+Plot the change in ice extent over time as a line plot. Chose a new theme from what you've been using previously. Add a linear regression and confidence interval. 
+
+Extra Challenge: Change the default colors of the regression line and the confidence interval.
 
 Comment each line of your ggplot code (you can add comments between the lines or at the end), remember to caption your figure, list your data source and and label your axis in a meaningful way.
 
@@ -690,7 +701,9 @@ Write a short description of your figure summarizing the key results displayed.
 
 `r msmbstyle::question_begin(label = "ques:Vis-5")`
 
-One more data set. This one is from the NOAA Hurricane Research Division. While interpreting the observed patterns in sea level and ice extent and modeling future projections is pretty straightforward. For this coding challenge you will need to combine your data wrangling and visualization skills!
+One more data set. This one is from the NOAA Hurricane Research Division. While interpreting the observed patterns in sea level and ice extent and modeling future projections is pretty straightforward, understanding whether extreme events are getting "worse" is a little bit more complicated.
+
+Note: For this coding challenge you will need to combine your data wrangling and visualization skills!
 
 ```{r}
 
@@ -698,13 +711,13 @@ hurricane <- read_delim("data/hurricanes.txt", delim = "\t")
 
 ```
 
-Take a quick look at the data set using `Vew()` and briefly summarize what data is contained in this data set. Be specific^[Note, several of the columns start with 'Revised' this just has to do with the entire data set having revised (most recent) definitions applied for the metrics included. You can ignore that component.].
+Take a quick look at the data set using `View()` and briefly summarize what data is contained in this data set. Be specific^[Note, several of the columns start with 'Revised' this just has to do with the entire data set having revised (most recent) definitions applied for the metrics included. You can ignore that component.].
 
 When thinking about hurricanes there are two metrics to consider when determining whether or not "hurricanes have gotten worse". First we can look at whether or not hurricanes have become more common by plotting the number of hurricanes for each year. Create a faceted plot with individual line plots showing the number of named storms (this would include not only hurricanes put also tropical storms), the number of hurricanes, the number of major hurricanes, and the number of hurricanes in the United States. Add a linear regression. Chose a custom theme.
 
-You will have to reformat the data set in order to plot it in this fashion. It can be helpful to first think about what your `ggplot` code should look like to create the plot described above and then format your data set to fit those needs^[Recall that ggplot is designed not only around the grammar of graphics but also the principles of tidy data... do we currently have a tidy data set?]. 
+You will have to reformat the data set in order to plot it in this fashion. It can be helpful to first think about what your `ggplot` code should look like to create the plot described above and then format your data set to fit those needs^[Recall that ggplot is designed not only around the grammar of graphics but also the principles of tidy data... so, do we currently have a tidy data set? Or what would it need to look like for this plotting challenge?]. 
 
-Bonus: We've previously used `facet_grid()` to create faceted plots which requires us to specify how panels should be laid out in rows and/or columns. Figure out how to use `facet_wrap()` to just specify which variable to use to create individual panels with out them all needing to be laid out next to each other in columns or underneath each other in rows. 
+Extra Challenge: We've previously used `facet_grid()` to create faceted plots which requires us to specify how panels should be laid out in rows and/or columns. Figure out how to use `facet_wrap()` to just specify which variable to use to create individual panels with out them all needing to be laid out next to each other in columns or underneath each other in rows. 
 
 ```{r eval=FALSE, include=FALSE}
 
@@ -724,7 +737,7 @@ The one column you probably have not yet been able to figure out is the column c
 
 Create a bar plot showing the ACE for each year. Chose a theme and customize the color of your bars^[You can specify color and fill for bar plots. Try setting the color and fill to the same and to different colors to see what happens when you have a bar plot with this many individual bars.] 
 
-Bonus: Tru to figure out how to use `geom_hline()` to add a horizontal line indicating the mean ACE for the recorded time period.
+Extra Challenge: Use `geom_hline()` to add a horizontal line indicating the mean ACE for the recorded time period.
 
 ```{r plot-14, eval=FALSE, include=FALSE}
 
@@ -744,6 +757,6 @@ Write a short description for each figure summarizing the key results displayed 
 
 Choose five of the plots we have generated in this module and combine them into a single plot using `patchwork`; include at least two columns and two rows in your layout. 
 
-Bonus: You can use `fig.height=` and `fig.width=` in the first line starting a new code to specify the dimensions of the output of a figure in the knitted document. When you initially knit your Rmarkdown file you will find that the default dimensions will not format your you multi-panel plot in a way that does not make it super legible. Manipulate these parameters and re-knit your html to display your figure in an appropriate way.
+Extra challenge: You can use `fig.height=` and `fig.width=` in the first line starting a new code to specify the dimensions of the output of a figure in the knitted document. When you initially knit your `Rmarkdown` file you will find that the default dimensions will not format your you multi-panel plot in a way that does not make it super legible. Manipulate these parameters and re-knit your `html` to display your figure in an appropriate way.
 
 `r msmbstyle::question_end()`
