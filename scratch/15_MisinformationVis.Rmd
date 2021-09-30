@@ -33,7 +33,27 @@ options(htmltools.dir.version = FALSE)
 
 After completing this tutorial you should be able to
 
-* 
+* * describe how deliberate misinformation campaigns neglecting the existence, anthropogenic cause and/or impacts of climate change have resulted in high levels of climate change skepticism in the US
+
+
+
+## A picture is worth a thousand words*
+
+* ...when appropriately placed in context.
+
+`r tufte::margin_note("Harold Evans")`
+
+> *The camera cannot lie but it can be an accessory to untruth.*
+
+`r msmbstyle::question_begin(label = ques:misinf-)`
+
+Use the above quote to briefly discuss argue the use of photographs in a manipulative way is such a powerful tool, especially for climate skeptics and deniers.
+
+`r msmbstyle::question_end()`
+
 
 
 ## Header
+
+
+Some examples of strategies employed by climate deniers and skeptics using visualizations are drawn from Schneider et al. "Twist and Shout: Images and Graphs in Skeptical Media".

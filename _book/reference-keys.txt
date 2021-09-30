@@ -140,3 +140,8 @@ customizing-plots
 arranging-plots
 exporting-plots
 more-plots
+visualizations-as-a-tool-for-misinformation
+terms-and-definitions
+a-strategic-approach-to-identifying-misinformation
+general-stratgies-for-unmasking-manipulative-visualizations
+acknowledgements
