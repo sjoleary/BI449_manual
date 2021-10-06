@@ -14,17 +14,17 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-06" />
 
 
 <meta name="description" content="References | Data Science for the Natural Environment (FA21)">
 
 <title>References | Data Science for the Natural Environment (FA21)</title>
 
+<script src="libs/header-attrs/header-attrs.js"></script>
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
-<script src="libs/accessible-code-block/empty-anchor.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/plotly-binding/plotly.js"></script>
 <script src="libs/typedarray/typedarray.min.js"></script>
@@ -37,19 +37,19 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -102,6 +102,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="msmb.css" type="text/css" />
 <script>
@@ -171,6 +193,7 @@ function reset_tooltip(id) {
 <a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
 <a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 <a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a id="active-page" href="references.html">References</a>
 </div>
 </li>
@@ -184,30 +207,30 @@ function reset_tooltip(id) {
 <html><body><div id="references" class="section level1 unnumbered">
 <h1>References</h1>
 
-<div id="refs" class="references">
-<div>
-<p>Carlson, John K., and Ivy E. Baremore. 2005. “Growth dynamics of the spinner shark (Carcharhinus brevipinna) off the United States southeast and Gulf of Mexico coasts: A comparison of methods.” <em>Fishery Bulletin</em> 103 (2): 280–91. <a href="http://aquaticcommons.org/9614/">http://aquaticcommons.org/9614/</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div class="csl-entry">
+Carlson, John K., and Ivy E. Baremore. 2005. <span>“<span class="nocase">Growth dynamics of the spinner shark (Carcharhinus brevipinna) off the United States southeast and Gulf of Mexico coasts: A comparison of methods</span>.”</span> <em>Fishery Bulletin</em> 103 (2): 280–91. <a href="http://aquaticcommons.org/9614/">http://aquaticcommons.org/9614/</a>.
 </div>
-<div>
-<p>Goodman, SN, D Fanelli, and JPA Ioannidis. 2016. “What does research reproducibility mean?” <em>Science Translational Medicine</em> 8 (341): 12. <a href="https://stm.sciencemag.org/content/8/341/341ps12.short">https://stm.sciencemag.org/content/8/341/341ps12.short</a>.</p>
+<div class="csl-entry">
+Goodman, SN, D Fanelli, and JPA Ioannidis. 2016. <span>“<span class="nocase">What does research reproducibility mean?</span>”</span> <em>Science Translational Medicine</em> 8 (341): 12. <a href="https://stm.sciencemag.org/content/8/341/341ps12.short">https://stm.sciencemag.org/content/8/341/341ps12.short</a>.
 </div>
-<div>
-<p>Heupel, Michelle R., John K. Carlson, and Colin A. Simpfendorfer. 2007. “Shark nursery areas: Concepts, definition, characterization and assumptions.” <a href="https://doi.org/10.3354/meps337287">https://doi.org/10.3354/meps337287</a>.</p>
+<div class="csl-entry">
+Heupel, Michelle R., John K. Carlson, and Colin A. Simpfendorfer. 2007. <span>“<span class="nocase">Shark nursery areas: Concepts, definition, characterization and assumptions</span>.”</span> <a href="https://doi.org/10.3354/meps337287">https://doi.org/10.3354/meps337287</a>.
 </div>
-<div>
-<p>Plumlee, Jeffrey D., Kaylan M. Dance, Philip Matich, John A. Mohan, Travis M. Richards, Thomas C. TinHan, Mark R. Fisher, and R. J.David Wells. 2018. “Community structure of elasmobranchs in estuaries along the northwest Gulf of Mexico.” <em>Estuarine, Coastal and Shelf Science</em> 204 (May): 103–13. <a href="https://doi.org/10.1016/j.ecss.2018.02.023">https://doi.org/10.1016/j.ecss.2018.02.023</a>.</p>
+<div class="csl-entry">
+Plumlee, Jeffrey D., Kaylan M. Dance, Philip Matich, John A. Mohan, Travis M. Richards, Thomas C. TinHan, Mark R. Fisher, and R. J.David Wells. 2018. <span>“<span class="nocase">Community structure of elasmobranchs in estuaries along the northwest Gulf of Mexico</span>.”</span> <em>Estuarine, Coastal and Shelf Science</em> 204 (May): 103–13. <a href="https://doi.org/10.1016/j.ecss.2018.02.023">https://doi.org/10.1016/j.ecss.2018.02.023</a>.
 </div>
-<div>
-<p>Swift, Dominic G., and David S. Portnoy. 2020. “Identification and Delineation of Essential Habitat for Elasmobranchs in Estuaries on the Texas Coast.” <em>Estuaries and Coasts</em>, July, 1–13. <a href="https://doi.org/10.1007/s12237-020-00797-y">https://doi.org/10.1007/s12237-020-00797-y</a>.</p>
+<div class="csl-entry">
+Swift, Dominic G., and David S. Portnoy. 2020. <span>“<span class="nocase">Identification and Delineation of Essential Habitat for Elasmobranchs in Estuaries on the Texas Coast</span>.”</span> <em>Estuaries and Coasts</em>, July, 1–13. <a href="https://doi.org/10.1007/s12237-020-00797-y">https://doi.org/10.1007/s12237-020-00797-y</a>.
 </div>
 </div>
 </div></body></html>
 
 <p style="text-align: center;">
-<a href="visualizations-as-a-tool-for-misinformation.html"><button class="btn btn-default">Previous</button></a>
+<a href="exploratory-analysis.html"><button class="btn btn-default">Previous</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

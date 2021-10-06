@@ -14,17 +14,17 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-06" />
 
 
 <meta name="description" content="9 Scientific misconduct and the reproducible crisis | Data Science for the Natural Environment (FA21)">
 
 <title>9 Scientific misconduct and the reproducible crisis | Data Science for the Natural Environment (FA21)</title>
 
+<script src="libs/header-attrs/header-attrs.js"></script>
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
-<script src="libs/accessible-code-block/empty-anchor.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/plotly-binding/plotly.js"></script>
 <script src="libs/typedarray/typedarray.min.js"></script>
@@ -37,19 +37,19 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -102,6 +102,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="msmb.css" type="text/css" />
 <script>
@@ -175,6 +197,7 @@ function reset_tooltip(id) {
 <a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
 <a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 <a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -186,7 +209,7 @@ function reset_tooltip(id) {
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
 <html><body>
-<div id="scientific-misconduct-and-the-reproducible-crisis" class="section level1">
+<div id="scientific-misconduct-and-the-reproducible-crisis" class="section level1" number="9">
 <h1>
 <span class="header-section-number">9</span> Scientific misconduct and the reproducible crisis</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -208,7 +231,7 @@ function reset_tooltip(id) {
 <li>add numbered and unordered bullet points (maybe even try adding multiple levels if you’re feeling adventerous).</li>
 </ul>
 <p>For these activities we will do all the computing (thinking) with our own brains … so let’s dive straight in!</p>
-<div id="frabrication-falsification-and-plagiarism-oh-my" class="section level2">
+<div id="frabrication-falsification-and-plagiarism-oh-my" class="section level2" number="9.1">
 <h2>
 <span class="header-section-number">9.1</span> Frabrication, falsification, and plagiarism (oh my!)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('frabrication-falsification-and-plagiarism-oh-my')" onmouseout="reset_tooltip('frabrication-falsification-and-plagiarism-oh-my-tooltip')"><span class="tooltiptext" id="frabrication-falsification-and-plagiarism-oh-my-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -266,7 +289,7 @@ function reset_tooltip(id) {
 </div>
 </div>
 </div>
-<div id="p-hacking-and-data-dredging" class="section level2">
+<div id="p-hacking-and-data-dredging" class="section level2" number="9.2">
 <h2>
 <span class="header-section-number">9.2</span> P-hacking and data dredging<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('p-hacking-and-data-dredging')" onmouseout="reset_tooltip('p-hacking-and-data-dredging-tooltip')"><span class="tooltiptext" id="p-hacking-and-data-dredging-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -308,7 +331,7 @@ function reset_tooltip(id) {
 </div>
 </div>
 </div>
-<div id="you-keep-using-that-word-but" class="section level2">
+<div id="you-keep-using-that-word-but" class="section level2" number="9.3">
 <h2>
 <span class="header-section-number">9.3</span> You keep using that word, but …<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('you-keep-using-that-word-but')" onmouseout="reset_tooltip('you-keep-using-that-word-but-tooltip')"><span class="tooltiptext" id="you-keep-using-that-word-but-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -328,7 +351,7 @@ function reset_tooltip(id) {
 ► Question 9.9
 </p>
 <div class="question-body">
-<p>The National Science Foundation (NSF) defines “replicability” as “the ability of a researcher to duplicate the results ofa prior study if the same procedures rae followed but new data are collected”.</p>
+<p>The National Science Foundation (NSF) defines “replicability” as “the ability of a researcher to duplicate the results ofa prior study if the same procedures rae followed but new data are collected.”</p>
 <p>Goodman et al <span class="citation">(<a href="#ref-Goodman2016" role="doc-biblioref">2016</a>)</span> propose a framework that defines three categories based on the goals as related to transparency &amp; compete reporting of methods, producing new evidence and drawing the same conclusion. Briefly compare and contrast the categories of <strong>methods reproducibility</strong>, <strong>results reproducibility</strong>, and <strong>inferential reproducibility</strong>.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -351,9 +374,9 @@ function reset_tooltip(id) {
 </div>
 <h3>References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('NA')" onmouseout="reset_tooltip('NA-tooltip')"><span class="tooltiptext" id="NA-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
-<div id="refs" class="references">
-<div id="ref-Goodman2016">
-<p>Goodman, SN, D Fanelli, and JPA Ioannidis. 2016. “What does research reproducibility mean?” <em>Science Translational Medicine</em> 8 (341): 12. <a href="https://stm.sciencemag.org/content/8/341/341ps12.short">https://stm.sciencemag.org/content/8/341/341ps12.short</a>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Goodman2016" class="csl-entry">
+Goodman, SN, D Fanelli, and JPA Ioannidis. 2016. <span>“<span class="nocase">What does research reproducibility mean?</span>”</span> <em>Science Translational Medicine</em> 8 (341): 12. <a href="https://stm.sciencemag.org/content/8/341/341ps12.short">https://stm.sciencemag.org/content/8/341/341ps12.short</a>.
 </div>
 </div>
 </body></html>
@@ -363,7 +386,7 @@ function reset_tooltip(id) {
 <a href="responsible-research-is-reproducible-research.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

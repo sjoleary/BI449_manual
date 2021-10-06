@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="16 Exploratory Analysis | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-10-06" />
+
+
+<meta name="description" content="16 Exploratory Analysis | Data Science for the Natural Environment (FA21)">
+
+<title>16 Exploratory Analysis | Data Science for the Natural Environment (FA21)</title>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
+<a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a id="active-page" href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a><ul class="toc-sections">
+<li class="toc"><a href="#exploratory-analysis-1"> Exploratory Analysis</a></li>
+<li class="toc"><a href="#formulate-a-question"> Formulate a question</a></li>
+<li class="toc"><a href="#read-wrangle-data-set"> Read &amp; Wrangle data set</a></li>
+<li class="toc"><a href="#get-an-overview-of-the-data-set"> Get an overview of the data set</a></li>
+<li class="toc"><a href="#chose-a-question-to-explore"> Chose a question to explore</a></li>
+<li class="toc"><a href="#plot-the-data"> Plot the data!</a></li>
+<li class="toc"><a href="#iterate-your-exploration"> Iterate your exploration</a></li>
+<li class="toc"><a href="#now-you"> Now you!</a></li>
+</ul>
+<a href="references.html">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div id="exploratory-analysis" class="section level1" number="16">
+<h1>
+<span class="header-section-number">16</span> Exploratory Analysis</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this tutorial you should be able to</p>
+<ul>
+<li>identify specific steps to explore a new data set</li>
+<li>formulate a question and determine if your data set is appropriate to answer it</li>
+<li>refine questions based on data contained in a data set</li>
+<li>outline a strategy for data exploration using graphs</li>
+</ul>
+<p>Download the <a href="https://drive.google.com/drive/folders/18Sl718Ua5F_-UqHtzFgkMo5uo22Q_JJp?usp=sharing">04_ExploratoryAnalysis</a> project folder. Once you have downloaded it, unzip the project directory into your <code>BI449</code> directory.</p>
+<p>To get some practice setting up your own project files, you might notice that this one does not yet have an <code>Rproj</code> file or any <code>Rmarkdown</code> files in it. So the first thing we want to do is create a new R project. To do this open <code>Rstudio</code> then use the dropdown menu in the top right corner to select <code>New Project</code> and from there <code>New Project in an existing directory</code>. From there, navigate to and select the project create an R project.</p>
+<p>Once you have created and opened the project you should see the project name in the top right corner per usual<label for="tufte-sn-92" class="margin-toggle sidenote-number">92</label><input type="checkbox" id="tufte-sn-92" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">92</span> Pro tip: If you run into issues where an Rmarkdown won’t render or file paths aren’t working (especially if things were working previously) one of your first steps should be to double check that the correct <code>Rproj</code> is loaded.</span>.</p>
+<p>Open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Visualization/Climate Change project directory. That’s right - training wheels are off … you will need to add all of your own headers, plain text etc. Set up the <code>YAML</code> header so that you are the author and when knitted the date will reflect the date of the creation of the document.</p>
+<p>When you create a new <code>Rmarkdown</code> file, it loads a template, i.e. it shows you standard formatting options, it also means that you already have content so e.g. if you wanted to test out that you have your <code>YAML</code> header set up correctly or you are testing out a new theme, you could just knit the file and see what happens. Of course, since you are going to add your own content you should delete that automatically inserted content.</p>
+<p>Now that you have some experience using <code>Rmarkdown</code> files to document your work in a reproducible way, you have probably started making a list of preferences (e.g. printing chunk out put in the console or in the document itself) and a list of things you find annoying. We have already seen a few options to customize individual code chunks by adding arguments between the curly brackets. <code>r</code> indicates the engine (coding language) and we’ve also inserted <code>fig.height</code> and <code>fig.width</code> to alter the plot size in the final knitted document.</p>
+<p>You can also use the setup chunk to set global settings, i.e. set certain things once for the entire document.</p>
+<p>When you opened a new <code>Rmarkdown</code> file, you should have seen a code chunk in the very top that has been named <code>setup</code>^[you can name any code chunk by inserting a name right after indicating <code>r</code> as your engine. This can be helpful because you can use the navigation menu to navigate directly to a code chunk.<code>]); you will also see that it has the additional argument</code>include=FALSE<code>between the curly brackets. This means that when you knit your document, that code chunk will be run, but the code itself will not be visible in the knitted</code>html` document.</p>
+<p>In that code chunk you should see <code>knitr::opts_chunk$set(echo = TRUE)</code> - this is already setting a global format for all codes which is that when you knit the document it will print (echo) the code chunk itself and not just the output. You can add additional arguments e.g. <code>warning = FALSE</code>, <code>error = FALSE</code>, <code>message = FALSE</code> will turn off the messages, warnings and errors being printed out when knitting the document<label for="tufte-sn-93" class="margin-toggle sidenote-number">93</label><input type="checkbox" id="tufte-sn-93" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">93</span> You will still see them in the console so you can still troubleshoot a needed, it just means you don’t have it included in the outcome fo your document</span>.</p>
+<p>Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc.</p>
+<p>Let’s load our packages so we can get started. You will likely have to install <code>janitor</code> and <code>skimr</code> before you can load them<label for="tufte-sn-94" class="margin-toggle sidenote-number">94</label><input type="checkbox" id="tufte-sn-94" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">94</span> Remember, you only have to do this once … this is the type of thing where it is more convenient to run it directly in the console so it is not re-run every time you knit your document.</span>.</p>
+<div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="exploratory-analysis.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb277-2"><a href="exploratory-analysis.html#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb277-3"><a href="exploratory-analysis.html#cb277-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb277-4"><a href="exploratory-analysis.html#cb277-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb277-5"><a href="exploratory-analysis.html#cb277-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb277-6"><a href="exploratory-analysis.html#cb277-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb277-7"><a href="exploratory-analysis.html#cb277-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb277-8"><a href="exploratory-analysis.html#cb277-8" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb277-9"><a href="exploratory-analysis.html#cb277-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
+<div id="exploratory-analysis-1" class="section level2" number="16.1">
+<h2>
+<span class="header-section-number">16.1</span> Exploratory Analysis<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('exploratory-analysis-1')" onmouseout="reset_tooltip('exploratory-analysis-1-tooltip')"><span class="tooltiptext" id="exploratory-analysis-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The goal of exploratory analysis is systematic way of exploring data set primarily through visualizations. It generally is an iterative process that starts with a question or hypothesis. Most of your exploratory analysis consists of visualizing, transforming, and even modeling your data to answer that question. Finally, your would summarize your results and conclusions and use that to refine your original question or generate new questions. It frequently is the first step before deciding on what your formal analysis will look like and can serve to generate hypothesis for further exploration.</p>
+<p>Part of exploratory analysis is quality control of your data, determining if it meets your expectations and cleaning it up as needed. Frequently it includes using the existing raw data to transform your data into parameters that are more useful for your assessment.</p>
+</div>
+<div id="formulate-a-question" class="section level2" number="16.2">
+<h2>
+<span class="header-section-number">16.2</span> Formulate a question<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('formulate-a-question')" onmouseout="reset_tooltip('formulate-a-question-tooltip')"><span class="tooltiptext" id="formulate-a-question-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Recall, from our visualization of Climate Change indicators that we left the question of whether or not hurricanes are going “to get worse” unresolved even after comparing both changes in the number of names storms, major hurricanes, and the intensity.</p>
+<p>Let’s say we wanted to explore whether or not natural disasters have gotten worse as climate change has progressed. To do this we can turn to the <a href="https://www.emdat.be/">International Disaster Database</a>.</p>
+<div id="ques:eda-1" class="question">
+<p class="question-begin">
+► Question 16.1
+</p>
+<div class="question-body">
+<p>Go to their website and use information you can find about the data collected to answer the following questions (use bullet points where appropriate):</p>
+<ol style="list-style-type: decimal">
+<li>How is (emergency) disaster defined?</li>
+<li>What are the major classifications of natural disasters included in the data set?</li>
+<li>Which of these categories do you think are most likely impacted by climate change?</li>
+<li>What measures can you use to determine if natural disasters are “getting worse?” Should different categories have different measures?</li>
+<li>What other mechanisms do you think could result in an increase in natural disasters?</li>
+</ol>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:eda-2" class="question">
+<p class="question-begin">
+► Question 16.2
+</p>
+<div class="question-body">
+<p>“Are natural disasters getting worse” is a pretty general question. Based on your overview of what is in the data set, try to formulate three more specific questions that you could explore using this data set.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="read-wrangle-data-set" class="section level2" number="16.3">
+<h2>
+<span class="header-section-number">16.3</span> Read &amp; Wrangle data set<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('read-wrangle-data-set')" onmouseout="reset_tooltip('read-wrangle-data-set-tooltip')"><span class="tooltiptext" id="read-wrangle-data-set-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>You should have a copy of the tab-delimited file in your <code>data</code> folder. It contains an additional 6 lines at the top that have information on when and where it was downloaded.</p>
+<div class="sourceCode" id="cb278"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb278-1"><a href="exploratory-analysis.html#cb278-1" aria-hidden="true" tabindex="-1"></a>disaster <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/nat-disasters_emdat-query-2021-10-05.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">skip =</span> <span class="dv">6</span>)</span></code></pre></div>
+<p>Our first step always is to take a look at the data set and make sure that it has read in correctly (i.e. that the columns are correctly separated, numeric columns are numeric, character columns are characters etc.) and is in a usable format.</p>
+<div id="ques:eda-3" class="question">
+<p class="question-begin">
+► Question 16.3
+</p>
+<div class="question-body">
+<p>Take a quick look at the data set using <code>View()</code> to make sure everything has read in correctly. Quickly skim to get an idea of how many columns/rows there are, how much missing data there is, that data types are correct etc.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Even though data has read in correctly does not necessarily mean that it is in the most use-able format … remember plotting and filtering data sets requires typing variable names in over and over again. Therefore, we want to make sure that everything is set up in a way where we will be able to avoid mistakes that are mostly due to typos.</p>
+<p>For example, let’s take a look at the column names:</p>
+<div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="exploratory-analysis.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(disaster)</span></code></pre></div>
+<pre><code>##  [1] "Dis No"                          "Year"                            "Seq"                             "Glide"                          
+##  [5] "Disaster Group"                  "Disaster Subgroup"               "Disaster Type"                   "Disaster Subtype"               
+##  [9] "Disaster Subsubtype"             "Event Name"                      "Country"                         "ISO"                            
+## [13] "Region"                          "Continent"                       "Location"                        "Origin"                         
+## [17] "Associated Dis"                  "Associated Dis2"                 "OFDA Response"                   "Appeal"                         
+## [21] "Declaration"                     "Aid Contribution"                "Dis Mag Value"                   "Dis Mag Scale"                  
+## [25] "Latitude"                        "Longitude"                       "Local Time"                      "River Basin"                    
+## [29] "Start Year"                      "Start Month"                     "Start Day"                       "End Year"                       
+## [33] "End Month"                       "End Day"                         "Total Deaths"                    "No Injured"                     
+## [37] "No Affected"                     "No Homeless"                     "Total Affected"                  "Reconstruction Costs ('000 US$)"
+## [41] "Insured Damages ('000 US$)"      "Total Damages ('000 US$)"        "CPI"                             "Adm Level"                      
+## [45] "Admin1 Code"                     "Admin2 Code"                     "Geo Locations"</code></pre>
+<p>Apparently, they have not read our guidelines for naming things. Column headers with special characters and spaces are super annoying, you might recall from our previous adventures in data wrangling that every time we want to call a column with spaces we are going to have to use back ticks to tell R that it isn’t separate words but a single name.</p>
+<p>Now is probably a good time to learn how to rename columns. The most straightforward way is using <code>rename()</code>.</p>
+<p>Let’s say we wanted to rename <code>Dis No</code> to <code>DisNo</code> the syntax is simple <code>NewName = OldName</code>.</p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb281-1"><a href="exploratory-analysis.html#cb281-1" aria-hidden="true" tabindex="-1"></a>disaster <span class="sc">%&gt;%</span></span>
+<span id="cb281-2"><a href="exploratory-analysis.html#cb281-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DisNo =</span> <span class="st">`</span><span class="at">Dis No</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb281-3"><a href="exploratory-analysis.html#cb281-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 47
+##   DisNo    Year Seq   Glide `Disaster Group` `Disaster Subgro~ `Disaster Type`  `Disaster Subtyp~ `Disaster Subsu~ `Event Name` Country ISO   Region 
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
+## 1 1900-9~  1900 9002  &lt;NA&gt;  Natural          Climatological    Drought          Drought           &lt;NA&gt;             &lt;NA&gt;         Cabo V~ CPV   Wester~
+## 2 1900-9~  1900 9001  &lt;NA&gt;  Natural          Climatological    Drought          Drought           &lt;NA&gt;             &lt;NA&gt;         India   IND   Southe~
+## 3 1902-0~  1902 0012  &lt;NA&gt;  Natural          Geophysical       Earthquake       Ground movement   &lt;NA&gt;             &lt;NA&gt;         Guatem~ GTM   Centra~
+## 4 1902-0~  1902 0003  &lt;NA&gt;  Natural          Geophysical       Volcanic activi~ Ash fall          &lt;NA&gt;             Santa Maria  Guatem~ GTM   Centra~
+## 5 1902-0~  1902 0010  &lt;NA&gt;  Natural          Geophysical       Volcanic activi~ Ash fall          &lt;NA&gt;             Santa Maria  Guatem~ GTM   Centra~
+## 6 1903-0~  1903 0006  &lt;NA&gt;  Natural          Geophysical       Mass movement (~ Rockfall          &lt;NA&gt;             &lt;NA&gt;         Canada  CAN   Northe~
+## # ... with 34 more variables: Continent &lt;chr&gt;, Location &lt;chr&gt;, Origin &lt;chr&gt;, Associated Dis &lt;chr&gt;, Associated Dis2 &lt;chr&gt;, OFDA Response &lt;chr&gt;,
+## #   Appeal &lt;chr&gt;, Declaration &lt;chr&gt;, Aid Contribution &lt;dbl&gt;, Dis Mag Value &lt;dbl&gt;, Dis Mag Scale &lt;chr&gt;, Latitude &lt;chr&gt;, Longitude &lt;chr&gt;,
+## #   Local Time &lt;chr&gt;, River Basin &lt;chr&gt;, Start Year &lt;dbl&gt;, Start Month &lt;dbl&gt;, Start Day &lt;dbl&gt;, End Year &lt;dbl&gt;, End Month &lt;dbl&gt;, End Day &lt;dbl&gt;,
+## #   Total Deaths &lt;dbl&gt;, No Injured &lt;dbl&gt;, No Affected &lt;dbl&gt;, No Homeless &lt;dbl&gt;, Total Affected &lt;dbl&gt;, Reconstruction Costs ('000 US$) &lt;lgl&gt;,
+## #   Insured Damages ('000 US$) &lt;dbl&gt;, Total Damages ('000 US$) &lt;dbl&gt;, CPI &lt;dbl&gt;, Adm Level &lt;chr&gt;, Admin1 Code &lt;chr&gt;, Admin2 Code &lt;chr&gt;,
+## #   Geo Locations &lt;chr&gt;</code></pre>
+<p>This would be pretty annoying if we wanted to rename all of our columns by hand.</p>
+<p>Fortunately, we can leverage the function <code>janitor::clean_names()</code> function<label for="tufte-sn-95" class="margin-toggle sidenote-number">95</label><input type="checkbox" id="tufte-sn-95" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">95</span> the notation format you see here specifies the <code>Rpackage</code> and then the function within it, as <code>package::function()</code>.</span> which is designed to parse letter cases and separators - the default is to convert it to <code>snake_case</code>, i.e. all names are lowercase and words are separated by an underscore, it also deals with duplicate names and special characters.</p>
+<p>Let’s see what this does for us:</p>
+<div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="exploratory-analysis.html#cb283-1" aria-hidden="true" tabindex="-1"></a>disaster <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/nat-disasters_emdat-query-2021-10-05.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">skip =</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb283-2"><a href="exploratory-analysis.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb283-3"><a href="exploratory-analysis.html#cb283-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb283-4"><a href="exploratory-analysis.html#cb283-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(disaster)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 47
+##   dis_no   year seq   glide disaster_group disaster_subgro~ disaster_type disaster_subtype disaster_subsub~ event_name country iso   region continent
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;    
+## 1 1900-9~  1900 9002  &lt;NA&gt;  Natural        Climatological   Drought       Drought          &lt;NA&gt;             &lt;NA&gt;       Cabo V~ CPV   Weste~ Africa   
+## 2 1900-9~  1900 9001  &lt;NA&gt;  Natural        Climatological   Drought       Drought          &lt;NA&gt;             &lt;NA&gt;       India   IND   South~ Asia     
+## 3 1902-0~  1902 0012  &lt;NA&gt;  Natural        Geophysical      Earthquake    Ground movement  &lt;NA&gt;             &lt;NA&gt;       Guatem~ GTM   Centr~ Americas 
+## 4 1902-0~  1902 0003  &lt;NA&gt;  Natural        Geophysical      Volcanic act~ Ash fall         &lt;NA&gt;             Santa Mar~ Guatem~ GTM   Centr~ Americas 
+## 5 1902-0~  1902 0010  &lt;NA&gt;  Natural        Geophysical      Volcanic act~ Ash fall         &lt;NA&gt;             Santa Mar~ Guatem~ GTM   Centr~ Americas 
+## 6 1903-0~  1903 0006  &lt;NA&gt;  Natural        Geophysical      Mass movemen~ Rockfall         &lt;NA&gt;             &lt;NA&gt;       Canada  CAN   North~ Americas 
+## # ... with 33 more variables: location &lt;chr&gt;, origin &lt;chr&gt;, associated_dis &lt;chr&gt;, associated_dis2 &lt;chr&gt;, ofda_response &lt;chr&gt;, appeal &lt;chr&gt;,
+## #   declaration &lt;chr&gt;, aid_contribution &lt;dbl&gt;, dis_mag_value &lt;dbl&gt;, dis_mag_scale &lt;chr&gt;, latitude &lt;chr&gt;, longitude &lt;chr&gt;, local_time &lt;chr&gt;,
+## #   river_basin &lt;chr&gt;, start_year &lt;dbl&gt;, start_month &lt;dbl&gt;, start_day &lt;dbl&gt;, end_year &lt;dbl&gt;, end_month &lt;dbl&gt;, end_day &lt;dbl&gt;, total_deaths &lt;dbl&gt;,
+## #   no_injured &lt;dbl&gt;, no_affected &lt;dbl&gt;, no_homeless &lt;dbl&gt;, total_affected &lt;dbl&gt;, reconstruction_costs_000_us &lt;lgl&gt;, insured_damages_000_us &lt;dbl&gt;,
+## #   total_damages_000_us &lt;dbl&gt;, cpi &lt;dbl&gt;, adm_level &lt;chr&gt;, admin1_code &lt;chr&gt;, admin2_code &lt;chr&gt;, geo_locations &lt;chr&gt;</code></pre>
+<p>That looks much better. Similar to running <code>head()</code> to make sure the first set of lines has read in properly, running <code>tail()</code> gives you a quickly look at whether the end of the file read in correctly as well.</p>
+</div>
+<div id="get-an-overview-of-the-data-set" class="section level2" number="16.4">
+<h2>
+<span class="header-section-number">16.4</span> Get an overview of the data set<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('get-an-overview-of-the-data-set')" onmouseout="reset_tooltip('get-an-overview-of-the-data-set-tooltip')"><span class="tooltiptext" id="get-an-overview-of-the-data-set-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Our next step always is to determine what information is contained in the data set and how it is organized.</p>
+<p>First, we will need to understand what information is contained in each column. Some of the column headers are more self-explanatory than others. One of the most helpful documents at this point is the metadata which will tell us what information is in each column. A good place to look for that is the <a href="https://public.emdat.be">data portal</a> where you accessed the data set itself.</p>
+<div id="ques:eda-4" class="question">
+<p class="question-begin">
+► Question 16.4
+</p>
+<div class="question-body">
+<p>Determine where you can find meta-data for our data set and describe what information is contained in the data set based on the included columns. Indicate which you think will be most useful to answer our general question based on your answers to Q1.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Now, we can take a look at some of the specifics of how the information is organized in the data set and specifics on the information contained.</p>
+<div id="ques:eda-5" class="question">
+<p class="question-begin">
+► Question 16.5
+</p>
+<div class="question-body">
+<p>Based on some of our previous exploits exploring data, come up with a checklist of at least five things to routinely check any time you are exploring a new data set, wherever possible include what function(s) you could use to look at that.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-28" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-28', 'sol-start-28')"></span>
+</p>
+<div id="sol-body-28" class="solution-body" style="display: none;">
+<p>Factors to consider are among other things understanding how many rows/columns there are, what variables are included, whether it is in a tidy format or not, what data type each variable is, and what the range/distribution of values is.</p>
+<p>You can get dimensions of the data set using <code>ncols()</code> and <code>nrows()</code>, <code>str()</code> will give you dimensions, the class, and data types (classes) of individual columns.</p>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Another helpful functions is <code>skimr::skim()</code></p>
+<div id="ques:eda-6" class="question">
+<p class="question-begin">
+► Question 16.6
+</p>
+<div class="question-body">
+<p>Run the function on your data set and briefly describe what information you can get from it.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="exploratory-analysis.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(disaster)</span></code></pre></div>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-298">Table 16.1: </span>Data summary</span><!--</caption>--></p>
+<table><tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">disaster</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">16121</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">47</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">29</td>
+</tr>
+<tr class="odd">
+<td align="left">logical</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">17</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody></table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">dis_no</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">13</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">16121</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">seq</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">1274</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">glide</td>
+<td align="right">14540</td>
+<td align="right">0.10</td>
+<td align="right">4</td>
+<td align="right">25</td>
+<td align="right">0</td>
+<td align="right">1086</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">disaster_group</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">disaster_subgroup</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">10</td>
+<td align="right">17</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">disaster_type</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3</td>
+<td align="right">21</td>
+<td align="right">0</td>
+<td align="right">15</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">disaster_subtype</td>
+<td align="right">3109</td>
+<td align="right">0.81</td>
+<td align="right">6</td>
+<td align="right">32</td>
+<td align="right">0</td>
+<td align="right">27</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">disaster_subsubtype</td>
+<td align="right">15044</td>
+<td align="right">0.07</td>
+<td align="right">4</td>
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">12</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">event_name</td>
+<td align="right">12263</td>
+<td align="right">0.24</td>
+<td align="right">2</td>
+<td align="right">76</td>
+<td align="right">0</td>
+<td align="right">1561</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">country</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">4</td>
+<td align="right">58</td>
+<td align="right">0</td>
+<td align="right">228</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">iso</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">228</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">region</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">9</td>
+<td align="right">25</td>
+<td align="right">0</td>
+<td align="right">23</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">continent</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">4</td>
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">location</td>
+<td align="right">1792</td>
+<td align="right">0.89</td>
+<td align="right">3</td>
+<td align="right">2878</td>
+<td align="right">0</td>
+<td align="right">12755</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">origin</td>
+<td align="right">12329</td>
+<td align="right">0.24</td>
+<td align="right">4</td>
+<td align="right">118</td>
+<td align="right">0</td>
+<td align="right">660</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">associated_dis</td>
+<td align="right">12774</td>
+<td align="right">0.21</td>
+<td align="right">3</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">30</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">associated_dis2</td>
+<td align="right">15415</td>
+<td align="right">0.04</td>
+<td align="right">3</td>
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">30</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">ofda_response</td>
+<td align="right">14427</td>
+<td align="right">0.11</td>
+<td align="right">3</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">appeal</td>
+<td align="right">13552</td>
+<td align="right">0.16</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">declaration</td>
+<td align="right">12866</td>
+<td align="right">0.20</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">dis_mag_scale</td>
+<td align="right">1190</td>
+<td align="right">0.93</td>
+<td align="right">3</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">latitude</td>
+<td align="right">13393</td>
+<td align="right">0.17</td>
+<td align="right">1</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">2372</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">longitude</td>
+<td align="right">13390</td>
+<td align="right">0.17</td>
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">2438</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">local_time</td>
+<td align="right">15019</td>
+<td align="right">0.07</td>
+<td align="right">4</td>
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">778</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">river_basin</td>
+<td align="right">14835</td>
+<td align="right">0.08</td>
+<td align="right">1</td>
+<td align="right">402</td>
+<td align="right">0</td>
+<td align="right">1213</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">adm_level</td>
+<td align="right">8262</td>
+<td align="right">0.49</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">admin1_code</td>
+<td align="right">11540</td>
+<td align="right">0.28</td>
+<td align="right">3</td>
+<td align="right">399</td>
+<td align="right">0</td>
+<td align="right">3434</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">admin2_code</td>
+<td align="right">12152</td>
+<td align="right">0.25</td>
+<td align="right">3</td>
+<td align="right">1571</td>
+<td align="right">0</td>
+<td align="right">3446</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">geo_locations</td>
+<td align="right">8262</td>
+<td align="right">0.49</td>
+<td align="right">10</td>
+<td align="right">2525</td>
+<td align="right">0</td>
+<td align="right">6355</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: logical</strong></p>
+<table>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="left">count</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">reconstruction_costs_000_us</td>
+<td align="right">16121</td>
+<td align="right">0</td>
+<td align="right">NaN</td>
+<td align="left">:</td>
+</tr></tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col width="14%">
+<col width="6%">
+<col width="8%">
+<col width="6%">
+<col width="7%">
+<col width="5%">
+<col width="5%">
+<col width="6%">
+<col width="6%">
+<col width="6%">
+<col width="26%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">year</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1996.76</td>
+<td align="right">20.16</td>
+<td align="right">1900.00</td>
+<td align="right">1989.00</td>
+<td align="right">2001.00</td>
+<td align="right">2011.00</td>
+<td align="right">2021</td>
+<td align="left">▁▁▁▃▇</td>
+</tr>
+<tr class="even">
+<td align="left">aid_contribution</td>
+<td align="right">15444</td>
+<td align="right">0.04</td>
+<td align="right">125413.61</td>
+<td align="right">2997874.55</td>
+<td align="right">1.00</td>
+<td align="right">175.00</td>
+<td align="right">721.00</td>
+<td align="right">3511.00</td>
+<td align="right">78000000</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">dis_mag_value</td>
+<td align="right">11177</td>
+<td align="right">0.31</td>
+<td align="right">47369.51</td>
+<td align="right">309485.37</td>
+<td align="right">-57.00</td>
+<td align="right">7.00</td>
+<td align="right">152.00</td>
+<td align="right">11315.00</td>
+<td align="right">13025874</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">start_year</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1996.77</td>
+<td align="right">20.15</td>
+<td align="right">1900.00</td>
+<td align="right">1989.00</td>
+<td align="right">2001.00</td>
+<td align="right">2011.00</td>
+<td align="right">2021</td>
+<td align="left">▁▁▁▃▇</td>
+</tr>
+<tr class="odd">
+<td align="left">start_month</td>
+<td align="right">387</td>
+<td align="right">0.98</td>
+<td align="right">6.44</td>
+<td align="right">3.39</td>
+<td align="right">1.00</td>
+<td align="right">4.00</td>
+<td align="right">7.00</td>
+<td align="right">9.00</td>
+<td align="right">12</td>
+<td align="left">▇▅▆▆▇</td>
+</tr>
+<tr class="even">
+<td align="left">start_day</td>
+<td align="right">3628</td>
+<td align="right">0.77</td>
+<td align="right">15.24</td>
+<td align="right">8.95</td>
+<td align="right">1.00</td>
+<td align="right">7.00</td>
+<td align="right">15.00</td>
+<td align="right">23.00</td>
+<td align="right">31</td>
+<td align="left">▇▆▆▆▅</td>
+</tr>
+<tr class="odd">
+<td align="left">end_year</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1996.83</td>
+<td align="right">20.14</td>
+<td align="right">1900.00</td>
+<td align="right">1989.00</td>
+<td align="right">2001.00</td>
+<td align="right">2011.00</td>
+<td align="right">2021</td>
+<td align="left">▁▁▁▃▇</td>
+</tr>
+<tr class="even">
+<td align="left">end_month</td>
+<td align="right">708</td>
+<td align="right">0.96</td>
+<td align="right">6.58</td>
+<td align="right">3.35</td>
+<td align="right">1.00</td>
+<td align="right">4.00</td>
+<td align="right">7.00</td>
+<td align="right">9.00</td>
+<td align="right">12</td>
+<td align="left">▇▅▆▇▇</td>
+</tr>
+<tr class="odd">
+<td align="left">end_day</td>
+<td align="right">3556</td>
+<td align="right">0.78</td>
+<td align="right">15.78</td>
+<td align="right">8.87</td>
+<td align="right">1.00</td>
+<td align="right">8.00</td>
+<td align="right">16.00</td>
+<td align="right">24.00</td>
+<td align="right">31</td>
+<td align="left">▇▇▇▇▆</td>
+</tr>
+<tr class="even">
+<td align="left">total_deaths</td>
+<td align="right">4713</td>
+<td align="right">0.71</td>
+<td align="right">2844.11</td>
+<td align="right">68620.96</td>
+<td align="right">1.00</td>
+<td align="right">6.00</td>
+<td align="right">20.00</td>
+<td align="right">63.00</td>
+<td align="right">3700000</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">no_injured</td>
+<td align="right">12227</td>
+<td align="right">0.24</td>
+<td align="right">2621.70</td>
+<td align="right">34407.82</td>
+<td align="right">1.00</td>
+<td align="right">14.00</td>
+<td align="right">50.00</td>
+<td align="right">200.00</td>
+<td align="right">1800000</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">no_affected</td>
+<td align="right">6903</td>
+<td align="right">0.57</td>
+<td align="right">882551.63</td>
+<td align="right">8574833.40</td>
+<td align="right">1.00</td>
+<td align="right">1245.50</td>
+<td align="right">10000.00</td>
+<td align="right">91941.00</td>
+<td align="right">330000000</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">no_homeless</td>
+<td align="right">13692</td>
+<td align="right">0.15</td>
+<td align="right">73323.11</td>
+<td align="right">523111.36</td>
+<td align="right">3.00</td>
+<td align="right">574.00</td>
+<td align="right">3000.00</td>
+<td align="right">17500.00</td>
+<td align="right">15850000</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">total_affected</td>
+<td align="right">4507</td>
+<td align="right">0.72</td>
+<td align="right">716692.93</td>
+<td align="right">7719586.75</td>
+<td align="right">1.00</td>
+<td align="right">650.00</td>
+<td align="right">5967.00</td>
+<td align="right">58255.00</td>
+<td align="right">330000000</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">insured_damages_000_us</td>
+<td align="right">15025</td>
+<td align="right">0.07</td>
+<td align="right">798651.42</td>
+<td align="right">3057638.17</td>
+<td align="right">34.00</td>
+<td align="right">50000.00</td>
+<td align="right">172500.00</td>
+<td align="right">500000.00</td>
+<td align="right">60000000</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">total_damages_000_us</td>
+<td align="right">10876</td>
+<td align="right">0.33</td>
+<td align="right">724783.54</td>
+<td align="right">4723130.53</td>
+<td align="right">2.00</td>
+<td align="right">8300.00</td>
+<td align="right">60000.00</td>
+<td align="right">317300.00</td>
+<td align="right">210000000</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">cpi</td>
+<td align="right">310</td>
+<td align="right">0.98</td>
+<td align="right">63.22</td>
+<td align="right">26.73</td>
+<td align="right">3.22</td>
+<td align="right">45.69</td>
+<td align="right">68.42</td>
+<td align="right">84.25</td>
+<td align="right">100</td>
+<td align="left">▃▂▅▇▇</td>
+</tr>
+</tbody>
+</table>
+<p>For numerical columns mean values and percentiles can give you an overview of how the data is distributed. However for columns that contain strings or characters we cannot produce those types of summary statistics. Rather, we are probably more interested on how many unique values those columns contain and what those unique entries are.</p>
+<p><code>skim()</code> already gave us the number of unique entries for each column, we have two options we can use to determine what those values are. The first is <code>unique()</code>. This function makes use of the fact that each column is a vector<label for="tufte-sn-96" class="margin-toggle sidenote-number">96</label><input type="checkbox" id="tufte-sn-96" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">96</span> Remember, we can access each column of a dataframe as `df$columnname</span>.</p>
+<div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="exploratory-analysis.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(disaster<span class="sc">$</span>disaster_subgroup)</span></code></pre></div>
+<pre><code>## [1] "Climatological"    "Geophysical"       "Meteorological"    "Hydrological"      "Biological"        "Extra-terrestrial"</code></pre>
+<p>When you run this function it returns a vector; while this might be helpful in some contexts, it would be helpful if we could also view it in a tabular format. Do not fret - <code>tidyverse</code> got you.</p>
+<div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="exploratory-analysis.html#cb288-1" aria-hidden="true" tabindex="-1"></a>disaster <span class="sc">%&gt;%</span></span>
+<span id="cb288-2"><a href="exploratory-analysis.html#cb288-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(disaster_subgroup)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 1
+##   disaster_subgroup
+##   &lt;chr&gt;            
+## 1 Climatological   
+## 2 Geophysical      
+## 3 Meteorological   
+## 4 Hydrological     
+## 5 Biological       
+## 6 Extra-terrestrial</code></pre>
+</div>
+<div id="chose-a-question-to-explore" class="section level2" number="16.5">
+<h2>
+<span class="header-section-number">16.5</span> Chose a question to explore<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('chose-a-question-to-explore')" onmouseout="reset_tooltip('chose-a-question-to-explore-tooltip')"><span class="tooltiptext" id="chose-a-question-to-explore-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Frequently you will have a general question (which is why you pulled a data set in the first place); in this case “Are natural disasters getting worse with climate change?”</p>
+<p>There may be more than one way to go after that question … and you might need some additional exploration of the data set to generate additional questions (hypothesis) and ultimately find the one you are mot interested in.</p>
+<p>In this case, we could focus on whether we are indeed observing an increase in frequency of events and/or we could compare if different groups of natural disasters that are more dependent on climate/weather conditions (storms, hurricanes) are increase more rapidly compared to categories that have other origins (e.g. earthquakes or volcanic eruptions).</p>
+<p>Or, we could have already done some analysis (or background reading) that indicates that natural disasters linked to climate patterns are indeed predicted to get worse based on modeling. In that case we might be more interested whether the impact of natural disasters on humans is getting increasingly worse. We could be at a point where at least some of the changes to the climate system are inevitable and in that case the question of mitigation of effects and preparedness like early warning systems or infrastructure become more important. We cannot stop the events from happening but to an extent we can control how well we can deal with them.</p>
+<p>Exploratory Analysis is fundamentally a very creative process and thinking outside the box can be what sets your analysis apart from what everyone else is doing. However, before we can start thinking outside the box we need to first figure out what “the box is” and use that as our starting point. This does mean you should always start with the boring standard stuff, cover your bases and then from there work towards something more interesting - though sometimes the “boring” stuff is the most revealing!</p>
+</div>
+<div id="plot-the-data" class="section level2" number="16.6">
+<h2>
+<span class="header-section-number">16.6</span> Plot the data!<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('plot-the-data')" onmouseout="reset_tooltip('plot-the-data-tooltip')"><span class="tooltiptext" id="plot-the-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>While tables are sometimes more appropriate, most exploratory analysis involves generating plots that help you get an overview of the data in relation to your question.</p>
+<div id="ques:eda-7" class="question">
+<p class="question-begin">
+► Question 16.7
+</p>
+<div class="question-body">
+<p>We should make a distinction between <strong>exploratory figures</strong> and <strong>explanatory</strong> or <strong>final figures</strong>. Briefly contrast the two in terms of their goal and audience and how this might be reflected in the presentation of the visualization.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>A good place to start is to get an idea of the <strong>variation</strong> or <strong>variance</strong> of the data you are interested in.</p>
+<div id="ques:eda-8" class="question">
+<p class="question-begin">
+► Question 16.8
+</p>
+<div class="question-body">
+<p>List 3 - 5 ways that you can assess the variance of a measured value. What metrics can you calculate and what options do we have to visualize?</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-29" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-29', 'sol-start-29')"></span>
+</p>
+<div id="sol-body-29" class="solution-body" style="display: none;">
+<p>You can calculate summary statistics</p>
+<ul>
+<li>mean, median</li>
+<li>mininimum, maximum values (range)</li>
+<li>quantiles</li>
+</ul>
+<p>(<code>fivenum()</code> will give you min, 25th percentile, median, 75th percentile, max)</p>
+<p>To visualize</p>
+<ul>
+<li>barplots for categorical values</li>
+<li>histograms for continuous values (your individual bins essentially become components of a categorical value)</li>
+<li>boxplots to compare distributions of continuous values</li>
+</ul>
+<p>For all of these assessments your should always ask the following questions</p>
+<ul>
+<li>Which values are more common than others? Why?</li>
+<li>Which values are more rare than others? Why?</li>
+<li>Are there distinct clusters that emerge?</li>
+<li>Do overall patterns meet my expectations?</li>
+<li>Are there patterns that stand out? Are they unusual/unexpected?</li>
+</ul>
+<p>In each case, as you pick up patterns you want to also ask “why” questions … those are the ones that will lead you to the next steps of your exploration.</p>
+<p>Typically you will want to explore outlier values (are they true outliers or do they need to be removed?) and patterns of missing data (too much missing data and you might need to find a different data set)</p>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Let’s start by figuring out how many observations fall into each sub-category of natural disasters<label for="tufte-sn-97" class="margin-toggle sidenote-number">97</label><input type="checkbox" id="tufte-sn-97" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">97</span> We finally get to see the alternative to <code>stat = "identity"</code> in using barplots! To plot distribution of categorical variable you are now telling <code>ggplot</code> to count the number of observations for each category</span>.</p>
+<div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="exploratory-analysis.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(disaster, <span class="fu">aes</span>(<span class="at">x =</span> disaster_subgroup)) <span class="sc">+</span></span>
+<span id="cb290-2"><a href="exploratory-analysis.html#cb290-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-301-1.png" width="672">
+and we could do the same for our disaster types.</p>
+<div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="exploratory-analysis.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(disaster, <span class="fu">aes</span>(<span class="at">x =</span> disaster_type)) <span class="sc">+</span></span>
+<span id="cb291-2"><a href="exploratory-analysis.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-302-1.png" width="672"></p>
+<p>We probably want to be able to read those labels</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="exploratory-analysis.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(disaster, <span class="fu">aes</span>(<span class="at">x =</span> disaster_type)) <span class="sc">+</span></span>
+<span id="cb292-2"><a href="exploratory-analysis.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
+<span id="cb292-3"><a href="exploratory-analysis.html#cb292-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-303-1.png" width="672"></p>
+<p>This is giving us global numbers, we might want to break it up by region.</p>
+<div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="exploratory-analysis.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(disaster, <span class="fu">aes</span>(<span class="at">x =</span> disaster_type)) <span class="sc">+</span></span>
+<span id="cb293-2"><a href="exploratory-analysis.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
+<span id="cb293-3"><a href="exploratory-analysis.html#cb293-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(. <span class="sc">~</span> region) <span class="sc">+</span></span>
+<span id="cb293-4"><a href="exploratory-analysis.html#cb293-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-304-1.png" width="672"></p>
+<p>If we want to think specifically about whether impact is increasing we should filter our data set to include only events for which damages where assessed.</p>
+<p>Let’s create new object with only those observations and then get an overview of distribution of the damage incurred.</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="exploratory-analysis.html#cb294-1" aria-hidden="true" tabindex="-1"></a>damages <span class="ot">&lt;-</span> disaster <span class="sc">%&gt;%</span></span>
+<span id="cb294-2"><a href="exploratory-analysis.html#cb294-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(total_damages_000_us))</span>
+<span id="cb294-3"><a href="exploratory-analysis.html#cb294-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb294-4"><a href="exploratory-analysis.html#cb294-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb294-5"><a href="exploratory-analysis.html#cb294-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us)) <span class="sc">+</span></span>
+<span id="cb294-6"><a href="exploratory-analysis.html#cb294-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-305-1.png" width="672"></p>
+<p>That looks like we might have some outliers that are skewing our histogram. We can try looking at e.g. a square root scale, which skews the y-axis in a systematic way<label for="tufte-sn-98" class="margin-toggle sidenote-number">98</label><input type="checkbox" id="tufte-sn-98" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">98</span> This is the type of thing where in order to not be unintentionally mislead you would always want to add “Note, the skewed y-scale”</span>.</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="exploratory-analysis.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us)) <span class="sc">+</span></span>
+<span id="cb295-2"><a href="exploratory-analysis.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb295-3"><a href="exploratory-analysis.html#cb295-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_sqrt</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-306-1.png" width="672">
+Another way would be to set the binwidths manually, let’s also divide our dollar amounts by 1,000,000 to make the x-axis more legible.</p>
+<div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="exploratory-analysis.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
+<span id="cb296-2"><a href="exploratory-analysis.html#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-307-1.png" width="672"></p>
+<p>Let’s look at variation within different disaster types.</p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="exploratory-analysis.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
+<span id="cb297-2"><a href="exploratory-analysis.html#cb297-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb297-3"><a href="exploratory-analysis.html#cb297-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(. <span class="sc">~</span> disaster_type)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-308-1.png" width="672">
+It looks like we might want to limit our assessment to droughts, earthquakes, wildfires, floods, and storms. To make these comparisons if might be more helpful to switch to a boxplot.</p>
+<div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="exploratory-analysis.html#cb298-1" aria-hidden="true" tabindex="-1"></a>damages <span class="ot">&lt;-</span> damages <span class="sc">%&gt;%</span></span>
+<span id="cb298-2"><a href="exploratory-analysis.html#cb298-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Drought"</span>, <span class="st">"Earthquake"</span>, <span class="st">"Flood"</span>, <span class="st">"Storm"</span>, <span class="st">"Wildfire"</span>))</span>
+<span id="cb298-3"><a href="exploratory-analysis.html#cb298-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb298-4"><a href="exploratory-analysis.html#cb298-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> disaster_type, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
+<span id="cb298-5"><a href="exploratory-analysis.html#cb298-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-309-1.png" width="672">
+We can also quickly calculate a set of summary stats for comparison</p>
+<div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="exploratory-analysis.html#cb299-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
+<span id="cb299-2"><a href="exploratory-analysis.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(disaster_type) <span class="sc">%&gt;%</span></span>
+<span id="cb299-3"><a href="exploratory-analysis.html#cb299-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(total_damages_000_us)<span class="sc">/</span><span class="dv">1000000</span>,</span>
+<span id="cb299-4"><a href="exploratory-analysis.html#cb299-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd =</span> <span class="fu">sd</span>(total_damages_000_us)<span class="sc">/</span><span class="dv">1000000</span>,</span>
+<span id="cb299-5"><a href="exploratory-analysis.html#cb299-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">min =</span> <span class="fu">min</span>(total_damages_000_us)<span class="sc">/</span><span class="dv">1000000</span>,</span>
+<span id="cb299-6"><a href="exploratory-analysis.html#cb299-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">max =</span> <span class="fu">max</span>(total_damages_000_us)<span class="sc">/</span><span class="dv">1000000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb299-7"><a href="exploratory-analysis.html#cb299-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead><tr class="header">
+<th align="left">disaster_type</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">min</th>
+<th align="right">max</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Drought</td>
+<td align="right">0.8805004</td>
+<td align="right">2.045504</td>
+<td align="right">0.000050</td>
+<td align="right">20.0</td>
+</tr>
+<tr class="even">
+<td align="left">Earthquake</td>
+<td align="right">1.4403066</td>
+<td align="right">10.581451</td>
+<td align="right">0.000002</td>
+<td align="right">210.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Flood</td>
+<td align="right">0.4972023</td>
+<td align="right">1.992408</td>
+<td align="right">0.000003</td>
+<td align="right">40.0</td>
+</tr>
+<tr class="even">
+<td align="left">Storm</td>
+<td align="right">0.7409707</td>
+<td align="right">4.311794</td>
+<td align="right">0.000005</td>
+<td align="right">125.0</td>
+</tr>
+<tr class="odd">
+<td align="left">Wildfire</td>
+<td align="right">0.7286744</td>
+<td align="right">2.037236</td>
+<td align="right">0.000600</td>
+<td align="right">16.5</td>
+</tr>
+</tbody>
+</table>
+<p>After you’ve explored patterns within variables you are interested in you are also going to want to explore relationships (<strong>Covariation</strong>) among variables<label for="tufte-sn-99" class="margin-toggle sidenote-number">99</label><input type="checkbox" id="tufte-sn-99" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">99</span> Remember, when we start looking at correlation, we always need to be careful about how/when we infer causation!</span>.</p>
+<div id="ques:eda-9" class="question">
+<p class="question-begin">
+► Question 16.9
+</p>
+<div class="question-body">
+<p>List 3 - 5 ways that you can assess the covariance of a measured value.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-30" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-30', 'sol-start-30')"></span>
+</p>
+<div id="sol-body-30" class="solution-body" style="display: none;">
+<p>You can calculate summary statistics and compare them, but for initial exploration of patterns visualizations are going to be much more handy.</p>
+<p>You could create faceted barplot or have bars next to each other in a figure; faceted historgrams can be helpful too. But especially with increasing number of comparisons, one of the most straightforward ways to compare distributions are boxplots.</p>
+<p>Comparing two categorical values can be challenging - heat plots can be used to visualize the number of observations that fulfill both categories, for two continuous values you can use scatter plots (though these become less useful with increasing number of observations in your data set).</p>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>We have already spent a little bit of time looking at more than one variable by looking at subgroups with in our data set, in this case the disaster types and regional differences. In our case the relationship we are really interested in is change over time. This means we are comparing two continuous values but it is a specific comparison we frequently describe as a time-series.</p>
+<p>Let’s take a look</p>
+<div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="exploratory-analysis.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
+<span id="cb300-2"><a href="exploratory-analysis.html#cb300-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-311-1.png" width="672">
+We could enhance this figure by e.g. color coding by disaster type.</p>
+<div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="exploratory-analysis.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">fill =</span> disaster_type)) <span class="sc">+</span></span>
+<span id="cb301-2"><a href="exploratory-analysis.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-312-1.png" width="672">
+Or we could color code by continent and make individual panels for different disaster types.</p>
+<div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="exploratory-analysis.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
+<span id="cb302-2"><a href="exploratory-analysis.html#cb302-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb302-3"><a href="exploratory-analysis.html#cb302-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(. <span class="sc">~</span> disaster_type)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-313-1.png" width="672">
+An alternative approach might be assess whether we are seeing changes in scale of each disaster and whether those show the same pattern as damages incurred, because the question we are really after is whether despite frequency and intensity increasing (or at least predicted to increase) that is also resulting in a scaling up of the damages.</p>
+<p>Each of these has a different way of being measure so we will need to look at each disaster type in turn.</p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="exploratory-analysis.html#cb303-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
+<span id="cb303-2"><a href="exploratory-analysis.html#cb303-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">==</span> <span class="st">"Storm"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb303-3"><a href="exploratory-analysis.html#cb303-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">color =</span> year)) <span class="sc">+</span></span>
+<span id="cb303-4"><a href="exploratory-analysis.html#cb303-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb303-5"><a href="exploratory-analysis.html#cb303-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-314-1.png" width="672"></p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="exploratory-analysis.html#cb304-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
+<span id="cb304-2"><a href="exploratory-analysis.html#cb304-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">==</span> <span class="st">"Flood"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb304-3"><a href="exploratory-analysis.html#cb304-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">color =</span> year)) <span class="sc">+</span></span>
+<span id="cb304-4"><a href="exploratory-analysis.html#cb304-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb304-5"><a href="exploratory-analysis.html#cb304-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-315-1.png" width="672"></p>
+<div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="exploratory-analysis.html#cb305-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
+<span id="cb305-2"><a href="exploratory-analysis.html#cb305-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">==</span> <span class="st">"Earthquake"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb305-3"><a href="exploratory-analysis.html#cb305-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
+<span id="cb305-4"><a href="exploratory-analysis.html#cb305-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-316-1.png" width="672"></p>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="exploratory-analysis.html#cb306-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
+<span id="cb306-2"><a href="exploratory-analysis.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">==</span> <span class="st">"Drought"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb306-3"><a href="exploratory-analysis.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
+<span id="cb306-4"><a href="exploratory-analysis.html#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-317-1.png" width="672"></p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="exploratory-analysis.html#cb307-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
+<span id="cb307-2"><a href="exploratory-analysis.html#cb307-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">==</span> <span class="st">"Wildfire"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb307-3"><a href="exploratory-analysis.html#cb307-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
+<span id="cb307-4"><a href="exploratory-analysis.html#cb307-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-318-1.png" width="672"></p>
+<p>The final step is starting to ask whether patterns are specific to the data set or whether there are true non-random relationships between variables. Typical questions we might further explore at this point include e.g.</p>
+<ul>
+<li>Is this pattern due to random change or does the independent variable have significant explanatory power?</li>
+<li>How can the relationship implied by the pattern be described (e.g. linear regression)?</li>
+<li>How strong is the relationship (R2 value)?</li>
+<li>What other variables might affect or explain the relationship (e.g. are these variable correlated because they are both correlated to another variable that is responsible for the mechanism?)</li>
+<li>Does this relationship hold across subgroups of the relationship itself?</li>
+</ul>
+<p>Fitting trend lines helps elucidate patterns (especially in time series). This is frequently where exploratory analysis transitions into a more formal analysis that involves statistical tests and fitting models. Keep in mind that we want to have a good grasp on whether our analysis is descriptive, inferential or causal/mechanistic in nature. Exploratory analysis is “quick and dirty,” you are mainly focused on summarizing the data and highlighting broad-scale patterns that emerge. They are useful for assessing the quality of your data, eye-balling if patterns are what you expect (was your hypothesis correct(ish)), and getting and idea of what the next steps in a more formal analysis should be.</p>
+<p>We could for example consider that we know have much better records in terms of when disasters occur and what the damages are and we may need to refine our analysis by limiting our data to a shorter time span. We might also want to determine if we see the same patterns for loss of life. Additionally, while we have played around with regional differences, that is also something to explore in light of expectations of e.g. better early warning systems and infrastructure in developed countries.</p>
+</div>
+<div id="iterate-your-exploration" class="section level2" number="16.7">
+<h2>
+<span class="header-section-number">16.7</span> Iterate your exploration<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('iterate-your-exploration')" onmouseout="reset_tooltip('iterate-your-exploration-tooltip')"><span class="tooltiptext" id="iterate-your-exploration-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Now that we have an answer(ish) to our question - the first thing we should do is question our answer<label for="tufte-sn-100" class="margin-toggle sidenote-number">100</label><input type="checkbox" id="tufte-sn-100" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">100</span> especially if your answer conforms to your <em>a priori</em> expectations!</span>. Always consider limitations of your data, whether there are alternative explanations, if your data has some inherent issues you need to be aware of etc. It can also be helpful to find at least one external data source to assess whether your answers are roughly in line with other (expected) measurements.</p>
+<p>It is called an exploratory analysis for a reason, because it is just the beginning. Usually this is the beginning of a more sophisticated analysis. Important questions to ask always include</p>
+<ul>
+<li>Is your data appropriate for the question your are asking?</li>
+<li>Do you need additional data to refine your answer?</li>
+<li>Do you have the right question or do you need to refine your question?</li>
+</ul>
+<p>Exploratory Analysis frequently is more about hypothesis generating, rather than hypothesis testing. So you data exploration can be an important step to defining the precise (set of) question(s) you want to explore. Not infrequetly, the exploration of an intial question leads you to generating additional (perhaps more interesting) questions.</p>
+</div>
+<div id="now-you" class="section level2" number="16.8">
+<h2>
+<span class="header-section-number">16.8</span> Now you!<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('now-you')" onmouseout="reset_tooltip('now-you-tooltip')"><span class="tooltiptext" id="now-you-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>As you suspected, training wheels are coming off.</p>
+<div id="ques:eda-10" class="question">
+<p class="question-begin">
+► Question 16.10
+</p>
+<div class="question-body">
+<p>Formulate three specific questions this data set can answer, consider that you have options like looking at specific geographic subsets, or different categories of natural disasters, you can also consider whether your would expect different types of natural disasters to show similar or different patterns.</p>
+<p>Use headers, plain text, code chunks etc. as appropriate to write a mini report for each question - this should include stating your question as concisely as possible, exploratory figures, final explanatory figure, description &amp; discussion of your results. Comment your code to generate your figures <strong>line by line</strong> with descriptive comments.</p>
+<p>For each question, generate 3 - 5 exploratory figures that can help answer your question, these can include different visualizations of the same variables or different variables. In each case, chose the figure that summarizes your results best and refine your visualization so that it best summarizes your results, this includes a figure title, labeled axis, color choice, how data is encoded etc.</p>
+<p>Write a figure legend that would accompany your figure in a report or paper, write a 3 - 5 sentence description of each figure (i.e. this should communicate the results with sufficient detail that somebody who <em>has not</em> seen the figure still fully understand them) and briefly discuss your results in 3-5 sentences in the context of the question you were asking (i.e. what are your conclusions, are there limitation to your data, alternative explanations, …).</p>
+<p>Chose one question + figure legend, description, and discussion and share it in our <code>#hwassignments</code> channel on slack.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:eda-11" class="question">
+<p class="question-begin">
+► Question 16.11
+</p>
+<div class="question-body">
+<p>Take a look your classmate’s posts on slack, identify what you like about the visualization along with some <strong>constructive</strong> points for improvement. Getting feedback is really important. Our goal is clear communication; you have spent more time thinking about this question and the visualization so some things might be obvious to you that others might not catch right away, similar a set of colors might look good to you, but somebody else might struggle to tell things apart. The figure might be too busy etc. Sometimes it can also be helpful to have other people help you refine your question.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+
+</div>
+</div></body></html>
+
+<p style="text-align: center;">
+<a href="visualizations-as-a-tool-for-misinformation.html"><button class="btn btn-default">Previous</button></a>
+<a href="references.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-10-06
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

@@ -14,17 +14,17 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-06" />
 
 
 <meta name="description" content="3 Project management and Rmarkdown Basics | Data Science for the Natural Environment (FA21)">
 
 <title>3 Project management and Rmarkdown Basics | Data Science for the Natural Environment (FA21)</title>
 
+<script src="libs/header-attrs/header-attrs.js"></script>
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
-<script src="libs/accessible-code-block/empty-anchor.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/plotly-binding/plotly.js"></script>
 <script src="libs/typedarray/typedarray.min.js"></script>
@@ -37,19 +37,19 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -102,6 +102,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="msmb.css" type="text/css" />
 <script>
@@ -180,6 +202,7 @@ function reset_tooltip(id) {
 <a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
 <a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 <a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -190,7 +213,7 @@ function reset_tooltip(id) {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="project-management-and-rmarkdown-basics" class="section level1">
+<html><body><div id="project-management-and-rmarkdown-basics" class="section level1" number="3">
 <h1>
 <span class="header-section-number">3</span> Project management and Rmarkdown Basics</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -213,12 +236,12 @@ function reset_tooltip(id) {
 <li>future you will be thankful when you don’t have to remember your assumptions, individual steps, and modifications.</li>
 <li>easy modification to extend/refine analysis or re-run with updated data.</li>
 </ul>
-<div id="project-organization-101" class="section level2">
+<div id="project-organization-101" class="section level2" number="3.1">
 <h2>
 <span class="header-section-number">3.1</span> Project organization 101<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('project-organization-101')" onmouseout="reset_tooltip('project-organization-101-tooltip')"><span class="tooltiptext" id="project-organization-101-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>A key component to doing data analysis is organizing your <strong>working directory</strong> which will contain your data, scripts, <code>Rmarkdown</code>-files, results, figures, and other output. Keeping this well organized will help you establish a reproducible workflow, collaborate well, and share your results.</p>
-<div id="organizing-your-files-and-directories" class="section level3">
+<div id="organizing-your-files-and-directories" class="section level3" number="3.1.1">
 <h3>
 <span class="header-section-number">3.1.1</span> Organizing your files and directories<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('organizing-your-files-and-directories')" onmouseout="reset_tooltip('organizing-your-files-and-directories-tooltip')"><span class="tooltiptext" id="organizing-your-files-and-directories-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -229,7 +252,7 @@ function reset_tooltip(id) {
 <li><code>scr</code></li>
 </ul>
 </div>
-<div id="a-note-on-naming-things" class="section level3">
+<div id="a-note-on-naming-things" class="section level3" number="3.1.2">
 <h3>
 <span class="header-section-number">3.1.2</span> A note on Naming things<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('a-note-on-naming-things')" onmouseout="reset_tooltip('a-note-on-naming-things-tooltip')"><span class="tooltiptext" id="a-note-on-naming-things-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -243,7 +266,7 @@ function reset_tooltip(id) {
 <strong>Sortable</strong>: standardize components of the file names to make it possible to sort files and find what you are looking for.</li>
 </ul>
 </div>
-<div id="set-up-your-project-directory-using-rprojects" class="section level3">
+<div id="set-up-your-project-directory-using-rprojects" class="section level3" number="3.1.3">
 <h3>
 <span class="header-section-number">3.1.3</span> Set up your project directory using Rprojects<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('set-up-your-project-directory-using-rprojects')" onmouseout="reset_tooltip('set-up-your-project-directory-using-rprojects-tooltip')"><span class="tooltiptext" id="set-up-your-project-directory-using-rprojects-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -258,7 +281,7 @@ function reset_tooltip(id) {
 <p>If you look in the bottom right hand pane in the <code>Files</code> tab, the bread crumbs should lead to your project folder which has now become your <code>working directory</code>, i.e. all paths are relative to this location.<label for="tufte-sn-15" class="margin-toggle sidenote-number">15</label><input type="checkbox" id="tufte-sn-15" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">15</span> If you weren’t working with an <code>R project</code>, you can set your working directory by naviating to your new working director and selecting <code>More &gt; Set as working directory</code>.</span> If you navigate away from your <code>working directory</code> (project directory) you can quickly get back to your project directory by clicking on the project icon in the <code>Files</code> pane or by clicking the cog icon (<code>More</code>) and selecting <code>Go to Working Directory</code>.</p>
 </div>
 </div>
-<div id="create-your-first-.rmd-file" class="section level2">
+<div id="create-your-first-.rmd-file" class="section level2" number="3.2">
 <h2>
 <span class="header-section-number">3.2</span> Create your first .Rmd file<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('create-your-first-.rmd-file')" onmouseout="reset_tooltip('create-your-first-.rmd-file-tooltip')"><span class="tooltiptext" id="create-your-first-.rmd-file-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -266,7 +289,7 @@ function reset_tooltip(id) {
 <p>We’ll break down the components of the <code>.Rmd</code> file in just a second but to give you the full experience hit the <code>Knit HTML</code> button to render an <code>html</code> document.</p>
 <p>Cool beans, now to the knitty-gritty.</p>
 </div>
-<div id="structure-of-an-rmarkdown-file" class="section level2">
+<div id="structure-of-an-rmarkdown-file" class="section level2" number="3.3">
 <h2>
 <span class="header-section-number">3.3</span> Structure of an Rmarkdown File<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('structure-of-an-rmarkdown-file')" onmouseout="reset_tooltip('structure-of-an-rmarkdown-file-tooltip')"><span class="tooltiptext" id="structure-of-an-rmarkdown-file-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -280,7 +303,7 @@ function reset_tooltip(id) {
 <strong>Code chunks</strong>: Chunks of <code>R</code> code. These can be run interactively (e.g. while generating your document) and will be rendered when knitting the document.</li>
 </ol>
 </div>
-<div id="yaml-header" class="section level2">
+<div id="yaml-header" class="section level2" number="3.4">
 <h2>
 <span class="header-section-number">3.4</span> YAML header<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('yaml-header')" onmouseout="reset_tooltip('yaml-header-tooltip')"><span class="tooltiptext" id="yaml-header-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -295,14 +318,14 @@ output: html_document
 </code></pre>
 <p>Customize your <code>.Rmd</code>:Change the title and add your name in the author line. Changing the date to <code>`r Sys.Date()`</code> will automatically include the current date when you render the document. Leave the default output setting.</p>
 </div>
-<div id="markdown-sections" class="section level2">
+<div id="markdown-sections" class="section level2" number="3.5">
 <h2>
 <span class="header-section-number">3.5</span> Markdown sections<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('markdown-sections')" onmouseout="reset_tooltip('markdown-sections-tooltip')"><span class="tooltiptext" id="markdown-sections-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Your markdown sections can contain any text you want using the markdown syntax; once you render the <code>.Rmd</code> the resulting (<code>html</code>) file will appear as text.</p>
 <p>Most of your text (without syntax) will appear as paragraph text but you can add additional syntax to format it in different ways. Check the official documentation for the <a href="https://rmarkdown.rstudio.com/authoring_basics.html">basics</a>.</p>
 </div>
-<div id="code-chunks" class="section level2">
+<div id="code-chunks" class="section level2" number="3.6">
 <h2>
 <span class="header-section-number">3.6</span> Code chunks<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('code-chunks')" onmouseout="reset_tooltip('code-chunks-tooltip')"><span class="tooltiptext" id="code-chunks-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -322,13 +345,13 @@ output: html_document
 </ul>
 <p>Multiple options can be applied to the same chunk; find additional options (here)[<a href="http://yihui.name/knitr/demo/output/" class="uri">http://yihui.name/knitr/demo/output/</a>].</p>
 </div>
-<div id="render-your-document-using-knitr" class="section level2">
+<div id="render-your-document-using-knitr" class="section level2" number="3.7">
 <h2>
 <span class="header-section-number">3.7</span> Render your document using knitr<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('render-your-document-using-knitr')" onmouseout="reset_tooltip('render-your-document-using-knitr-tooltip')"><span class="tooltiptext" id="render-your-document-using-knitr-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p><code>knitr</code> is an <code>R</code> package used to render <code>R markdown</code> files to another format (usually <code>html</code> or <code>pdf</code>). In Rstudio the most straightforward way of knitting a document is using the <code>Knit HTML</code> button. This will open a new tab in your console title R Markdown that will show the knitting process; any errors that occur with show up here along with a line number so you can determine where the error is occurring in your <code>.Rmd</code> file to troubleshoot the issue. The output will automatically be saved in your working directory.</p>
 </div>
-<div id="some-advanced-options" class="section level2">
+<div id="some-advanced-options" class="section level2" number="3.8">
 <h2>
 <span class="header-section-number">3.8</span> Some advanced options<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('some-advanced-options')" onmouseout="reset_tooltip('some-advanced-options-tooltip')"><span class="tooltiptext" id="some-advanced-options-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -363,7 +386,7 @@ output:
 <a href="r-functions-objects-vectors---oh-my.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

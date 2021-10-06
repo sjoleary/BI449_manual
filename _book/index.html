@@ -14,17 +14,17 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-06" />
 
 
 <meta name="description" content="Overview | Data Science for the Natural Environment (FA21)">
 
 <title>Overview | Data Science for the Natural Environment (FA21)</title>
 
+<script src="libs/header-attrs/header-attrs.js"></script>
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
-<script src="libs/accessible-code-block/empty-anchor.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/plotly-binding/plotly.js"></script>
 <script src="libs/typedarray/typedarray.min.js"></script>
@@ -37,19 +37,19 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -102,6 +102,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="msmb.css" type="text/css" />
 <script>
@@ -174,6 +196,7 @@ function reset_tooltip(id) {
 <a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
 <a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 <a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -195,7 +218,7 @@ function reset_tooltip(id) {
 <p><strong>BYOD: Bring your own device (to lab)</strong></p>
 <p>You are required to bring your laptop for use during lab; a tablet will not be sufficient to participate though you are welcome to bring an additional device to have an extra screen to follow along an electronic version of the lab manual. Make sure to have a power cable and/or fully charged battery!</p>
 <p><strong>Course Materials</strong></p>
-<p>Readings will primarily assigned from <a href="https://r4ds.had.co.nz/index.html">Wickham, H., &amp; Grolemund, G. (2016). R for data science: import, tidy, transform, visualize, and model data. " O’Reilly Media, Inc.".</a></p>
+<p>Readings will primarily assigned from <a href="https://r4ds.had.co.nz/index.html">Wickham, H., &amp; Grolemund, G. (2016). R for data science: import, tidy, transform, visualize, and model data. ” O’Reilly Media, Inc.”.</a></p>
 <p><br></p>
 </div>
 <div id="homework-assignments" class="section level2 unnumbered">
@@ -264,7 +287,7 @@ So an answer for Q13.24 could start like this …</p>
 <a href="what-even-is-data-science.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

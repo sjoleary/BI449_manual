@@ -14,17 +14,17 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-06" />
 
 
 <meta name="description" content="7 Welcome to the tidyverse | Data Science for the Natural Environment (FA21)">
 
 <title>7 Welcome to the tidyverse | Data Science for the Natural Environment (FA21)</title>
 
+<script src="libs/header-attrs/header-attrs.js"></script>
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
-<script src="libs/accessible-code-block/empty-anchor.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/plotly-binding/plotly.js"></script>
 <script src="libs/typedarray/typedarray.min.js"></script>
@@ -37,19 +37,19 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -102,6 +102,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="msmb.css" type="text/css" />
 <script>
@@ -180,6 +202,7 @@ function reset_tooltip(id) {
 <a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
 <a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 <a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -190,7 +213,7 @@ function reset_tooltip(id) {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="welcome-to-the-tidyverse" class="section level1">
+<html><body><div id="welcome-to-the-tidyverse" class="section level1" number="7">
 <h1>
 <span class="header-section-number">7</span> Welcome to the tidyverse</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -206,10 +229,10 @@ function reset_tooltip(id) {
 </ul>
 <p>You should have a <code>DataWrangling.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-28" class="margin-toggle sidenote-number">28</label><input type="checkbox" id="tufte-sn-28" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">28</span> You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
 <p>As always, let’s start by loading our packages needed for this analysis.</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="welcome-to-the-tidyverse.html#cb111-1"></a><span class="co"># load libraries (make sure you have installed them first)</span></span>
-<span id="cb111-2"><a href="welcome-to-the-tidyverse.html#cb111-2"></a><span class="kw">library</span>(knitr)</span>
-<span id="cb111-3"><a href="welcome-to-the-tidyverse.html#cb111-3"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
-<div id="data-wrangling" class="section level2">
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="welcome-to-the-tidyverse.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries (make sure you have installed them first)</span></span>
+<span id="cb111-2"><a href="welcome-to-the-tidyverse.html#cb111-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb111-3"><a href="welcome-to-the-tidyverse.html#cb111-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div id="data-wrangling" class="section level2" number="7.1">
 <h2>
 <span class="header-section-number">7.1</span> Data Wrangling<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('data-wrangling')" onmouseout="reset_tooltip('data-wrangling-tooltip')"><span class="tooltiptext" id="data-wrangling-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -223,20 +246,20 @@ function reset_tooltip(id) {
 <p>Be sure to record all the steps (code chunks) in your Rmarkdown - both the examples given here and the applications you will be asked to make. You can copy and paste, but you will find that writing out the code will help you get more used to syntax, how autocomplete etc. works. Make use of the fact that you can add headers, text etc. + code chunks. Be sure to comment your code.</p>
 <p>These are central concepts that you will use and reuse throughout the semester so you will likely want to refer back to this document. A good way to create a “cheatsheet” would be to for example for each function write a short description of what it does in general (refer to this manual) before each code chunk, then make your comment in the code specific to your example. Similarly use normal text to refer to the question numbers in this manual as you work through the problem sets.</p>
 </div>
-<div id="selecting-and-organizing-columns" class="section level2">
+<div id="selecting-and-organizing-columns" class="section level2" number="7.2">
 <h2>
 <span class="header-section-number">7.2</span> Selecting and organizing columns<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('selecting-and-organizing-columns')" onmouseout="reset_tooltip('selecting-and-organizing-columns-tooltip')"><span class="tooltiptext" id="selecting-and-organizing-columns-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Let’s start by loading our data set.</p>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="welcome-to-the-tidyverse.html#cb112-1"></a><span class="co"># read catch data</span></span>
-<span id="cb112-2"><a href="welcome-to-the-tidyverse.html#cb112-2"></a>catch &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/longline_catchdata.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code></pre></div>
-<p><label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle"><span class="marginnote"><span style="display: block;">We will make heavy use of the magrittr pipe <code>%&gt;%</code> this allows you to link commands together; think of it as “and now do this”.</span>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="welcome-to-the-tidyverse.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read catch data</span></span>
+<span id="cb112-2"><a href="welcome-to-the-tidyverse.html#cb112-2" aria-hidden="true" tabindex="-1"></a>catch <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/longline_catchdata.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
+<p><label for="tufte-mn-2" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-2" class="margin-toggle"><span class="marginnote"><span style="display: block;">We will make heavy use of the magrittr pipe <code>%&gt;%</code> this allows you to link commands together; think of it as “and now do this.”</span>
 <span style="display: block;">Because we are mostly interested in what the individual functions (verbs) do we will not always assign a new object, but just having it print to the console/below the code chunk we will be able to immediately assess the affect. By piping our function to <code>head()</code> it will print just the first 6 lines.</span></span></p>
 <p>The function <code>select()</code> is used to select a subset of columns from a data set.</p>
 <p>For example, you can select just the Site and Species columns.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="welcome-to-the-tidyverse.html#cb113-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb113-2"><a href="welcome-to-the-tidyverse.html#cb113-2"></a><span class="st">  </span><span class="kw">select</span>(Site, Species) <span class="op">%&gt;%</span></span>
-<span id="cb113-3"><a href="welcome-to-the-tidyverse.html#cb113-3"></a><span class="st">  </span><span class="kw">head</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="welcome-to-the-tidyverse.html#cb113-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb113-2"><a href="welcome-to-the-tidyverse.html#cb113-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Site, Species) <span class="sc">%&gt;%</span></span>
+<span id="cb113-3"><a href="welcome-to-the-tidyverse.html#cb113-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 2
 ##   Site        Species      
 ##   &lt;chr&gt;       &lt;chr&gt;        
@@ -260,8 +283,8 @@ How would you select just Day, Month, and Year columns?
 </div>
 </div>
 <p>You PCL column doesn’t contain any information (all <code>NA</code>s) - you can also eliminate individual columns by name.</p>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="welcome-to-the-tidyverse.html#cb115-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb115-2"><a href="welcome-to-the-tidyverse.html#cb115-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>PCL)</span></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="welcome-to-the-tidyverse.html#cb115-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb115-2"><a href="welcome-to-the-tidyverse.html#cb115-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>PCL)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 11
 ##    Site        Species       Sex   Observed_Stage    FL   STL Hook_Size   Set   Day Month  Year
 ##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -290,8 +313,8 @@ How would you eliminate hook size from the data set?
 </div>
 </div>
 <p>You can also eliminate multiple columns by name, for example you would remove Day, Month and Year like this:</p>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="welcome-to-the-tidyverse.html#cb117-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb117-2"><a href="welcome-to-the-tidyverse.html#cb117-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>Day, <span class="op">-</span>Month, <span class="op">-</span>Year)</span></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="welcome-to-the-tidyverse.html#cb117-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb117-2"><a href="welcome-to-the-tidyverse.html#cb117-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Day, <span class="sc">-</span>Month, <span class="sc">-</span>Year)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 9
 ##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set
 ##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -307,8 +330,8 @@ How would you eliminate hook size from the data set?
 ## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1
 ## # ... with 2,315 more rows</code></pre>
 <p>If you want to re-arrange columns in your data frame, you would also use <code>select()</code>.</p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="welcome-to-the-tidyverse.html#cb119-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb119-2"><a href="welcome-to-the-tidyverse.html#cb119-2"></a><span class="st">  </span><span class="kw">select</span>(FL, Sex, Day)</span></code></pre></div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="welcome-to-the-tidyverse.html#cb119-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb119-2"><a href="welcome-to-the-tidyverse.html#cb119-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(FL, Sex, Day)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 3
 ##       FL Sex     Day
 ##    &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
@@ -324,8 +347,8 @@ How would you eliminate hook size from the data set?
 ## 10   450 U        28
 ## # ... with 2,315 more rows</code></pre>
 <p>If you wanted to move a set of columns to the front, but not have to type in all the other column names you can use <code>everything()</code>.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="welcome-to-the-tidyverse.html#cb121-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb121-2"><a href="welcome-to-the-tidyverse.html#cb121-2"></a><span class="st">  </span><span class="kw">select</span>(Day, Month, Year, <span class="kw">everything</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="welcome-to-the-tidyverse.html#cb121-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb121-2"><a href="welcome-to-the-tidyverse.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Day, Month, Year, <span class="fu">everything</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 12
 ##      Day Month  Year Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
@@ -342,56 +365,56 @@ How would you eliminate hook size from the data set?
 ## # ... with 2,315 more rows</code></pre>
 <p>There you go. Simple as that.</p>
 </div>
-<div id="separate-uniting-columns" class="section level2">
+<div id="separate-uniting-columns" class="section level2" number="7.3">
 <h2>
 <span class="header-section-number">7.3</span> Separate &amp; uniting columns<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('separate-uniting-columns')" onmouseout="reset_tooltip('separate-uniting-columns-tooltip')"><span class="tooltiptext" id="separate-uniting-columns-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Occasionally you will find that you want to combine the contents of two columns into a single column (e.g. first name, last name) or at other times you may want to separate the contents of a column over multiple columns (e.g. dates).</p>
 <p>For example, you may have noticed that the Species is entered as <code>genus_species</code> - what if you wanted to have two separate columns with that information? The function <code>separate()</code> is a function that will split the contents from one column across two or more columns.</p>
 <p>To do this you need to specify the new column names (<code>into = c("column1", "column2")</code>), and what pattern should be used to determine where the content should be split (<code>sep = "pattern"</code>).</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="welcome-to-the-tidyverse.html#cb123-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb123-2"><a href="welcome-to-the-tidyverse.html#cb123-2"></a><span class="st">  </span><span class="kw">separate</span>(Species, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">"species"</span>, <span class="st">"genus"</span>), <span class="dt">sep =</span> <span class="st">"_"</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="welcome-to-the-tidyverse.html#cb123-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb123-2"><a href="welcome-to-the-tidyverse.html#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(Species, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"genus"</span>), <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 14
-##    Site        Species  species genus Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;       &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
-##  2 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015
-##  3 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015
-##  4 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015
-##  5 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015
-##  6 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015
-##  7 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015
-##  8 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
-##  9 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
-## 10 Aransas_Bay Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
+##    Site        Species       species genus   Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
+##  2 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015
+##  3 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015
+##  4 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015
+##  5 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015
+##  6 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015
+##  7 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015
+##  8 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
+##  9 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
+## 10 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-3" class="question">
 <p class="question-begin">
 ► Question 7.3
 </p>
 <div class="question-body">
-<p>In some cases, there might not be a distinct pattern that you can use to identify where to split the column content. In this case it may be more helpful to use the position (e.g. “split at”third character from the left") Look up the <code>separate()</code> function in the help and determine how you could split the Year column so you get two new columns by splitting off the last two digits (i.e. 2021 would be 20 and 21). Then eliminate the column containing the first two digits.</p>
+<p>In some cases, there might not be a distinct pattern that you can use to identify where to split the column content. In this case it may be more helpful to use the position (e.g. “split at”third character from the left”) Look up the <code>separate()</code> function in the help and determine how you could split the Year column so you get two new columns by splitting off the last two digits (i.e. 2021 would be 20 and 21). Then eliminate the column containing the first two digits.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
 <p>To do the opposite action you would use <code>unite()</code>. For example, if we wanted to create a column called date that had the day, month, and year of each sampling trip separated by an <code>_</code>.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="welcome-to-the-tidyverse.html#cb125-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb125-2"><a href="welcome-to-the-tidyverse.html#cb125-2"></a><span class="st">  </span><span class="kw">unite</span>(Date, Day, Month, Year, <span class="dt">sep =</span> <span class="st">"_"</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="welcome-to-the-tidyverse.html#cb125-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb125-2"><a href="welcome-to-the-tidyverse.html#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(Date, Day, Month, Year, <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 13
-##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set Date       Day Month  Year
-##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1 28_7_20~    28     7  2015
-##  2 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   425   495        10     1 28_7_20~    28     7  2015
-##  3 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   502        15     1 28_7_20~    28     7  2015
-##  4 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   507        10     1 28_7_20~    28     7  2015
-##  5 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   418   510        15     1 28_7_20~    28     7  2015
-##  6 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   434   515        10     1 28_7_20~    28     7  2015
-##  7 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   427   520        15     1 28_7_20~    28     7  2015
-##  8 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1 28_7_20~    28     7  2015
-##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1 28_7_20~    28     7  2015
-## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1 28_7_20~    28     7  2015
+##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set Date        Day Month  Year
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1 28_7_2015    28     7  2015
+##  2 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   425   495        10     1 28_7_2015    28     7  2015
+##  3 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   502        15     1 28_7_2015    28     7  2015
+##  4 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   507        10     1 28_7_2015    28     7  2015
+##  5 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   418   510        15     1 28_7_2015    28     7  2015
+##  6 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   434   515        10     1 28_7_2015    28     7  2015
+##  7 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   427   520        15     1 28_7_2015    28     7  2015
+##  8 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1 28_7_2015    28     7  2015
+##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1 28_7_2015    28     7  2015
+## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1 28_7_2015    28     7  2015
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-4" class="question">
 <p class="question-begin">
@@ -412,27 +435,27 @@ How would you eliminate hook size from the data set?
 </div>
 </div>
 </div>
-<div id="filtering-subsetting-rows" class="section level2">
+<div id="filtering-subsetting-rows" class="section level2" number="7.4">
 <h2>
 <span class="header-section-number">7.4</span> Filtering (subsetting) rows<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('filtering-subsetting-rows')" onmouseout="reset_tooltip('filtering-subsetting-rows-tooltip')"><span class="tooltiptext" id="filtering-subsetting-rows-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Until you want to visualize a table how the rows are arranged is not really important. However, when generating reports for example you might want values to be listed in a specific way. This can be done using the function <code>arrange()</code>.</p>
 <p>For example, if we wanted to arrange our dataframe based on the <code>Observed_Stage</code> column we could do the following:</p>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="welcome-to-the-tidyverse.html#cb127-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb127-2"><a href="welcome-to-the-tidyverse.html#cb127-2"></a><span class="st">  </span><span class="kw">arrange</span>(Observed_Stage)</span></code></pre></div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="welcome-to-the-tidyverse.html#cb127-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb127-2"><a href="welcome-to-the-tidyverse.html#cb127-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Observed_Stage)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 12
-##    Site               Species         Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;              &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Redfish_Bay        Sphyrna_tiburo  M     MAT              622   668   850        10     1     8     9  2015
-##  2 Redfish_Bay        Sphyrna_tiburo  M     MAT              656   710   869        10     1     8     9  2015
-##  3 Redfish_Bay        Sphyrna_tiburo  F     MAT              708   770   979        15     2     8     9  2015
-##  4 Corpus_Christi_Bay Sphyrna_tiburo  M     MAT              695   757   954        10     2    12     9  2016
-##  5 Corpus_Christi_Bay Sphyrna_tiburo  F     MAT              760   861  1090        10     2    12     9  2016
-##  6 Corpus_Christi_Bay Sphyrna_tiburo  M     MAT              621   689   856        10     2    27     9  2016
-##  7 Redfish_Bay        Sphyrna_tiburo  F     MAT              781   853  1020        10     4    29     9  2016
-##  8 Redfish_Bay        Sphyrna_tiburo  M     MAT              721   783   980        10     3    11     8  2017
-##  9 Redfish_Bay        Carcharhinus_b~ U     UND               NA    NA    NA        15     2    16     6  2016
-## 10 Corpus_Christi_Bay Sphyrna_tiburo  U     UND               NA    NA    NA        10     1    27     9  2016
+##    Site               Species                 Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;              &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Redfish_Bay        Sphyrna_tiburo          M     MAT              622   668   850        10     1     8     9  2015
+##  2 Redfish_Bay        Sphyrna_tiburo          M     MAT              656   710   869        10     1     8     9  2015
+##  3 Redfish_Bay        Sphyrna_tiburo          F     MAT              708   770   979        15     2     8     9  2015
+##  4 Corpus_Christi_Bay Sphyrna_tiburo          M     MAT              695   757   954        10     2    12     9  2016
+##  5 Corpus_Christi_Bay Sphyrna_tiburo          F     MAT              760   861  1090        10     2    12     9  2016
+##  6 Corpus_Christi_Bay Sphyrna_tiburo          M     MAT              621   689   856        10     2    27     9  2016
+##  7 Redfish_Bay        Sphyrna_tiburo          F     MAT              781   853  1020        10     4    29     9  2016
+##  8 Redfish_Bay        Sphyrna_tiburo          M     MAT              721   783   980        10     3    11     8  2017
+##  9 Redfish_Bay        Carcharhinus_brevipinna U     UND               NA    NA    NA        15     2    16     6  2016
+## 10 Corpus_Christi_Bay Sphyrna_tiburo          U     UND               NA    NA    NA        10     1    27     9  2016
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-8" class="question">
 <p class="question-begin">
@@ -448,27 +471,27 @@ How would sort your table by Sex?
 </div>
 </div>
 <p>Characters are sorted alphabetically, numeric columns from smallest to largest value. If you want to order your values from largest to smallest, you can specify that using <code>desc()</code></p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="welcome-to-the-tidyverse.html#cb129-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb129-2"><a href="welcome-to-the-tidyverse.html#cb129-2"></a><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(FL))</span></code></pre></div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="welcome-to-the-tidyverse.html#cb129-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb129-2"><a href="welcome-to-the-tidyverse.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(FL))</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 12
-##    Site               Species         Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;              &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransas_Bay        Carcharhinus_l~ F     &lt;NA&gt;            1042  1140  1410        15     1    25     5  2016
-##  2 Redfish_Bay        Carcharhinus_b~ F     &lt;NA&gt;             812   900  1090        15     1    16     6  2016
-##  3 Redfish_Bay        Carcharhinus_b~ M     &lt;NA&gt;             792   882  1092        15     2    16     6  2016
-##  4 Corpus_Christi_Bay Sphyrna_tiburo  F     MAT              760   861  1090        10     2    12     9  2016
-##  5 Redfish_Bay        Sphyrna_tiburo  F     MAT              781   853  1020        10     4    29     9  2016
-##  6 Corpus_Christi_Bay Sciaenops_ocel~ U     &lt;NA&gt;              NA   841   950        10     3    25     9  2018
-##  7 Redfish_Bay        Carcharhinus_l~ M     &lt;NA&gt;             740   840  1010        15     3    29     9  2016
-##  8 Redfish_Bay        Carcharhinus_b~ M     &lt;NA&gt;             740   820  1020        10     4     1     8  2016
-##  9 Aransas_Bay        Carcharhinus_l~ M     &lt;NA&gt;             720   812   912        15     4    22     9  2016
-## 10 Redfish_Bay        Sphyrna_tiburo  M     MAT              721   783   980        10     3    11     8  2017
+##    Site               Species                 Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;              &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay        Carcharhinus_leucas     F     &lt;NA&gt;            1042  1140  1410        15     1    25     5  2016
+##  2 Redfish_Bay        Carcharhinus_brevipinna F     &lt;NA&gt;             812   900  1090        15     1    16     6  2016
+##  3 Redfish_Bay        Carcharhinus_brevipinna M     &lt;NA&gt;             792   882  1092        15     2    16     6  2016
+##  4 Corpus_Christi_Bay Sphyrna_tiburo          F     MAT              760   861  1090        10     2    12     9  2016
+##  5 Redfish_Bay        Sphyrna_tiburo          F     MAT              781   853  1020        10     4    29     9  2016
+##  6 Corpus_Christi_Bay Sciaenops_ocellatus     U     &lt;NA&gt;              NA   841   950        10     3    25     9  2018
+##  7 Redfish_Bay        Carcharhinus_leucas     M     &lt;NA&gt;             740   840  1010        15     3    29     9  2016
+##  8 Redfish_Bay        Carcharhinus_brevipinna M     &lt;NA&gt;             740   820  1020        10     4     1     8  2016
+##  9 Aransas_Bay        Carcharhinus_leucas     M     &lt;NA&gt;             720   812   912        15     4    22     9  2016
+## 10 Redfish_Bay        Sphyrna_tiburo          M     MAT              721   783   980        10     3    11     8  2017
 ## # ... with 2,315 more rows</code></pre>
 <p>The function <code>filter()</code> is used to subset a data frame by row.</p>
 <p>We do this using <code>regular expressions</code> and the <code>boolean operators</code> we previously encounter to describe the content of sets of rows.</p>
 <p>For example, we might a <code>data.frame</code> with only Gafftop sail catfish (<em>Bagre marinus</em>).</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="welcome-to-the-tidyverse.html#cb131-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb131-2"><a href="welcome-to-the-tidyverse.html#cb131-2"></a><span class="st">  </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> "Bagre_marinus"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="welcome-to-the-tidyverse.html#cb131-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb131-2"><a href="welcome-to-the-tidyverse.html#cb131-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"Bagre_marinus"</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1,511 x 12
 ##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
 ##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -497,22 +520,22 @@ How would you select only rows containing Scalloped Hammerheads (<em>Sphyrna lew
 </div>
 </div>
 <p><label for="tufte-sn-30" class="margin-toggle sidenote-number">30</label><input type="checkbox" id="tufte-sn-30" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">30</span> Note: you need to use <code>==</code> (not <code>=</code> if you are looking for an exact match).</span></p>
-<p>If want all rows but Gafftop sailfish you can use a <code>!</code> to say “not that”.</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="welcome-to-the-tidyverse.html#cb133-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb133-2"><a href="welcome-to-the-tidyverse.html#cb133-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>Species <span class="op">==</span><span class="st"> "Bagre_marinus"</span>)</span></code></pre></div>
+<p>If want all rows but Gafftop sailfish you can use a <code>!</code> to say “not that.”</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="welcome-to-the-tidyverse.html#cb133-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb133-2"><a href="welcome-to-the-tidyverse.html#cb133-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Species <span class="sc">==</span> <span class="st">"Bagre_marinus"</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 814 x 12
-##    Site               Species         Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;              &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Redfish_Bay        Rhizoprionodon~ M     &lt;NA&gt;             351   378   433        15     1    29     7  2015
-##  2 Redfish_Bay        Sphyrna_tiburo  F     &lt;NA&gt;             470   430   600        10     3    29     7  2015
-##  3 Redfish_Bay        Hypanus_americ~ F     &lt;NA&gt;              NA    NA   670        15     3    29     7  2015
-##  4 Redfish_Bay        Hypanus_sabina  F     &lt;NA&gt;              NA    NA   340        10     3    29     7  2015
-##  5 Redfish_Bay        Hypanus_americ~ M     &lt;NA&gt;              NA    NA   810        10     4    29     7  2015
-##  6 Corpus_Christi_Bay Carcharhinus_l~ F     &lt;NA&gt;             609   670   820        15     1    30     7  2015
-##  7 Corpus_Christi_Bay Sphyrna_tiburo  M     &lt;NA&gt;             495   485   615        10     2    24     8  2015
-##  8 Corpus_Christi_Bay Sphyrna_tiburo  F     &lt;NA&gt;             550   370   720        10     2    24     8  2015
-##  9 Corpus_Christi_Bay Sphyrna_tiburo  M     &lt;NA&gt;             470   505   645        10     3    24     8  2015
-## 10 Corpus_Christi_Bay Sphyrna_tiburo  F     &lt;NA&gt;             540   565   720        10     3    24     8  2015
+##    Site               Species                    Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;              &lt;chr&gt;                      &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Redfish_Bay        Rhizoprionodon_terraenovae M     &lt;NA&gt;             351   378   433        15     1    29     7  2015
+##  2 Redfish_Bay        Sphyrna_tiburo             F     &lt;NA&gt;             470   430   600        10     3    29     7  2015
+##  3 Redfish_Bay        Hypanus_americanus         F     &lt;NA&gt;              NA    NA   670        15     3    29     7  2015
+##  4 Redfish_Bay        Hypanus_sabina             F     &lt;NA&gt;              NA    NA   340        10     3    29     7  2015
+##  5 Redfish_Bay        Hypanus_americanus         M     &lt;NA&gt;              NA    NA   810        10     4    29     7  2015
+##  6 Corpus_Christi_Bay Carcharhinus_leucas        F     &lt;NA&gt;             609   670   820        15     1    30     7  2015
+##  7 Corpus_Christi_Bay Sphyrna_tiburo             M     &lt;NA&gt;             495   485   615        10     2    24     8  2015
+##  8 Corpus_Christi_Bay Sphyrna_tiburo             F     &lt;NA&gt;             550   370   720        10     2    24     8  2015
+##  9 Corpus_Christi_Bay Sphyrna_tiburo             M     &lt;NA&gt;             470   505   645        10     3    24     8  2015
+## 10 Corpus_Christi_Bay Sphyrna_tiburo             F     &lt;NA&gt;             540   565   720        10     3    24     8  2015
 ## # ... with 804 more rows</code></pre>
 <div id="ques:tidy-10" class="question">
 <p class="question-begin">
@@ -528,8 +551,8 @@ How would you create a dataframe without Scalloped Hammerheads (<em>Sphyrna lewi
 </div>
 </div>
 <p>Sometimes you might want to select rows that match one of a set of values<label for="tufte-sn-31" class="margin-toggle sidenote-number">31</label><input type="checkbox" id="tufte-sn-31" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">31</span> Recall, the function <code>c()</code> (concatenate) creates a vector</span>.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="welcome-to-the-tidyverse.html#cb135-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb135-2"><a href="welcome-to-the-tidyverse.html#cb135-2"></a><span class="st">  </span><span class="kw">filter</span>(Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"Sciades_felis"</span>, <span class="st">"Bagre_marinus"</span>, <span class="st">"Synodus_foetens"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="welcome-to-the-tidyverse.html#cb135-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb135-2"><a href="welcome-to-the-tidyverse.html#cb135-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sciades_felis"</span>, <span class="st">"Bagre_marinus"</span>, <span class="st">"Synodus_foetens"</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2,166 x 12
 ##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
 ##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -545,21 +568,21 @@ How would you create a dataframe without Scalloped Hammerheads (<em>Sphyrna lewi
 ## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
 ## # ... with 2,156 more rows</code></pre>
 <p>Again, if you wanted everything but rows containing those values you would preface it with a <code>!</code>.</p>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="welcome-to-the-tidyverse.html#cb137-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb137-2"><a href="welcome-to-the-tidyverse.html#cb137-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>Species <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"Sciades_felis"</span>, <span class="st">"Bagre_marinus"</span>, <span class="st">"Synodus_foetens"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="welcome-to-the-tidyverse.html#cb137-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb137-2"><a href="welcome-to-the-tidyverse.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sciades_felis"</span>, <span class="st">"Bagre_marinus"</span>, <span class="st">"Synodus_foetens"</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 159 x 12
-##    Site               Species         Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;              &lt;chr&gt;           &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Redfish_Bay        Rhizoprionodon~ M     &lt;NA&gt;             351   378   433        15     1    29     7  2015
-##  2 Redfish_Bay        Sphyrna_tiburo  F     &lt;NA&gt;             470   430   600        10     3    29     7  2015
-##  3 Redfish_Bay        Hypanus_americ~ F     &lt;NA&gt;              NA    NA   670        15     3    29     7  2015
-##  4 Redfish_Bay        Hypanus_sabina  F     &lt;NA&gt;              NA    NA   340        10     3    29     7  2015
-##  5 Redfish_Bay        Hypanus_americ~ M     &lt;NA&gt;              NA    NA   810        10     4    29     7  2015
-##  6 Corpus_Christi_Bay Carcharhinus_l~ F     &lt;NA&gt;             609   670   820        15     1    30     7  2015
-##  7 Corpus_Christi_Bay Sphyrna_tiburo  M     &lt;NA&gt;             495   485   615        10     2    24     8  2015
-##  8 Corpus_Christi_Bay Sphyrna_tiburo  F     &lt;NA&gt;             550   370   720        10     2    24     8  2015
-##  9 Corpus_Christi_Bay Sphyrna_tiburo  M     &lt;NA&gt;             470   505   645        10     3    24     8  2015
-## 10 Corpus_Christi_Bay Sphyrna_tiburo  F     &lt;NA&gt;             540   565   720        10     3    24     8  2015
+##    Site               Species                    Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;              &lt;chr&gt;                      &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Redfish_Bay        Rhizoprionodon_terraenovae M     &lt;NA&gt;             351   378   433        15     1    29     7  2015
+##  2 Redfish_Bay        Sphyrna_tiburo             F     &lt;NA&gt;             470   430   600        10     3    29     7  2015
+##  3 Redfish_Bay        Hypanus_americanus         F     &lt;NA&gt;              NA    NA   670        15     3    29     7  2015
+##  4 Redfish_Bay        Hypanus_sabina             F     &lt;NA&gt;              NA    NA   340        10     3    29     7  2015
+##  5 Redfish_Bay        Hypanus_americanus         M     &lt;NA&gt;              NA    NA   810        10     4    29     7  2015
+##  6 Corpus_Christi_Bay Carcharhinus_leucas        F     &lt;NA&gt;             609   670   820        15     1    30     7  2015
+##  7 Corpus_Christi_Bay Sphyrna_tiburo             M     &lt;NA&gt;             495   485   615        10     2    24     8  2015
+##  8 Corpus_Christi_Bay Sphyrna_tiburo             F     &lt;NA&gt;             550   370   720        10     2    24     8  2015
+##  9 Corpus_Christi_Bay Sphyrna_tiburo             M     &lt;NA&gt;             470   505   645        10     3    24     8  2015
+## 10 Corpus_Christi_Bay Sphyrna_tiburo             F     &lt;NA&gt;             540   565   720        10     3    24     8  2015
 ## # ... with 149 more rows</code></pre>
 <div id="ques:tidy-11" class="question">
 <p class="question-begin">
@@ -575,8 +598,8 @@ How would you subset a data frame to contain only entries for different species 
 </div>
 </div>
 <p>For numbers you likely aren’t just searching for exact matches, you also want to be able to set threshold values and select everything above or below. For example, you can select all rows with values greater than a certain value using <code>&gt;</code>.</p>
-<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="welcome-to-the-tidyverse.html#cb139-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb139-2"><a href="welcome-to-the-tidyverse.html#cb139-2"></a><span class="st">  </span><span class="kw">filter</span>(FL <span class="op">&gt;</span><span class="st"> </span><span class="dv">440</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="welcome-to-the-tidyverse.html#cb139-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb139-2"><a href="welcome-to-the-tidyverse.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FL <span class="sc">&gt;</span> <span class="dv">440</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 907 x 12
 ##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
 ##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -605,8 +628,8 @@ Create a data frame containing only entries with a forklength &lt; 300.
 </div>
 </div>
 <p>You can also combine expressions - for example to select only scalloped hammerheads that are also smaller that 300 cm you would use</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="welcome-to-the-tidyverse.html#cb141-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb141-2"><a href="welcome-to-the-tidyverse.html#cb141-2"></a><span class="st">  </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> "Sphyrna_lewini"</span> <span class="op">&amp;</span><span class="st"> </span>FL <span class="op">&lt;</span><span class="st"> </span><span class="dv">300</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="welcome-to-the-tidyverse.html#cb141-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb141-2"><a href="welcome-to-the-tidyverse.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"Sphyrna_lewini"</span> <span class="sc">&amp;</span> FL <span class="sc">&lt;</span> <span class="dv">300</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 12
 ##   Site               Species        Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
 ##   &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -624,9 +647,9 @@ How would you subset a data frame to contain only entries for different species 
 </p>
 </div>
 </div>
-<p>Instead of entries having to fulfill two (or more) requirements, you might have a situation where you only want to retain rows that fulfill one or another argument. For example, if you wanted all entries that are either gafftops or a fork length smaller than 300 cm you could use the following code<label for="tufte-sn-32" class="margin-toggle sidenote-number">32</label><input type="checkbox" id="tufte-sn-32" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">32</span> When you are combining arguments you use <code>&amp;</code> to say “it must fulfill this <strong>AND</strong> this” or <code>|</code> (called the pipe) to say "it must fulfill this <strong>OR</strong> that.</span>:</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="welcome-to-the-tidyverse.html#cb143-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb143-2"><a href="welcome-to-the-tidyverse.html#cb143-2"></a><span class="st">  </span><span class="kw">filter</span>(Species <span class="op">==</span><span class="st"> "Sphyrna_lewini"</span> <span class="op">|</span><span class="st"> </span>FL <span class="op">&lt;</span><span class="st"> </span><span class="dv">300</span>)</span></code></pre></div>
+<p>Instead of entries having to fulfill two (or more) requirements, you might have a situation where you only want to retain rows that fulfill one or another argument. For example, if you wanted all entries that are either gafftops or a fork length smaller than 300 cm you could use the following code<label for="tufte-sn-32" class="margin-toggle sidenote-number">32</label><input type="checkbox" id="tufte-sn-32" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">32</span> When you are combining arguments you use <code>&amp;</code> to say “it must fulfill this <strong>AND</strong> this” or <code>|</code> (called the pipe) to say “it must fulfill this <strong>OR</strong> that.</span>:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="welcome-to-the-tidyverse.html#cb143-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb143-2"><a href="welcome-to-the-tidyverse.html#cb143-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"Sphyrna_lewini"</span> <span class="sc">|</span> FL <span class="sc">&lt;</span> <span class="dv">300</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 409 x 12
 ##    Site               Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
 ##    &lt;chr&gt;              &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -654,23 +677,23 @@ How would you select fish that have a forklength either smaller than 200 cm or l
 </p>
 </div>
 </div>
-<p>The tidyverse has a central concept call “split-apply-combine”, which means that occasionally we want to group entries in a dataframe (split), do some sort of manipulation (apply), but end up with a single data frame (combine).</p>
+<p>The tidyverse has a central concept call “split-apply-combine,” which means that occasionally we want to group entries in a dataframe (split), do some sort of manipulation (apply), but end up with a single data frame (combine).</p>
 <p><label for="tufte-mn-3" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-3" class="margin-toggle"><span class="marginnote"><span style="display: block;">The function <code>max()</code> can be used to get the maximum value for a vector of numbers. In this case, the vector we are looking at is the <code>FL</code> column of the <code>catch</code> dataframe.</span></span></p>
 <p>For example, we might want to retain the entry with the longest fork length for each species. To do this we can use the <code>group_by()</code> function, then the <code>filter()</code> function.</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="welcome-to-the-tidyverse.html#cb145-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb145-2"><a href="welcome-to-the-tidyverse.html#cb145-2"></a><span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></span>
-<span id="cb145-3"><a href="welcome-to-the-tidyverse.html#cb145-3"></a><span class="st">  </span><span class="kw">filter</span>(FL <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(FL)) <span class="op">%&gt;%</span></span>
-<span id="cb145-4"><a href="welcome-to-the-tidyverse.html#cb145-4"></a><span class="st">  </span><span class="kw">ungroup</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="welcome-to-the-tidyverse.html#cb145-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb145-2"><a href="welcome-to-the-tidyverse.html#cb145-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
+<span id="cb145-3"><a href="welcome-to-the-tidyverse.html#cb145-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FL <span class="sc">==</span> <span class="fu">max</span>(FL)) <span class="sc">%&gt;%</span></span>
+<span id="cb145-4"><a href="welcome-to-the-tidyverse.html#cb145-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 12
-##   Site               Species          Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##   &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 Aransas_Bay        Rhizoprionodon_~ F     &lt;NA&gt;             580   637   790        10     2    25     8  2015
-## 2 Aransas_Bay        Carcharhinus_le~ F     &lt;NA&gt;            1042  1140  1410        15     1    25     5  2016
-## 3 Aransas_Bay        Carcharhinus_li~ F     &lt;NA&gt;             690   757   940        10     2    22     6  2017
-## 4 Corpus_Christi_Bay Sphyrna_lewini   F     &lt;NA&gt;             520   578   770        10     1    21     8  2017
-## 5 Corpus_Christi_Bay Carcharhinus_po~ U     &lt;NA&gt;             335   415   475        10     1     3     7  2018
-## 6 Corpus_Christi_Bay Sciaenops_ocell~ U     &lt;NA&gt;              NA   841   950        10     3    25     9  2018
-## 7 Corpus_Christi_Bay Synodus_foetens  U     &lt;NA&gt;              NA   173   185        10     3    30     6  2016</code></pre>
+##   Site               Species                    Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##   &lt;chr&gt;              &lt;chr&gt;                      &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Aransas_Bay        Rhizoprionodon_terraenovae F     &lt;NA&gt;             580   637   790        10     2    25     8  2015
+## 2 Aransas_Bay        Carcharhinus_leucas        F     &lt;NA&gt;            1042  1140  1410        15     1    25     5  2016
+## 3 Aransas_Bay        Carcharhinus_limbatus      F     &lt;NA&gt;             690   757   940        10     2    22     6  2017
+## 4 Corpus_Christi_Bay Sphyrna_lewini             F     &lt;NA&gt;             520   578   770        10     1    21     8  2017
+## 5 Corpus_Christi_Bay Carcharhinus_porosus       U     &lt;NA&gt;             335   415   475        10     1     3     7  2018
+## 6 Corpus_Christi_Bay Sciaenops_ocellatus        U     &lt;NA&gt;              NA   841   950        10     3    25     9  2018
+## 7 Corpus_Christi_Bay Synodus_foetens            U     &lt;NA&gt;              NA   173   185        10     3    30     6  2016</code></pre>
 <p>This is also an example of how we can use the pipe (<code>%&gt;%</code>) to string a bunch of commands, in this example we are saying “take the object catch, and then group rows by Species and then for each group retain only the maximum forklength value for that group and then ungroup them again.”</p>
 <div id="ques:tidy-15" class="question">
 <p class="question-begin">
@@ -686,8 +709,8 @@ How would you group rows by Species and then retain the individual caught on the
 </div>
 </div>
 <p>By doing that, you retained only one observation per species. That is actually a common process you might need to perform during exploratory analysis and can be achieved in a straightforward way using the function <code>distinct()</code>. For example, if we wanted to know all the years that had been sampled in we could use</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="welcome-to-the-tidyverse.html#cb147-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb147-2"><a href="welcome-to-the-tidyverse.html#cb147-2"></a><span class="st">  </span><span class="kw">distinct</span>(Year)</span></code></pre></div>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb147-1"><a href="welcome-to-the-tidyverse.html#cb147-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb147-2"><a href="welcome-to-the-tidyverse.html#cb147-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(Year)</span></code></pre></div>
 <pre><code>## # A tibble: 4 x 1
 ##    Year
 ##   &lt;dbl&gt;
@@ -710,8 +733,8 @@ How would you produce a table with only one representative per species?
 </div>
 </div>
 <p>You can also combine columns. For example if we wanted to determine the individual sets of the data set we could use</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="welcome-to-the-tidyverse.html#cb149-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb149-2"><a href="welcome-to-the-tidyverse.html#cb149-2"></a><span class="st">  </span><span class="kw">distinct</span>(Day, Month, Year, Set)</span></code></pre></div>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="welcome-to-the-tidyverse.html#cb149-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb149-2"><a href="welcome-to-the-tidyverse.html#cb149-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(Day, Month, Year, Set)</span></code></pre></div>
 <pre><code>## # A tibble: 197 x 4
 ##      Set   Day Month  Year
 ##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -740,15 +763,15 @@ How would you produce a table showing all the species caught per station using d
 </div>
 </div>
 </div>
-<div id="adding-new-variables" class="section level2">
+<div id="adding-new-variables" class="section level2" number="7.5">
 <h2>
 <span class="header-section-number">7.5</span> Adding new variables<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('adding-new-variables')" onmouseout="reset_tooltip('adding-new-variables-tooltip')"><span class="tooltiptext" id="adding-new-variables-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Turns out selecting columns and filtering based on content in rows is pretty straightforward. But frequently when we are processing our raw data sets we end up wanting to compute additional metrics or use the existing raw data to create new categories.</p>
-<p>The function <code>mutate()</code> can be used to create new columns - frequently based on columns already existing in the data frame. This is a very powerful function with endless possibilities, but we are going to stick to some of the basics for now<label for="tufte-sn-33" class="margin-toggle sidenote-number">33</label><input type="checkbox" id="tufte-sn-33" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">33</span> Rest assured if your answer is “Oh, could I …” the answer is “Yes”.</span>.</p>
+<p>The function <code>mutate()</code> can be used to create new columns - frequently based on columns already existing in the data frame. This is a very powerful function with endless possibilities, but we are going to stick to some of the basics for now<label for="tufte-sn-33" class="margin-toggle sidenote-number">33</label><input type="checkbox" id="tufte-sn-33" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">33</span> Rest assured if your answer is “Oh, could I …” the answer is “Yes.”</span>.</p>
 <p>Let’s say you wanted create a column that contained the difference between the fork length and the stretch total length:</p>
-<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="welcome-to-the-tidyverse.html#cb151-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb151-2"><a href="welcome-to-the-tidyverse.html#cb151-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">difference =</span> STL <span class="op">-</span><span class="st"> </span>FL)</span></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="welcome-to-the-tidyverse.html#cb151-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb151-2"><a href="welcome-to-the-tidyverse.html#cb151-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference =</span> STL <span class="sc">-</span> FL)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 13
 ##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year difference
 ##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
@@ -778,8 +801,8 @@ How would you create a new column called ratio, that is the ratio of the fork to
 </div>
 </div>
 <p>You can also create a column that contains a logical value (<code>TRUE</code>/<code>FALSE</code>). For example we might need a column that indicates if the Sex is unknown.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="welcome-to-the-tidyverse.html#cb153-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb153-2"><a href="welcome-to-the-tidyverse.html#cb153-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">unknown_sex =</span> Sex <span class="op">==</span><span class="st"> "U"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="welcome-to-the-tidyverse.html#cb153-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb153-2"><a href="welcome-to-the-tidyverse.html#cb153-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unknown_sex =</span> Sex <span class="sc">==</span> <span class="st">"U"</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 13
 ##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year unknown_sex
 ##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;      
@@ -812,9 +835,9 @@ How would you create a new column called post_2017 that is TRUE if fish were cau
 <p>Many problems in data science require you to split your data set into subsets according to some grouping variable, apply a function, and then combine the results. <code>dplyr</code> is designed to make this straightforward; you have already sen an example of this while you were learning about <code>filter()</code>. Similarly, you can combine <code>mutate()</code> with <code>group_by()</code>.</p>
 <p><label for="tufte-mn-5" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-5" class="margin-toggle"><span class="marginnote"><span style="display: block;">The function <code>mean()</code> will calculate the mean value of a vector of numbers, the argument <code>na.rm=TRUE</code> tells the function to ignore any <code>NA</code>-values in the data set.</span></span></p>
 <p>For example, let’s say you wanted to create a column that is the difference between the fork length of an individual and the mean fork length of <em>that species</em>.</p>
-<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="welcome-to-the-tidyverse.html#cb155-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb155-2"><a href="welcome-to-the-tidyverse.html#cb155-2"></a><span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></span>
-<span id="cb155-3"><a href="welcome-to-the-tidyverse.html#cb155-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">diff_mean =</span> FL<span class="op">-</span><span class="kw">mean</span>(FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="welcome-to-the-tidyverse.html#cb155-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb155-2"><a href="welcome-to-the-tidyverse.html#cb155-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
+<span id="cb155-3"><a href="welcome-to-the-tidyverse.html#cb155-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_mean =</span> FL<span class="sc">-</span><span class="fu">mean</span>(FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 13
 ## # Groups:   Species [14]
 ##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year diff_mean
@@ -844,15 +867,15 @@ How would you create a new column called that contains the difference between th
 </div>
 </div>
 </div>
-<div id="create-new-data.frame-based-on-another" class="section level2">
+<div id="create-new-data.frame-based-on-another" class="section level2" number="7.6">
 <h2>
 <span class="header-section-number">7.6</span> Create new <code>data.frame</code> based on another<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('create-new-data.frame-based-on-another')" onmouseout="reset_tooltip('create-new-data.frame-based-on-another-tooltip')"><span class="tooltiptext" id="create-new-data.frame-based-on-another-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Not infrequently we are more interested in summary stats of a data set rather than all the raw data - <code>Tidyverse</code> got you covered with the function <code>summarize()</code>.</p>
 <p>For example, we might want to calculate the mean and standard deviation of the measured fork length.</p>
-<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="welcome-to-the-tidyverse.html#cb157-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb157-2"><a href="welcome-to-the-tidyverse.html#cb157-2"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_FL =</span> <span class="kw">mean</span>(FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb157-3"><a href="welcome-to-the-tidyverse.html#cb157-3"></a>            <span class="dt">sd_FL =</span> <span class="kw">sd</span>(FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="welcome-to-the-tidyverse.html#cb157-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb157-2"><a href="welcome-to-the-tidyverse.html#cb157-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_FL =</span> <span class="fu">mean</span>(FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb157-3"><a href="welcome-to-the-tidyverse.html#cb157-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">sd_FL =</span> <span class="fu">sd</span>(FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   mean_FL sd_FL
 ##     &lt;dbl&gt; &lt;dbl&gt;
@@ -872,7 +895,7 @@ How could you use summarize to get the maximum forklength?
 </div>
 <p><label for="tufte-sn-35" class="margin-toggle sidenote-number">35</label><input type="checkbox" id="tufte-sn-35" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">35</span> Hint: Remember earlier we used the function max() to get a maximum value.</span></p>
 <p>That’s cool but really we could have also just used</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="welcome-to-the-tidyverse.html#cb159-1"></a><span class="kw">mean</span>(catch<span class="op">$</span>FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="welcome-to-the-tidyverse.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(catch<span class="sc">$</span>FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 405.9179</code></pre>
 <p>to get that information.</p>
 <p><code>summarize</code> becomes especially powerful once we leverage <code>group_by()</code> to start calculating summary stats for entries grouped by a grouping variable.</p>
@@ -921,23 +944,23 @@ How could you use summarize calculate a range of summary stats for the stretch t
 </div>
 </div>
 <p>So far, we have been manipulating our data frame using code and printing it directly to the console (and our rmarkdown). This can be useful for example to generate tables for reports but frequently we want to create a new object that has been manipulated according to our code and then we will further process, visualize, or analyze that dataframe down the line.</p>
-<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="welcome-to-the-tidyverse.html#cb162-1"></a>summary &lt;-<span class="st"> </span>catch <span class="op">%&gt;%</span></span>
-<span id="cb162-2"><a href="welcome-to-the-tidyverse.html#cb162-2"></a><span class="st">  </span><span class="kw">group_by</span>(Species) <span class="op">%&gt;%</span></span>
-<span id="cb162-3"><a href="welcome-to-the-tidyverse.html#cb162-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_FL =</span> <span class="kw">mean</span>(FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb162-4"><a href="welcome-to-the-tidyverse.html#cb162-4"></a>           <span class="dt">median_FL =</span> <span class="kw">median</span>(FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb162-5"><a href="welcome-to-the-tidyverse.html#cb162-5"></a>           <span class="dt">max_FL =</span> <span class="kw">max</span>(FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb162-6"><a href="welcome-to-the-tidyverse.html#cb162-6"></a>           <span class="dt">min_FL =</span> <span class="kw">min</span>(FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</span>
-<span id="cb162-7"><a href="welcome-to-the-tidyverse.html#cb162-7"></a>           <span class="dt">sd_FL =</span> <span class="kw">sd</span>(FL, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb162-8"><a href="welcome-to-the-tidyverse.html#cb162-8"></a><span class="st">  </span><span class="kw">ungroup</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="welcome-to-the-tidyverse.html#cb162-1" aria-hidden="true" tabindex="-1"></a>summary <span class="ot">&lt;-</span> catch <span class="sc">%&gt;%</span></span>
+<span id="cb162-2"><a href="welcome-to-the-tidyverse.html#cb162-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species) <span class="sc">%&gt;%</span></span>
+<span id="cb162-3"><a href="welcome-to-the-tidyverse.html#cb162-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_FL =</span> <span class="fu">mean</span>(FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb162-4"><a href="welcome-to-the-tidyverse.html#cb162-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">median_FL =</span> <span class="fu">median</span>(FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb162-5"><a href="welcome-to-the-tidyverse.html#cb162-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">max_FL =</span> <span class="fu">max</span>(FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb162-6"><a href="welcome-to-the-tidyverse.html#cb162-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">min_FL =</span> <span class="fu">min</span>(FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb162-7"><a href="welcome-to-the-tidyverse.html#cb162-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">sd_FL =</span> <span class="fu">sd</span>(FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb162-8"><a href="welcome-to-the-tidyverse.html#cb162-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <p>When you execute this code, you’ll notice that the code (and probably a warning) is printed to the console but there is no output. Instead, if you look at the environment in the top right corner you should now see a new object called <code>summary</code>. Per usual, you can pull that up in the Editor/View pane (top left) using either <code>View(summary)</code> in the console or by clicking on the object in the environment.</p>
 <p>You will be presenting results in reports over the course of the semester, when you <code>knit</code> an <code>Rmarkdown</code> file you will get tables formatted in a standard way according to defaults in the resulting <code>html</code> file. If you want finer control over the output, you can use the <code>kable()</code> function. This will allow you to further format the table, for example, you may specify the number of digits printed using the argument <code>digits =</code> and add a caption using <code>caption = "caption"</code>.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="welcome-to-the-tidyverse.html#cb163-1"></a><span class="kw">kable</span>(</span>
-<span id="cb163-2"><a href="welcome-to-the-tidyverse.html#cb163-2"></a>  summary,</span>
-<span id="cb163-3"><a href="welcome-to-the-tidyverse.html#cb163-3"></a>  <span class="dt">digits =</span> <span class="dv">1</span>,</span>
-<span id="cb163-4"><a href="welcome-to-the-tidyverse.html#cb163-4"></a>  <span class="dt">caption =</span> <span class="st">"Summary statistics of forklength for each species."</span></span>
-<span id="cb163-5"><a href="welcome-to-the-tidyverse.html#cb163-5"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="welcome-to-the-tidyverse.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb163-2"><a href="welcome-to-the-tidyverse.html#cb163-2" aria-hidden="true" tabindex="-1"></a>  summary,</span>
+<span id="cb163-3"><a href="welcome-to-the-tidyverse.html#cb163-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">1</span>,</span>
+<span id="cb163-4"><a href="welcome-to-the-tidyverse.html#cb163-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Summary statistics of forklength for each species."</span></span>
+<span id="cb163-5"><a href="welcome-to-the-tidyverse.html#cb163-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-105">Table 7.1: </span>Summary statistics of forklength for each species.</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-176">Table 7.1: </span>Summary statistics of forklength for each species.</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="left">Species</th>
@@ -1063,7 +1086,7 @@ How could you use summarize calculate a range of summary stats for the stretch t
 </tbody>
 </table>
 </div>
-<div id="combining-verbs" class="section level2">
+<div id="combining-verbs" class="section level2" number="7.7">
 <h2>
 <span class="header-section-number">7.7</span> Combining verbs<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('combining-verbs')" onmouseout="reset_tooltip('combining-verbs-tooltip')"><span class="tooltiptext" id="combining-verbs-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -1074,14 +1097,14 @@ How could you use summarize calculate a range of summary stats for the stretch t
 </p>
 <div class="question-body">
 <p>Copy this code into your <code>Rmarkdown</code> file and execute the code chunk. Then describe what each line is doing to manipulate the data frame.</p>
-<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="welcome-to-the-tidyverse.html#cb164-1"></a>catch <span class="op">%&gt;%</span></span>
-<span id="cb164-2"><a href="welcome-to-the-tidyverse.html#cb164-2"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>PCL, <span class="op">-</span>Hook_Size) <span class="op">%&gt;%</span></span>
-<span id="cb164-3"><a href="welcome-to-the-tidyverse.html#cb164-3"></a><span class="st">  </span><span class="kw">separate</span>(Species, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">"genus"</span>, <span class="st">"species"</span>), <span class="dt">remove =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
-<span id="cb164-4"><a href="welcome-to-the-tidyverse.html#cb164-4"></a><span class="st">  </span><span class="kw">unite</span>(Date, Day, Month, Year) <span class="op">%&gt;%</span></span>
-<span id="cb164-5"><a href="welcome-to-the-tidyverse.html#cb164-5"></a><span class="st">  </span><span class="kw">filter</span>(genus <span class="op">==</span><span class="st"> "Carcharhinus"</span> <span class="op">&amp;</span><span class="st"> </span>Sex <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"F"</span>, <span class="st">"M"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb164-6"><a href="welcome-to-the-tidyverse.html#cb164-6"></a><span class="st">  </span><span class="kw">group_by</span>(Site, genus, species, Sex) <span class="op">%&gt;%</span></span>
-<span id="cb164-7"><a href="welcome-to-the-tidyverse.html#cb164-7"></a><span class="st">  </span><span class="kw">filter</span>(FL <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(FL)) <span class="op">%&gt;%</span></span>
-<span id="cb164-8"><a href="welcome-to-the-tidyverse.html#cb164-8"></a><span class="st">  </span><span class="kw">arrange</span>(species)</span></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="welcome-to-the-tidyverse.html#cb164-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
+<span id="cb164-2"><a href="welcome-to-the-tidyverse.html#cb164-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>PCL, <span class="sc">-</span>Hook_Size) <span class="sc">%&gt;%</span></span>
+<span id="cb164-3"><a href="welcome-to-the-tidyverse.html#cb164-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(Species, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"genus"</span>, <span class="st">"species"</span>), <span class="at">remove =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb164-4"><a href="welcome-to-the-tidyverse.html#cb164-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(Date, Day, Month, Year) <span class="sc">%&gt;%</span></span>
+<span id="cb164-5"><a href="welcome-to-the-tidyverse.html#cb164-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(genus <span class="sc">==</span> <span class="st">"Carcharhinus"</span> <span class="sc">&amp;</span> Sex <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"F"</span>, <span class="st">"M"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb164-6"><a href="welcome-to-the-tidyverse.html#cb164-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Site, genus, species, Sex) <span class="sc">%&gt;%</span></span>
+<span id="cb164-7"><a href="welcome-to-the-tidyverse.html#cb164-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FL <span class="sc">==</span> <span class="fu">max</span>(FL)) <span class="sc">%&gt;%</span></span>
+<span id="cb164-8"><a href="welcome-to-the-tidyverse.html#cb164-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(species)</span></code></pre></div>
 <pre><code>## # A tibble: 11 x 9
 ## # Groups:   Site, genus, species, Sex [11]
 ##    Site               genus        species    Sex   Observed_Stage    FL   STL   Set Date      
@@ -1131,7 +1154,7 @@ How could you use summarize calculate a range of summary stats for the stretch t
 </div>
 </div>
 </div>
-<div id="producing-tidy-data-sets" class="section level2">
+<div id="producing-tidy-data-sets" class="section level2" number="7.8">
 <h2>
 <span class="header-section-number">7.8</span> Producing tidy data sets<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('producing-tidy-data-sets')" onmouseout="reset_tooltip('producing-tidy-data-sets-tooltip')"><span class="tooltiptext" id="producing-tidy-data-sets-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -1163,11 +1186,11 @@ Take a look at our data set and argue whether or not it is a tidy data set. The 
 </div>
 </div>
 <p>Let’s quickly reformat our catch data as follows</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="welcome-to-the-tidyverse.html#cb166-1"></a>catch_length &lt;-<span class="st"> </span>catch <span class="op">%&gt;%</span></span>
-<span id="cb166-2"><a href="welcome-to-the-tidyverse.html#cb166-2"></a><span class="st">  </span><span class="kw">unite</span>(SetID, Year, Month, Day, Set, <span class="dt">sep =</span> <span class="st">"_"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb166-3"><a href="welcome-to-the-tidyverse.html#cb166-3"></a><span class="st">  </span><span class="kw">select</span>(SetID, Site, Species, Sex, PCL, FL, STL)</span>
-<span id="cb166-4"><a href="welcome-to-the-tidyverse.html#cb166-4"></a></span>
-<span id="cb166-5"><a href="welcome-to-the-tidyverse.html#cb166-5"></a><span class="kw">head</span>(catch_length)</span></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="welcome-to-the-tidyverse.html#cb166-1" aria-hidden="true" tabindex="-1"></a>catch_length <span class="ot">&lt;-</span> catch <span class="sc">%&gt;%</span></span>
+<span id="cb166-2"><a href="welcome-to-the-tidyverse.html#cb166-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(SetID, Year, Month, Day, Set, <span class="at">sep =</span> <span class="st">"_"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb166-3"><a href="welcome-to-the-tidyverse.html#cb166-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(SetID, Site, Species, Sex, PCL, FL, STL)</span>
+<span id="cb166-4"><a href="welcome-to-the-tidyverse.html#cb166-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb166-5"><a href="welcome-to-the-tidyverse.html#cb166-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(catch_length)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 7
 ##   SetID       Site        Species       Sex     PCL    FL   STL
 ##   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -1181,8 +1204,8 @@ Take a look at our data set and argue whether or not it is a tidy data set. The 
 <p>So in this case <code>Measurement</code> would be the key. This column will let us know whether an observation (row) is pre-caudal length, fork length, or stretch total length.</p>
 <p>We will designate another column <code>Length</code> to hold the values for each measurement.</p>
 <p>We can identify the columns that need to be gathered either by name or since we have re-arranged our dataframe so they are the last columns but column number.</p>
-<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="welcome-to-the-tidyverse.html#cb168-1"></a>tidy_length &lt;-<span class="st"> </span>catch_length <span class="op">%&gt;%</span></span>
-<span id="cb168-2"><a href="welcome-to-the-tidyverse.html#cb168-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"Measurement"</span>, <span class="dt">values_to =</span> <span class="st">"Length"</span>, <span class="dt">cols =</span> <span class="dv">5</span><span class="op">:</span><span class="dv">7</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="welcome-to-the-tidyverse.html#cb168-1" aria-hidden="true" tabindex="-1"></a>tidy_length <span class="ot">&lt;-</span> catch_length <span class="sc">%&gt;%</span></span>
+<span id="cb168-2"><a href="welcome-to-the-tidyverse.html#cb168-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"Measurement"</span>, <span class="at">values_to =</span> <span class="st">"Length"</span>, <span class="at">cols =</span> <span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>)</span></code></pre></div>
 <div id="ques:tidy-28" class="question">
 <p class="question-begin">
 ► Question 7.25
@@ -1197,9 +1220,9 @@ Briefly outline advantages to using tidy data sets.
 </div>
 </div>
 <p>With this data set it would be straightforward for us to e.g. calculate mean values for each length measurement by species.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="welcome-to-the-tidyverse.html#cb169-1"></a>tidy_length <span class="op">%&gt;%</span></span>
-<span id="cb169-2"><a href="welcome-to-the-tidyverse.html#cb169-2"></a><span class="st">  </span><span class="kw">group_by</span>(Species, Measurement) <span class="op">%&gt;%</span></span>
-<span id="cb169-3"><a href="welcome-to-the-tidyverse.html#cb169-3"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="welcome-to-the-tidyverse.html#cb169-1" aria-hidden="true" tabindex="-1"></a>tidy_length <span class="sc">%&gt;%</span></span>
+<span id="cb169-2"><a href="welcome-to-the-tidyverse.html#cb169-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species, Measurement) <span class="sc">%&gt;%</span></span>
+<span id="cb169-3"><a href="welcome-to-the-tidyverse.html#cb169-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 42 x 3
 ## # Groups:   Species [14]
 ##    Species                 Measurement  mean
@@ -1220,11 +1243,11 @@ Briefly outline advantages to using tidy data sets.
 <p>Then you need to identify which column in your current data frame contains the values that should be filled out/spread into the columns that will be generated from your key (<code>values_from =</code>).</p>
 <p>Since we don’t have values for precaudal length, we probably want to use <code>filter()</code> to remove those rows first.</p>
 <p><label for="tufte-mn-6" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-6" class="margin-toggle"><span class="marginnote"><span style="display: block;">More notes on naming things … recall, that we said that filenames should not contain spaces or special characters? We set similar rules for naming objects. Well, column names is a similar conundrum. Including spaces or species characters as a column name creates problems when we are using functions like <code>select()</code> to subset by column name or <code>mutate()</code> to create new columns based on exisiting columns. Similarly, if the column name is a number you will have problems. If you do have unconvential column names you can rename them using <code>rename()</code> or you can use backticks and either side of the name to indicate that it is a column name.</span></span></p>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="welcome-to-the-tidyverse.html#cb171-1"></a>tidy_length <span class="op">%&gt;%</span></span>
-<span id="cb171-2"><a href="welcome-to-the-tidyverse.html#cb171-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span>Measurement <span class="op">==</span><span class="st"> "PCL"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb171-3"><a href="welcome-to-the-tidyverse.html#cb171-3"></a><span class="st">  </span><span class="kw">group_by</span>(Species, Measurement) <span class="op">%&gt;%</span></span>
-<span id="cb171-4"><a href="welcome-to-the-tidyverse.html#cb171-4"></a><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(Length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb171-5"><a href="welcome-to-the-tidyverse.html#cb171-5"></a><span class="st">  </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> <span class="st">"Measurement"</span>, <span class="dt">values_from =</span> <span class="st">"mean"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="welcome-to-the-tidyverse.html#cb171-1" aria-hidden="true" tabindex="-1"></a>tidy_length <span class="sc">%&gt;%</span></span>
+<span id="cb171-2"><a href="welcome-to-the-tidyverse.html#cb171-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Measurement <span class="sc">==</span> <span class="st">"PCL"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb171-3"><a href="welcome-to-the-tidyverse.html#cb171-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Species, Measurement) <span class="sc">%&gt;%</span></span>
+<span id="cb171-4"><a href="welcome-to-the-tidyverse.html#cb171-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean =</span> <span class="fu">mean</span>(Length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb171-5"><a href="welcome-to-the-tidyverse.html#cb171-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">"Measurement"</span>, <span class="at">values_from =</span> <span class="st">"mean"</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 14 x 3
 ## # Groups:   Species [14]
 ##    Species                       FL   STL
@@ -1265,7 +1288,7 @@ Calculate the number of individuals per species caught per month in 2018 and pre
 <a href="catch-data-analysis.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

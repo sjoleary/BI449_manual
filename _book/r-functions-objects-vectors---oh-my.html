@@ -14,17 +14,17 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-06" />
 
 
 <meta name="description" content="4 R: Functions, Objects, Vectors - oh my! | Data Science for the Natural Environment (FA21)">
 
 <title>4 R: Functions, Objects, Vectors - oh my! | Data Science for the Natural Environment (FA21)</title>
 
+<script src="libs/header-attrs/header-attrs.js"></script>
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
-<script src="libs/accessible-code-block/empty-anchor.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/plotly-binding/plotly.js"></script>
 <script src="libs/typedarray/typedarray.min.js"></script>
@@ -37,19 +37,19 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -102,6 +102,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="msmb.css" type="text/css" />
 <script>
@@ -178,6 +200,7 @@ function reset_tooltip(id) {
 <a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
 <a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 <a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -188,7 +211,7 @@ function reset_tooltip(id) {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="r-functions-objects-vectors---oh-my" class="section level1">
+<html><body><div id="r-functions-objects-vectors---oh-my" class="section level1" number="4">
 <h1>
 <span class="header-section-number">4</span> R: Functions, Objects, Vectors - oh my!</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -202,33 +225,33 @@ function reset_tooltip(id) {
 <li>to inspect, subset, and extract their content from a <code>vector</code>.</li>
 <li>understand how <code>data.frames</code> and <code>vectors</code> relate.</li>
 </ul>
-<div id="r-is-all-about-objects" class="section level2">
+<div id="r-is-all-about-objects" class="section level2" number="4.1">
 <h2>
 <span class="header-section-number">4.1</span> R is all about <code>Objects</code>
 <div class="tooltip"><button class="internal-link-btn" onclick="copy_link('r-is-all-about-objects')" onmouseout="reset_tooltip('r-is-all-about-objects-tooltip')"><span class="tooltiptext" id="r-is-all-about-objects-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>You can think of the <code>R console</code> as a super-powerful calculator. You can get output from <code>R</code> by simply typing math directly into the console.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="r-functions-objects-vectors---oh-my.html#cb23-1"></a><span class="dv">13</span> <span class="op">+</span><span class="st"> </span><span class="dv">29</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="r-functions-objects-vectors---oh-my.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dv">13</span> <span class="sc">+</span> <span class="dv">29</span></span></code></pre></div>
 <pre><code>## [1] 42</code></pre>
 <p>or</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="r-functions-objects-vectors---oh-my.html#cb25-1"></a><span class="dv">546</span> <span class="op">/</span><span class="st"> </span><span class="dv">13</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="r-functions-objects-vectors---oh-my.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="dv">546</span> <span class="sc">/</span> <span class="dv">13</span></span></code></pre></div>
 <pre><code>## [1] 42</code></pre>
 <p>Well that’s fun - but not super helpful.</p>
 <p>For us to get to the good stuff we need to assign <code>values</code> to <code>objects</code>. Creating an <code>object</code> is straightforward. First, we give it a name, then we use the <code>assignment operator</code> to assign it a <code>value</code>.</p>
 <p>The <code>assignment operator</code> (<code>&lt;-</code>) assigns the <code>value</code> on the right of the <code>&lt;-</code> to the <code>object</code> on the left.</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="r-functions-objects-vectors---oh-my.html#cb27-1"></a>fork_length_mm &lt;-<span class="st"> </span><span class="dv">344</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="r-functions-objects-vectors---oh-my.html#cb27-1" aria-hidden="true" tabindex="-1"></a>fork_length_mm <span class="ot">&lt;-</span> <span class="dv">344</span></span></code></pre></div>
 <p>Type that into the console and execute the command using <code>Enter</code>. If you look at your <code>Global Environment</code> (top right panel) you should now see <code>forklength</code> and the <code>value</code> you assigned it.</p>
 <p>Notice, how when you assigned a <code>value</code> to your new <code>object</code> nothing was printed in the console compared to when you were typing in math.</p>
 <p>To print the <code>value</code> of an <code>object</code> you can type the name of the object into the console.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="r-functions-objects-vectors---oh-my.html#cb28-1"></a><span class="co"># print value</span></span>
-<span id="cb28-2"><a href="r-functions-objects-vectors---oh-my.html#cb28-2"></a>fork_length_mm</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="r-functions-objects-vectors---oh-my.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># print value</span></span>
+<span id="cb28-2"><a href="r-functions-objects-vectors---oh-my.html#cb28-2" aria-hidden="true" tabindex="-1"></a>fork_length_mm</span></code></pre></div>
 <pre><code>## [1] 344</code></pre>
 <p>Now that <code>fork_length</code> is in your environment we can use it to compute instead of the <code>value</code> itself.</p>
 <p>For example, we might need to convert our fork length from millimeters (mm) to centimeters (cm).</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="r-functions-objects-vectors---oh-my.html#cb30-1"></a>fork_length_mm <span class="op">/</span><span class="st"> </span><span class="dv">10</span> </span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="r-functions-objects-vectors---oh-my.html#cb30-1" aria-hidden="true" tabindex="-1"></a>fork_length_mm <span class="sc">/</span> <span class="dv">10</span> </span></code></pre></div>
 <pre><code>## [1] 34.4</code></pre>
 <p>We can change the <code>value</code> of an <code>object</code> any time by assigning it a new one. Changing the <code>value</code> of one <code>object</code> does not change the <code>values</code> of other objects.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="r-functions-objects-vectors---oh-my.html#cb32-1"></a>fork_length_mm &lt;-<span class="st"> </span><span class="dv">567</span></span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="r-functions-objects-vectors---oh-my.html#cb32-1" aria-hidden="true" tabindex="-1"></a>fork_length_mm <span class="ot">&lt;-</span> <span class="dv">567</span></span></code></pre></div>
 <div id="ques:R-1" class="question">
 <p class="question-begin">
 ► Question 4.1
@@ -254,7 +277,7 @@ Create a new object with the fork length in centimeters. Then change then change
 </ul>
 <p>Using a consistent style for naming your objects is part of adopting a consistent styling of your code - this will make following your code a lot easier for yourself and others. This includes things like spacing, how you name objects, and upper/lower case.</p>
 </div>
-<div id="saving-your-work" class="section level2">
+<div id="saving-your-work" class="section level2" number="4.2">
 <h2>
 <span class="header-section-number">4.2</span> Saving your work<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('saving-your-work')" onmouseout="reset_tooltip('saving-your-work-tooltip')"><span class="tooltiptext" id="saving-your-work-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -269,25 +292,25 @@ Create a new object with the fork length in centimeters. Then change then change
 <p><code>Ctrl</code> + <code>Enter</code> will execute commands directly from the script editor You can use this to run the line of code your cursor is currently in in the script editor or you can highlight a series of lines to execute. You can also run all the code in a script by clicking on the <code>Run</code> button.</p>
 <p>Create a new <code>R script</code> to keep track of the rest of the things we will learn today.</p>
 </div>
-<div id="using-comments" class="section level2">
+<div id="using-comments" class="section level2" number="4.3">
 <h2>
 <span class="header-section-number">4.3</span> Using comments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('using-comments')" onmouseout="reset_tooltip('using-comments-tooltip')"><span class="tooltiptext" id="using-comments-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>You can add comments to your <code>R scripts</code> using <code>#</code>. Essentially, once you type an <code>#</code> in a line anything to the right of it will be ignored.</p>
 <p>This is really helpful as it will allow you to comment your script, i.e. you can leave yourself and other notes and explanations as to what your code is doing. This is especially helpful if you come back to some of your code after a period of time, if you are sharing your code with others, and when you are debugging code. You will find that as you become more experienced your comments will become shorter and more concise and you might even be tempted to leave them out completely - don’t!</p>
 <p>For example you might find a comment like this more helpful at the moment:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="r-functions-objects-vectors---oh-my.html#cb33-1"></a><span class="co"># assign value to new object total length</span></span>
-<span id="cb33-2"><a href="r-functions-objects-vectors---oh-my.html#cb33-2"></a>fork_length &lt;-<span class="st"> </span><span class="dv">436</span></span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="r-functions-objects-vectors---oh-my.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># assign value to new object total length</span></span>
+<span id="cb33-2"><a href="r-functions-objects-vectors---oh-my.html#cb33-2" aria-hidden="true" tabindex="-1"></a>fork_length <span class="ot">&lt;-</span> <span class="dv">436</span></span></code></pre></div>
 <p>But soon you’ll find this just as helpful:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="r-functions-objects-vectors---oh-my.html#cb34-1"></a><span class="co"># total length fish</span></span>
-<span id="cb34-2"><a href="r-functions-objects-vectors---oh-my.html#cb34-2"></a>fork_length &lt;-<span class="st"> </span><span class="dv">436</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="r-functions-objects-vectors---oh-my.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># total length fish</span></span>
+<span id="cb34-2"><a href="r-functions-objects-vectors---oh-my.html#cb34-2" aria-hidden="true" tabindex="-1"></a>fork_length <span class="ot">&lt;-</span> <span class="dv">436</span></span></code></pre></div>
 <div id="ques:R-2" class="question">
 <p class="question-begin">
 ► Question 4.2
 </p>
 <div class="question-body">
 <p>What do you expect the value of the object <code>total_length</code> to be after executing this command?</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="r-functions-objects-vectors---oh-my.html#cb35-1"></a>FL &lt;-<span class="st"> </span><span class="dv">436</span>  <span class="co"># total length fish</span></span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="r-functions-objects-vectors---oh-my.html#cb35-1" aria-hidden="true" tabindex="-1"></a>FL <span class="ot">&lt;-</span> <span class="dv">436</span>  <span class="co"># total length fish</span></span></code></pre></div>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -295,39 +318,39 @@ Create a new object with the fork length in centimeters. Then change then change
 </div>
 <p>You can comment/uncomment multiple lines at once by highlighting the lines you want to comment (or uncomment) and hitting <code>Ctrl + Shift + C</code>. This can be useful if you are playing around with code and don’t want to delete something but don’t want it to be run either.</p>
 </div>
-<div id="functions" class="section level2">
+<div id="functions" class="section level2" number="4.4">
 <h2>
 <span class="header-section-number">4.4</span> Functions<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('functions')" onmouseout="reset_tooltip('functions-tooltip')"><span class="tooltiptext" id="functions-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>When we installed <code>R packages</code> earlier we mentioned that they are sets of predefined <code>functions</code>. These are essentially mini-scripts that automate using specific sets of commands. So instead of having to run multiple lines of code (this can be 10s - 100s of lines code) you <em>call</em> the function instead.</p>
 <p>Each function usually requires multiple inputs (<em>arguments</em>) and once executed return a <code>value</code> (though this is not always the case).</p>
 <p>For example the function <code>round()</code> can be used to round a number<label for="tufte-sn-20" class="margin-toggle sidenote-number">20</label><input type="checkbox" id="tufte-sn-20" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">20</span> This is an excellent example of naming things well!</span>.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="r-functions-objects-vectors---oh-my.html#cb36-1"></a>fork_length_cm &lt;-<span class="st"> </span><span class="kw">round</span>(<span class="fl">34.8821</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="r-functions-objects-vectors---oh-my.html#cb36-1" aria-hidden="true" tabindex="-1"></a>fork_length_cm <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">34.8821</span>)</span></code></pre></div>
 <p>If we print the value of our object we see the following value is returned.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="r-functions-objects-vectors---oh-my.html#cb37-1"></a>fork_length_cm</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="r-functions-objects-vectors---oh-my.html#cb37-1" aria-hidden="true" tabindex="-1"></a>fork_length_cm</span></code></pre></div>
 <pre><code>## [1] 35</code></pre>
 <p>For this function the input (argument) is a number and the returned value is also a number. This is not always the case, arguments can be numbers, objects, file paths …</p>
 <p>Many functions have set of arguments that alter the way a function operates - these are called <code>options</code>. Generally, they have a default value which are used unless specified otherwise by the user.</p>
 <p>You can determine the arguments as function by calling the function <code>args()</code>.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="r-functions-objects-vectors---oh-my.html#cb39-1"></a><span class="kw">args</span>(round)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="r-functions-objects-vectors---oh-my.html#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">args</span>(round)</span></code></pre></div>
 <pre><code>## function (x, digits = 0) 
 ## NULL</code></pre>
 <p>Or you can call up the help page using <code>?round</code> or by typing it into the search box in the <code>help</code> tab in the lower right panel.</p>
 <p>For example, our <code>round()</code> function has an argument called <code>digits</code>, we can use this to specify the number of significant digits we want our rounded value to have.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="r-functions-objects-vectors---oh-my.html#cb41-1"></a><span class="kw">round</span>(<span class="fl">34.8821</span>, <span class="dt">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="r-functions-objects-vectors---oh-my.html#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">34.8821</span>, <span class="at">digits =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 34.88</code></pre>
 <p>If you provide the arguments in the exact same order as they are defined you do not have to specify them.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="r-functions-objects-vectors---oh-my.html#cb43-1"></a><span class="kw">round</span>(<span class="fl">34.8821</span>, <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="r-functions-objects-vectors---oh-my.html#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">34.8821</span>, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 34.88</code></pre>
 <p>And you can switch their order if you do.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="r-functions-objects-vectors---oh-my.html#cb45-1"></a><span class="kw">round</span>(<span class="dt">digits =</span> <span class="dv">2</span>, <span class="dt">x =</span> <span class="fl">34.8821</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="r-functions-objects-vectors---oh-my.html#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>, <span class="at">x =</span> <span class="fl">34.8821</span>)</span></code></pre></div>
 <pre><code>## [1] 34.88</code></pre>
 <p>Good code style is to put the non-optional arguments (frequently the object, file path or value you are using) first and then specify the names of all the optional arguments you are specifying. This provides clarity and makes it easier for yourself and others to follow your code. Occasionally you might even want to use comments to further specify what each argument is doing or why you are choosing a specific option.</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="r-functions-objects-vectors---oh-my.html#cb47-1"></a><span class="kw">round</span>(<span class="fl">34.8821</span>,</span>
-<span id="cb47-2"><a href="r-functions-objects-vectors---oh-my.html#cb47-2"></a>      <span class="dt">digits =</span> <span class="dv">2</span>)  <span class="co"># specify number of significant digits</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="r-functions-objects-vectors---oh-my.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fl">34.8821</span>,</span>
+<span id="cb47-2"><a href="r-functions-objects-vectors---oh-my.html#cb47-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="dv">2</span>)  <span class="co"># specify number of significant digits</span></span></code></pre></div>
 <pre><code>## [1] 34.88</code></pre>
 </div>
-<div id="vectors-data-types-i" class="section level2">
+<div id="vectors-data-types-i" class="section level2" number="4.5">
 <h2>
 <span class="header-section-number">4.5</span> Vectors (data types I)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('vectors-data-types-i')" onmouseout="reset_tooltip('vectors-data-types-i-tooltip')"><span class="tooltiptext" id="vectors-data-types-i-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -348,12 +371,12 @@ Create a new object with the fork length in centimeters. Then change then change
 <code>raw</code>: bitstreams (we won’t use those either).</li>
 </ul>
 <p>You can check the data type of any object using <code>class()</code>.</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="r-functions-objects-vectors---oh-my.html#cb49-1"></a><span class="kw">class</span>(fork_length)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="r-functions-objects-vectors---oh-my.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(fork_length)</span></code></pre></div>
 <pre><code>## [1] "numeric"</code></pre>
 <p>Currently, our <code>fork_length</code> object consists of a single value. The function <code>c()</code> (concatenate) will allow us to assign a series of values to an object.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="r-functions-objects-vectors---oh-my.html#cb51-1"></a>fork_length &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">454</span>, <span class="dv">234</span>, <span class="dv">948</span>, <span class="dv">201</span>)</span>
-<span id="cb51-2"><a href="r-functions-objects-vectors---oh-my.html#cb51-2"></a></span>
-<span id="cb51-3"><a href="r-functions-objects-vectors---oh-my.html#cb51-3"></a>fork_length</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="r-functions-objects-vectors---oh-my.html#cb51-1" aria-hidden="true" tabindex="-1"></a>fork_length <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">454</span>, <span class="dv">234</span>, <span class="dv">948</span>, <span class="dv">201</span>)</span>
+<span id="cb51-2"><a href="r-functions-objects-vectors---oh-my.html#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="r-functions-objects-vectors---oh-my.html#cb51-3" aria-hidden="true" tabindex="-1"></a>fork_length</span></code></pre></div>
 <pre><code>## [1] 454 234 948 201</code></pre>
 <div id="ques:R-3" class="question">
 <p class="question-begin">
@@ -369,9 +392,9 @@ What data type do you expect this vector to be?
 </div>
 </div>
 <p>We call the same function to create a <code>character vector</code>.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="r-functions-objects-vectors---oh-my.html#cb53-1"></a>sharks &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"bullshark"</span>, <span class="st">"blacktip"</span>, <span class="st">"scallopedhammerhead"</span>)</span>
-<span id="cb53-2"><a href="r-functions-objects-vectors---oh-my.html#cb53-2"></a></span>
-<span id="cb53-3"><a href="r-functions-objects-vectors---oh-my.html#cb53-3"></a><span class="kw">class</span>(sharks)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="r-functions-objects-vectors---oh-my.html#cb53-1" aria-hidden="true" tabindex="-1"></a>sharks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"bullshark"</span>, <span class="st">"blacktip"</span>, <span class="st">"scallopedhammerhead"</span>)</span>
+<span id="cb53-2"><a href="r-functions-objects-vectors---oh-my.html#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="r-functions-objects-vectors---oh-my.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(sharks)</span></code></pre></div>
 <pre><code>## [1] "character"</code></pre>
 <p>The quotes around <code>"bullshark"</code> etc. are essential because they indicate that this is a character. If we do not use quotes, R will assume that we are trying to call an object.</p>
 <pre><code>
@@ -379,21 +402,21 @@ bullshark
 </code></pre>
 <p>Since these objects don’t exist, we will just get an error message.</p>
 <p>You can use <code>c()</code> to combine an existing object with additional elements (assuming they are the same data type).</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="r-functions-objects-vectors---oh-my.html#cb56-1"></a>species &lt;-<span class="st"> </span><span class="kw">c</span>(sharks, <span class="st">"gafftop"</span>)</span>
-<span id="cb56-2"><a href="r-functions-objects-vectors---oh-my.html#cb56-2"></a></span>
-<span id="cb56-3"><a href="r-functions-objects-vectors---oh-my.html#cb56-3"></a>species</span></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="r-functions-objects-vectors---oh-my.html#cb56-1" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> <span class="fu">c</span>(sharks, <span class="st">"gafftop"</span>)</span>
+<span id="cb56-2"><a href="r-functions-objects-vectors---oh-my.html#cb56-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-3"><a href="r-functions-objects-vectors---oh-my.html#cb56-3" aria-hidden="true" tabindex="-1"></a>species</span></code></pre></div>
 <pre><code>## [1] "bullshark"           "blacktip"            "scallopedhammerhead" "gafftop"</code></pre>
 <p>Next to <code>class()</code> there are other helpful functions to inspect the content of a vector. For example <code>length()</code> will tell you how many elements are in a particular vector.</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="r-functions-objects-vectors---oh-my.html#cb58-1"></a><span class="kw">length</span>(fork_length)</span></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="r-functions-objects-vectors---oh-my.html#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(fork_length)</span></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <p>The function <code>str()</code> will give you an overview of the structure of any object and its elements.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="r-functions-objects-vectors---oh-my.html#cb60-1"></a><span class="kw">str</span>(fork_length)</span></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="r-functions-objects-vectors---oh-my.html#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(fork_length)</span></code></pre></div>
 <pre><code>##  num [1:4] 454 234 948 201</code></pre>
 <p>Recall, that an atomic vector is a linear vector of <em>a single type</em> - what does that mean. Let’s take a look at what happens if we create atomic vectors where we mix the data types.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="r-functions-objects-vectors---oh-my.html#cb62-1"></a>numeric_character &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">"a"</span>)</span>
-<span id="cb62-2"><a href="r-functions-objects-vectors---oh-my.html#cb62-2"></a>numeric_logical &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">TRUE</span>)</span>
-<span id="cb62-3"><a href="r-functions-objects-vectors---oh-my.html#cb62-3"></a>character_logical &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="ot">TRUE</span>)</span>
-<span id="cb62-4"><a href="r-functions-objects-vectors---oh-my.html#cb62-4"></a>wtf &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">"4"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="r-functions-objects-vectors---oh-my.html#cb62-1" aria-hidden="true" tabindex="-1"></a>numeric_character <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">"a"</span>)</span>
+<span id="cb62-2"><a href="r-functions-objects-vectors---oh-my.html#cb62-2" aria-hidden="true" tabindex="-1"></a>numeric_logical <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb62-3"><a href="r-functions-objects-vectors---oh-my.html#cb62-3" aria-hidden="true" tabindex="-1"></a>character_logical <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="cn">TRUE</span>)</span>
+<span id="cb62-4"><a href="r-functions-objects-vectors---oh-my.html#cb62-4" aria-hidden="true" tabindex="-1"></a>wtf <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="st">"4"</span>)</span></code></pre></div>
 <div id="ques:R-4" class="question">
 <p class="question-begin">
 ► Question 4.4
@@ -409,31 +432,31 @@ Describe what happens when data types are mixed in a single atomic vector?
 </div>
 <p>We already discovered that we can combine vectors - but can we extract certain components from vectors? Indeed, there are a variety of ways that we can subset vectors.</p>
 <p>The most simple way is using square brackets to indicate which element (or elements) we can’t extract. In R, indices start at 1.<label for="tufte-sn-22" class="margin-toggle sidenote-number">22</label><input type="checkbox" id="tufte-sn-22" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">22</span> This is not the case for all programming languages, e.g. Perl, Python, or C++ start with 0.</span></p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="r-functions-objects-vectors---oh-my.html#cb63-1"></a><span class="co"># extract second element</span></span>
-<span id="cb63-2"><a href="r-functions-objects-vectors---oh-my.html#cb63-2"></a>species[<span class="dv">2</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="r-functions-objects-vectors---oh-my.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract second element</span></span>
+<span id="cb63-2"><a href="r-functions-objects-vectors---oh-my.html#cb63-2" aria-hidden="true" tabindex="-1"></a>species[<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [1] "blacktip"</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="r-functions-objects-vectors---oh-my.html#cb65-1"></a><span class="co"># extract fourth and second element</span></span>
-<span id="cb65-2"><a href="r-functions-objects-vectors---oh-my.html#cb65-2"></a>species[<span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">2</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="r-functions-objects-vectors---oh-my.html#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract fourth and second element</span></span>
+<span id="cb65-2"><a href="r-functions-objects-vectors---oh-my.html#cb65-2" aria-hidden="true" tabindex="-1"></a>species[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">2</span>)]</span></code></pre></div>
 <pre><code>## [1] "gafftop"  "blacktip"</code></pre>
 <p>You can also repeat indices to create a new object with additional elements.</p>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="r-functions-objects-vectors---oh-my.html#cb67-1"></a>species_longer &lt;-<span class="st"> </span>species[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>)]</span>
-<span id="cb67-2"><a href="r-functions-objects-vectors---oh-my.html#cb67-2"></a></span>
-<span id="cb67-3"><a href="r-functions-objects-vectors---oh-my.html#cb67-3"></a>species_longer</span></code></pre></div>
-<pre><code>## [1] "blacktip"            "blacktip"            "gafftop"             "scallopedhammerhead"
-## [5] "gafftop"             "gafftop"             "bullshark"           "bullshark"</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="r-functions-objects-vectors---oh-my.html#cb67-1" aria-hidden="true" tabindex="-1"></a>species_longer <span class="ot">&lt;-</span> species[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>)]</span>
+<span id="cb67-2"><a href="r-functions-objects-vectors---oh-my.html#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb67-3"><a href="r-functions-objects-vectors---oh-my.html#cb67-3" aria-hidden="true" tabindex="-1"></a>species_longer</span></code></pre></div>
+<pre><code>## [1] "blacktip"            "blacktip"            "gafftop"             "scallopedhammerhead" "gafftop"             "gafftop"            
+## [7] "bullshark"           "bullshark"</code></pre>
 <p>More frequently, we will want to extract certain elements based on a specific condition (conditional subsetting).</p>
 <p>This is done using a logical vector, here <code>TRUE</code> select the element with the same index and <code>FALSE</code> will not.</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="r-functions-objects-vectors---oh-my.html#cb69-1"></a>fork_length &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">454</span>, <span class="dv">234</span>, <span class="dv">948</span>, <span class="dv">201</span>)</span>
-<span id="cb69-2"><a href="r-functions-objects-vectors---oh-my.html#cb69-2"></a></span>
-<span id="cb69-3"><a href="r-functions-objects-vectors---oh-my.html#cb69-3"></a><span class="co"># use logical vector to subset</span></span>
-<span id="cb69-4"><a href="r-functions-objects-vectors---oh-my.html#cb69-4"></a>fork_length[<span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">FALSE</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="r-functions-objects-vectors---oh-my.html#cb69-1" aria-hidden="true" tabindex="-1"></a>fork_length <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">454</span>, <span class="dv">234</span>, <span class="dv">948</span>, <span class="dv">201</span>)</span>
+<span id="cb69-2"><a href="r-functions-objects-vectors---oh-my.html#cb69-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb69-3"><a href="r-functions-objects-vectors---oh-my.html#cb69-3" aria-hidden="true" tabindex="-1"></a><span class="co"># use logical vector to subset</span></span>
+<span id="cb69-4"><a href="r-functions-objects-vectors---oh-my.html#cb69-4" aria-hidden="true" tabindex="-1"></a>fork_length[<span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>)]</span></code></pre></div>
 <pre><code>## [1] 454 948</code></pre>
 <p>This seems like a very impractical option but normally we would not create the logical vector by hand as we have done here, rather it will be the output of a function or logical test. For example, we might want to identify fish with a fork length &gt; 300mm.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="r-functions-objects-vectors---oh-my.html#cb71-1"></a><span class="co"># identify fish with fork length &gt; threshold</span></span>
-<span id="cb71-2"><a href="r-functions-objects-vectors---oh-my.html#cb71-2"></a>fork_length <span class="op">&gt;</span><span class="st"> </span><span class="dv">300</span></span></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="r-functions-objects-vectors---oh-my.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify fish with fork length &gt; threshold</span></span>
+<span id="cb71-2"><a href="r-functions-objects-vectors---oh-my.html#cb71-2" aria-hidden="true" tabindex="-1"></a>fork_length <span class="sc">&gt;</span> <span class="dv">300</span></span></code></pre></div>
 <pre><code>## [1]  TRUE FALSE  TRUE FALSE</code></pre>
 <p>We can use this to subset our vector directly.</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="r-functions-objects-vectors---oh-my.html#cb73-1"></a>fork_length[<span class="kw">c</span>(fork_length <span class="op">&gt;</span><span class="st"> </span><span class="dv">300</span>)]</span></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="r-functions-objects-vectors---oh-my.html#cb73-1" aria-hidden="true" tabindex="-1"></a>fork_length[<span class="fu">c</span>(fork_length <span class="sc">&gt;</span> <span class="dv">300</span>)]</span></code></pre></div>
 <pre><code>## [1] 454 948</code></pre>
 <p>There are a series of <code>boolean expressions</code><label for="tufte-sn-23" class="margin-toggle sidenote-number">23</label><input type="checkbox" id="tufte-sn-23" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">23</span> logical statements that are either true or false</span> we can use for subsetting vectors. Most of them you are probaly already familiar with because math.</p>
 <ul>
@@ -465,12 +488,12 @@ Describe what happens when data types are mixed in a single atomic vector?
 </div>
 <p>R is set apart from other programming languages because it was designed to analyze data<label for="tufte-sn-24" class="margin-toggle sidenote-number">24</label><input type="checkbox" id="tufte-sn-24" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">24</span> some people will argue that it is a ‘statistical language’ rather than a true programming language … don’t listen to them!</span> it has straightfoward ways to deal with missing data (<code>NA</code> or <code>na</code> values) because those are quite common in real world data sets.</p>
 <p>Let’s create a vector with a missing value.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="r-functions-objects-vectors---oh-my.html#cb75-1"></a>total_length &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">560</span>, <span class="ot">NA</span>, <span class="dv">1021</span>, <span class="dv">250</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="r-functions-objects-vectors---oh-my.html#cb75-1" aria-hidden="true" tabindex="-1"></a>total_length <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">560</span>, <span class="cn">NA</span>, <span class="dv">1021</span>, <span class="dv">250</span>)</span></code></pre></div>
 <p>Let’s say we want to calculate the mean value.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="r-functions-objects-vectors---oh-my.html#cb76-1"></a><span class="kw">mean</span>(total_length)</span></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="r-functions-objects-vectors---oh-my.html#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(total_length)</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 <p>Most functions will return <code>NA</code> when doing operations on objects with missing values. As such, many functions include an argument to omit missing values.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="r-functions-objects-vectors---oh-my.html#cb78-1"></a><span class="kw">mean</span>(total_length, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="r-functions-objects-vectors---oh-my.html#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(total_length, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 610.3333</code></pre>
 <p>Other functions that are helpful to deal with missing values are <code>is.na()</code>, <code>na.omit()</code>, and <code>complete.cases()</code>.</p>
 <div id="ques:R-6" class="question">
@@ -487,23 +510,23 @@ Run each of these functions on our total_length vector and describe what they do
 </div>
 </div>
 </div>
-<div id="data-frames-data-types-ii" class="section level2">
+<div id="data-frames-data-types-ii" class="section level2" number="4.6">
 <h2>
 <span class="header-section-number">4.6</span> Data frames (data types II)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('data-frames-data-types-ii')" onmouseout="reset_tooltip('data-frames-data-types-ii-tooltip')"><span class="tooltiptext" id="data-frames-data-types-ii-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Recall that <strong>atomic vectors</strong> are <em>linear</em> vectors of a simple type, essentially they are one dimensional. Frequently we will be using data frames (<code>data.frame</code>) which you can think of as consisting of several vectors of the same length where each vector becomes a column and the elements are the rows.</p>
 <p>Let’s create a new object that is a dataframe with three columns containing information on species, fork length, and total length.</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="r-functions-objects-vectors---oh-my.html#cb80-1"></a><span class="co"># combine vectors into data frame</span></span>
-<span id="cb80-2"><a href="r-functions-objects-vectors---oh-my.html#cb80-2"></a>catch &lt;-<span class="st"> </span><span class="kw">data.frame</span>(species, fork_length, total_length)</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="r-functions-objects-vectors---oh-my.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># combine vectors into data frame</span></span>
+<span id="cb80-2"><a href="r-functions-objects-vectors---oh-my.html#cb80-2" aria-hidden="true" tabindex="-1"></a>catch <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(species, fork_length, total_length)</span></code></pre></div>
 <p>You should now see a new object in your <code>Global Environment</code> and you will now also see that there are two categories of objects <code>Data</code> and <code>Values</code>. You will see that the <code>data.frame</code> is described as having 4 obs (observations, those are your rows) of 3 variables (those are your columns). If you click on the little blue arrow it will give you additional information on each column - note that because each column is essentially a vector, each one must consist of a single data type which is also indicated.</p>
 <p>Calling the <code>str()</code> will give you the same information.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="r-functions-objects-vectors---oh-my.html#cb81-1"></a><span class="kw">str</span>(catch)</span></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="r-functions-objects-vectors---oh-my.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(catch)</span></code></pre></div>
 <pre><code>## 'data.frame':    4 obs. of  3 variables:
 ##  $ species     : chr  "bullshark" "blacktip" "scallopedhammerhead" "gafftop"
 ##  $ fork_length : num  454 234 948 201
 ##  $ total_length: num  560 NA 1021 250</code></pre>
 <p>You can further inspect the <code>data.frame</code> by clicking on the little white box on the right which will open a tab in the top left panel next to your R script. You can also always view a <code>data.frame</code> by calling the <code>View()</code> function.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="r-functions-objects-vectors---oh-my.html#cb83-1"></a><span class="kw">View</span>(catch)</span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="r-functions-objects-vectors---oh-my.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(catch)</span></code></pre></div>
 <p>This can be a helpful way to explore your <code>data.frame</code>, for example, clicking on the headers will sort the data frame by that column. Usually we won’t build or <code>data.frames</code> by hand, rather we will read them in from e.g. a tab-delimited text file - but more on that later.</p>
 
 </div>
@@ -514,7 +537,7 @@ Run each of these functions on our total_length vector and describe what they do
 <a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

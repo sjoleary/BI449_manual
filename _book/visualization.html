@@ -14,17 +14,17 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-06" />
 
 
 <meta name="description" content="14 Visualization | Data Science for the Natural Environment (FA21)">
 
 <title>14 Visualization | Data Science for the Natural Environment (FA21)</title>
 
+<script src="libs/header-attrs/header-attrs.js"></script>
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
-<script src="libs/accessible-code-block/empty-anchor.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/plotly-binding/plotly.js"></script>
 <script src="libs/typedarray/typedarray.min.js"></script>
@@ -37,19 +37,19 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -102,6 +102,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="msmb.css" type="text/css" />
 <script>
@@ -179,6 +201,7 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#more-plots"> More Plots!</a></li>
 </ul>
 <a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -189,7 +212,7 @@ function reset_tooltip(id) {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="visualization" class="section level1">
+<html><body><div id="visualization" class="section level1" number="14">
 <h1>
 <span class="header-section-number">14</span> Visualization</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -205,20 +228,20 @@ function reset_tooltip(id) {
 <p>The majority of this set of activities is exploring how to use <code>ggplot()</code> to generate different types of plots. Each plot involves at least two lines of code - as we go through each step record the code presented and include a comment specifying what each line of code does. Comments can be inserted either between lines or at the end of each line.</p>
 <p>Let’s start by loading the packages we will need for this set of activities.</p>
 <p>Before you can load all the libraries we need, you will need to install the <code>patchwork</code> package using <code>install.package("patchwork")</code>. You only need to do this once, the easiest wat to do this is to simply run that function directly in the console.</p>
-<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="visualization.html#cb239-1"></a><span class="co"># load libraries</span></span>
-<span id="cb239-2"><a href="visualization.html#cb239-2"></a><span class="kw">library</span>(knitr)</span>
-<span id="cb239-3"><a href="visualization.html#cb239-3"></a><span class="kw">library</span>(tidyverse)</span>
-<span id="cb239-4"><a href="visualization.html#cb239-4"></a><span class="kw">library</span>(patchwork)</span>
-<span id="cb239-5"><a href="visualization.html#cb239-5"></a></span>
-<span id="cb239-6"><a href="visualization.html#cb239-6"></a><span class="co"># turn of sci notation</span></span>
-<span id="cb239-7"><a href="visualization.html#cb239-7"></a><span class="kw">options</span>(<span class="dt">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
-<div id="a-grammar-of-graphics" class="section level2">
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="visualization.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb239-2"><a href="visualization.html#cb239-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb239-3"><a href="visualization.html#cb239-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb239-4"><a href="visualization.html#cb239-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb239-5"><a href="visualization.html#cb239-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb239-6"><a href="visualization.html#cb239-6" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb239-7"><a href="visualization.html#cb239-7" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
+<div id="a-grammar-of-graphics" class="section level2" number="14.1">
 <h2>
 <span class="header-section-number">14.1</span> A grammar of graphics<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('a-grammar-of-graphics')" onmouseout="reset_tooltip('a-grammar-of-graphics-tooltip')"><span class="tooltiptext" id="a-grammar-of-graphics-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Now that we are confident(ish) in our data wrangling the next step is learning how we can visualize our data for exploration and for communication.</p>
 <p>Exploratory analysis is an important component of data science as it not only gives you an overview of what information is contained in a data set, but it can also help you refine the question you are asking. Finally, once you have refined and completed an analysis, visualizations are a key component to communicate your results.</p>
-<p><code>ggplot2</code> is the core package of the <code>tidyverse</code> used for visualization. Similar to <code>tidyr</code> and <code>dplyr</code> having been built on the concept of a tidy data set, <code>ggplot2</code> was built on a framework which follows a layered approach to describe and/or build any type of visualization in a structure way termed the “grammar of graphics”.</p>
+<p><code>ggplot2</code> is the core package of the <code>tidyverse</code> used for visualization. Similar to <code>tidyr</code> and <code>dplyr</code> having been built on the concept of a tidy data set, <code>ggplot2</code> was built on a framework which follows a layered approach to describe and/or build any type of visualization in a structure way termed the “grammar of graphics.”</p>
 <p>The grammar of graphics breaks down the components of any visualization into seven components.</p>
 <ul>
 <li>
@@ -240,19 +263,19 @@ function reset_tooltip(id) {
 <p>Until now you’ve probably thought of each plot type as it’s own distinctive format (a scatter plot, a pie chart, etc) and have not considered that each plot can be broken down into these fundamental components, so at first this way of thinking of plots will likely not seem intuitive.</p>
 <p>But if you commit to thinking about plots in this abstract way you will quickly learn how these components fit together and realize the flexibility that thinking about plots in this way will give you to quickly generate exploratory plots, optimize your visualizations and be able to generate pretty much any plot you can think up<label for="tufte-sn-68" class="margin-toggle sidenote-number">68</label><input type="checkbox" id="tufte-sn-68" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">68</span> You will also see that keeping your data <code>tidy</code> will allow you to customize your plots using different aesthetics and mappings to group your data.</span>.</p>
 </div>
-<div id="building-plots" class="section level2">
+<div id="building-plots" class="section level2" number="14.2">
 <h2>
 <span class="header-section-number">14.2</span> Building plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('building-plots')" onmouseout="reset_tooltip('building-plots-tooltip')"><span class="tooltiptext" id="building-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>Y’all ready for this?</p>
 <p>Then, let’s go back to our global mean temperature anomaly data set to figure out how the grammar of graphics can be applied and plot some data!</p>
-<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="visualization.html#cb240-1"></a>temperature &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/GLB.Ts+dSST.csv"</span>, <span class="dt">delim =</span> <span class="st">","</span>, <span class="dt">skip =</span> <span class="dv">1</span>) <span class="op">%&gt;%</span></span>
-<span id="cb240-2"><a href="visualization.html#cb240-2"></a><span class="st">  </span><span class="kw">replace</span>(. <span class="op">==</span><span class="st"> "***"</span>, <span class="ot">NA</span>) <span class="op">%&gt;%</span></span>
-<span id="cb240-3"><a href="visualization.html#cb240-3"></a><span class="st">  </span><span class="kw">mutate_if</span>(is.character, as.numeric)</span></code></pre></div>
+<div class="sourceCode" id="cb240"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb240-1"><a href="visualization.html#cb240-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/GLB.Ts+dSST.csv"</span>, <span class="at">delim =</span> <span class="st">","</span>, <span class="at">skip =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb240-2"><a href="visualization.html#cb240-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(. <span class="sc">==</span> <span class="st">"***"</span>, <span class="cn">NA</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb240-3"><a href="visualization.html#cb240-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate_if</span>(is.character, as.numeric)</span></code></pre></div>
 <p>Recall how we created a line plot:</p>
-<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="visualization.html#cb241-1"></a><span class="kw">ggplot</span>(temperature, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>)) <span class="op">+</span></span>
-<span id="cb241-2"><a href="visualization.html#cb241-2"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-183-1.png" width="672"></p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="visualization.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(temperature, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb241-2"><a href="visualization.html#cb241-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-254-1.png" width="672"></p>
 <p>We can generalize this into a basic template that can be used for different kinds of plots, including scatter plots, bar plots, and box plots.</p>
 <pre><code>
 ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
@@ -267,177 +290,177 @@ ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
 <p>Let’s break down what is happening to get a better understanding of how these minimum components fit together to create individual plots.</p>
 <p>First, we use the <code>ggplot()</code> function to define the specific <code>data.frame</code> to use to build the plot using the <code>data</code> argument (<code>&lt;DATA&gt;</code>)<label for="tufte-sn-70" class="margin-toggle sidenote-number">70</label><input type="checkbox" id="tufte-sn-70" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">70</span> Remember, that when we are using arguments in the specified sequence that they are defined you do not explicitly need to call them.</span>.</p>
 <p>In our example that would be</p>
-<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="visualization.html#cb243-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> temperature)</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="visualization.html#cb243-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temperature)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-184"></span>
+<span style="display:block;" id="fig:unnamed-chunk-255"></span>
 <p class="caption marginnote shownote">
 Figure 14.1: Empty canvas generated using ggplot() function.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-184-1.png" alt="Empty canvas generated using ggplot() function." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-255-1.png" alt="Empty canvas generated using ggplot() function." width="672">
 </div>
 <p>Not much happens when you execute that piece of code other than creating a blank canvas in your plot panel<label for="tufte-sn-71" class="margin-toggle sidenote-number">71</label><input type="checkbox" id="tufte-sn-71" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">71</span> If you are using and <code>Rmarkdown</code> document and have <code>Chunk Output Inline</code> enabled it will print beneath your code chunk</span>.</p>
 <p>That is because we still need to define an aesthetic mapping using the <code>aes()</code> function (<code>&lt;MAPPING&gt;</code>).</p>
 <p>Here, we are selecting the variables that we want to plot (columns in our <code>data.frame</code>). At minimum we need to specify what columns we want to plot on the x and y axis, but we can also define variables (columns) we want to use to encode using color, shapes, size etc.</p>
-<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="visualization.html#cb244-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> temperature, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb244"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb244-1"><a href="visualization.html#cb244-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temperature, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>))</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-185"></span>
+<span style="display:block;" id="fig:unnamed-chunk-256"></span>
 <p class="caption marginnote shownote">
 Figure 14.2: Coordinate system plotted after specifying mapping aesthetics, specifically which variables to plot on each axis.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-185-1.png" alt="Coordinate system plotted after specifying mapping aesthetics, specifically which variables to plot on each axis." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-256-1.png" alt="Coordinate system plotted after specifying mapping aesthetics, specifically which variables to plot on each axis." width="672">
 </div>
-<p>When we execute that code you will now get an empty coordinate system… This still seems like slim pickings but patience, young grasshopper, we have not yet defined the <code>geom</code>, i.e. what type of plot (“geometries”, <code>&lt;GEOM_FUNCTION&gt;</code>) we want to use. For example, here we want generate a line plot (<code>geom_line()</code>).</p>
-<p>For <code>ggplot</code> we add layers using the <code>+</code> operator, which is a pipe (similar to <code>%&gt;%</code>) which tells <code>R</code> “and now add this”.</p>
-<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="visualization.html#cb245-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> temperature, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>)) <span class="op">+</span></span>
-<span id="cb245-2"><a href="visualization.html#cb245-2"></a><span class="st">  </span><span class="kw">geom_line</span>()</span></code></pre></div>
+<p>When we execute that code you will now get an empty coordinate system… This still seems like slim pickings but patience, young grasshopper, we have not yet defined the <code>geom</code>, i.e. what type of plot (“geometries,” <code>&lt;GEOM_FUNCTION&gt;</code>) we want to use. For example, here we want generate a line plot (<code>geom_line()</code>).</p>
+<p>For <code>ggplot</code> we add layers using the <code>+</code> operator, which is a pipe (similar to <code>%&gt;%</code>) which tells <code>R</code> “and now add this.”</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="visualization.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temperature, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb245-2"><a href="visualization.html#cb245-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-186"></span>
+<span style="display:block;" id="fig:unnamed-chunk-257"></span>
 <p class="caption marginnote shownote">
 Figure 14.3: Line plot (geom_line()) showing global mean temperature anomalies relative to 1951-1980 average.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-186-1.png" alt="Line plot (geom_line()) showing global mean temperature anomalies relative to 1951-1980 average." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-257-1.png" alt="Line plot (geom_line()) showing global mean temperature anomalies relative to 1951-1980 average." width="672">
 </div>
 <p>Now, we’re playing!</p>
 <p>One of the advantages of the layered framework of <code>ggplot2</code> is that we can plot multiple layers in the same plot by adding additional <code>geoms</code>.</p>
 <p>For example, we can plot a scatterplot and line plot in the same plot as such:</p>
-<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="visualization.html#cb246-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> temperature, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>)) <span class="op">+</span></span>
-<span id="cb246-2"><a href="visualization.html#cb246-2"></a><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span></span>
-<span id="cb246-3"><a href="visualization.html#cb246-3"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="visualization.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temperature, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb246-2"><a href="visualization.html#cb246-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb246-3"><a href="visualization.html#cb246-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-187"></span>
+<span style="display:block;" id="fig:unnamed-chunk-258"></span>
 <p class="caption marginnote shownote">
 Figure 14.4: Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point().
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-187-1.png" alt="Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point()." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-258-1.png" alt="Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point()." width="672">
 </div>
 <p>Now that you know how to generate a simple plot, let’s think about how we can further modify it to improve your visualization.</p>
 <p>For example we can change the color, fill, size, and shape for each <code>geom</code> layer<label for="tufte-sn-72" class="margin-toggle sidenote-number">72</label><input type="checkbox" id="tufte-sn-72" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">72</span> In this example we will use the arguments for individual geom functions to change how data points are represented using colors and shapes for each layer, we can also use <code>aes()</code> to set mapping aesthetics for the entire plots.</span>.</p>
-<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="visualization.html#cb247-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> temperature, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>)) <span class="op">+</span></span>
-<span id="cb247-2"><a href="visualization.html#cb247-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">"darkblue"</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb247-3"><a href="visualization.html#cb247-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">color =</span> <span class="st">"darkblue"</span>, <span class="dt">fill =</span> <span class="st">"white"</span>, <span class="dt">size =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb247"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb247-1"><a href="visualization.html#cb247-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temperature, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb247-2"><a href="visualization.html#cb247-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb247-3"><a href="visualization.html#cb247-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-188"></span>
+<span style="display:block;" id="fig:unnamed-chunk-259"></span>
 <p class="caption marginnote shownote">
 Figure 14.5: Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point(), color and fill for lines and shapes have been modified.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-188-1.png" alt="Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point(), color and fill for lines and shapes have been modified." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-259-1.png" alt="Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point(), color and fill for lines and shapes have been modified." width="672">
 </div>
-<p>Shapes for points can be specified using numbers; note how some shapes are “solid”, i.e. specifying <code>color</code> will define the color of the shape. Others, like the one used in our example are filled, i.e. <code>color</code> will determine the color of the outline, and <code>fill</code> the color of the space inside. For “hollow” shapes (or e.g. X’s) <code>color</code> will determine the line color.</p>
+<p>Shapes for points can be specified using numbers; note how some shapes are “solid,” i.e. specifying <code>color</code> will define the color of the shape. Others, like the one used in our example are filled, i.e. <code>color</code> will determine the color of the outline, and <code>fill</code> the color of the space inside. For “hollow” shapes (or e.g. X’s) <code>color</code> will determine the line color.</p>
 <div class="figure">
 <img src="figures/points-symbols.png" alt=""><p class="caption">Numeric codes for sympols.</p>
 </div>
 <p>You can specify colors either using the <a href="http://applied-r.com/r-color-tables/">color names</a> defined by R or using hex codes.</p>
 <p><label for="tufte-mn-10" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-10" class="margin-toggle"><span class="marginnote"><span style="display: block;">Some exploring will also lead you to various color pallets, Wes Anderson fan? You can <a href="https://github.com/karthik/wesanderson">style your plots</a> accordingly… dig the aesthetics of the old school National Park posters and images? <a href="https://github.com/katiejolly/nationalparkcolors">R community got you covered.</a>.</span></span></p>
 <p>Previously, we also used <code>geom_smooth()</code> to add a layer with a linear regression. If you take a look at the arguments for this function using <code>?geom_smooth</code> you will see that this has additional arguments apart from the mapping aesthetics like choosing the type of regression, whether or not the confidence interval is shown etc. Let’s say we want to add a red, dashed regression line without the confidence interval.</p>
-<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="visualization.html#cb248-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> temperature, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>)) <span class="op">+</span></span>
-<span id="cb248-2"><a href="visualization.html#cb248-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">"darkblue"</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb248-3"><a href="visualization.html#cb248-3"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">shape =</span> <span class="dv">21</span>, <span class="dt">color =</span> <span class="st">"darkblue"</span>, <span class="dt">fill =</span> <span class="st">"white"</span>, <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
-<span id="cb248-4"><a href="visualization.html#cb248-4"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">stat =</span> <span class="st">"smooth"</span>, <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">color =</span> <span class="st">"red"</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>, <span class="dt">size =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="visualization.html#cb248-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temperature, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb248-2"><a href="visualization.html#cb248-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb248-3"><a href="visualization.html#cb248-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb248-4"><a href="visualization.html#cb248-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">stat =</span> <span class="st">"smooth"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-190"></span>
+<span style="display:block;" id="fig:unnamed-chunk-261"></span>
 <p class="caption marginnote shownote">
 Figure 14.6: Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point(), color and fill for lines and shapes have been modified. Trend line fitted using geom_smooth().
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-190-1.png" alt="Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point(), color and fill for lines and shapes have been modified. Trend line fitted using geom_smooth()." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-261-1.png" alt="Line plot showing global mean temperature anomalies relative to 1951-1980 average. Individual data points added using geom_point(), color and fill for lines and shapes have been modified. Trend line fitted using geom_smooth()." width="672">
 </div>
 <p>Admittedly, this plot is starting to look a little bit ridiculous. Maybe we should think of alternative options for visualizing this data to explore some additional <code>ggplot</code> options.</p>
 <p>Another way to visualize this data would be using a bar plot<label for="tufte-sn-73" class="margin-toggle sidenote-number">73</label><input type="checkbox" id="tufte-sn-73" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">73</span> Can we appreciate for a second how easy it was to change how the same data is plotted? If you were using excel you would have had to insert a new plot, define what data you wanted to plot, relabel the axis, etc. Here all you had to do was change a single line of code</span>.</p>
-<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="visualization.html#cb249-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> temperature, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>)) <span class="op">+</span></span>
-<span id="cb249-2"><a href="visualization.html#cb249-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb249"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb249-1"><a href="visualization.html#cb249-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temperature, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb249-2"><a href="visualization.html#cb249-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-191"></span>
+<span style="display:block;" id="fig:unnamed-chunk-262"></span>
 <p class="caption marginnote shownote">
 Figure 14.7: Bar plot showing global mean temperature anomalies relative to 1951-1980 average.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-191-1.png" alt="Bar plot showing global mean temperature anomalies relative to 1951-1980 average." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-262-1.png" alt="Bar plot showing global mean temperature anomalies relative to 1951-1980 average." width="672">
 </div>
 <p>Notice, how this is still the exact same mapping aesthetics (time/year on the x-axis and the temperature anomaly on the y-axis) but it changes the way we see the data completely - the emphasis now is on the change of temperatures below the long-term mean and the change to those temperature differences to being positive.</p>
 <p>Let’s say we want really lean into demonstrating this drastic change in temperatures not only being above the long-term average but also steadily increasing. One way to do this is to use color. We could modify this bar plot to have all of our bars representing years with global mean temperatures below the 1951-1980 average in one color and those above in another.</p>
 <p>To do this, we need a column that encodes that information… that of course is not an issue for us a basically professional data wranglers! We can use a simple conditional mutate using an <code>ifelse()</code> statement to add a column (<code>year_type</code>) that indicates whether temperatures are above or below the the long-term average.</p>
 <p>We can manipulate our <code>data.frame</code> using the <code>dplyr</code> functions we are already familiar with - we can then use the <code>%&gt;%</code> pipe to pass the data argument to the <code>ggplot()</code> function<label for="tufte-sn-74" class="margin-toggle sidenote-number">74</label><input type="checkbox" id="tufte-sn-74" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">74</span> When you do this, remember that you need to switch back to using the <code>+</code> operator once you are adding your geom layers.</span></p>
-<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="visualization.html#cb250-1"></a>temperature <span class="op">%&gt;%</span></span>
-<span id="cb250-2"><a href="visualization.html#cb250-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year_type =</span> <span class="kw">ifelse</span>(<span class="st">`</span><span class="dt">J-D</span><span class="st">`</span> <span class="op">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb250-3"><a href="visualization.html#cb250-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>, <span class="dt">fill =</span> year_type, <span class="dt">color =</span> year_type)) <span class="op">+</span></span>
-<span id="cb250-4"><a href="visualization.html#cb250-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="visualization.html#cb250-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="sc">%&gt;%</span></span>
+<span id="cb250-2"><a href="visualization.html#cb250-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year_type =</span> <span class="fu">ifelse</span>(<span class="st">`</span><span class="at">J-D</span><span class="st">`</span> <span class="sc">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb250-3"><a href="visualization.html#cb250-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>, <span class="at">fill =</span> year_type, <span class="at">color =</span> year_type)) <span class="sc">+</span></span>
+<span id="cb250-4"><a href="visualization.html#cb250-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-192"></span>
+<span style="display:block;" id="fig:unnamed-chunk-263"></span>
 <p class="caption marginnote shownote">
 Figure 14.8: Bar plot showing global mean temperature anomalies relative to 1951-1980 average. Mapping aesthetics have been specified to color code according to variable included in the data set.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-192-1.png" alt="Bar plot showing global mean temperature anomalies relative to 1951-1980 average. Mapping aesthetics have been specified to color code according to variable included in the data set." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-263-1.png" alt="Bar plot showing global mean temperature anomalies relative to 1951-1980 average. Mapping aesthetics have been specified to color code according to variable included in the data set." width="672">
 </div>
 <p>Anything that we add to the <code>ggplot()</code> layer as a mapping is a universal plot setting that will apply to all subsequent layers. You can override these global settings is you specify aesthetics like color, shape or size specifically in an separate layer. For example if we do the following, we will override our color coding even though we specified it in our <code>ggplot()</code> layer.</p>
-<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="visualization.html#cb251-1"></a>temperature <span class="op">%&gt;%</span></span>
-<span id="cb251-2"><a href="visualization.html#cb251-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year_type =</span> <span class="kw">ifelse</span>(<span class="st">`</span><span class="dt">J-D</span><span class="st">`</span> <span class="op">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb251-3"><a href="visualization.html#cb251-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>, <span class="dt">fill =</span> year_type, <span class="dt">color =</span> year_type)) <span class="op">+</span></span>
-<span id="cb251-4"><a href="visualization.html#cb251-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">color =</span> <span class="st">"blue"</span>, <span class="dt">fill =</span> <span class="st">"blue"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="visualization.html#cb251-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="sc">%&gt;%</span></span>
+<span id="cb251-2"><a href="visualization.html#cb251-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year_type =</span> <span class="fu">ifelse</span>(<span class="st">`</span><span class="at">J-D</span><span class="st">`</span> <span class="sc">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb251-3"><a href="visualization.html#cb251-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>, <span class="at">fill =</span> year_type, <span class="at">color =</span> year_type)) <span class="sc">+</span></span>
+<span id="cb251-4"><a href="visualization.html#cb251-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">fill =</span> <span class="st">"blue"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-193"></span>
+<span style="display:block;" id="fig:unnamed-chunk-264"></span>
 <p class="caption marginnote shownote">
 Figure 14.9: Bar plot showing global mean temperature anomalies relative to 1951-1980 average. Mapping aesthetics have been specified to color code according to variable included in the data set. Settings in geom_bar() override the general plot specifications.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-193-1.png" alt="Bar plot showing global mean temperature anomalies relative to 1951-1980 average. Mapping aesthetics have been specified to color code according to variable included in the data set. Settings in geom_bar() override the general plot specifications." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-264-1.png" alt="Bar plot showing global mean temperature anomalies relative to 1951-1980 average. Mapping aesthetics have been specified to color code according to variable included in the data set. Settings in geom_bar() override the general plot specifications." width="672">
 </div>
 <p>Let’s see what else we can visualize using <code>ggplot</code>. Recall from when you explored our temperature anomaly data set, that this data set also contains information for seasons and individual months.</p>
 <p>Let’s take a look at the distribution of mean global winter temperatures (<code>DJF</code> = December, January, February) using a histogram, (<code>geom_histogram()</code>). Note that we only need to define our x-axis to plot a histogram, this is because <code>ggplot2</code> will count how many observations fall into each bin for you … this geom is a mixture of a geometry (bar plot) and a statistical transformation (binning data points into ranges and the plotting those as bar plots).].</p>
-<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="visualization.html#cb252-1"></a><span class="kw">ggplot</span>(temperature, <span class="kw">aes</span>(<span class="dt">x =</span> DJF)) <span class="op">+</span></span>
-<span id="cb252-2"><a href="visualization.html#cb252-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb252"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb252-1"><a href="visualization.html#cb252-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(temperature, <span class="fu">aes</span>(<span class="at">x =</span> DJF)) <span class="sc">+</span></span>
+<span id="cb252-2"><a href="visualization.html#cb252-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-194"></span>
+<span style="display:block;" id="fig:unnamed-chunk-265"></span>
 <p class="caption marginnote shownote">
 Figure 14.10: Histogram displaying distribution of mean global winter temperatures.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-194-1.png" alt="Histogram displaying distribution of mean global winter temperatures." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-265-1.png" alt="Histogram displaying distribution of mean global winter temperatures." width="672">
 </div>
 <p>We can refine our plot by choosing our own binwidth and by manipulating fill and color.</p>
-<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="visualization.html#cb253-1"></a><span class="kw">ggplot</span>(temperature, <span class="kw">aes</span>(<span class="dt">x =</span> SON)) <span class="op">+</span></span>
-<span id="cb253-2"><a href="visualization.html#cb253-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.05</span>, <span class="dt">color =</span> <span class="st">"black"</span>, <span class="dt">fill =</span> <span class="st">"darkorange"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="visualization.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(temperature, <span class="fu">aes</span>(<span class="at">x =</span> SON)) <span class="sc">+</span></span>
+<span id="cb253-2"><a href="visualization.html#cb253-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-195"></span>
+<span style="display:block;" id="fig:unnamed-chunk-266"></span>
 <p class="caption marginnote shownote">
 Figure 14.11: Histogram displaying distribution of mean global winter temperatures with customized bin width and coloration.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-195-1.png" alt="Histogram displaying distribution of mean global winter temperatures with customized bin width and coloration." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-266-1.png" alt="Histogram displaying distribution of mean global winter temperatures with customized bin width and coloration." width="672">
 </div>
 <p>For our example we might also want to add a vertical line (<code>geom_vline()</code>) to indicate 0 (i.e. the long-term global temperature mean calculated for 1951 - 1980).</p>
-<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="visualization.html#cb254-1"></a><span class="kw">ggplot</span>(temperature, <span class="kw">aes</span>(<span class="dt">x =</span> SON)) <span class="op">+</span></span>
-<span id="cb254-2"><a href="visualization.html#cb254-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.05</span>, <span class="dt">color =</span> <span class="st">"black"</span>, <span class="dt">fill =</span> <span class="st">"darkorange"</span>) <span class="op">+</span></span>
-<span id="cb254-3"><a href="visualization.html#cb254-3"></a><span class="st">  </span><span class="kw">geom_vline</span>(<span class="dt">xintercept =</span> <span class="dv">0</span>, <span class="dt">color =</span> <span class="st">"darkred"</span>, <span class="dt">linetype =</span> <span class="st">"dashed"</span>, <span class="dt">size =</span> <span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb254"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb254-1"><a href="visualization.html#cb254-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(temperature, <span class="fu">aes</span>(<span class="at">x =</span> SON)) <span class="sc">+</span></span>
+<span id="cb254-2"><a href="visualization.html#cb254-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.05</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb254-3"><a href="visualization.html#cb254-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"darkred"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-196"></span>
+<span style="display:block;" id="fig:unnamed-chunk-267"></span>
 <p class="caption marginnote shownote">
 Figure 14.12: Histogram displaying distribution of mean global winter temperatures with customized binwidth and coloration and added vertical line (red).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-196-1.png" alt="Histogram displaying distribution of mean global winter temperatures with customized binwidth and coloration and added vertical line (red)." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-267-1.png" alt="Histogram displaying distribution of mean global winter temperatures with customized binwidth and coloration and added vertical line (red)." width="672">
 </div>
 <p>If we want to compare multiple distributions, box plots can be more helpful than histograms. Let’s say we wanted to compare the distribution of mean global temperature for each season.</p>
 <p>How can we go about this?</p>
 <p>Currently, our seasons are in individual columns, so our first step would be to create a tidy data set.</p>
-<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="visualization.html#cb255-1"></a>tidy_season &lt;-<span class="st"> </span>temperature <span class="op">%&gt;%</span></span>
-<span id="cb255-2"><a href="visualization.html#cb255-2"></a><span class="st">  </span><span class="kw">select</span>(Year, DJF, MAM, JJA, SON) <span class="op">%&gt;%</span></span>
-<span id="cb255-3"><a href="visualization.html#cb255-3"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="dt">names_to =</span> <span class="st">"season"</span>, <span class="dt">values_to =</span> <span class="st">"temperature"</span>, <span class="dv">2</span><span class="op">:</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb255"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb255-1"><a href="visualization.html#cb255-1" aria-hidden="true" tabindex="-1"></a>tidy_season <span class="ot">&lt;-</span> temperature <span class="sc">%&gt;%</span></span>
+<span id="cb255-2"><a href="visualization.html#cb255-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Year, DJF, MAM, JJA, SON) <span class="sc">%&gt;%</span></span>
+<span id="cb255-3"><a href="visualization.html#cb255-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"season"</span>, <span class="at">values_to =</span> <span class="st">"temperature"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>)</span></code></pre></div>
 <p>Now we can plot our seasons on the x-axis and the distribution of temperatures on the y-axis using <code>geom_boxplot()</code>.</p>
-<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="visualization.html#cb256-1"></a><span class="kw">ggplot</span>(tidy_season, <span class="kw">aes</span>(<span class="dt">x =</span> season, <span class="dt">y =</span> temperature)) <span class="op">+</span></span>
-<span id="cb256-2"><a href="visualization.html#cb256-2"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb256"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb256-1"><a href="visualization.html#cb256-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_season, <span class="fu">aes</span>(<span class="at">x =</span> season, <span class="at">y =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb256-2"><a href="visualization.html#cb256-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-198"></span>
+<span style="display:block;" id="fig:unnamed-chunk-269"></span>
 <p class="caption marginnote shownote">
 Figure 14.13: Box plot comparing global mean temperature anomalies relative to 1951-1980 average for all four seasons.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-198-1.png" alt="Box plot comparing global mean temperature anomalies relative to 1951-1980 average for all four seasons." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-269-1.png" alt="Box plot comparing global mean temperature anomalies relative to 1951-1980 average for all four seasons." width="672">
 </div>
 <p>Again, you can add additional information using the mapping aesthetics to e.g. color code the boxes by season.</p>
-<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="visualization.html#cb257-1"></a><span class="kw">ggplot</span>(tidy_season, <span class="kw">aes</span>(<span class="dt">x =</span> season, <span class="dt">y =</span> temperature, <span class="dt">fill =</span> season)) <span class="op">+</span></span>
-<span id="cb257-2"><a href="visualization.html#cb257-2"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb257"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb257-1"><a href="visualization.html#cb257-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_season, <span class="fu">aes</span>(<span class="at">x =</span> season, <span class="at">y =</span> temperature, <span class="at">fill =</span> season)) <span class="sc">+</span></span>
+<span id="cb257-2"><a href="visualization.html#cb257-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-199"></span>
+<span style="display:block;" id="fig:unnamed-chunk-270"></span>
 <p class="caption marginnote shownote">
 Figure 14.14: Box plot comparing global mean temperature anomalies relative to 1951-1980 average for all four seasons color-coded by season.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-199-1.png" alt="Box plot comparing global mean temperature anomalies relative to 1951-1980 average for all four seasons color-coded by season." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-270-1.png" alt="Box plot comparing global mean temperature anomalies relative to 1951-1980 average for all four seasons color-coded by season." width="672">
 </div>
 </div>
-<div id="faceting-plots" class="section level2">
+<div id="faceting-plots" class="section level2" number="14.3">
 <h2>
 <span class="header-section-number">14.3</span> Faceting plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('faceting-plots')" onmouseout="reset_tooltip('faceting-plots-tooltip')"><span class="tooltiptext" id="faceting-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -446,53 +469,53 @@ Figure 14.14: Box plot comparing global mean temperature anomalies relative to 1
 <p>How could you create individual plots with the methods you are already familiar with?</p>
 <p>Here is how you can do it using <code>facet_grid()</code>.</p>
 <p>Now we can plot our data and using <code>facet_grid()</code> we can specify that we want individual panels by month in separate rows.</p>
-<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="visualization.html#cb258-1"></a><span class="kw">ggplot</span>(tidy_season, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> temperature)) <span class="op">+</span></span>
-<span id="cb258-2"><a href="visualization.html#cb258-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"darkorange"</span>, <span class="dt">color =</span> <span class="st">"darkorange"</span>) <span class="op">+</span></span>
-<span id="cb258-3"><a href="visualization.html#cb258-3"></a><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">rows =</span> <span class="kw">vars</span>(season))</span></code></pre></div>
+<div class="sourceCode" id="cb258"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb258-1"><a href="visualization.html#cb258-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_season, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb258-2"><a href="visualization.html#cb258-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">color =</span> <span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb258-3"><a href="visualization.html#cb258-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(season))</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-200"></span>
+<span style="display:block;" id="fig:unnamed-chunk-271"></span>
 <p class="caption marginnote shownote">
 Figure 14.15: Change in temperature anomaly relative to long-term avarage per season (rows)
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-200-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (rows)" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-271-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (rows)" width="672">
 </div>
 <p>You could also specify that you want the individual plots to be separated into columns.</p>
-<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="visualization.html#cb259-1"></a><span class="kw">ggplot</span>(tidy_season, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> temperature)) <span class="op">+</span></span>
-<span id="cb259-2"><a href="visualization.html#cb259-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"darkorange"</span>, <span class="dt">color =</span> <span class="st">"darkorange"</span>) <span class="op">+</span></span>
-<span id="cb259-3"><a href="visualization.html#cb259-3"></a><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">cols =</span> <span class="kw">vars</span>(season))</span></code></pre></div>
+<div class="sourceCode" id="cb259"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb259-1"><a href="visualization.html#cb259-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_season, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb259-2"><a href="visualization.html#cb259-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">color =</span> <span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb259-3"><a href="visualization.html#cb259-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">cols =</span> <span class="fu">vars</span>(season))</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-201"></span>
+<span style="display:block;" id="fig:unnamed-chunk-272"></span>
 <p class="caption marginnote shownote">
 Figure 14.16: Change in temperature anomaly relative to long-term avarage per season (columns)
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-201-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (columns)" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-272-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (columns)" width="672">
 </div>
 <p>You can also create faceted plot where subset your data by two variables and so you end up with one variable defining the rows and one the columns and you can use a simpler syntax <code>row-variable ~ column-variable</code>.</p>
 <p>You can also use this syntax if you are only faceting by one variable as we are doing in this example by specifying the variable and leaving the other one “blank” using a <code>.</code>.</p>
 <p>For example, to plot this faceted data set in rows, you would use the following syntax -</p>
-<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="visualization.html#cb260-1"></a><span class="kw">ggplot</span>(tidy_season, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> temperature)) <span class="op">+</span></span>
-<span id="cb260-2"><a href="visualization.html#cb260-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"darkorange"</span>, <span class="dt">color =</span> <span class="st">"darkorange"</span>) <span class="op">+</span></span>
-<span id="cb260-3"><a href="visualization.html#cb260-3"></a><span class="st">  </span><span class="kw">facet_grid</span>(season <span class="op">~</span><span class="st"> </span>.)</span></code></pre></div>
+<div class="sourceCode" id="cb260"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb260-1"><a href="visualization.html#cb260-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_season, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb260-2"><a href="visualization.html#cb260-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">color =</span> <span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb260-3"><a href="visualization.html#cb260-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(season <span class="sc">~</span> .)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-202"></span>
+<span style="display:block;" id="fig:unnamed-chunk-273"></span>
 <p class="caption marginnote shownote">
 Figure 14.17: Change in temperature anomaly relative to long-term avarage per season (rows)
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-202-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (rows)" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-273-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (rows)" width="672">
 </div>
 <p>And to plot this data set column-wise you would specify it like so -</p>
-<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="visualization.html#cb261-1"></a><span class="kw">ggplot</span>(tidy_season, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> temperature)) <span class="op">+</span></span>
-<span id="cb261-2"><a href="visualization.html#cb261-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"darkorange"</span>, <span class="dt">color =</span> <span class="st">"darkorange"</span>) <span class="op">+</span></span>
-<span id="cb261-3"><a href="visualization.html#cb261-3"></a><span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>season)</span></code></pre></div>
+<div class="sourceCode" id="cb261"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb261-1"><a href="visualization.html#cb261-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_season, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb261-2"><a href="visualization.html#cb261-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">color =</span> <span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb261-3"><a href="visualization.html#cb261-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> season)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-203"></span>
+<span style="display:block;" id="fig:unnamed-chunk-274"></span>
 <p class="caption marginnote shownote">
 Figure 14.18: Change in temperature anomaly relative to long-term avarage per season (columns)
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-203-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (columns)" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-274-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (columns)" width="672">
 </div>
 </div>
-<div id="customizing-plots" class="section level2">
+<div id="customizing-plots" class="section level2" number="14.4">
 <h2>
 <span class="header-section-number">14.4</span> Customizing plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('customizing-plots')" onmouseout="reset_tooltip('customizing-plots-tooltip')"><span class="tooltiptext" id="customizing-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -501,36 +524,36 @@ Figure 14.18: Change in temperature anomaly relative to long-term avarage per se
 <p>Once you have identified the central plots that you want to use to communicate the results and conclusions of your data analysis you will want to further customize your visualization to optimize communication, this includes how you encode data using color and shape but also making sure that everything is well labeled and clear to the person who is reading your report or listening to your presentation.</p>
 <p>One of the first things we frequently want to changes is the axis labels. <code>ggplot2</code> does handily use the column names to automatically label your axes, so you will always have a label which is great during exploratory analysis but generally you will want to customize that for your final figure. The function <code>labs()</code> can be used to specify a title, subtitle, axis labels and additional annotations (caption) below the figure.</p>
 <p>For example we could customize our faceted figure to look like this:</p>
-<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="visualization.html#cb262-1"></a><span class="kw">ggplot</span>(tidy_season, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> temperature)) <span class="op">+</span></span>
-<span id="cb262-2"><a href="visualization.html#cb262-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"darkorange"</span>, <span class="dt">color =</span> <span class="st">"darkorange"</span>) <span class="op">+</span></span>
-<span id="cb262-3"><a href="visualization.html#cb262-3"></a><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">rows =</span> <span class="kw">vars</span>(season)) <span class="op">+</span></span>
-<span id="cb262-4"><a href="visualization.html#cb262-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Change in global seasonal temperatures 1880 - 2020"</span>,</span>
-<span id="cb262-5"><a href="visualization.html#cb262-5"></a>       <span class="dt">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
-<span id="cb262-6"><a href="visualization.html#cb262-6"></a>       <span class="dt">x =</span> <span class="st">"Year"</span>, <span class="dt">y =</span> <span class="st">"Temperature [C]"</span>,</span>
-<span id="cb262-7"><a href="visualization.html#cb262-7"></a>       <span class="dt">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb262"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb262-1"><a href="visualization.html#cb262-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_season, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb262-2"><a href="visualization.html#cb262-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">color =</span> <span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb262-3"><a href="visualization.html#cb262-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(season)) <span class="sc">+</span></span>
+<span id="cb262-4"><a href="visualization.html#cb262-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Change in global seasonal temperatures 1880 - 2020"</span>,</span>
+<span id="cb262-5"><a href="visualization.html#cb262-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
+<span id="cb262-6"><a href="visualization.html#cb262-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Temperature [C]"</span>,</span>
+<span id="cb262-7"><a href="visualization.html#cb262-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-204"></span>
+<span style="display:block;" id="fig:unnamed-chunk-275"></span>
 <p class="caption marginnote shownote">
 Figure 14.19: Change in temperature anomaly relative to long-term avarage per season (rows)
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-204-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (rows)" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-275-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (rows)" width="672">
 </div>
 <p>Pretty much every component of a <code>ggplot</code> figure can be further customized using <code>theme()</code>, this includes things like font size, background and line colors, grids, legend position … <code>ggplot2</code> odes have some pre-defined themes that you can call up that will change the layout.</p>
 <p>The default theme is <code>theme_grey()</code>.</p>
-<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="visualization.html#cb263-1"></a><span class="kw">ggplot</span>(tidy_season, <span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> temperature)) <span class="op">+</span></span>
-<span id="cb263-2"><a href="visualization.html#cb263-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>, <span class="dt">fill =</span> <span class="st">"darkorange"</span>, <span class="dt">color =</span> <span class="st">"darkorange"</span>) <span class="op">+</span></span>
-<span id="cb263-3"><a href="visualization.html#cb263-3"></a><span class="st">  </span><span class="kw">facet_grid</span>(<span class="dt">rows =</span> <span class="kw">vars</span>(season)) <span class="op">+</span></span>
-<span id="cb263-4"><a href="visualization.html#cb263-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Change in global seasonal temperatures 1880 - 2020"</span>,</span>
-<span id="cb263-5"><a href="visualization.html#cb263-5"></a>       <span class="dt">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
-<span id="cb263-6"><a href="visualization.html#cb263-6"></a>       <span class="dt">x =</span> <span class="st">"Year"</span>, <span class="dt">y =</span> <span class="st">"Temperature [C]"</span>,</span>
-<span id="cb263-7"><a href="visualization.html#cb263-7"></a>       <span class="dt">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>) <span class="op">+</span></span>
-<span id="cb263-8"><a href="visualization.html#cb263-8"></a><span class="st">  </span><span class="kw">theme_grey</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb263"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb263-1"><a href="visualization.html#cb263-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_season, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb263-2"><a href="visualization.html#cb263-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">color =</span> <span class="st">"darkorange"</span>) <span class="sc">+</span></span>
+<span id="cb263-3"><a href="visualization.html#cb263-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="at">rows =</span> <span class="fu">vars</span>(season)) <span class="sc">+</span></span>
+<span id="cb263-4"><a href="visualization.html#cb263-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Change in global seasonal temperatures 1880 - 2020"</span>,</span>
+<span id="cb263-5"><a href="visualization.html#cb263-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
+<span id="cb263-6"><a href="visualization.html#cb263-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Temperature [C]"</span>,</span>
+<span id="cb263-7"><a href="visualization.html#cb263-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>) <span class="sc">+</span></span>
+<span id="cb263-8"><a href="visualization.html#cb263-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_grey</span>()</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-205"></span>
+<span style="display:block;" id="fig:unnamed-chunk-276"></span>
 <p class="caption marginnote shownote">
 Figure 14.20: Change in temperature anomaly relative to long-term avarage per season (rows)
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-205-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (rows)" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-276-1.png" alt="Change in temperature anomaly relative to long-term avarage per season (rows)" width="672">
 </div>
 <p>Here, we explicitly specified it using <code>theme_grey()</code>; if you do not specify a theme this is the theme that will be used for your plot. There are other themes that are part of the <code>ggplot</code> package that include <code>theme_bw()</code>, <code>theme_minimal()</code>, <code>theme_classic()</code> or <code>theme_light()</code>.</p>
 <div id="ques:Vis-1" class="question">
@@ -546,136 +569,136 @@ Figure 14.20: Change in temperature anomaly relative to long-term avarage per se
 </div>
 <p>You will likely find a theme that you like but still want to make additional tweaks in that case <code>theme()</code> is your friend.</p>
 <p>Let’s go back to our bar plot of the global temperature anomaly to look at an example of likely the three most common things you will want to adjust which is the legend position, changing font size, color, turning x-axis labels by 90 degrees.</p>
-<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="visualization.html#cb264-1"></a>temperature <span class="op">%&gt;%</span></span>
-<span id="cb264-2"><a href="visualization.html#cb264-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year_type =</span> <span class="kw">ifelse</span>(<span class="st">`</span><span class="dt">J-D</span><span class="st">`</span> <span class="op">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb264-3"><a href="visualization.html#cb264-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>, <span class="dt">fill =</span> year_type, <span class="dt">color =</span> year_type)) <span class="op">+</span></span>
-<span id="cb264-4"><a href="visualization.html#cb264-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span></span>
-<span id="cb264-5"><a href="visualization.html#cb264-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Change in global mean temperatures 1880 - 2020"</span>,</span>
-<span id="cb264-6"><a href="visualization.html#cb264-6"></a>       <span class="dt">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
-<span id="cb264-7"><a href="visualization.html#cb264-7"></a>       <span class="dt">x =</span> <span class="st">"Year"</span>, <span class="dt">y =</span> <span class="st">"Temperature [C]"</span>,</span>
-<span id="cb264-8"><a href="visualization.html#cb264-8"></a>       <span class="dt">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>) <span class="op">+</span></span>
-<span id="cb264-9"><a href="visualization.html#cb264-9"></a><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></span>
-<span id="cb264-10"><a href="visualization.html#cb264-10"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb264-11"><a href="visualization.html#cb264-11"></a>        <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">color =</span> <span class="st">"black"</span>,</span>
-<span id="cb264-12"><a href="visualization.html#cb264-12"></a>                                   <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb264-13"><a href="visualization.html#cb264-13"></a>        <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">color =</span> <span class="st">"black"</span>,),</span>
-<span id="cb264-14"><a href="visualization.html#cb264-14"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb264"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb264-1"><a href="visualization.html#cb264-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="sc">%&gt;%</span></span>
+<span id="cb264-2"><a href="visualization.html#cb264-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year_type =</span> <span class="fu">ifelse</span>(<span class="st">`</span><span class="at">J-D</span><span class="st">`</span> <span class="sc">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb264-3"><a href="visualization.html#cb264-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>, <span class="at">fill =</span> year_type, <span class="at">color =</span> year_type)) <span class="sc">+</span></span>
+<span id="cb264-4"><a href="visualization.html#cb264-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb264-5"><a href="visualization.html#cb264-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Change in global mean temperatures 1880 - 2020"</span>,</span>
+<span id="cb264-6"><a href="visualization.html#cb264-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
+<span id="cb264-7"><a href="visualization.html#cb264-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Temperature [C]"</span>,</span>
+<span id="cb264-8"><a href="visualization.html#cb264-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>) <span class="sc">+</span></span>
+<span id="cb264-9"><a href="visualization.html#cb264-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb264-10"><a href="visualization.html#cb264-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb264-11"><a href="visualization.html#cb264-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb264-12"><a href="visualization.html#cb264-12" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb264-13"><a href="visualization.html#cb264-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"black"</span>,),</span>
+<span id="cb264-14"><a href="visualization.html#cb264-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-206"></span>
+<span style="display:block;" id="fig:unnamed-chunk-277"></span>
 <p class="caption marginnote shownote">
 Figure 14.21: Change in mean global temperature relative to long-term avaerage with customized font sizes and legend positions.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-206-1.png" alt="Change in mean global temperature relative to long-term avaerage with customized font sizes and legend positions." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-277-1.png" alt="Change in mean global temperature relative to long-term avaerage with customized font sizes and legend positions." width="672">
 </div>
 <p>That’s starting to look pretty slick.</p>
 <p>As you start your visualization adventure the <a href="https://www.cookbook-r.com/Graphs/Colors_(ggplot2)/">R Cookbook</a> is a good resource. It is written in a helpful style that starts with a concrete plotting problem and then walks you through a solution.</p>
 </div>
-<div id="arranging-plots" class="section level2">
+<div id="arranging-plots" class="section level2" number="14.5">
 <h2>
 <span class="header-section-number">14.5</span> Arranging plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('arranging-plots')" onmouseout="reset_tooltip('arranging-plots-tooltip')"><span class="tooltiptext" id="arranging-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>We’ve already seen that we can create multi-panel plots in a very straightforward way when we are essentially plotting the same plot for different subsets of the data.</p>
 <p>But what if we want to generate individual plots that might fit together thematically but aren’t subsets that we can facet but we still want to be able to present them together? Fear not, this too can be solved; one option is using <code>patchwork</code>, a package designed for exactly this purpose. Let’s generate a few additional plots so we can try this out.</p>
 <p>In our data folder there is a tab-delimited file with monthly mean CO2 concentrations (parts per million) from Maunua Loa. Let’s read in that data set and create line plot with a regression line.</p>
-<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="visualization.html#cb265-1"></a>carbon &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/CO2_monthly.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span>
-<span id="cb265-2"><a href="visualization.html#cb265-2"></a></span>
-<span id="cb265-3"><a href="visualization.html#cb265-3"></a><span class="kw">ggplot</span>(carbon, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> average)) <span class="op">+</span></span>
-<span id="cb265-4"><a href="visualization.html#cb265-4"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">"blue"</span>) <span class="op">+</span></span>
-<span id="cb265-5"><a href="visualization.html#cb265-5"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">color =</span> <span class="st">"red"</span>) <span class="op">+</span></span>
-<span id="cb265-6"><a href="visualization.html#cb265-6"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Atmospheric CO2"</span>,</span>
-<span id="cb265-7"><a href="visualization.html#cb265-7"></a>       <span class="dt">subtitle =</span> <span class="st">"monthly mean CO2 Mauna Loa CO2"</span>,</span>
-<span id="cb265-8"><a href="visualization.html#cb265-8"></a>       <span class="dt">x =</span> <span class="st">"year"</span>, <span class="dt">y =</span> <span class="st">"CO2 concentration air [ppm]"</span>,</span>
-<span id="cb265-9"><a href="visualization.html#cb265-9"></a>       <span class="dt">caption =</span> <span class="st">"Data: NOAA/ESRL"</span>) <span class="op">+</span></span>
-<span id="cb265-10"><a href="visualization.html#cb265-10"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb265"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb265-1"><a href="visualization.html#cb265-1" aria-hidden="true" tabindex="-1"></a>carbon <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/CO2_monthly.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span>
+<span id="cb265-2"><a href="visualization.html#cb265-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb265-3"><a href="visualization.html#cb265-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(carbon, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> average)) <span class="sc">+</span></span>
+<span id="cb265-4"><a href="visualization.html#cb265-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb265-5"><a href="visualization.html#cb265-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb265-6"><a href="visualization.html#cb265-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Atmospheric CO2"</span>,</span>
+<span id="cb265-7"><a href="visualization.html#cb265-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"monthly mean CO2 Mauna Loa CO2"</span>,</span>
+<span id="cb265-8"><a href="visualization.html#cb265-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"year"</span>, <span class="at">y =</span> <span class="st">"CO2 concentration air [ppm]"</span>,</span>
+<span id="cb265-9"><a href="visualization.html#cb265-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data: NOAA/ESRL"</span>) <span class="sc">+</span></span>
+<span id="cb265-10"><a href="visualization.html#cb265-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-207"></span>
+<span style="display:block;" id="fig:unnamed-chunk-278"></span>
 <p class="caption marginnote shownote">
 Figure 14.22: Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory from 1958 - 2021.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-207-1.png" alt="Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory from 1958 - 2021." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-278-1.png" alt="Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory from 1958 - 2021." width="672">
 </div>
 <p>We also have a data set from the Global Carbon Project downloaded from the <a href="https://github.com/owid/co2-data">Our World in Data repository</a> that contains atmospheric CO2 emissions. We can plot that as a simple line plot with a regression.</p>
-<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="visualization.html#cb266-1"></a>emissions &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/emissions.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb266-2"><a href="visualization.html#cb266-2"></a><span class="st">  </span><span class="kw">filter</span>(iso_code <span class="op">==</span><span class="st"> "OWID_WRL"</span>)</span>
-<span id="cb266-3"><a href="visualization.html#cb266-3"></a></span>
-<span id="cb266-4"><a href="visualization.html#cb266-4"></a><span class="kw">ggplot</span>(emissions, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> co2)) <span class="op">+</span></span>
-<span id="cb266-5"><a href="visualization.html#cb266-5"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">"blue"</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb266-6"><a href="visualization.html#cb266-6"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">color =</span> <span class="st">"red"</span>) <span class="op">+</span></span>
-<span id="cb266-7"><a href="visualization.html#cb266-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"CO2 Emissions over time."</span>,</span>
-<span id="cb266-8"><a href="visualization.html#cb266-8"></a>       <span class="dt">subtitle =</span> <span class="st">"Global emissions atmospheric emissions by year."</span>,</span>
-<span id="cb266-9"><a href="visualization.html#cb266-9"></a>       <span class="dt">x =</span> <span class="st">"year"</span>, <span class="dt">y =</span> <span class="st">"CO2 [Gt/year]"</span>,</span>
-<span id="cb266-10"><a href="visualization.html#cb266-10"></a>       <span class="dt">caption =</span> <span class="st">"Data: Global Carbon Project/Our World in Data"</span>) <span class="op">+</span></span>
-<span id="cb266-11"><a href="visualization.html#cb266-11"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb266"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb266-1"><a href="visualization.html#cb266-1" aria-hidden="true" tabindex="-1"></a>emissions <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/emissions.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb266-2"><a href="visualization.html#cb266-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(iso_code <span class="sc">==</span> <span class="st">"OWID_WRL"</span>)</span>
+<span id="cb266-3"><a href="visualization.html#cb266-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb266-4"><a href="visualization.html#cb266-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(emissions, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> co2)) <span class="sc">+</span></span>
+<span id="cb266-5"><a href="visualization.html#cb266-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb266-6"><a href="visualization.html#cb266-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb266-7"><a href="visualization.html#cb266-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"CO2 Emissions over time."</span>,</span>
+<span id="cb266-8"><a href="visualization.html#cb266-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Global emissions atmospheric emissions by year."</span>,</span>
+<span id="cb266-9"><a href="visualization.html#cb266-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"year"</span>, <span class="at">y =</span> <span class="st">"CO2 [Gt/year]"</span>,</span>
+<span id="cb266-10"><a href="visualization.html#cb266-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data: Global Carbon Project/Our World in Data"</span>) <span class="sc">+</span></span>
+<span id="cb266-11"><a href="visualization.html#cb266-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-208"></span>
+<span style="display:block;" id="fig:unnamed-chunk-279"></span>
 <p class="caption marginnote shownote">
 Figure 14.23: Global atmospheric CO2 emissions.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-208-1.png" alt="Global atmospheric CO2 emissions." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-279-1.png" alt="Global atmospheric CO2 emissions." width="672">
 </div>
 <p>To be able to plot multiple plots in one using <code>patchwork</code> we need to assign our figures as objects.</p>
-<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="visualization.html#cb267-1"></a>p1 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(carbon, <span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> average)) <span class="op">+</span></span>
-<span id="cb267-2"><a href="visualization.html#cb267-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">"blue"</span>) <span class="op">+</span></span>
-<span id="cb267-3"><a href="visualization.html#cb267-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">color =</span> <span class="st">"red"</span>) <span class="op">+</span></span>
-<span id="cb267-4"><a href="visualization.html#cb267-4"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Atmospheric CO2"</span>,</span>
-<span id="cb267-5"><a href="visualization.html#cb267-5"></a>       <span class="dt">subtitle =</span> <span class="st">"monthly mean CO2 Mauna Loa CO2"</span>,</span>
-<span id="cb267-6"><a href="visualization.html#cb267-6"></a>       <span class="dt">x =</span> <span class="st">"year"</span>, <span class="dt">y =</span> <span class="st">"CO2 concentration air [ppm]"</span>,</span>
-<span id="cb267-7"><a href="visualization.html#cb267-7"></a>       <span class="dt">caption =</span> <span class="st">"Data: NOAA/ESRL"</span>) <span class="op">+</span></span>
-<span id="cb267-8"><a href="visualization.html#cb267-8"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span>
-<span id="cb267-9"><a href="visualization.html#cb267-9"></a></span>
-<span id="cb267-10"><a href="visualization.html#cb267-10"></a>p2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(emissions, <span class="kw">aes</span>(<span class="dt">x =</span> year, <span class="dt">y =</span> co2)) <span class="op">+</span></span>
-<span id="cb267-11"><a href="visualization.html#cb267-11"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="st">"blue"</span>, <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></span>
-<span id="cb267-12"><a href="visualization.html#cb267-12"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">color =</span> <span class="st">"red"</span>) <span class="op">+</span></span>
-<span id="cb267-13"><a href="visualization.html#cb267-13"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Atmospheric CO2 Emissions"</span>,</span>
-<span id="cb267-14"><a href="visualization.html#cb267-14"></a>       <span class="dt">subtitle =</span> <span class="st">"global emissions"</span>,</span>
-<span id="cb267-15"><a href="visualization.html#cb267-15"></a>       <span class="dt">x =</span> <span class="st">"year"</span>, <span class="dt">y =</span> <span class="st">"CO2 [Gt/year]"</span>,</span>
-<span id="cb267-16"><a href="visualization.html#cb267-16"></a>       <span class="dt">caption =</span> <span class="st">"Data: Global Carbon Project/Our World in Data"</span>) <span class="op">+</span></span>
-<span id="cb267-17"><a href="visualization.html#cb267-17"></a><span class="st">  </span><span class="kw">theme_classic</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb267"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb267-1"><a href="visualization.html#cb267-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(carbon, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> average)) <span class="sc">+</span></span>
+<span id="cb267-2"><a href="visualization.html#cb267-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb267-3"><a href="visualization.html#cb267-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb267-4"><a href="visualization.html#cb267-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Atmospheric CO2"</span>,</span>
+<span id="cb267-5"><a href="visualization.html#cb267-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"monthly mean CO2 Mauna Loa CO2"</span>,</span>
+<span id="cb267-6"><a href="visualization.html#cb267-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"year"</span>, <span class="at">y =</span> <span class="st">"CO2 concentration air [ppm]"</span>,</span>
+<span id="cb267-7"><a href="visualization.html#cb267-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data: NOAA/ESRL"</span>) <span class="sc">+</span></span>
+<span id="cb267-8"><a href="visualization.html#cb267-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb267-9"><a href="visualization.html#cb267-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb267-10"><a href="visualization.html#cb267-10" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(emissions, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> co2)) <span class="sc">+</span></span>
+<span id="cb267-11"><a href="visualization.html#cb267-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb267-12"><a href="visualization.html#cb267-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb267-13"><a href="visualization.html#cb267-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Atmospheric CO2 Emissions"</span>,</span>
+<span id="cb267-14"><a href="visualization.html#cb267-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"global emissions"</span>,</span>
+<span id="cb267-15"><a href="visualization.html#cb267-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"year"</span>, <span class="at">y =</span> <span class="st">"CO2 [Gt/year]"</span>,</span>
+<span id="cb267-16"><a href="visualization.html#cb267-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Data: Global Carbon Project/Our World in Data"</span>) <span class="sc">+</span></span>
+<span id="cb267-17"><a href="visualization.html#cb267-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div>
 <p>Now we can combine them side by side using a simple syntax.</p>
-<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="visualization.html#cb268-1"></a>p1 <span class="op">+</span><span class="st"> </span>p2</span></code></pre></div>
+<div class="sourceCode" id="cb268"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb268-1"><a href="visualization.html#cb268-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> p2</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-210"></span>
+<span style="display:block;" id="fig:unnamed-chunk-281"></span>
 <p class="caption marginnote shownote">
 Figure 14.24: Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory (left panel) and Global atmospheric CO2 emissions (right panel).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-210-1.png" alt="Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory (left panel) and Global atmospheric CO2 emissions (right panel)." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-281-1.png" alt="Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory (left panel) and Global atmospheric CO2 emissions (right panel)." width="672">
 </div>
 <p>Similarly, we can plot them underneath each other like so -</p>
-<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="visualization.html#cb269-1"></a>p1 <span class="op">/</span><span class="st"> </span>p2</span></code></pre></div>
+<div class="sourceCode" id="cb269"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb269-1"><a href="visualization.html#cb269-1" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">/</span> p2</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-211"></span>
+<span style="display:block;" id="fig:unnamed-chunk-282"></span>
 <p class="caption marginnote shownote">
 Figure 14.25: Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory (top panel) and Global atmospheric CO2 emissions (bottom panel).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-211-1.png" alt="Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory (top panel) and Global atmospheric CO2 emissions (bottom panel)." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-282-1.png" alt="Mean monthly atmospheric CO2 concentrations measuread at Mauna Loa Observatory (top panel) and Global atmospheric CO2 emissions (bottom panel)." width="672">
 </div>
 <p>Oh, it gets better. Let’s say we wanted to plot our global mean temperatures in the top row and our two emissions plots below.</p>
-<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="visualization.html#cb270-1"></a>p3 &lt;-<span class="st"> </span>temperature <span class="op">%&gt;%</span></span>
-<span id="cb270-2"><a href="visualization.html#cb270-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year_type =</span> <span class="kw">ifelse</span>(<span class="st">`</span><span class="dt">J-D</span><span class="st">`</span> <span class="op">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb270-3"><a href="visualization.html#cb270-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>, <span class="dt">fill =</span> year_type, <span class="dt">color =</span> year_type)) <span class="op">+</span></span>
-<span id="cb270-4"><a href="visualization.html#cb270-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span></span>
-<span id="cb270-5"><a href="visualization.html#cb270-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Change in global mean temperatures 1880 - 2020"</span>,</span>
-<span id="cb270-6"><a href="visualization.html#cb270-6"></a>       <span class="dt">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
-<span id="cb270-7"><a href="visualization.html#cb270-7"></a>       <span class="dt">x =</span> <span class="st">"Year"</span>, <span class="dt">y =</span> <span class="st">"Temperature [C]"</span>,</span>
-<span id="cb270-8"><a href="visualization.html#cb270-8"></a>       <span class="dt">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>) <span class="op">+</span></span>
-<span id="cb270-9"><a href="visualization.html#cb270-9"></a><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></span>
-<span id="cb270-10"><a href="visualization.html#cb270-10"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb270-11"><a href="visualization.html#cb270-11"></a>        <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">color =</span> <span class="st">"black"</span>,</span>
-<span id="cb270-12"><a href="visualization.html#cb270-12"></a>                                   <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb270-13"><a href="visualization.html#cb270-13"></a>        <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">color =</span> <span class="st">"black"</span>,),</span>
-<span id="cb270-14"><a href="visualization.html#cb270-14"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>))</span>
-<span id="cb270-15"><a href="visualization.html#cb270-15"></a></span>
-<span id="cb270-16"><a href="visualization.html#cb270-16"></a>p3 <span class="op">/</span><span class="st"> </span>(p1 <span class="op">|</span><span class="st"> </span>p2)</span></code></pre></div>
+<div class="sourceCode" id="cb270"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb270-1"><a href="visualization.html#cb270-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> temperature <span class="sc">%&gt;%</span></span>
+<span id="cb270-2"><a href="visualization.html#cb270-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year_type =</span> <span class="fu">ifelse</span>(<span class="st">`</span><span class="at">J-D</span><span class="st">`</span> <span class="sc">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb270-3"><a href="visualization.html#cb270-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>, <span class="at">fill =</span> year_type, <span class="at">color =</span> year_type)) <span class="sc">+</span></span>
+<span id="cb270-4"><a href="visualization.html#cb270-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb270-5"><a href="visualization.html#cb270-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Change in global mean temperatures 1880 - 2020"</span>,</span>
+<span id="cb270-6"><a href="visualization.html#cb270-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
+<span id="cb270-7"><a href="visualization.html#cb270-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Temperature [C]"</span>,</span>
+<span id="cb270-8"><a href="visualization.html#cb270-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>) <span class="sc">+</span></span>
+<span id="cb270-9"><a href="visualization.html#cb270-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb270-10"><a href="visualization.html#cb270-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb270-11"><a href="visualization.html#cb270-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb270-12"><a href="visualization.html#cb270-12" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb270-13"><a href="visualization.html#cb270-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"black"</span>,),</span>
+<span id="cb270-14"><a href="visualization.html#cb270-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span>
+<span id="cb270-15"><a href="visualization.html#cb270-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb270-16"><a href="visualization.html#cb270-16" aria-hidden="true" tabindex="-1"></a>p3 <span class="sc">/</span> (p1 <span class="sc">|</span> p2)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-212"></span>
+<span style="display:block;" id="fig:unnamed-chunk-283"></span>
 <p class="caption marginnote shownote">
 Figure 14.26: Comparison of change in mean global temperature (top panel), atmospheric CO2 concentrations (bottom left), and atmospheric CO2 emissions (bottom right).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-212-1.png" alt="Comparison of change in mean global temperature (top panel), atmospheric CO2 concentrations (bottom left), and atmospheric CO2 emissions (bottom right)." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-283-1.png" alt="Comparison of change in mean global temperature (top panel), atmospheric CO2 concentrations (bottom left), and atmospheric CO2 emissions (bottom right)." width="672">
 </div>
 <p>You can create complex compositions in <code>patchwork</code> using syntax combining <code>+</code>, <code>|</code>, and <code>\</code>. To see how you can control the layout even further you can check out the <a href="https://patchwork.data-imaginist.com/articles/guides/layout.html">documentation for patchwork</a>.</p>
 </div>
-<div id="exporting-plots" class="section level2">
+<div id="exporting-plots" class="section level2" number="14.6">
 <h2>
 <span class="header-section-number">14.6</span> Exporting Plots<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('exporting-plots')" onmouseout="reset_tooltip('exporting-plots-tooltip')"><span class="tooltiptext" id="exporting-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -684,32 +707,32 @@ Figure 14.26: Comparison of change in mean global temperature (top panel), atmos
 <p>For more control over the format of your figure you can use the Export tab in the Plot pane which will allow you to adjust the dimensions and the the file format.</p>
 <p>Finally, the <code>ggplot2</code> has a function called <code>ggsave()</code> that will allow you to determine the dimensions (<code>width</code>, <code>height</code>), resolution (<code>dpi</code>), and format (<code>device</code>).</p>
 <p>By default it will save the last plot that was plotted. If you specify the format in the file name (e.g. <code>*.svg</code>, <code>*.jpg</code>, <code>*.png</code>) it will automatically recognize the format<label for="tufte-sn-75" class="margin-toggle sidenote-number">75</label><input type="checkbox" id="tufte-sn-75" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">75</span> Remember that we have designed our research compendium to keep raw and processed data, and results separate? Figures are considered results so you should always save them to the <code>results</code> folder.</span>.</p>
-<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="visualization.html#cb271-1"></a>temperature <span class="op">%&gt;%</span></span>
-<span id="cb271-2"><a href="visualization.html#cb271-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">year_type =</span> <span class="kw">ifelse</span>(<span class="st">`</span><span class="dt">J-D</span><span class="st">`</span> <span class="op">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="op">%&gt;%</span></span>
-<span id="cb271-3"><a href="visualization.html#cb271-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> Year, <span class="dt">y =</span> <span class="st">`</span><span class="dt">J-D</span><span class="st">`</span>, <span class="dt">fill =</span> year_type, <span class="dt">color =</span> year_type)) <span class="op">+</span></span>
-<span id="cb271-4"><a href="visualization.html#cb271-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">"identity"</span>) <span class="op">+</span></span>
-<span id="cb271-5"><a href="visualization.html#cb271-5"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Change in global mean temperatures 1880 - 2020"</span>,</span>
-<span id="cb271-6"><a href="visualization.html#cb271-6"></a>       <span class="dt">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
-<span id="cb271-7"><a href="visualization.html#cb271-7"></a>       <span class="dt">x =</span> <span class="st">"Year"</span>, <span class="dt">y =</span> <span class="st">"Temperature [C]"</span>,</span>
-<span id="cb271-8"><a href="visualization.html#cb271-8"></a>       <span class="dt">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>) <span class="op">+</span></span>
-<span id="cb271-9"><a href="visualization.html#cb271-9"></a><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span></span>
-<span id="cb271-10"><a href="visualization.html#cb271-10"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">"bottom"</span>,</span>
-<span id="cb271-11"><a href="visualization.html#cb271-11"></a>        <span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">color =</span> <span class="st">"black"</span>,</span>
-<span id="cb271-12"><a href="visualization.html#cb271-12"></a>                                   <span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">vjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb271-13"><a href="visualization.html#cb271-13"></a>        <span class="dt">axis.text.y =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">12</span>, <span class="dt">color =</span> <span class="st">"black"</span>,),</span>
-<span id="cb271-14"><a href="visualization.html#cb271-14"></a>        <span class="dt">axis.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">14</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb271"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb271-1"><a href="visualization.html#cb271-1" aria-hidden="true" tabindex="-1"></a>temperature <span class="sc">%&gt;%</span></span>
+<span id="cb271-2"><a href="visualization.html#cb271-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year_type =</span> <span class="fu">ifelse</span>(<span class="st">`</span><span class="at">J-D</span><span class="st">`</span> <span class="sc">&lt;=</span><span class="dv">0</span>, <span class="st">"colder"</span>, <span class="st">"hotter"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb271-3"><a href="visualization.html#cb271-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> <span class="st">`</span><span class="at">J-D</span><span class="st">`</span>, <span class="at">fill =</span> year_type, <span class="at">color =</span> year_type)) <span class="sc">+</span></span>
+<span id="cb271-4"><a href="visualization.html#cb271-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb271-5"><a href="visualization.html#cb271-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Change in global mean temperatures 1880 - 2020"</span>,</span>
+<span id="cb271-6"><a href="visualization.html#cb271-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Global mean temperatures relative to 1951 - 1980 mean"</span>,</span>
+<span id="cb271-7"><a href="visualization.html#cb271-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Temperature [C]"</span>,</span>
+<span id="cb271-8"><a href="visualization.html#cb271-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Date source: NASA Goddard Institute for Space Studies"</span>) <span class="sc">+</span></span>
+<span id="cb271-9"><a href="visualization.html#cb271-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb271-10"><a href="visualization.html#cb271-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>,</span>
+<span id="cb271-11"><a href="visualization.html#cb271-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"black"</span>,</span>
+<span id="cb271-12"><a href="visualization.html#cb271-12" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb271-13"><a href="visualization.html#cb271-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>, <span class="at">color =</span> <span class="st">"black"</span>,),</span>
+<span id="cb271-14"><a href="visualization.html#cb271-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-213"></span>
+<span style="display:block;" id="fig:unnamed-chunk-284"></span>
 <p class="caption marginnote shownote">
 Figure 14.27: Change in mean global temperature realtive to long-term average.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-213-1.png" alt="Change in mean global temperature realtive to long-term average." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-284-1.png" alt="Change in mean global temperature realtive to long-term average." width="672">
 </div>
-<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="visualization.html#cb272-1"></a><span class="kw">ggsave</span>(<span class="st">"results/global_temp.png"</span>, <span class="dt">dpi =</span> <span class="dv">300</span>, <span class="dt">width =</span> <span class="dv">15</span>, <span class="dt">height =</span> <span class="dv">10</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb272"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb272-1"><a href="visualization.html#cb272-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"results/global_temp.png"</span>, <span class="at">dpi =</span> <span class="dv">300</span>, <span class="at">width =</span> <span class="dv">15</span>, <span class="at">height =</span> <span class="dv">10</span>)</span></code></pre></div>
 <p>Check your results folder to see if you were successful!</p>
 <p>If you assign your plot to an object you can use the <code>plot</code> argument of the <code>ggsave()</code> function to export it. This also works for figures that consist of multiple panels combined using <code>patchwork</code>.</p>
 </div>
-<div id="more-plots" class="section level2">
+<div id="more-plots" class="section level2" number="14.7">
 <h2>
 <span class="header-section-number">14.7</span> More Plots!<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('more-plots')" onmouseout="reset_tooltip('more-plots-tooltip')"><span class="tooltiptext" id="more-plots-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
@@ -724,7 +747,7 @@ Figure 14.27: Change in mean global temperature realtive to long-term average.
 <div class="question-body">
 <p>Increasing atmospheric temperatures result in land ice melting and the ocean heat content rising. The latter leads to thermal expansion which together with the increase freshwater inflow results in rising sea levels.</p>
 <p>The first data set is from the NOAA Laboratory for Satellite Altimetry and contains records from coastal sea level tide gauges. Start by reading in the data set:</p>
-<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="visualization.html#cb273-1"></a>sealevel &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/sealevel.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb273"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb273-1"><a href="visualization.html#cb273-1" aria-hidden="true" tabindex="-1"></a>sealevel <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/sealevel.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
 <p>Take a quick look at the data set using <code>View()</code> and briefly summarize what data is contained in this data set<label for="tufte-sn-76" class="margin-toggle sidenote-number">76</label><input type="checkbox" id="tufte-sn-76" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">76</span> Include things like the number of columns, what data is contained in each sample, what time periods are included etc. Practice deducing these types of things from the context of the data set description above and by browsing the content.</span></p>
 <p>Plot the change in mean sea level over time as a line plot and color code the line(s) by method (see column names). Chose a theme and position your legend below the figure.</p>
 <p>Extra challenge<label for="tufte-sn-77" class="margin-toggle sidenote-number">77</label><input type="checkbox" id="tufte-sn-77" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">77</span> YJust because it’s extra doesno’t mean it’s optional … you should be able to figure this out using the tool set you have and practicing reading the manual pages to learn how to use functions!</span>: Figure out how to use <code>geom_hline()</code> to add a line at 0.</p>
@@ -732,11 +755,11 @@ Figure 14.27: Change in mean global temperature realtive to long-term average.
 <p>Write a short description of your figure summarizing the key results displayed.</p>
 <p>Here’s an example of what tour final figure could look like.</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-215"></span>
+<span style="display:block;" id="fig:unnamed-chunk-286"></span>
 <p class="caption marginnote shownote">
 Figure 14.28: Change in mean global coastal sea level using costal sea level tide gauges (blue) and satellite data (red).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-215-1.png" alt="Change in mean global coastal sea level using costal sea level tide gauges (blue) and satellite data (red)." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-286-1.png" alt="Change in mean global coastal sea level using costal sea level tide gauges (blue) and satellite data (red)." width="672">
 </div>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -749,7 +772,7 @@ Figure 14.28: Change in mean global coastal sea level using costal sea level tid
 </p>
 <div class="question-body">
 <p>Our next data set is from the <a href="https://nsidc.org/data/seaice_index/archives">National Snow and Ice Data Center</a> and contains the Arctic (Northern Hemisphere) July sea ice extent.</p>
-<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="visualization.html#cb274-1"></a>ice_arctic &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/arctic_ice.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb274"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb274-1"><a href="visualization.html#cb274-1" aria-hidden="true" tabindex="-1"></a>ice_arctic <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/arctic_ice.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
 <p>Take a quick look at the data set using <code>View()</code> and briefly summarize what data is contained in this data set. Be specific.</p>
 <p>Plot the change in ice extent over time as a line plot. Chose a theme. Add a linear regression and confidence interval.</p>
 <p>Extra Challenge: Change the default colors of the regression line and the confidence interval.</p>
@@ -766,7 +789,7 @@ Figure 14.28: Change in mean global coastal sea level using costal sea level tid
 </p>
 <div class="question-body">
 <p>Let’s take a look at the equivalent data set depicting sea ice extent in the Antarctic (Southern Hemisphere.)</p>
-<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="visualization.html#cb275-1"></a>ice_arctic &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/antarctic_ice.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb275"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb275-1"><a href="visualization.html#cb275-1" aria-hidden="true" tabindex="-1"></a>ice_arctic <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/antarctic_ice.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
 <p>Take a quick look at the data set using <code>View()</code> and briefly summarize what data is contained in this data set. Be specific.</p>
 <p>Plot the change in ice extent over time as a line plot. Chose a new theme from what you’ve been using previously. Add a linear regression and confidence interval.</p>
 <p>Extra Challenge: Change the default colors of the regression line and the confidence interval.</p>
@@ -784,9 +807,9 @@ Figure 14.28: Change in mean global coastal sea level using costal sea level tid
 <div class="question-body">
 <p>One more data set. This one is from the NOAA Hurricane Research Division. While interpreting the observed patterns in sea level and ice extent and modeling future projections is pretty straightforward, understanding whether extreme events are getting “worse” is a little bit more complicated.</p>
 <p>Note: For this coding challenge you will need to combine your data wrangling and visualization skills!</p>
-<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="visualization.html#cb276-1"></a>hurricane &lt;-<span class="st"> </span><span class="kw">read_delim</span>(<span class="st">"data/hurricanes.txt"</span>, <span class="dt">delim =</span> <span class="st">"</span><span class="ch">\t</span><span class="st">"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb276"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb276-1"><a href="visualization.html#cb276-1" aria-hidden="true" tabindex="-1"></a>hurricane <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/hurricanes.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
 <p>Take a quick look at the data set using <code>View()</code> and briefly summarize what data is contained in this data set. Be specific<label for="tufte-sn-78" class="margin-toggle sidenote-number">78</label><input type="checkbox" id="tufte-sn-78" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">78</span> Note, several of the columns start with ‘Revised’ this just has to do with the entire data set having revised (most recent) definitions applied for the metrics included. You can ignore that component.</span>.</p>
-<p>When thinking about hurricanes there are two metrics to consider when determining whether or not “hurricanes have gotten worse”. First we can look at whether or not hurricanes have become more common by plotting the number of hurricanes for each year. Create a faceted plot with individual line plots showing the number of named storms (this would include not only hurricanes put also tropical storms), the number of hurricanes, the number of major hurricanes, and the number of hurricanes in the United States. Add a linear regression. Chose a custom theme.</p>
+<p>When thinking about hurricanes there are two metrics to consider when determining whether or not “hurricanes have gotten worse.” First we can look at whether or not hurricanes have become more common by plotting the number of hurricanes for each year. Create a faceted plot with individual line plots showing the number of named storms (this would include not only hurricanes put also tropical storms), the number of hurricanes, the number of major hurricanes, and the number of hurricanes in the United States. Add a linear regression. Chose a custom theme.</p>
 <p>You will have to reformat the data set in order to plot it in this fashion. It can be helpful to first think about what your <code>ggplot</code> code should look like to create the plot described above and then format your data set to fit those needs<label for="tufte-sn-79" class="margin-toggle sidenote-number">79</label><input type="checkbox" id="tufte-sn-79" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">79</span> Recall that ggplot is designed not only around the grammar of graphics but also the principles of tidy data… so, do we currently have a tidy data set? Or what would it need to look like for this plotting challenge?</span>.</p>
 <p>Extra Challenge: We’ve previously used <code>facet_grid()</code> to create faceted plots which requires us to specify how panels should be laid out in rows and/or columns. Figure out how to use <code>facet_wrap()</code> to just specify which variable to use to create individual panels with out them all needing to be laid out next to each other in columns or underneath each other in rows.</p>
 <p>The other way to evaluate whether or not “hurricanes have gotten worse” is to not look at the number of storms but to determine whether individual storms or storms as a whole have become more intense and/or destructive.</p>
@@ -794,7 +817,7 @@ Figure 14.28: Change in mean global coastal sea level using costal sea level tid
 <p>Create a bar plot showing the ACE for each year. Chose a theme and customize the color of your bars<label for="tufte-sn-81" class="margin-toggle sidenote-number">81</label><input type="checkbox" id="tufte-sn-81" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">81</span> You can specify color and fill for bar plots. Try setting the color and fill to the same and to different colors to see what happens when you have a bar plot with this many individual bars.</span></p>
 <p>Extra Challenge: Use <code>geom_hline()</code> to add a horizontal line indicating the mean ACE for the recorded time period.</p>
 <p>For all the plots, comment each line of your ggplot code (you can add comments between the lines or at the end), remember to caption your figure, list your data source and and label your axis in a meaningful way.</p>
-<p>Write a short description for each figure summarizing the key results displayed and argue whether or not you thing “hurricanes have gotten worse”.</p>
+<p>Write a short description for each figure summarizing the key results displayed and argue whether or not you thing “hurricanes have gotten worse.”</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -821,7 +844,7 @@ Figure 14.28: Change in mean global coastal sea level using costal sea level tid
 <a href="visualizations-as-a-tool-for-misinformation.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

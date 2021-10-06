@@ -14,17 +14,17 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-09-30" />
+<meta name="date" content="2021-10-06" />
 
 
 <meta name="description" content="2 Installing R/Rstudio | Data Science for the Natural Environment (FA21)">
 
 <title>2 Installing R/Rstudio | Data Science for the Natural Environment (FA21)</title>
 
+<script src="libs/header-attrs/header-attrs.js"></script>
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
-<script src="libs/accessible-code-block/empty-anchor.js"></script>
 <script src="libs/htmlwidgets/htmlwidgets.js"></script>
 <script src="libs/plotly-binding/plotly.js"></script>
 <script src="libs/typedarray/typedarray.min.js"></script>
@@ -37,19 +37,19 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,7 +69,7 @@ pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-le
 div.sourceCode
   {  background-color: #f8f8f8; }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -102,6 +102,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="msmb.css" type="text/css" />
 <script>
@@ -175,6 +197,7 @@ function reset_tooltip(id) {
 <a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
 <a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
 <a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -185,7 +208,7 @@ function reset_tooltip(id) {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="installing-rrstudio" class="section level1">
+<html><body><div id="installing-rrstudio" class="section level1" number="2">
 <h1>
 <span class="header-section-number">2</span> Installing R/Rstudio</h1>
 <p><strong>Learning Objectives</strong></p>
@@ -196,12 +219,12 @@ function reset_tooltip(id) {
 <li>understand the main use for each of the four main panes in the <code>Rstudio</code> GUI.</li>
 <li>understand what a package is in <code>R</code> and how to install them.</li>
 </ul>
-<div id="install-set-up-r-and-rstudio-on-your-computer" class="section level2">
+<div id="install-set-up-r-and-rstudio-on-your-computer" class="section level2" number="2.1">
 <h2>
 <span class="header-section-number">2.1</span> Install &amp; Set up R and Rstudio on your computer<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('install-set-up-r-and-rstudio-on-your-computer')" onmouseout="reset_tooltip('install-set-up-r-and-rstudio-on-your-computer-tooltip')"><span class="tooltiptext" id="install-set-up-r-and-rstudio-on-your-computer-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>If you have already installed <code>R</code> and <code>Rstudio</code> make sure your R version is up to date. Whenever you open <code>Rstudio</code> the version will be printed in the console (bottom left pane). In addition, you can always check what version is installed by typing <code>sessionInfo()</code> into your console. You should be using version 4.0.0 or later. You do not need to uninstall old version of <code>R</code>. If you do have to update, you will need to re-install packages (see below) for R4.0.0</p>
-<div id="windows" class="section level3">
+<div id="windows" class="section level3" number="2.1.1">
 <h3>
 <span class="header-section-number">2.1.1</span> Windows<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('windows')" onmouseout="reset_tooltip('windows-tooltip')"><span class="tooltiptext" id="windows-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -228,7 +251,7 @@ function reset_tooltip(id) {
 <li>Install the <code>devtools</code> package by typing <code>install.packages("devtools")</code> in the console.</li>
 </ul>
 </div>
-<div id="mac-os-x" class="section level3">
+<div id="mac-os-x" class="section level3" number="2.1.2">
 <h3>
 <span class="header-section-number">2.1.2</span> Mac OS X<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('mac-os-x')" onmouseout="reset_tooltip('mac-os-x-tooltip')"><span class="tooltiptext" id="mac-os-x-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -252,12 +275,12 @@ function reset_tooltip(id) {
 </ul>
 </div>
 </div>
-<div id="get-to-know-rstudio" class="section level2">
+<div id="get-to-know-rstudio" class="section level2" number="2.2">
 <h2>
 <span class="header-section-number">2.2</span> Get to know Rstudio<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('get-to-know-rstudio')" onmouseout="reset_tooltip('get-to-know-rstudio-tooltip')"><span class="tooltiptext" id="get-to-know-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p><code>Rstudio</code> is an Integrated Development Environment (IDE) that you can use to write code, navigate files, inspect objects, etc. The advantage of using an IDE is that you have access to shortcuts, visual cues, troubleshooting, navigation, and autocomplete help.</p>
-<div id="gui-layout" class="section level3">
+<div id="gui-layout" class="section level3" number="2.2.1">
 <h3>
 <span class="header-section-number">2.2.1</span> GUI Layout<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('gui-layout')" onmouseout="reset_tooltip('gui-layout-tooltip')"><span class="tooltiptext" id="gui-layout-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -274,7 +297,7 @@ function reset_tooltip(id) {
 </ol>
 <p>The panes can be customized (<code>Rstudio -&gt; Preferences -&gt; Pane Layout</code>) and you can move/re-size them using your mouse.</p>
 </div>
-<div id="interacting-with-r-in-rstudio" class="section level3">
+<div id="interacting-with-r-in-rstudio" class="section level3" number="2.2.2">
 <h3>
 <span class="header-section-number">2.2.2</span> Interacting with R in Rstudio<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('interacting-with-r-in-rstudio')" onmouseout="reset_tooltip('interacting-with-r-in-rstudio-tooltip')"><span class="tooltiptext" id="interacting-with-r-in-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -297,18 +320,18 @@ function reset_tooltip(id) {
 <p>If the console is ready for you to execute commands you should see a <code>&gt;</code> prompt. If you e.g. forget a <code>)</code> you will see a <code>+</code> prompt - <code>R</code> is telling you that it is expecting further code. When this happens and you don’t know what you are missing (usually it is an unmatched quotation or parenthesis), make sure your cursor is in the console and hit the <code>Esc</code> key.</p>
 <p><em>We will run through these options, but you can always check back here while you are getting used to R</em>.</p>
 </div>
-<div id="customize-rstudio" class="section level3">
+<div id="customize-rstudio" class="section level3" number="2.2.3">
 <h3>
 <span class="header-section-number">2.2.3</span> Customize Rstudio<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('customize-rstudio')" onmouseout="reset_tooltip('customize-rstudio-tooltip')"><span class="tooltiptext" id="customize-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
 <p>There are several options to customize Rstudio including setting a theme, and other formatting preferences. You can access this using <code>Tools &gt; Global Options</code>. I recommend using a dark theme (it’s a lot easier on the eyes) and keeping the panes in the same positions as described because it will make troubleshooting a lot easier<label for="tufte-sn-9" class="margin-toggle sidenote-number">9</label><input type="checkbox" id="tufte-sn-9" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">9</span> “You should see xx in the top left” is a lot more helpful if your top left looks like my top left!</span>.</p>
 </div>
 </div>
-<div id="installing-and-using-packages-in-r" class="section level2">
+<div id="installing-and-using-packages-in-r" class="section level2" number="2.3">
 <h2>
 <span class="header-section-number">2.3</span> Installing and using packages in R<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('installing-and-using-packages-in-r')" onmouseout="reset_tooltip('installing-and-using-packages-in-r-tooltip')"><span class="tooltiptext" id="installing-and-using-packages-in-r-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<div id="install-a-package" class="section level3">
+<div id="install-a-package" class="section level3" number="2.3.1">
 <h3>
 <span class="header-section-number">2.3.1</span> Install a package<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('install-a-package')" onmouseout="reset_tooltip('install-a-package-tooltip')"><span class="tooltiptext" id="install-a-package-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -317,20 +340,20 @@ function reset_tooltip(id) {
 <p>When you install packages they will be downloaded and installed onto your computer. Determine what your default path is using <code>.libPaths()</code> and change if necessary.</p>
 <p>The easiest way to install packages is to use the <code>install.packages()</code> function. Use the <code>R</code> console to install some libraries to get us started (we will install other libraries as needed for other labs).</p>
 <p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;">Using <code>#</code> in an R script allows you to insert comments that are ignored by R when executing your code. Use comments to document your code, future you will thank you!</span></span></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="installing-rrstudio.html#cb17-1"></a><span class="co"># install the rmarkdown package</span></span>
-<span id="cb17-2"><a href="installing-rrstudio.html#cb17-2"></a><span class="kw">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
-<span id="cb17-3"><a href="installing-rrstudio.html#cb17-3"></a></span>
-<span id="cb17-4"><a href="installing-rrstudio.html#cb17-4"></a><span class="co"># install central packages in the tidyverse</span></span>
-<span id="cb17-5"><a href="installing-rrstudio.html#cb17-5"></a><span class="kw">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb17-6"><a href="installing-rrstudio.html#cb17-6"></a></span>
-<span id="cb17-7"><a href="installing-rrstudio.html#cb17-7"></a><span class="co"># install additional packages</span></span>
-<span id="cb17-8"><a href="installing-rrstudio.html#cb17-8"></a><span class="kw">install.packages</span>(<span class="st">"plyr"</span>, <span class="st">"ggthemes"</span>, <span class="st">"patchwork"</span>, <span class="st">"glue"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="installing-rrstudio.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the rmarkdown package</span></span>
+<span id="cb17-2"><a href="installing-rrstudio.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
+<span id="cb17-3"><a href="installing-rrstudio.html#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="installing-rrstudio.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># install central packages in the tidyverse</span></span>
+<span id="cb17-5"><a href="installing-rrstudio.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb17-6"><a href="installing-rrstudio.html#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="installing-rrstudio.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># install additional packages</span></span>
+<span id="cb17-8"><a href="installing-rrstudio.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"plyr"</span>, <span class="st">"ggthemes"</span>, <span class="st">"patchwork"</span>, <span class="st">"glue"</span>)</span></code></pre></div>
 <p>Let’s check if you were able to successfully install those packages.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="installing-rrstudio.html#cb18-1"></a><span class="co"># load library</span></span>
-<span id="cb18-2"><a href="installing-rrstudio.html#cb18-2"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="installing-rrstudio.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load library</span></span>
+<span id="cb18-2"><a href="installing-rrstudio.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 <p>If you don’t see any error messages in the console along the lines of <code>there is no package called ...</code> you are all set. If you look in the <code>packages</code> tab in the lower right panel you should also see that packages such as <code>dplyr</code> and <code>tidyr</code> (two of the central <code>tidyverse</code> packages) now have a little check box next to them.</p>
 </div>
-<div id="updating-r-packages" class="section level3">
+<div id="updating-r-packages" class="section level3" number="2.3.2">
 <h3>
 <span class="header-section-number">2.3.2</span> Updating R packages<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('updating-r-packages')" onmouseout="reset_tooltip('updating-r-packages-tooltip')"><span class="tooltiptext" id="updating-r-packages-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h3>
@@ -346,7 +369,7 @@ function reset_tooltip(id) {
 <a href="project-management-and-rmarkdown-basics.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-09-30
+2021-10-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

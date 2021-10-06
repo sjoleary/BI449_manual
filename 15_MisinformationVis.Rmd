@@ -278,7 +278,7 @@ Here is an example of an infographic shared by the Heartland Institute^[The Hear
 
 ![Infographic posted by the Heartland Institute.](figures/atm_comp.jpg)
 
-Describe what the central message is you think they are trying to convey with this infographic and argue whether this fals in the category of misinformation or disinformation. Discuss whether you think this figure is compelling in it's design and what could make it effective in persuading viewers of their point of view.
+Describe what the central message is you think they are trying to convey with this infographic and argue whether this falls in the category of misinformation or disinformation. Discuss whether you think this figure is compelling in it's design and what could make it effective in persuading viewers of their point of view.
 
 `r msmbstyle::question_end()`
 
