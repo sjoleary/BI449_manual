@@ -686,12 +686,15 @@ Formulate three specific questions this data set can answer, consider that you h
 
 Use headers, plain text, code chunks etc. as appropriate to write a mini report for each question - this should include stating your question as concisely as possible, exploratory figures, final explanatory figure, description & discussion of your results. Comment your code to generate your figures **line by line** with descriptive comments.
 
-For each question, generate 3 - 5 exploratory figures that can help answer your question, these can include different visualizations of the same variables or different variables. In each case, chose the figure that summarizes your results best and refine your visualization so that it best summarizes your results, this includes a figure title, labeled axis, color choice, how data is encoded etc.
+For each question, generate 3 - 5 exploratory figures that can help answer your question, these can include different visualizations of the same variables or different (combinations of) variables. For each question, chose the figure that summarizes your results best and refine your visualization so that it best summarizes your results, this includes a figure title, labeled axis, color choice, how data is encoded etc.
+
+*It's possible that you have some additional ideas on how you would like to refine your figure but you're not sure how you can achieve that using your current ggplot skill set. If that is the case, do not get hung up on cosmetics, rather make a note and we will refine figures based on all of our feedback in class.*
 
 Write a figure legend that would accompany your figure in a report or paper, write a 3 - 5 sentence description of each figure (i.e. this should communicate the results with sufficient detail that somebody who *has not* seen the figure still fully understand them) and briefly discuss your results in 3-5 sentences in the context of the question you were asking (i.e. what are your conclusions, are there limitation to your data, alternative explanations, ...).
 
-Chose one question + figure legend, description, and discussion and share it in our `#hwassignments` channel on slack.
+For each initial question, jot down 2-3 ideas of where you would take your exploratory analysis in the next step.
 
+Chose one question, your final figure and accompanying legend, description, and discussion and share it in our `#hwassignments` channel on slack.
 
 `r msmbstyle::question_end()`
 
@@ -700,5 +703,19 @@ Chose one question + figure legend, description, and discussion and share it in 
 
 Take a look your classmate's posts on slack, identify what you like about the visualization along with some **constructive** points for improvement. Getting feedback is really important. Our goal is clear communication; you have spent more time thinking about this question and the visualization so some things might be obvious to you that others might not catch right away, similar a set of colors might look good to you, but somebody else might struggle to tell things apart. The figure might be too busy etc. Sometimes it can also be helpful to have other people help you refine your question.
 
+*Make some notes for yourself so we can share in class; you do not need to include this in your HW submission. You should also make some notes on constructive criticism of your own figures of things you may have wanted to improve by weren't sure how to achieve that.*
+
 `r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:eda-11")`
+
+Our next step will be exploring where we can find data sets. 
+
+Your final project can be summed up as "find a data set - do something with it". Chances of finding things are always a lot higher when you have at least a rough idea of what you are looking for. In preparation for formulating a mini-proposal for your final project, identify a broad area of interest for you and brainstorm 2-3 ideas of more specific questions you're interested in. 
+
+Don't worry, this is not final, just a starting point. As we take a look at databases and data repositories you might something in a different area you are interested in exploring.
+
+`r msmbstyle::question_end()`
+
+
 

@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-10-06" />
+<meta name="date" content="2021-10-07" />
 
 
 <meta name="description" content="16 Exploratory Analysis | Data Science for the Natural Environment (FA21)">
@@ -424,7 +424,7 @@ function reset_tooltip(id) {
 </div>
 <div class="sourceCode" id="cb285"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb285-1"><a href="exploratory-analysis.html#cb285-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(disaster)</span></code></pre></div>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-326">Table 16.1: </span>Data summary</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-227">Table 16.1: </span>Data summary</span><!--</caption>--></p>
 <table><tbody>
 <tr class="odd">
 <td align="left">Name</td>
@@ -1132,22 +1132,22 @@ function reset_tooltip(id) {
 <p>Let’s start by figuring out how many observations fall into each sub-category of natural disasters<label for="tufte-sn-98" class="margin-toggle sidenote-number">98</label><input type="checkbox" id="tufte-sn-98" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">98</span> We finally get to see the alternative to <code>stat = "identity"</code> in using barplots! To plot distribution of categorical variable you are now telling <code>ggplot</code> to count the number of observations for each category</span>.</p>
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="exploratory-analysis.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(disaster, <span class="fu">aes</span>(<span class="at">x =</span> disaster_subgroup)) <span class="sc">+</span></span>
 <span id="cb290-2"><a href="exploratory-analysis.html#cb290-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-329-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-230-1.png" width="672"></p>
 <p>and we could do the same for our disaster types.</p>
 <div class="sourceCode" id="cb291"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb291-1"><a href="exploratory-analysis.html#cb291-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(disaster, <span class="fu">aes</span>(<span class="at">x =</span> disaster_type)) <span class="sc">+</span></span>
 <span id="cb291-2"><a href="exploratory-analysis.html#cb291-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-330-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672"></p>
 <p>We probably want to be able to read those labels</p>
 <div class="sourceCode" id="cb292"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb292-1"><a href="exploratory-analysis.html#cb292-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(disaster, <span class="fu">aes</span>(<span class="at">x =</span> disaster_type)) <span class="sc">+</span></span>
 <span id="cb292-2"><a href="exploratory-analysis.html#cb292-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
 <span id="cb292-3"><a href="exploratory-analysis.html#cb292-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-331-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-232-1.png" width="672"></p>
 <p>This is giving us global numbers, we might want to break it up by region.</p>
 <div class="sourceCode" id="cb293"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb293-1"><a href="exploratory-analysis.html#cb293-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(disaster, <span class="fu">aes</span>(<span class="at">x =</span> disaster_type)) <span class="sc">+</span></span>
 <span id="cb293-2"><a href="exploratory-analysis.html#cb293-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>) <span class="sc">+</span></span>
 <span id="cb293-3"><a href="exploratory-analysis.html#cb293-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(. <span class="sc">~</span> region) <span class="sc">+</span></span>
 <span id="cb293-4"><a href="exploratory-analysis.html#cb293-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="fl">0.5</span>, <span class="at">hjust=</span><span class="dv">1</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-332-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-233-1.png" width="672"></p>
 <p>If we want to think specifically about whether impact is increasing we should filter our data set to include only events for which damages where assessed.</p>
 <p>Let’s create new object with only those observations and then get an overview of distribution of the damage incurred.</p>
 <div class="sourceCode" id="cb294"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb294-1"><a href="exploratory-analysis.html#cb294-1" aria-hidden="true" tabindex="-1"></a>damages <span class="ot">&lt;-</span> disaster <span class="sc">%&gt;%</span></span>
@@ -1156,28 +1156,28 @@ function reset_tooltip(id) {
 <span id="cb294-4"><a href="exploratory-analysis.html#cb294-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb294-5"><a href="exploratory-analysis.html#cb294-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us)) <span class="sc">+</span></span>
 <span id="cb294-6"><a href="exploratory-analysis.html#cb294-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-333-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-234-1.png" width="672"></p>
 <p>That looks like we might have some outliers that are skewing our histogram. We can try looking at e.g. a square root scale, which skews the y-axis in a systematic way<label for="tufte-sn-99" class="margin-toggle sidenote-number">99</label><input type="checkbox" id="tufte-sn-99" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">99</span> This is the type of thing where in order to not be unintentionally mislead you would always want to add “Note, the skewed y-scale”</span>.</p>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="exploratory-analysis.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us)) <span class="sc">+</span></span>
 <span id="cb295-2"><a href="exploratory-analysis.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
 <span id="cb295-3"><a href="exploratory-analysis.html#cb295-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_sqrt</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-334-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-235-1.png" width="672"></p>
 <p>Another way would be to set the binwidths manually, let’s also divide our dollar amounts by 1,000,000 to make the x-axis more legible.</p>
 <div class="sourceCode" id="cb296"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb296-1"><a href="exploratory-analysis.html#cb296-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
 <span id="cb296-2"><a href="exploratory-analysis.html#cb296-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-335-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-236-1.png" width="672"></p>
 <p>Let’s look at variation within different disaster types.</p>
 <div class="sourceCode" id="cb297"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb297-1"><a href="exploratory-analysis.html#cb297-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
 <span id="cb297-2"><a href="exploratory-analysis.html#cb297-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
 <span id="cb297-3"><a href="exploratory-analysis.html#cb297-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(. <span class="sc">~</span> disaster_type)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-336-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-237-1.png" width="672"></p>
 <p>It looks like we might want to limit our assessment to droughts, earthquakes, wildfires, floods, and storms. To make these comparisons if might be more helpful to switch to a boxplot.</p>
 <div class="sourceCode" id="cb298"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb298-1"><a href="exploratory-analysis.html#cb298-1" aria-hidden="true" tabindex="-1"></a>damages <span class="ot">&lt;-</span> damages <span class="sc">%&gt;%</span></span>
 <span id="cb298-2"><a href="exploratory-analysis.html#cb298-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Drought"</span>, <span class="st">"Earthquake"</span>, <span class="st">"Flood"</span>, <span class="st">"Storm"</span>, <span class="st">"Wildfire"</span>))</span>
 <span id="cb298-3"><a href="exploratory-analysis.html#cb298-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb298-4"><a href="exploratory-analysis.html#cb298-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> disaster_type, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
 <span id="cb298-5"><a href="exploratory-analysis.html#cb298-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-337-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-238-1.png" width="672"></p>
 <p>We can also quickly calculate a set of summary stats for comparison</p>
 <div class="sourceCode" id="cb299"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb299-1"><a href="exploratory-analysis.html#cb299-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
 <span id="cb299-2"><a href="exploratory-analysis.html#cb299-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(disaster_type) <span class="sc">%&gt;%</span></span>
@@ -1261,16 +1261,16 @@ function reset_tooltip(id) {
 <p>Let’s take a look</p>
 <div class="sourceCode" id="cb300"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb300-1"><a href="exploratory-analysis.html#cb300-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
 <span id="cb300-2"><a href="exploratory-analysis.html#cb300-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-339-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-240-1.png" width="672"></p>
 <p>We could enhance this figure by e.g. color coding by disaster type.</p>
 <div class="sourceCode" id="cb301"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb301-1"><a href="exploratory-analysis.html#cb301-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">fill =</span> disaster_type)) <span class="sc">+</span></span>
 <span id="cb301-2"><a href="exploratory-analysis.html#cb301-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-340-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-241-1.png" width="672"></p>
 <p>Or we could color code by continent and make individual panels for different disaster types.</p>
 <div class="sourceCode" id="cb302"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb302-1"><a href="exploratory-analysis.html#cb302-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">color =</span> continent)) <span class="sc">+</span></span>
 <span id="cb302-2"><a href="exploratory-analysis.html#cb302-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb302-3"><a href="exploratory-analysis.html#cb302-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(. <span class="sc">~</span> disaster_type)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-341-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-242-1.png" width="672"></p>
 <p>An alternative approach might be assess whether we are seeing changes in scale of each disaster and whether those show the same pattern as damages incurred, because the question we are really after is whether despite frequency and intensity increasing (or at least predicted to increase) that is also resulting in a scaling up of the damages.</p>
 <p>Each of these has a different way of being measure so we will need to look at each disaster type in turn.</p>
 <div class="sourceCode" id="cb303"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb303-1"><a href="exploratory-analysis.html#cb303-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
@@ -1278,28 +1278,28 @@ function reset_tooltip(id) {
 <span id="cb303-3"><a href="exploratory-analysis.html#cb303-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">color =</span> year)) <span class="sc">+</span></span>
 <span id="cb303-4"><a href="exploratory-analysis.html#cb303-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb303-5"><a href="exploratory-analysis.html#cb303-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_c</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-342-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-243-1.png" width="672"></p>
 <div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="exploratory-analysis.html#cb304-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
 <span id="cb304-2"><a href="exploratory-analysis.html#cb304-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">==</span> <span class="st">"Flood"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb304-3"><a href="exploratory-analysis.html#cb304-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">color =</span> year)) <span class="sc">+</span></span>
 <span id="cb304-4"><a href="exploratory-analysis.html#cb304-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb304-5"><a href="exploratory-analysis.html#cb304-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_b</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-343-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-244-1.png" width="672"></p>
 <div class="sourceCode" id="cb305"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb305-1"><a href="exploratory-analysis.html#cb305-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
 <span id="cb305-2"><a href="exploratory-analysis.html#cb305-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">==</span> <span class="st">"Earthquake"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb305-3"><a href="exploratory-analysis.html#cb305-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
 <span id="cb305-4"><a href="exploratory-analysis.html#cb305-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-344-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-245-1.png" width="672"></p>
 <div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="exploratory-analysis.html#cb306-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
 <span id="cb306-2"><a href="exploratory-analysis.html#cb306-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">==</span> <span class="st">"Drought"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb306-3"><a href="exploratory-analysis.html#cb306-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
 <span id="cb306-4"><a href="exploratory-analysis.html#cb306-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-345-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-246-1.png" width="672"></p>
 <div class="sourceCode" id="cb307"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb307-1"><a href="exploratory-analysis.html#cb307-1" aria-hidden="true" tabindex="-1"></a>damages <span class="sc">%&gt;%</span></span>
 <span id="cb307-2"><a href="exploratory-analysis.html#cb307-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(disaster_type <span class="sc">==</span> <span class="st">"Wildfire"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb307-3"><a href="exploratory-analysis.html#cb307-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dis_mag_value, <span class="at">y =</span> total_damages_000_us<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
 <span id="cb307-4"><a href="exploratory-analysis.html#cb307-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-346-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-247-1.png" width="672"></p>
 <p>So far we haven’t really found any interesting patterns that pop out - though keeping mind that “non-patterns” are also noteworthy.</p>
 <p>We do know that we tend to have a pretty tight distribution with damages being pretty similar across events but then we have individual events that are outlier incurring much higher damages. Since are looking at very broad-scale patterns of it might make sense to <strong>transform</strong> our data in order to get a new metric that enables a more helpful comparison. For example, we could calculate total costs incurred per year for each disaster type and the compare how those total values are changing over time.</p>
 <div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="exploratory-analysis.html#cb308-1" aria-hidden="true" tabindex="-1"></a>total_yr <span class="ot">&lt;-</span> disaster <span class="sc">%&gt;%</span></span>
@@ -1309,14 +1309,14 @@ function reset_tooltip(id) {
 <p>Let’s plot that data set.</p>
 <div class="sourceCode" id="cb309"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb309-1"><a href="exploratory-analysis.html#cb309-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(total_yr, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_damages_yr<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">color =</span> disaster_type)) <span class="sc">+</span></span>
 <span id="cb309-2"><a href="exploratory-analysis.html#cb309-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-348-1.png" width="672">
+<p><img src="_main_files/figure-html/unnamed-chunk-249-1.png" width="672">
 Let’s split those into different panels.</p>
 <div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="exploratory-analysis.html#cb310-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(total_yr, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_damages_yr<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
 <span id="cb310-2"><a href="exploratory-analysis.html#cb310-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb310-3"><a href="exploratory-analysis.html#cb310-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>() <span class="sc">+</span></span>
 <span id="cb310-4"><a href="exploratory-analysis.html#cb310-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(. <span class="sc">~</span> disaster_type) <span class="sc">+</span></span>
 <span id="cb310-5"><a href="exploratory-analysis.html#cb310-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-349-1.png" width="576"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-250-1.png" width="576"></p>
 <p>Now we’re getting somewhere … I added all the disaster types back in. We also need to keep in mind that increase in total damages per year can be a combination of more individual events but all have small number of damages incurred or if we have more incidence of high cost events and of course, it could be a combination thereof.</p>
 <p>Let’s create a data set with limited disaster types so we can elucidate patterns more easily, and while we’re at it also calculate frequency of each disaster type per year.</p>
 <div class="sourceCode" id="cb311"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb311-1"><a href="exploratory-analysis.html#cb311-1" aria-hidden="true" tabindex="-1"></a>total_yr <span class="ot">&lt;-</span> disaster <span class="sc">%&gt;%</span></span>
@@ -1329,19 +1329,19 @@ Let’s split those into different panels.</p>
 <div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="exploratory-analysis.html#cb312-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(total_yr, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> total_damages_yr)) <span class="sc">+</span></span>
 <span id="cb312-2"><a href="exploratory-analysis.html#cb312-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb312-3"><a href="exploratory-analysis.html#cb312-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(. <span class="sc">~</span> disaster_type)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-351-1.png" width="672">
+<p><img src="_main_files/figure-html/unnamed-chunk-252-1.png" width="672">
 And let’s quickly check what the relationship is of frequency and total damages.</p>
 <div class="sourceCode" id="cb313"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb313-1"><a href="exploratory-analysis.html#cb313-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(total_yr, <span class="fu">aes</span>(<span class="at">x =</span> events_yr, <span class="at">y =</span> total_damages_yr)) <span class="sc">+</span></span>
 <span id="cb313-2"><a href="exploratory-analysis.html#cb313-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb313-3"><a href="exploratory-analysis.html#cb313-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-352-1.png" width="672">
+<p><img src="_main_files/figure-html/unnamed-chunk-253-1.png" width="672">
 So the number of events definitely appears to play a role in the total damages due to various disaster types per year, though we would need a more format analysis to disentangle those effects.</p>
 <p>Are multi-panel time-series data seems to have the data transformed in a way that will give us an answer to our question - but it’s not really a great visualization if we wanted to share results from our exploratory analysis. Generally, you’ll hit a point where you know have the data transformed in a way that is useful and you could start playing around with optimizing the presentation of that data set.</p>
 <p>So let’s start shifting from our <strong>exploratory</strong> figures to an <strong>explanatory</strong> figure that we might include in a report or an update to our collaborators.</p>
 <p>One of the problems with our multiplot visualization is that the scales for all of the y-axis are the same because we have some outlier that compress the scale. Maybe a traditional scatterplot is not ideal. Because we are interested in changes in magnitude we could try a less traditional plot, like a bubble chart. Instead of plotting the total damages incurred on the y-axis, we can plot our disaster types and then adjust the size of each bubble according to damages incurred.</p>
 <div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="exploratory-analysis.html#cb314-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(total_yr, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> disaster_type, <span class="at">size =</span> total_damages_yr<span class="sc">/</span><span class="dv">1000000</span>)) <span class="sc">+</span></span>
 <span id="cb314-2"><a href="exploratory-analysis.html#cb314-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-353-1.png" width="672">
+<p><img src="_main_files/figure-html/unnamed-chunk-254-1.png" width="672">
 Now we’re cooking!</p>
 <p>Let’s think of some ways that we can refine this plot. We have overlapping points, we also might want additional bin sizes.</p>
 <div class="sourceCode" id="cb315"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb315-1"><a href="exploratory-analysis.html#cb315-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(total_yr, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> disaster_type, <span class="at">size =</span> total_damages_yr<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">fill =</span> disaster_type)) <span class="sc">+</span></span>
@@ -1349,7 +1349,7 @@ Now we’re cooking!</p>
 <span id="cb315-3"><a href="exploratory-analysis.html#cb315-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">25</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">200</span>),</span>
 <span id="cb315-4"><a href="exploratory-analysis.html#cb315-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">name =</span> <span class="st">"damages [USD]"</span>) <span class="sc">+</span></span>
 <span id="cb315-5"><a href="exploratory-analysis.html#cb315-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-354-1.png" width="672">
+<p><img src="_main_files/figure-html/unnamed-chunk-255-1.png" width="672">
 Let’s see if we can fix our legend to something more visible, we might want different colors, and we’ll need to add axis labels, plot titles etc.</p>
 <div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="exploratory-analysis.html#cb316-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(total_yr, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> disaster_type, <span class="at">size =</span> total_damages_yr<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">fill =</span> disaster_type)) <span class="sc">+</span></span>
 <span id="cb316-2"><a href="exploratory-analysis.html#cb316-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
@@ -1364,7 +1364,7 @@ Let’s see if we can fix our legend to something more visible, we might want di
 <span id="cb316-11"><a href="exploratory-analysis.html#cb316-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span> </span>
 <span id="cb316-12"><a href="exploratory-analysis.html#cb316-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb316-13"><a href="exploratory-analysis.html#cb316-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">fill =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="dv">1</span>)))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-355-1.png" width="576"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-256-1.png" width="576"></p>
 <p>A final step can be starting to ask whether patterns are specific to the data set or whether there are true non-random relationships between variables; this is starts to overlap with a more formal analysis now that you have an overview of what patterns you want to explore and will not always be part of your exploratory analysis. Typical questions we might further explore at this point include e.g.</p>
 <ul>
 <li>Is this pattern due to random change or does the independent variable have significant explanatory power?</li>
@@ -1406,7 +1406,7 @@ Let’s see if we can fix our legend to something more visible, we might want di
 <span id="cb317-16"><a href="exploratory-analysis.html#cb317-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span> </span>
 <span id="cb317-17"><a href="exploratory-analysis.html#cb317-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb317-18"><a href="exploratory-analysis.html#cb317-18" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="fu">guide_legend</span>(<span class="at">override.aes =</span> <span class="fu">list</span>(<span class="at">fill =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="dv">1</span>)))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-356-1.png" width="576"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-257-1.png" width="576"></p>
 <p>Additionally we could break down regional patterns, or even pull in additional data of GDP of individual countries to compare costs incurred scaled to the economies of different countries.</p>
 <p>It’s always helpful to take notes as you go to jot down questions and also ideas on what might explain certain patterns you see.</p>
 </div>
@@ -1422,9 +1422,11 @@ Let’s see if we can fix our legend to something more visible, we might want di
 <div class="question-body">
 <p>Formulate three specific questions this data set can answer, consider that you have options like looking at specific geographic subsets, or different categories of natural disasters, you can also consider whether your would expect different types of natural disasters to show similar or different patterns.</p>
 <p>Use headers, plain text, code chunks etc. as appropriate to write a mini report for each question - this should include stating your question as concisely as possible, exploratory figures, final explanatory figure, description &amp; discussion of your results. Comment your code to generate your figures <strong>line by line</strong> with descriptive comments.</p>
-<p>For each question, generate 3 - 5 exploratory figures that can help answer your question, these can include different visualizations of the same variables or different variables. In each case, chose the figure that summarizes your results best and refine your visualization so that it best summarizes your results, this includes a figure title, labeled axis, color choice, how data is encoded etc.</p>
+<p>For each question, generate 3 - 5 exploratory figures that can help answer your question, these can include different visualizations of the same variables or different (combinations of) variables. For each question, chose the figure that summarizes your results best and refine your visualization so that it best summarizes your results, this includes a figure title, labeled axis, color choice, how data is encoded etc.</p>
+<p><em>It’s possible that you have some additional ideas on how you would like to refine your figure but you’re not sure how you can achieve that using your current ggplot skill set. If that is the case, do not get hung up on cosmetics, rather make a note and we will refine figures based on all of our feedback in class.</em></p>
 <p>Write a figure legend that would accompany your figure in a report or paper, write a 3 - 5 sentence description of each figure (i.e. this should communicate the results with sufficient detail that somebody who <em>has not</em> seen the figure still fully understand them) and briefly discuss your results in 3-5 sentences in the context of the question you were asking (i.e. what are your conclusions, are there limitation to your data, alternative explanations, …).</p>
-<p>Chose one question + figure legend, description, and discussion and share it in our <code>#hwassignments</code> channel on slack.</p>
+<p>For each initial question, jot down 2-3 ideas of where you would take your exploratory analysis in the next step.</p>
+<p>Chose one question, your final figure and accompanying legend, description, and discussion and share it in our <code>#hwassignments</code> channel on slack.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -1436,6 +1438,20 @@ Let’s see if we can fix our legend to something more visible, we might want di
 </p>
 <div class="question-body">
 <p>Take a look your classmate’s posts on slack, identify what you like about the visualization along with some <strong>constructive</strong> points for improvement. Getting feedback is really important. Our goal is clear communication; you have spent more time thinking about this question and the visualization so some things might be obvious to you that others might not catch right away, similar a set of colors might look good to you, but somebody else might struggle to tell things apart. The figure might be too busy etc. Sometimes it can also be helpful to have other people help you refine your question.</p>
+<p><em>Make some notes for yourself so we can share in class; you do not need to include this in your HW submission. You should also make some notes on constructive criticism of your own figures of things you may have wanted to improve by weren’t sure how to achieve that.</em></p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:eda-11" class="question">
+<p class="question-begin">
+► Question 16.11
+</p>
+<div class="question-body">
+<p>Our next step will be exploring where we can find data sets.</p>
+<p>Your final project can be summed up as “find a data set - do something with it.” Chances of finding things are always a lot higher when you have at least a rough idea of what you are looking for. In preparation for formulating a mini-proposal for your final project, identify a broad area of interest for you and brainstorm 2-3 ideas of more specific questions you’re interested in.</p>
+<p>Don’t worry, this is not final, just a starting point. As we take a look at databases and data repositories you might something in a different area you are interested in exploring.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -1450,7 +1466,7 @@ Let’s see if we can fix our legend to something more visible, we might want di
 <a href="references.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-06
+2021-10-07
  using 
 R version 4.0.2 (2020-06-22)
 </p>
