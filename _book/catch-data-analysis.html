@@ -259,7 +259,7 @@ Produce a table that contains the number of times a species was caught at each s
 </div>
 <p>Your table should look something like this.<label for="tufte-sn-39" class="margin-toggle sidenote-number">39</label><input type="checkbox" id="tufte-sn-39" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">39</span> Pro tip: you can use <code>replace(is.na(.), 0)</code> to replace <code>NA</code> values in all columns with a <code>0</code>.</span></p>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-187">Table 8.1: </span>Number of individuals per caught per site and overall across all sites and years.</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-215">Table 8.1: </span>Number of individuals per caught per site and overall across all sites and years.</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="left">Species</th>
@@ -486,7 +486,7 @@ Use this data set to create a table with the number of individuals per life hist
 </div>
 </div>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-192">Table 8.2: </span>Number of individuals per species caught at each site by life history stage.</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-220">Table 8.2: </span>Number of individuals per species caught at each site by life history stage.</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="left">Species</th>
@@ -961,7 +961,7 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 <span id="cb185-2"><a href="catch-data-analysis.html#cb185-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CPUE =</span> n<span class="sc">/</span>Hook_Hours)</span></code></pre></div>
 <p>And from that we can easily calculate mean and standard deviation CPUE of catching sharks by site.</p>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-200">Table 8.3: </span>mean +/- sd CPUE</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-228">Table 8.3: </span>mean +/- sd CPUE</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="left">Site</th>
@@ -1035,7 +1035,7 @@ Choose one species and calculate the CPUE per set. For convenience convert CPUE 
 <div id="sol-body-11" class="solution-body" style="display: none;">
 <p>This is what that could look like for a single species.</p>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-203">Table 8.4: </span>Catch per unit effort (1000 hook hours) for each site.</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-231">Table 8.4: </span>Catch per unit effort (1000 hook hours) for each site.</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="right">Aransas_Bay</th>
@@ -1098,7 +1098,7 @@ Choose one species and calculate the CPUE per set. For convenience convert CPUE 
 <span id="cb192-5"><a href="catch-data-analysis.html#cb192-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(results) <span class="sc">%&gt;%</span></span>
 <span id="cb192-6"><a href="catch-data-analysis.html#cb192-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(Species)</span></code></pre></div>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-207">Table 8.5: </span>Catch per unit effort (per 1000 hook hours) for each species by site.</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-235">Table 8.5: </span>Catch per unit effort (per 1000 hook hours) for each species by site.</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="left">Species</th>

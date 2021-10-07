@@ -59,7 +59,7 @@ Now that you have some experience using `Rmarkdown` files to document your work 
 
 You can also use the setup chunk to set global settings, i.e. set certain things once for the entire document. 
 
-When you opened a new `Rmarkdown` file, you should have seen a code chunk in the very top that has been named `setup`^[you can name any code chunk by inserting a name right after indicating `r` as your engine. This can be helpful because you can use the navigation menu to navigate directly to a code chunk.`]); you will also see that it has the additional argument `include=FALSE` between the curly brackets. This means that when you knit your document, that code chunk will be run, but the code itself will not be visible in the knitted `html` document. 
+When you opened a new `Rmarkdown` file, you should have seen a code chunk in the very top that has been named `setup`^[you can name any code chunk by inserting a name right after indicating `r` as your engine. This can be helpful because you can use the navigation menu to navigate directly to a code chunk.]; you will also see that it has the additional argument `include=FALSE` between the curly brackets. This means that when you knit your document, that code chunk will be run, but the code itself will not be visible in the knitted `html` document. 
 
 In that code chunk you should see `knitr::opts_chunk$set(echo = TRUE)` - this is already setting a global format for all codes which is that when you knit the document it will print (echo) the code chunk itself and not just the output. You can add additional arguments e.g. `warning = FALSE`, `error = FALSE`, `message = FALSE` will turn off the messages, warnings and errors being printed out when knitting the document^[You will still see them in the console so you can still troubleshoot a needed, it just means you don't have it included in the outcome fo your document].
 
@@ -308,6 +308,7 @@ ggplot(disaster, aes(x = disaster_subgroup)) +
   geom_bar(stat = "count")
 
 ```
+
 and we could do the same for our disaster types.
 
 ```{r}
@@ -363,6 +364,7 @@ ggplot(damages, aes(x = total_damages_000_us)) +
   scale_y_sqrt()
 
 ```
+
 Another way would be to set the binwidths manually, let's also divide our dollar amounts by 1,000,000 to make the x-axis more legible.
 
 ```{r}
@@ -381,6 +383,7 @@ ggplot(damages, aes(x = total_damages_000_us/1000000)) +
   facet_wrap(. ~ disaster_type)
 
 ```
+
 It looks like we might want to limit our assessment to droughts, earthquakes, wildfires, floods, and storms. To make these comparisons if might be more helpful to switch to a boxplot.
 
 ```{r}
@@ -393,6 +396,7 @@ ggplot(damages, aes(x = disaster_type, y = total_damages_000_us/1000000)) +
   
 
 ```
+
 We can also quickly calculate a set of summary stats for comparison
 
 ```{r}
@@ -436,6 +440,7 @@ ggplot(damages, aes(x = year, y = total_damages_000_us/1000000)) +
   geom_point()
 
 ```
+
 We could enhance this figure by e.g. color coding by disaster type.
 
 ```{r}
@@ -444,6 +449,7 @@ ggplot(damages, aes(x = year, y = total_damages_000_us/1000000, fill = disaster_
   geom_point(shape = 21)
 
 ```
+
 Or we could color code by continent and make individual panels for different disaster types.
 
 ```{r}
@@ -453,6 +459,7 @@ ggplot(damages, aes(x = year, y = total_damages_000_us/1000000, color = continen
   facet_wrap(. ~ disaster_type)
 
 ```
+
 An alternative approach might be assess whether we are seeing changes in scale of each disaster and whether those show the same pattern as damages incurred, because the question we are really after is whether despite frequency and intensity increasing (or at least predicted to increase) that is also resulting in a scaling up of the damages.
 
 Each of these has a different way of being measure so we will need to look at each disaster type in turn.
@@ -466,6 +473,7 @@ damages %>%
   scale_color_viridis_c()
 
 ```
+
 ```{r}
 
 damages %>%
@@ -475,6 +483,7 @@ damages %>%
   scale_color_viridis_b()
 
 ```
+
 ```{r}
 
 damages %>%
@@ -483,6 +492,7 @@ damages %>%
   geom_point()
 
 ```
+
 ```{r}
 
 damages %>%
@@ -491,6 +501,7 @@ damages %>%
   geom_point()
 
 ```
+
 ```{r}
 
 damages %>%
@@ -500,7 +511,120 @@ damages %>%
 
 ```
 
-The final step is starting to ask whether patterns are specific to the data set or whether there are true non-random relationships between variables. Typical questions we might further explore at this point include e.g.
+So far we haven't really found any interesting patterns that pop out - though keeping mind that "non-patterns" are also noteworthy.
+
+We do know that we tend to have a pretty tight distribution with damages being pretty similar across events but then we have individual events that are outlier incurring much higher damages. Since are looking at very broad-scale patterns of it might make sense to **transform** our data in order to get a new metric that enables a more helpful comparison. For example, we could calculate total costs incurred per year for each disaster type and the compare how those total values are changing over time.
+
+```{r}
+
+total_yr <- disaster %>%
+  filter(!is.na(total_damages_000_us)) %>%
+  group_by(year,disaster_type) %>%
+  summarize(total_damages_yr = sum(total_damages_000_us))
+
+```
+Let's plot that data set.
+
+```{r}
+
+ggplot(total_yr, aes(x = year, y = total_damages_yr/1000000, color = disaster_type)) +
+  geom_point()
+
+```
+Let's split those into different panels.
+
+```{r fig.width=6, fig.height=6}
+
+ggplot(total_yr, aes(x = year, y = total_damages_yr/1000000)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(. ~ disaster_type) +
+  theme(legend.position = "bottom")
+
+```
+
+Now we're getting somewhere ... I added all the disaster types back in. We also need to keep in mind that increase in total damages per year can be a combination of more individual events but all have small number of damages incurred or if we have more incidence of high cost events and of course, it could be a combination thereof.
+
+Let's create a data set with limited disaster types so we can elucidate patterns more easily, and while we're at it also calculate frequency of each disaster type per year.
+
+```{r}
+
+total_yr <- disaster %>%
+  filter(!is.na(total_damages_000_us) & disaster_type %in% c("Drought", "Earthquake", "Extreme Temperature",
+                                                               "Flood", "Storm", "Wildfire")) %>%
+  group_by(year,disaster_type) %>%
+  summarize(total_damages_yr = sum(total_damages_000_us),
+            events_yr = n())
+
+```
+
+Let's plot this revised data set.
+
+```{r}
+
+ggplot(total_yr, aes(x = year, y = total_damages_yr)) +
+  geom_point() +
+  facet_wrap(. ~ disaster_type)
+
+```
+And let's quickly check what the relationship is of frequency and total damages.
+
+```{r}
+
+ggplot(total_yr, aes(x = events_yr, y = total_damages_yr)) +
+  geom_point() +
+  geom_smooth()
+
+```
+So the number of events definitely appears to play a role in the total damages due to various disaster types per year, though we would need a more format analysis to disentangle those effects.
+
+Are multi-panel time-series data seems to have the data transformed in a way that will give us an answer to our question - but it's not really a great visualization if we wanted to share results from our exploratory analysis. Generally, you'll hit a point where you know have the data transformed in a way that is useful and you could start playing around with optimizing the presentation of that data set.
+
+So let's start shifting from our **exploratory** figures to an **explanatory** figure that we might include in a report or an update to our collaborators.
+
+One of the problems with our multiplot visualization is that the scales for all of the y-axis are the same because we have some outlier that compress the scale. Maybe a traditional scatterplot is not ideal. Because we are interested in changes in magnitude we could try a less traditional plot, like a bubble chart. Instead of plotting the total damages incurred on the y-axis, we can plot our disaster types and then adjust the size of each bubble according to damages incurred.
+
+```{r}
+
+ggplot(total_yr, aes(x = year, y = disaster_type, size = total_damages_yr/1000000)) +
+  geom_point()
+
+```
+Now we're cooking!
+
+Let's think of some ways that we can refine this plot. We have overlapping points, we also might want additional bin sizes.
+
+```{r}
+
+ggplot(total_yr, aes(x = year, y = disaster_type, size = total_damages_yr/1000000, fill = disaster_type)) +
+  geom_point(shape = 21, alpha = .5) +
+  scale_size_continuous(breaks = c(10, 25, 50, 100, 200),
+                        name = "damages [USD]") +
+  theme(legend.position = "bottom")
+
+```
+Let's see if we can fix our legend to something more visible, we might want different colors, and we'll need to add axis labels, plot titles etc.
+
+```{r fig.width=6, fig.height=5}
+
+ggplot(total_yr, aes(x = year, y = disaster_type, size = total_damages_yr/1000000, fill = disaster_type)) +
+  geom_point(shape = 21, alpha = .5) +
+  scale_fill_viridis_d() +
+  scale_size_continuous(breaks = c(5, 10, 25, 50, 100, 200),
+                        name = "damages [USD]") +
+  labs(x = "total damages incurred [USD]", y = "disaster type",
+       title = "Economic costs incurred by natural disasters (1900 - 2020)",
+       subtitle = "The size of the bubble represents the total damages incurred by all events in a given category.",
+       caption = "data: EMDAT/International Disaster Database") +
+  theme_standard +
+  theme(legend.position = "bottom") + 
+  guides(fill = FALSE,
+         size = guide_legend(override.aes = list(fill = "black", alpha = 1)))
+
+
+```
+
+A final step can be starting to ask whether patterns are specific to the data set or whether there are true non-random relationships between variables; this is starts to overlap with a more formal analysis now that you have an overview of what patterns you want to explore and will not always be part of your exploratory analysis. Typical questions we might further explore at this point include e.g.
 
 * Is this pattern due to random change or does the independent variable have significant explanatory power?
 * How can the relationship implied by the pattern be described (e.g. linear regression)?
@@ -509,8 +633,6 @@ The final step is starting to ask whether patterns are specific to the data set 
 * Does this relationship hold across subgroups of the relationship itself?
 
 Fitting trend lines helps elucidate patterns (especially in time series). This is frequently where exploratory analysis transitions into a more formal analysis that involves statistical tests and fitting models. Keep in mind that we want to have a good grasp on whether our analysis is descriptive, inferential or causal/mechanistic in nature. Exploratory analysis is "quick and dirty", you are mainly focused on summarizing the data and highlighting broad-scale patterns that emerge. They are useful for assessing the quality of your data, eye-balling if patterns are what you expect (was your hypothesis correct(ish)), and getting and idea of what the next steps in a more formal analysis should be.
-
-We could for example consider that we know have much better records in terms of when disasters occur and what the damages are and we may need to refine our analysis by limiting our data to a shorter time span. We might also want to determine if we see the same patterns for loss of life. Additionally, while we have played around with regional differences, that is also something to explore in light of expectations of e.g. better early warning systems and infrastructure in developed countries.
 
 ## Iterate your exploration
 
@@ -522,7 +644,36 @@ It is called an exploratory analysis for a reason, because it is just the beginn
 * Do you need additional data to refine your answer?
 * Do you have the right question or do you need to refine your question?
 
-Exploratory Analysis frequently is more about hypothesis generating, rather than hypothesis testing. So you data exploration can be an important step to defining the precise (set of) question(s) you want to explore. Not infrequetly, the exploration of an intial question leads you to generating additional (perhaps more interesting) questions.
+Exploratory Analysis frequently is more about hypothesis generating, rather than hypothesis testing. So you data exploration can be an important step to defining the precise (set of) question(s) you want to explore. Not infrequently, the exploration of an initial question leads you to generating additional (perhaps more interesting) questions.
+
+So for example, one of the first questions we might ask is whether the pattern we see with higher damages being incurred holds if we compare this to loss of life.
+
+```{r fig.width=6, fig.height=5}
+
+deaths <- disaster %>%
+  filter(!is.na(total_deaths)) %>%
+  group_by(year, disaster_type) %>%
+  summarize(total_deaths_yr = sum(total_deaths)) 
+
+ggplot(deaths, aes(x = year, y = disaster_type, size = total_deaths_yr/100000, fill = disaster_type)) +
+  geom_point(shape = 21, alpha = .5) +
+  scale_fill_viridis_d() +
+  scale_size_continuous(breaks = c(.5, 1, 5, 10, 15, 30),
+                        name = "100k deaths") +
+  labs(x = "total deaths incurred", y = "disaster type",
+       title = "Total deaths due to natural disasters (1900 - 2020)",
+       subtitle = "The size of the bubble represents the total loss of life incurred by all events per year.",
+       caption = "data: EMDAT/International Disaster Database") +
+  theme_standard +
+  theme(legend.position = "bottom") + 
+  guides(fill = FALSE,
+         size = guide_legend(override.aes = list(fill = "black", alpha = 1)))
+
+```
+
+Additionally we could break down regional patterns, or even pull in additional data of GDP of individual countries to compare costs incurred scaled to the economies of different countries.
+
+It's always helpful to take notes as you go to jot down questions and also ideas on what might explain certain patterns you see.
 
 
 ## Now you!
