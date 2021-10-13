@@ -51,7 +51,7 @@ To get some practice setting up your own project files, you might notice that th
 
 Once you have created and opened the project you should see the project name in the top right corner per usual^[Pro tip: If you run into issues where an Rmarkdown won't render or file paths aren't working (especially if things were working previously) one of your first steps should be to double check that the correct `Rproj` is loaded.].
 
-Open a new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Visualization/Climate Change project directory. That's right - training wheels are off ... you will need to add all of your own headers, plain text etc. Set up the `YAML` header so that you are the author and when knitted the date will reflect the date of the creation of the document.
+Open a new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Exploratory Analysis project directory. That's right - training wheels are off ... you will need to add all of your own headers, plain text etc. Set up the `YAML` header so that you are the author and when knitted the date will reflect the date of the creation of the document.
 
 When you create a new `Rmarkdown` file, it loads a template, i.e. it shows you standard formatting options, it also means that you already have content so e.g. if you wanted to test out that you have your `YAML` header set up correctly or you are testing out a new theme, you could just knit the file and see what happens. Of course, since you are going to add your own content you should delete that automatically inserted content.
 

@@ -43,6 +43,7 @@ fig:unnamed-chunk-212
 fig:unnamed-chunk-213
 fig:unnamed-chunk-215
 tab:unnamed-chunk-227
+fig:unnamed-chunk-261
 what-even-is-data-science
 defining-data-and-science
 what-even-is-data-science-1
@@ -155,3 +156,8 @@ chose-a-question-to-explore
 plot-the-data
 iterate-your-exploration
 now-you
+making-good-figures
+best-practices-for-effective-figures
+best-practices-for-communicating-results
+practice-the-best-practices
+spatial-visualization

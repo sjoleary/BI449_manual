@@ -1,0 +1,293 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      cache.extra = packageVersion('msmbstyle'),
+                      warning = FALSE,
+                      message = FALSE)
+
+
+options(htmltools.dir.version = FALSE)
+
+source("scr/ggplot.R")
+
+```
+
+# Making good figures
+
+**Learning Objectives**
+
+After completing this tutorial you should be able to
+
+* describe detailed characteristics of a figure that is clear, accessible, transparent, and honest.
+* describe characteristics of an effective figure legend.
+* describe characteristics of an effective description of results.
+* describe characteristics of an effective interpretation/discussion of central results.
+
+
+Open a new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Exploratory Analysis project directory. That's right - training wheels are off ... you will need to add all of your own headers, plain text etc. Set up the `YAML` header so that you are the author and when knitted the date will reflect the date of the creation of the document and create settings for your document in the setup chunk.
+
+Remember, you should always check your `html` document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. 
+
+Let's load our packages so we can get started. 
+
+```{r}
+
+# load libraries
+library(tidyverse)
+library(janitor)
+library(skimr)
+library(patchwork)
+library(knitr)
+
+# turn of sci notation
+options(scipen=999)
+
+```
+
+
+## Best practices for effective figures
+
+Effective figures are used to tell a story. You can think of your exploratory analysis as the first step in determining what story the data tells (a fact finding mission if you will). Once you have determined what your specific question hypothesis is, the next step is narrowing down what analysis you will perform. Then you will identify your central results and interpret them in the context of your question. Your next step is communicating your results. At this point you need to identify which figures serve to communicate individual, specific points in the overall narrative.
+
+In our example, we have refined our question to "Have impacts due to natural disasters increased at a global scale?". To answer this question, we are calculating the total annual loss of life and annual total economic damages incurred for each disaster type.
+
+```{r}
+
+disaster <- read_delim("data/nat-disasters_emdat-query-2021-10-05.txt", delim = "\t", skip = 6) %>%
+  clean_names()
+
+total_yr <- disaster %>%
+  filter(!is.na(total_damages_000_us)) %>%
+  group_by(year,disaster_type) %>%
+  summarize(total_damages_yr = sum(total_damages_000_us))
+
+deaths <- disaster %>%
+  filter(!is.na(total_deaths)) %>%
+  group_by(year, disaster_type) %>%
+  summarize(total_deaths_yr = sum(total_deaths)) 
+
+```
+
+Then we create bubble plot showing the total loss of life and total damages incurred for each disaster type in each year.
+
+```{r fig.width=7, fig.height=11, fig.cap="Impacts due to natural disasters (1900 - 2020). Impacts were calculated as total annual economic costs (top) and total annual loss of life (bottom) due to each disaster type per year. The size of the bubble is scaled to cost [$] and total deaths [100k]. Data was obtained from EMDAT/International Disaster Database", echo=FALSE}
+
+p1 <- ggplot(total_yr, aes(x = year, y = disaster_type, size = total_damages_yr/1000000, fill = disaster_type)) +
+  geom_point(shape = 21, alpha = .5) +
+  scale_fill_viridis_d() +
+  scale_size_continuous(breaks = c(5, 10, 25, 50, 100, 200),
+                        name = "damages [USD]") +
+  labs(x = "total damages incurred [USD]", y = " ") +
+  theme_standard +
+  theme(legend.position = "bottom") + 
+  guides(fill = FALSE,
+         size = guide_legend(override.aes = list(fill = "black", alpha = 1)))
+
+p2 <- ggplot(deaths, aes(x = year, y = disaster_type, size = total_deaths_yr/100000, fill = disaster_type)) +
+  geom_point(shape = 21, alpha = .5) +
+  scale_fill_viridis_d() +
+  scale_size_continuous(breaks = c(.5, 1, 5, 10, 15, 30),
+                        name = "100k deaths") +
+  labs(x = "total deaths incurred", y = " ",
+       title = "Total deaths due to natural disasters (1900 - 2020)") +
+  theme_standard +
+  theme(legend.position = "bottom") + 
+  guides(fill = FALSE,
+         size = guide_legend(override.aes = list(fill = "black", alpha = 1)))
+
+p1 / p2
+
+```
+
+
+`r msmbstyle::question_begin(label = "ques:eff-1")`
+
+Summarize the overall narrative for the "story" we want to communicate based on our central question and state the specific point that each of these figures makes.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label = "ques:eff-2")`
+
+Data visualizations should be clear, accessible, transparent, and honest. For each of these categories list at least three criteria/guidelines that detail how data visualizations fulfill this category. Assess whether our figure(s) above fulfill these criteria and list at least three things that could be improved based this set of criteria.
+
+`r msmbstyle::question_end()`
+
+
+## Best practices for communicating results
+
+Visualizations are a key component to effectively communicating your results. A good rule of thumb is that your written description of your results should allow the reader to understand what you are trying to communicate even without visualizations and that your title & legend should be descriptive enough that even without the written results (some would even say methods) the reader would understand the results as well.
+
+`r msmbstyle::question_begin(label = "ques:eff-3")`
+
+Give a description of what the components of an effective figure title & legend should look like and assess whether the figure legend above fulfills these criteria. List points for improvement.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label = "ques:eff-4")`
+
+Give a description of what an effective description of results should look like and write a description for the figure(s) above.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label = "ques:eff-5")`
+
+Give a description of the components of an effective discussion and write a brief discussion of the results of our example above.
+
+`r msmbstyle::question_end()`
+
+
+## Practice the best practices!
+
+`r msmbstyle::question_begin(label = "ques:eff-6")`
+
+Use one of the questions you explored for last week's assignments and complete the following tasks:
+
+* State the overall broad question you are asking
+* Summarize your "methods" in 2-3 sentences: How are you transforming/analyzing the data to specifically answer your question?
+* Summarize the narrative of the story you want to communicate with this analysis and specify how the visualization serves the overall narrative.
+* Generate your figure. Use bullet points to assess whether your visualization is clear, accessible, transparent, and honest.
+* Write an effective title/legend for your figure.
+* Write an effective description of your results.
+* Write an effective interpretation discussion/interpretation of your results.
+
+`r msmbstyle::question_end()`
+
+
+## Spatial visualization
+
+You have probably noticed that for some of the geographic comparisons were are making the most effective way to communicate those results would be to create a map with countries color coded according to the metric we are assessing.
+
+Let's learn a straightforward method for visualization of spatial data.
+
+Install these packages as needed:
+
+```{r}
+
+library(rnaturalearth)
+library(rnaturalearthdata)
+
+library(sf)
+
+```
+
+
+The first thing we need is is some maps! The package `rnaturalearth` provides a map of countries of the entire world. Let's load a map as an `sf` class.
+
+```{r}
+
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+class(world)
+
+```
+
+We see that world is both a `data.frame` and a class `sf`(simple features) which is a class of R object designed speficically for plotting maps.
+
+Let's take a look at the column names
+
+```{r}
+
+colnames(world)
+
+```
+
+You can see that it contains quote a bit of information including some data about each country. The column `geometry` has the information about the country "shapes" (multipolygons) we want to plot.
+
+```{r}
+
+world %>%
+  select(geometry) %>%
+  head()
+
+```
+
+We can plot the map using `ggplot::geom_sf()` and the same syntax we generally use. We do not need to specify x or y coordinates as ggplot recognizes that we have passed a object of the class `sf` and that it contains a column called `geometry`.
+
+```{r}
+
+ggplot(data = world) +
+  geom_sf()
+
+```
+
+We can manipulate the `geom_sf` layer using the same arguments we have used for other plot types. For example, let's make all the countries orange.
+
+```{r}
+
+ggplot(data = world) + 
+    geom_sf(color = "black", fill = "orange") 
+
+```
+
+Or, we could color code them according to the column `pop_est` in the `world` data.frame which contains population estimates for each country.
+
+```{r}
+
+ggplot(data = world) +
+    geom_sf(aes(fill = pop_est)) +
+    scale_fill_viridis_c(trans = "sqrt") +
+  coord_sf() 
+
+```
+
+Let's say we want to create a map that compares the number of droughts that occurred in each country from 2010 - 2020. First we would need to transform our raw data.
+
+```{r}
+
+droughts <- disaster %>%
+  filter(year >= 2010 & year <= 2020) %>%
+  group_by(iso) %>%
+  summarize(droughts_total = n())
+
+```
+
+Now we can use `left_join()` to join the `world` and `drought` data.frames. Note that I used the column `iso` to calculate the number of droughts, this is equivalent to the column `iso_a3` in the `world` database. These are internationally recognized codes that designate every country and most independent areas with either a two or in this case three-letter abbreviations.
+
+```{r}
+
+world <- world %>%
+  left_join(droughts, by = c("iso_a3" = "iso"))
+
+head(world)
+
+```
+
+Now our `world` data.frame has a column specifying the number of droughts that occurred.
+
+```{r}
+
+ggplot(data = world) +
+    geom_sf(aes(fill = droughts_total)) +
+    scale_fill_viridis_c(trans = "sqrt") +
+    coord_sf(expand = FALSE) +
+  labs(x = "longitude", y = "latitude") +
+  theme_bw() +
+  theme(legend.position = "bottom")
+
+```
+
