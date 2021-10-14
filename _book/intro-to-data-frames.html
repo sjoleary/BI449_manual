@@ -246,9 +246,9 @@ Use ?read_delim to pull up the help page for the function we will using and expl
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-4" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-4', 'sol-start-4')"></span>
+► Solution<span id="sol-start-42" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-42', 'sol-start-42')"></span>
 </p>
-<div id="sol-body-4" class="solution-body" style="display: none;">
+<div id="sol-body-42" class="solution-body" style="display: none;">
 <p><code>read_delim</code> has two required arguments, the <strong>path</strong> (<code>data/longline_catchdata.csv</code>) which tells <code>R</code> where your file is located and the <strong>delimiter</strong> in this case a comma (<code>,</code>) tells <code>R</code> how columns are separated from each other.</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="intro-to-data-frames.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read catch data</span></span>
 <span id="cb85-2"><a href="intro-to-data-frames.html#cb85-2" aria-hidden="true" tabindex="-1"></a>catch <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/longline_catchdata.csv"</span>, <span class="at">delim =</span> <span class="st">","</span>)</span>
@@ -277,9 +277,9 @@ Based on how you read in the csv file how would you read in the tab-delimited ve
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-5" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-5', 'sol-start-5')"></span>
+► Solution<span id="sol-start-43" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-43', 'sol-start-43')"></span>
 </p>
-<div id="sol-body-5" class="solution-body" style="display: none;">
+<div id="sol-body-43" class="solution-body" style="display: none;">
 <p>We need to change delimiter - <code>\t</code> is “computer” for tab.</p>
 <div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="intro-to-data-frames.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read catch data</span></span>
 <span id="cb86-2"><a href="intro-to-data-frames.html#cb86-2" aria-hidden="true" tabindex="-1"></a>catch <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/longline_catchdata.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
@@ -399,9 +399,9 @@ How would you extract the entire 5th column?
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-6" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-6', 'sol-start-6')"></span>
+► Solution<span id="sol-start-44" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-44', 'sol-start-44')"></span>
 </p>
-<div id="sol-body-6" class="solution-body" style="display: none;">
+<div id="sol-body-44" class="solution-body" style="display: none;">
 <p>Here are two options using indices:</p>
 <div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="intro-to-data-frames.html#cb99-1" aria-hidden="true" tabindex="-1"></a>catch[, <span class="dv">1</span>]</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 1

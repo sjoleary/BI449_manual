@@ -198,7 +198,7 @@ Let's try to get an idea of when these different events occur throughout the yea
 
 Since we are interested in distributions, you would want to look at histograms or boxplots - this is one way your figure could look like:
 
-```{r figheight=15, fig.width=7, fig.cap="Distribution of life history events throughout the year for Minnesota woody plants. echo=FALSE"}
+```{r fig.height=10, fig.width=7, fig.cap="Distribution of life history events throughout the year for Minnesota woody plants", echo=FALSE}
 
 ggplot(woody, aes(x = day_of_year, y = event)) +
   geom_boxplot(fill = "darkorange") +
@@ -322,7 +322,7 @@ Give your visualization a title and legend and describe your results. Be specifi
 
 This is what your figure should look like.
 
-```{r fig.cap="Change in flowering data for American Elm in Ramsey Co., MN  (1941 - 1991). Fill of individual points indicates the month of the flowering date, the linear trendline is indicated in red.",echo=FALSE}
+```{r fig.cap="Change in flowering data for American Elm in Ramsey Co., MN  (1941 - 1991). Fill of individual points indicates the month of the flowering date, the linear trendline is indicated in red.", echo=FALSE}
 
 elm <- elm %>%
   filter(county == "RAMSEY")
