@@ -79,7 +79,7 @@ options(scipen=999)
 
 `r msmbstyle::question_begin(label = "ques:phen-1")`
 
-Briefly define the terms phenology.
+Briefly define the terms phenology, phenophases, life history and life history traits and argue how you think climate change might impact these.
 
 `r msmbstyle::question_end()`
 
@@ -89,11 +89,13 @@ We are going to explore a data set that contains information on the phenology of
 
 Go to the Minnesota Phenological Network's website and explore the short introductory and history statements in the "Home" and "About" sections. Check out the "Meet the species" page that presents Minnesota's seven superstar species. Get to know them in the "Read more" sections. 
 
-Give a brief definition of phenophases. Pick two of the seven superstars and list the specific phenophases that associated with the species.
+Pick two of the seven superstars and list the specific phenophases that associated with the species.
 
 `r msmbstyle::question_end()`
 
 ## Explore the data set
+
+We are going to use data from the Minnesota Phenology Network to explore how climate change might be impacting the phenology of species.
 
 ```{r}
 
@@ -196,7 +198,7 @@ Let's try to get an idea of when these different events occur throughout the yea
 
 Since we are interested in distributions, you would want to look at histograms or boxplots - this is one way your figure could look like:
 
-```{r figheight=10, fig.width=7, fig.cap="Distribution of life history events throughout the year for Minnesota woody plants. echo=FALSE"}
+```{r figheight=15, fig.width=7, fig.cap="Distribution of life history events throughout the year for Minnesota woody plants. echo=FALSE"}
 
 ggplot(woody, aes(x = day_of_year, y = event)) +
   geom_boxplot(fill = "darkorange") +
