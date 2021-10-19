@@ -49,7 +49,7 @@ Download the [05_Phenology](https://drive.google.com/drive/folders/19GD1COEgPPfj
 
 To get some practice setting up your own project files, you might notice that this one does not yet have an `Rproj` file or any `Rmarkdown` files in it. So the first thing we want to do is create a new R project. To do this open `Rstudio` then use the dropdown menu in the top right corner to select `New Project` and from there `New Project in an existing directory`. From there, navigate to and select the project folder create an R project.
 
-Open a new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Exploratory Analysis project directory. That's right - training wheels are off ... you will need to add all of your own headers, plain text etc. Set up the `YAML` header so that you are the author and when knitted the date will reflect the date of the creation of the document.
+Open a new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Phenology project directory. That's right - training wheels are off ... you will need to add all of your own headers, plain text etc. Set up the `YAML` header so that you are the author and when knitted the date will reflect the date of the creation of the document.
 
 Recall that you can use the initial setup chunk to set some of your preferred formatting by determining global settings for the document. One helpful setting we discovered is to turn off warnings, errors, and messages being printed out in the knitted html document.
 
@@ -314,7 +314,7 @@ Filter your data so that it only contains entries for Ramsey Country.
 
 Plot your data to determine if your prediction was correct; add a simple linear trend line to your plot to help identify the overall pattern.
 
-Give your visualization a title and legend and describe your results. Be specific, i.e. consider how much the flowering data has shifted. For your interpretation/discussion identify at least two possible mechanisms that could be causing this pattern.
+Make sure to give your visualization a title and add a legend.
 
 `r msmbstyle::question_end()`
 
@@ -338,6 +338,39 @@ ggplot(elm, aes(x = year, y = day_of_year, fill = month)) +
 ```
 
 `r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:phen-15")`
+
+Determine the rate of change (remember to include units!).
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+Hint: You will need to determine the equation of your linear trend line to do this.
+
+```{r echo=FALSE}
+
+# fit linear regression
+fit <- lm(day_of_year ~ year, data = elm)
+
+# view summary of results
+summary(fit)
+
+```
+
+Don't get too hung up on whether the result is significant or not. The rate is still the rate and you will want to include that in your results.
+
+`r msmbstyle::solution_end()`
+
+
+`r msmbstyle::question_begin(label = "ques:phen-15")`
+
+Describe your overall results. Remember, results are more than just figures! Practice being specific, i.e. consider how much the flowering data has shifted and at what rate. 
+
+For your interpretation/discussion identify at least two possible mechanisms that could be causing this pattern^[You likely notices that you have a low R2 value and the linear regression is not significant. What does that mean in this context? How can you apply that to generating possible mechanisms for the pattern?].
+
+`r msmbstyle::question_end()`
 
 
 ## Determine temperature change in Ramsey County
@@ -395,8 +428,220 @@ ggplot(temp, aes(x = year, y = temperature)) +
 
 ```
 
-Bonus question: Consider why it might be appropriate to use a line graph for the temperature data but not for the flowering date plot.
+I used a linegraph, which is an option for visualizing change over time as we are doing here in this time series. Using a line graph instead of a scatterplot is appropriate when plotting a categorical data on the x axis^[years are numbers ... but they are not numeric! Rather, they are ordered categorical variables]. That means that we have a trendline and a line connecting individual points. This can be helpful because the linear trendline shows us the overall trend of the data while the line connecting the individual points helps us visualize local change from point to point.
+
+For categorical data we can also use barplots:
+
+```{r fig.cap="Change in mean March temperature [Fahrenheit] for 1941 - 1991 (orange bars).", echo=FALSE}
+
+ggplot(temp, aes(x = year, y = temperature)) +
+  geom_bar(stat = "identity", color = "black", fill = "darkorange") +
+  labs(x = "year", y = "flowering date") +
+  theme_standard +
+  theme(legend.position = "bottom")
+
+```
+
+Why do you think it is better to use a scatter plot or line plot compared to the barplot?
 
 `r msmbstyle::solution_end()`
 
+`r msmbstyle::question_begin(label = "ques:phen-17")`
 
+For a good presentation of your results, e.g. through a presentation or poster, you would likely want to produce a figure where you have change in flowering date and change in mean temperature for March side by side. Practice making that type of figure here:
+
+`r msmbstyle::question_end()`
+
+
+## Analyze relationship of flowering date and temperature
+
+`r msmbstyle::question_begin(label = "ques:phen-17")`
+
+Especially when we look at the two figures side by side the fact we see that there is a trend for earlier flowering dates for American elm and warmer March temperatures. Describe the analysis you want to perform to determine whether there is a significant relationship between the mean temperature in March and the flowering date for the American Elm in Ramsey Co.. Include what your dependent and independent variables are^[Your are practicing writing up your methods. A good methods section includes not just what you want to do but why you are doing it/what that analysis is meant to achieve. A good way to start for this specific example would be e.g. "To determine whether {variable} depends on {variable}, we will {analysis}].
+
+Create a plot to visualize the relationship but hold off on the analysis component until the next step.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+Hint: To be able to plot temperature vs flowering date those two variables will need to be in the same data set. You can combine them using `left_join()`.
+
+Here's what your figure could look like:
+
+```{r fig.cap="Relationship of mean temperature in March and flowering date for American Elm in Ramsey Co., MN.", echo=FALSE}
+
+elm <- elm %>%
+  left_join(temp)
+
+ggplot(elm, aes(x = temperature, y = day_of_year)) +
+  geom_point(shape = 21, size = 3, fill = "darkorange") +
+  geom_smooth(method = "lm", color = "red") +
+  scale_fill_viridis_c() +
+  labs(x = "temperature [F]", y = "flowering date") +
+  theme_standard +
+  theme(legend.position = "bottom")
+
+```
+
+`r msmbstyle::solution_end()`
+
+You've already learned how to fit linear regressions using the function `lm()`. As you can imagine, there is a different function for various models (and occasionally multiple functions for the same type of models) and each comes with a slightly different syntax. It also might be more helpful to have the output e.g. in a `data.frame` or `tibble`.
+
+There is a group of packages that has been designed to make interacting with models more consistent and processing the output in a more user-friendly way. You can install and load them as a group by calling `tidymodels`^[If you have not already use `install.packages("tidymidels") to install.`]. From the name you have probably guessed that these packages have been designed to play well with the `tidyverse`.
+
+Here's how you can run a linear regression using `parsnip` which is the package designed to fit models using a tidy, unified interface. Essentially, in provides an interface to use different models behind the scene. This means that you can use a consistent syntax instead of having to figure it out for each model. You will see that having already used `lm()` without the interface that you are already familiar with the formula syntax that is used here.
+
+The first step will be loading the `tidymodels` packages and specifying the model we want to use, in this case that would be a linear regression model.
+
+```{r}
+
+library(tidymodels)
+
+linear_reg()                                      # specify model
+
+```
+
+That's not too exciting, because after we specify the type of model we need to tell R which engine (method) it should use to fit the model. For example, to use an ordinary least square regression, we would set the method to `lm`^[You could use the documentation page for `linear_reg()` to list all the possible engines.].
+
+```{r}
+
+linear_reg() %>%                                  # specify model
+  set_engine("lm")                                # Define computational engine
+
+```
+
+It appears we are getting somewhere, the last things we still need to do is use the function `fit()` to tell it what variables and we want to use to train/fit the model. We use the same formula syntax you are familiar with from using `lm()`. We will also use the function `tidy()` to conver the output into a handy `tibble`/`data.frame`.
+
+```{r}
+
+linear_reg() %>%                                  # specify model
+  set_engine("lm") %>%                            # Define computational engine
+  fit(day_of_year ~ temperature, data = elm) %>%  # define variables
+  tidy()
+
+```
+
+This doesn't look too different from the output you are used to seeing but we will see down the line that there are additional benefits to using the `tidymodels` framework when it comes to doing more sophisticated analysis.
+
+We've previously used regressions, mainly because were interested in the slope to be able to calculate a rate of increase or decrease over time. Now we are interested in a relationship between two continuous variables and whether or not one of the (the independent value, in our case temperature) has significant explanatory power for the dependent variable (in this case the flowering date). So let's think about how we should interpret the results of our regression.
+
+The `(Intercept)` term (slope) tells us that for temperature = 0 Fahrenheit, the expected flowering date would be 148. The `temperature` term tells us that on average for every one degree Fahrenheit decrease in Temperature, we would expect the flowering date to occur 1.57 days earlier.
+
+`r msmbstyle::question_begin(label = "ques:phen-17")`
+
+After first thinking about the purely mathematical explanation, we would want to think about what is biologically meaningful/sensible. Is there part of our interpretation above that biologically doesn't entirely make sense? What does this tell you about extrapolating beyond the reach of your data?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:phen-17")`
+
+Discuss your results, make a conclusion about the relationship between American elm flowering data and mean March temperature and then discuss that in the context of our original question.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:phen-17")`
+
+Especially if you are writing a paper or report in the style of "Introduction/Methods/Results/Discussion", a good discussion starts by reiterating the original (broad) question you asked with short description of how you specifically investigated it, your key results, and then interpreting/discussing those.
+
+You can essentially follow a fill-in-the-blank-formula, which as you become more comfortable communicating your research will sound a little less formulaic and a little bit more you; adapt the following for your answer:
+
+> In this study, I investigated [broad question asked/hypothesis tested]. To achieve this, I [specific data set + analysis used]. We found that [key results: in your case you would make a specific statement about the trend of earlier flowering dates, the trend of warmer March temperatures, and the relationship of temperature and flowering date]. 
+
+And then you would follow this with a brief discussion of whether your results and how they apply to your initial question, i.e. we are asking whether climate change will impact the phenology of plants - how does this specific example apply to that question?
+
+`r msmbstyle::question_end()`
+
+
+## Now you!
+
+We asked a pretty general question to start us off with and used a specific species and a specific phenophase to investigate. To gather further evidence or determine if there are other patterns to observe we would want to investigate the phenology of further organisms. 
+
+Good thing we have a very large data set to work with!
+
+`r msmbstyle::question_begin(label = "ques:phen-")`
+
+Go back to the original data set with all the phenology records (`object` pheno). To find a good species to investigate we will want to make sure that we have sufficient data to make a meaningful statement about changes in the timing of phenophases.
+
+Use your data wrangling skills to identify all species in the data set with at least 30 years of data for a specific phenophase and locations (i.e. you want at least 20 entries over at least 20 years).
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+Hint: You need to generate a table that looks like this - bonus, organize your table group of species, species, and by years of data available.
+
+```{r echo=FALSE}
+
+pheno %>%
+  group_by(group, species_common_name, event, county) %>%
+  summarize(min_year = min(year),
+            max_year = max(year),
+            time_observed = max_year - min_year,
+            n_observations = n()) %>%
+  filter(time_observed >=30 & n_observations >= 30) %>%
+  arrange(group, species_common_name, desc(time_observed)) %>%
+  kable(caption = "Minnesota species with at least 30 years of data for a specific phenophase in the Minnesota Phenology database.")
+
+```
+
+`r msmbstyle::solution_end()`
+
+We have already looked at a tree - let's see if we can broaden the scope of the organisms we investigate and chose examples from different groups of species. For efficiency, we'll divvy up the work and have everyone chose a different species.
+
+`r msmbstyle::question_begin(label = "ques:phen-")`
+
+Call dibs on the species you would like to investigate. Do a tiny-google and write a 3-5 sentences description of your species. List the phenological questions you could pose about the species you have chosen based on your data set^[If you were writing a report/paper this would be part of your introduction/background section.]. 
+
+`r msmbstyle::question_end()`
+
+We are going to practice putting together all the components of a data science-esque analysis.
+
+![Data Science Process (H.Wickham & Grolemund: R for Data Science](figures/data-science.png)
+
+`r msmbstyle::question_begin(label = "ques:phen-")`
+
+Chose the phenophase you want to investigate and go through the process of "Transform-Visualize-Analyze/Model" + "Communicate".
+
+1. *Transform*: Create a subset of your data set that contains only the data for the species, phenophase, and location you have chosen.
+2. *Visualize*: Plot the change in the timing of the phenophase you have chosen over time.
+3. *Model/Analyze*: Calculate the rate of change using a linear regression.
+4. *Import/Tidy/Transform*: Determine what the appropriate temperature data is to match your phenophase data^[Remember this will include both matching the geographic location & what time of year the temperature should be from, and time span to compare match the years in your data set], the download, and import it.
+5. *Visualize*: Plot the change in temperature over time.
+6. *Model/Analyze*: Calculate the reate of change using a linear regression.
+7. *Transform*: Combine the phenophase and temperature data.
+8. *Visualize*: Plot the relationship of temperature & phenophase
+9. *Model/Analyze*: Determine if the relationship of temperature/phenophase is significant.
+
+Describe what you are doing as you go, i.e. describe your methods^[Pro Tip: Use the instructions as your starting point, for some of them you would want to add a detail or two specific to your analysis.]. 
+
+Create a final multi-panel figure of your three visualizations and share it with your classmates in our slack channel along with your results (be specific.)
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:phen-")`
+
+Collect the results from all the species/phenophases we have analyzed, this includes the American Elm, your species and those of your classmates and discuss the overall results.
+
+ * restate the overall broad question/central hypothesis
+ * summarize in 2-3 sentences what data set you used (include all the species/phenophase analysis we've done as a class) and how your analyzed it.
+ * summarize the results - which (if any) phenophase now occur earlier/later/have not changed? Which (if any) phenophases are significantly correlated with temperature? How are you reaching these conclusions?
+ * discuss your results - what mechanisms are consistent with the patterns your have observed? Make sure to connect your final conclusion(s) back to your initial question/hypothesis.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label = "ques:phen-")`
+
+A final question we should consider is what the potential impacts of changing phenologies could be. Consider that species within a biological community might be differentially impacted by climate change and that some might be directly impacted by climate change resulting in an altered phenology, while other might be indirectly impacted because of an altered phenology for a species they closely interact with (this is called a population asynchrony or phenological mismatch).
+
+Describe how you could set up an analysis to to test whether one of the species we analyzed might experience a phenological mismatch. Your description should include what how what data you would need and how you would design your analysis.
+
+`r msmbstyle::question_end()`
+
+
+
+## Acknowledgments
+
+These activities are based on the EDDIE Phenology Trends and Climate Change in Minnesota module.^[Freeman, P. (2021). Phenology Trends and Climate Change in Minnesota (Project EDDIE).]

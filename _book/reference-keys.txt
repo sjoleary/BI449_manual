@@ -48,7 +48,10 @@ tab:unnamed-chunk-275
 fig:unnamed-chunk-278
 fig:unnamed-chunk-280
 fig:unnamed-chunk-282
-fig:unnamed-chunk-284
+fig:unnamed-chunk-285
+fig:unnamed-chunk-286
+fig:unnamed-chunk-287
+tab:unnamed-chunk-291
 what-even-is-data-science
 defining-data-and-science
 what-even-is-data-science-1
@@ -172,3 +175,6 @@ explore-the-data-set-1
 formulate-a-specific-question
 determine-changes-in-the-flowering-date-of-american-elm-in-ramsey-county-mn
 determine-temperature-change-in-ramsey-county
+analyze-relationship-of-flowering-date-and-temperature
+now-you-1
+acknowledgments-2

@@ -1,0 +1,171 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      cache.extra = packageVersion('msmbstyle'),
+                      warning = FALSE,
+                      message = FALSE)
+
+
+options(htmltools.dir.version = FALSE)
+
+source("scr/ggplot.R")
+
+theme_set
+
+```
+
+# Remote Sensing
+
+**Learning Objectives**
+
+After completing this tutorial you should be able to
+
+* 
+
+
+Download the [06_RemoteSensing]() project folder. Once you have downloaded it, unzip the project directory into your `BI449` directory. 
+
+Your first step is creating a new R project in your project folder. To do this open `Rstudio` then use the dropdown menu in the top right corner to select `New Project` and from there `New Project in an existing directory`. From there, navigate to and select the project folder create an R project. Remember, your `Rproj` sets the working directory so you need to make sure that it is in your project folder.
+
+Next, open a new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Remote Sensing project directory. Use the setup chunk to set your global settings for the document using the options you've learned about in the last few projects. Remember, you should always check your `html` document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. 
+
+We are going to need some specific packages for mapping; if you have not already you will need to install the following^[Remember, you only need to do this once, so you should type these functions directly into the console rather than have a code chunk which will try to run every time you knit the document.]
+
+```{r}
+
+install.packages("rnaturalearthhires", 
+                 repos = "http://packages.ropensci.org", 
+                 type = "source")
+
+install.packages("ggspatial")
+
+```
+
+We will also need the package `sf`. If you are working on a 
+
+We will need the package `rgdal` and `raster`
+
+Let's load our packages so we can get started. 
+
+```{r}
+
+# load libraries
+library(tidyverse)
+library(janitor)
+library(skimr)
+library()
+
+library(ggplot2)
+library(sf)
+library(ggspatial)
+library(rnaturalearth)
+library(rnaturalearthhires)
+library(rnaturalearthdata)
+
+
+# load libraries
+library(rgdal)
+library(raster)
+library(ggplot2)
+library(viridisLite)
+
+
+
+
+# turn of sci notation
+options(scipen=999)
+
+```
+
+
+## Introduction to phenology
+
+
+
+
+
+
+
+##
+
+Load **Digital Terrain Model** data (DEM).
+
+```{r}
+
+dtm <- raster("data/NEON_D17_SOAP_DP3_298000_4100000_DTM.tif")
+
+```
+
+Load **Digital Surface Model**, LiDAR first returns, topography + vegetation
+
+```{r}
+
+dsm <- raster("data/NEON_D17_SOAP_DP3_298000_4100000_DSM.tif")
+
+```
+
+Load **Normalized Difference vegetation index** (NDVI)
+
+```{r}
+
+ndvi <- raster("data/NEON_D17_SOAP_DP3_298000_4100000_NDVI.tif")
+
+```
+
+We can calculate the vegetation height as DSM - DTM.
+
+```{r}
+
+veg.ht <- dsm - dtm
+
+```
+
+Next, let's stack the data so we can plot it all in the same plot
+
+```{r}
+
+# create raster stack
+all.data <- stack(dtm, dsm, ndvi, veg.ht)
+
+# rename raster layers
+names(all.data) <- c("DTM", "DSM", "NDVI", "Vegetation.Height")
+
+```
+
+Now we can create maps for each of our raster files.
+
+```{r}
+
+plot(all.data, 
+     col = viridis(255))
+
+```
+
+
+
+
+
+
+

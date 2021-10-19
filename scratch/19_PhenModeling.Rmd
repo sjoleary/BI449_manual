@@ -1,0 +1,355 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      cache.extra = packageVersion('msmbstyle'),
+                      warning = FALSE,
+                      message = FALSE)
+
+
+options(htmltools.dir.version = FALSE)
+
+source("scr/ggplot.R")
+
+library(ggplot2)
+
+theme_set(theme_standard)
+
+```
+
+# Phenology
+
+**Learning Objectives**
+
+After completing this tutorial you should be able to
+
+* 
+
+
+Open a new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Phenology project directory.
+
+Remember, you should always check your `html` document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. 
+
+Let's load our packages so we can get started. 
+
+```{r}
+
+# load libraries
+library(tidyverse)
+library(janitor)
+library(skimr)
+library(patchwork)
+library(lubridate)
+library(tidymodels)
+library(knitr)
+
+
+
+# turn of sci notation
+options(scipen=999)
+
+```
+
+
+## Model checking
+
+Our analysis of Flowering date in the American Elm shows that mean temperature in March explains a large proportion of variance observed in the flowering date, i.e. we have an expectation of how much earlier the flowering date will occur over every one degree change in temperature based on the linear regression we performed.
+
+Can we predict the flowering date?
+
+Yes, the point of fitting models is that ideally we can model the relationship and then use that model to infer information about our dependent value (flowering date) for values of our independent variable (temperature).
+
+Let's go ahead and read phenology data back in and extract the American Elm data for Ramsey Co. and then join that to our temperature data.
+
+```{r}
+
+# mean march temperature
+temp <- read_delim("data/MN_temp.txt", delim = "\t", col_names = c("year", "temperature"))
+
+# flowering date w/temp
+pheno <- read_delim("data/mnpn_master_dataset_2018.v2.txt", delim = "\t") %>%
+  clean_names() %>%
+  filter(species_common_name == "AMERICAN ELM" & event == "FLOWERING" & county == "RAMSEY") %>%
+  select(year, day_of_year) %>%
+  left_join(temp)
+
+```
+
+Now, let's create a linear regression modeling the relationship of the flowering date and temperature for the American Elm. This time we will assign it to an object so we can perform some additional steps.
+
+```{r}
+
+lm_fit <- linear_reg() %>%                        # specify model
+  set_engine("lm") %>%                            # Define computational engine
+  fit(day_of_year ~ temperature, data = pheno)    # define variables
+
+```
+
+Choosing `lm` as our computational engine, means that we are performing an ordinary least square regression. Let's quickly review what that means for how we are fitting our model.
+
+```{r fig.cap="Observed (orange) and corresponding predicted (blue) flowering dates using linear regression model (black line) for American Elm in Ramsey Country.", echo=FALSE}
+
+# extract observed temperature
+obs_temps <- pheno %>%
+  select(temperature)
+
+# predict values
+pred_values <- pred <- predict(lm_fit, new_data = obs_temps)
+
+# add to pheno data frame
+plot <- pheno %>%
+  bind_cols(pred_values) %>%
+  rename(observed = day_of_year,
+         predicted = .pred) %>%
+  select(year, temperature, observed, predicted) %>%
+  pivot_longer(names_to = "type", values_to = "flowering", 3:4)
+
+# plot
+ggplot(plot) +
+  geom_smooth(aes(x = temperature, y = flowering), method = "lm", color = "black", size = 0.5, se = FALSE) +
+  geom_line(aes(x = temperature, y = flowering, group = factor(temperature)), size = 1) +
+  geom_point(aes(x = temperature, y = flowering, fill = type), shape = 21, size = 2) +
+  scale_fill_manual(values = c("darkorange", "blue")) +
+  labs(x = "Temperature [F]", y = "flowering date") +
+  theme(legend.position = "bottom")
+
+```
+
+In this figure you see the observed flowering dates and the corresponding predicted value for each temperature in the data set using the linear regression model. The vertical segments connecting those two points are the **residuals**, i.e. the distance between the observed and predicted value. When we fit the model, we (and by we I mean R) took the residuals, squared them, summed them all up and then tried to minimize that number - i.e. we tried out all possible configurations of the linear trendline until we found the one that minimizes the sum of the squared regressions.
+
+How do we know how "good" or model is? Well, we can look at the R2 and p-value which tells us how much of the variance in the dependent variable is explained by the independent variable and whether or not that relationship is significant but we should also check our model to determine if a linear regression is an appropriate way to describe the relationship.
+
+One way we can do this is using a diagnostic plot, called a residuals plot which can be used to determine if there is a relationship between predicted values and residuals.
+
+Before we can construct this plot we need to calculate our residuals. We can do this using the function `augment()`
+
+```{r}
+
+lm_aug <- augment(lm_fit$fit)
+
+head(lm_aug) %>%
+  kable()
+
+```
+
+What augmenting does is for every point in our model calculate the fitted value (`.fitted`) and the residuals (`.resid`) among other diagnostic variables.
+
+From there we can create the residuals plot.
+
+```{r}
+
+ggplot(lm_aug, aes(x = .fitted, y = .resid)) +
+  geom_point(shape = 21, size = 2) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "gray") +
+  labs(x = "predicted value", y = "residual")
+
+```
+
+When we plot the residuals vs the predicted values we should find a completely random scatter around 0, and no visible patterns among x or y-axis indicating that there is no relationship between the predicted values and the residuals (no clusters, no correlation)^[The fact that the residuals have no pattern to them tells us that all the important variation has already been captured by our model, indicating we chose a good model!].
+
+
+## Use the model to predict
+
+Let's say that we had looked at a bunch of climate models predicting mean March temperatures under various emissions scenarios and based off of that information we want to know what the predicted flowering dates would be for 10 - 65F.
+
+First, we need to create a new data set with the values we want to predict flowering date for.
+
+```{r}
+
+# create data frame with temperature values from 10 - 65F
+predict_temp <- expand.grid(temperature = 10:65)
+
+head(predict_temp)
+
+```
+
+Then we can use the function `predict()`. This generates a tibble with the predicted flowering dates for each temperature.
+
+```{r}
+
+pred <- predict(lm_fit, new_data = predict_temp)
+
+```
+
+We can use the same function to calculate confidence intervals.
+
+```{r}
+
+pred_CI <- predict(lm_fit, new_data = predict_temp,
+                   type = "conf_int")
+
+```
+
+Because all the outputs are tibbles, we can easily combine them all into a single dataframe using `bind_cols()`:
+
+```{r}
+
+predict_temp <- predict_temp %>%
+  bind_cols(pred) %>%
+  bind_cols(pred_CI)
+
+```
+
+Now we can plot our predicted values along with the estimated confidence intervals.
+
+```{r}
+
+ggplot(predict_temp, aes(x = temperature, y = .pred)) +
+  geom_errorbar(aes(ymin = .pred_lower,
+                    ymax = .pred_upper),
+                width = .2) +
+  geom_point(shape = 21, fill = "white", size = 2) +
+  labs(x = "temperature", y = "predicted flowering date") +
+  theme_standard
+
+```
+
+Not unsurprisingly, our predicted points fall exactly on the calculated trendline, though it is notable that the farther we extrapolate out to temperatures lower or higher than those recorded in our data set our uncertainty increases.
+
+## Do we trust our model?
+
+The process of prediction itself is straightforward. We have the equation for the linear model, so all we have to do (or tell R to do) is to plug the values of the **predictor(s)** (our independent variable) in to the model equation and the calculate the predicted value for our **response** (independent) **variable**.
+
+However, there still are two factors we need to consider that will determine whether or not we can trust our predictions.
+
+1. There is no guarantee that the model estimates you have are correct
+2. There is no guarantee that the model will perform as well with new data as it did with your sample (observed) data.
+
+Our concern lies in the concept of overfitting vs underfitting. 
+
+![Comparison of underfit (left), optimal (middle), or overfit (right) model.](figures/overfitting.png)
+In this figure you can see that a linear function is not sufficient to describe the pattern in the observed data^[Think back to us calculating the rate of change for our CO2 and temperature data ... where we likely over/under/optimally fitting our data set?]. This is described as **underfitting**, i.e. your model is too simple to capture the pattern and as a result you would expect uncertainties in our predicted values. Likely the model would be more accurate for some values (in this case lower values) while for others (high values) our predicted values would not be very trustworthy. 
+
+The panel on the right illustrates what happens when we **overfit** the model to the data. Here, the model fits the ata almost perfectly - which means that it describes the noise not the general pattern in the data.
+
+How can we figure out if we've over- or underfit our model? Well, one method is **data splitting** which means we will be able to **cross-validate** our model.
+
+
+## Data splitting
+
+Previously, we used all the data available to use to fit a model and understand how to interpret the data. But if we want to know how good our model is at predicting things we can allocate our data to two different tasks, training/fitting the model and then testing the performance of the model.
+
+**Data splitting** means that we will take our data set and split it into a **training** data set that we will use to to fit the model and a **test** data set that we can use to determine how well our model performs.
+
+The `rsample` package which is part of the `tidymodels` network of packages, allows us to randomly subset our data. We will want to have most of our data in the training data set (more data generally means better model) and then keep a small number of observations for testing.
+
+Because we are randomly sub-setting our data set we need to set our initial seed number which means that every time we run the analysis the same set of random numbers will be generated.
+
+```{r}
+
+# set random seed
+set.seed(42)
+
+# assign 3/4 of data to training set
+data_split <- initial_split(pheno, prop = 3/4)
+
+# create two separate data frames
+train_data <- training(data_split)
+test_data <- testing(data_split)
+
+```
+
+
+## Evaluating models
+
+Our first step is fitting the model using our training data set. This looks exactly like when we fit the model using all of our data except now we will specify `train_data` as the data frame containing the observations.
+
+```{r}
+
+lm_fit <- linear_reg() %>%                        
+  set_engine("lm") %>%                              
+  fit(day_of_year ~ temperature, data = train_data)
+
+tidy(lm_fit) %>%
+  kable()
+
+```
+
+Now we need to use our model to predict values for our training data and the combine that output with our test_data that also contains the observed flowering dates.
+
+```{r}
+
+flowering_pred <- predict(lm_fit, test_data) %>%
+  bind_cols(test_data) %>%
+  select(year, temperature, day_of_year, .pred)
+
+```
+
+Let's take a look at how well our model performs by comparing the observed and predicted flowering dates
+
+```{r}
+
+flowering_pred %>%
+  arrange(desc(.pred)) %>%
+  kable()
+
+```
+
+Let's make a plot that will allow us to compare the predicted vs observed values.
+
+```{r fig.cap="Comparison of predicted vs. observed flowering date for training data set. The dashed black line indicates perfect predictions, the red line is the linear trendline showing relationship of observed vs predicted values."}
+
+ggplot(flowering_pred, aes(x = day_of_year, y = .pred)) +
+  geom_smooth(method = "lm", color = "darkred") +
+  geom_abline(slope = 1, linetype = "dashed", color = "black", size = 1) +
+  geom_point(shape = 21, fill = "darkorange", size = 3) +
+  labs(x = "observed flowering date", y = "predicted flowering date")
+
+```
+
+If we had "perfect" predictions, our linear trendline should fall on top of the dashed line indicating perfect predictions.
+
+One way we can quantify this is calculating the **root-mean-square deviation** (RMSE) which is the standard deviation of the residuals, i.e. the prediction errors. We can calculate this using the package `yardstick` which contains functions to assess model performance.
+
+```{r}
+
+rmse(flowering_pred, 
+     truth = day_of_year, 
+     estimate = .pred) %>%
+  kable()
+
+```
+
+In general, a smaller RMSE indicates a better model fit.
+
+Let's compare that to the RMSE for our training data:
+
+```{r}
+
+lm_aug <- augment(lm_fit$fit)
+
+rmse(lm_aug, 
+     truth = day_of_year, 
+     estimate = .fitted) %>%
+  kable()
+
+```
+
+By comparing these two values we can see that our model performs similarly well for the training data set used to make the model and also for the test data set that was not used to make the model.
+
+The fact that the observation were not used to inform the initial model, means that our comparison of the observed vs fitted values are not biased.
+
+If the model was overfit (i.e. it modeled the noise not the overall pattern) we would expect our model to perform poorly in terms of predictions for observations that were not included in the initial data set used to fit the model.
+
+Generally, the next step would be the process of **Cross-validation** where we would repeatedly split our data set into training and test data sets to see

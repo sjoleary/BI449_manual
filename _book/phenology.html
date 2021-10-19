@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-10-14" />
+<meta name="date" content="2021-10-19" />
 
 
 <meta name="description" content="18 Phenology | Data Science for the Natural Environment (FA21)">
@@ -201,6 +201,9 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#formulate-a-specific-question"> Formulate a specific question</a></li>
 <li class="toc"><a href="#determine-changes-in-the-flowering-date-of-american-elm-in-ramsey-county-mn"> Determine changes in the flowering date of American elm in Ramsey County, MN</a></li>
 <li class="toc"><a href="#determine-temperature-change-in-ramsey-county"> Determine temperature change in Ramsey County</a></li>
+<li class="toc"><a href="#analyze-relationship-of-flowering-date-and-temperature"> Analyze relationship of flowering date and temperature</a></li>
+<li class="toc"><a href="#now-you-1"> Now you!</a></li>
+<li class="toc"><a href="#acknowledgments-2"> Acknowledgments</a></li>
 </ul>
 <a href="references.html">References</a>
 </div>
@@ -224,7 +227,7 @@ function reset_tooltip(id) {
 </ul>
 <p>Download the <a href="https://drive.google.com/drive/folders/19GD1COEgPPfjtXrfzKFoLodzdH0a-v68?usp=sharing">05_Phenology</a> project folder. Once you have downloaded it, unzip the project directory into your <code>BI449</code> directory.</p>
 <p>To get some practice setting up your own project files, you might notice that this one does not yet have an <code>Rproj</code> file or any <code>Rmarkdown</code> files in it. So the first thing we want to do is create a new R project. To do this open <code>Rstudio</code> then use the dropdown menu in the top right corner to select <code>New Project</code> and from there <code>New Project in an existing directory</code>. From there, navigate to and select the project folder create an R project.</p>
-<p>Open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Exploratory Analysis project directory. That’s right - training wheels are off … you will need to add all of your own headers, plain text etc. Set up the <code>YAML</code> header so that you are the author and when knitted the date will reflect the date of the creation of the document.</p>
+<p>Open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Phenology project directory. That’s right - training wheels are off … you will need to add all of your own headers, plain text etc. Set up the <code>YAML</code> header so that you are the author and when knitted the date will reflect the date of the creation of the document.</p>
 <p>Recall that you can use the initial setup chunk to set some of your preferred formatting by determining global settings for the document. One helpful setting we discovered is to turn off warnings, errors, and messages being printed out in the knitted html document.</p>
 <p>Another helpful setting is to define a default theme for your plots. You can do this using <code>theme_set()</code>. So for example, you could set a default theme like so: <code>theme_set(theme_bw())</code>. Choose your favorite theme (or try a new one) for this homework assignment.</p>
 <p>Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc.</p>
@@ -289,9 +292,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-69" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-69', 'sol-start-69')"></span>
+► Solution<span id="sol-start-31" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-31', 'sol-start-31')"></span>
 </p>
-<div id="sol-body-69" class="solution-body" style="display: none;">
+<div id="sol-body-31" class="solution-body" style="display: none;">
 <p>That’s right - <code>skim()</code> will give you all the information in one handy place!</p>
 <div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="phenology.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(pheno)</span></code></pre></div>
 <p><!--
@@ -524,9 +527,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-70" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-70', 'sol-start-70')"></span>
+► Solution<span id="sol-start-32" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-32', 'sol-start-32')"></span>
 </p>
-<div id="sol-body-70" class="solution-body" style="display: none;">
+<div id="sol-body-32" class="solution-body" style="display: none;">
 <p>The <code>dplyr</code> verb that can help you out here is <code>distinct()</code> - go ahead and create those tables.</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -581,9 +584,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-71" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-71', 'sol-start-71')"></span>
+► Solution<span id="sol-start-33" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-33', 'sol-start-33')"></span>
 </p>
-<div id="sol-body-71" class="solution-body" style="display: none;">
+<div id="sol-body-33" class="solution-body" style="display: none;">
 <p>Since we are interested in distributions, you would want to look at histograms or boxplots - this is one way your figure could look like:</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-278"></span>
@@ -630,9 +633,9 @@ Figure 18.1: Distribution of life history events throughout the year for Minneso
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-72" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-72', 'sol-start-72')"></span>
+► Solution<span id="sol-start-34" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-34', 'sol-start-34')"></span>
 </p>
-<div id="sol-body-72" class="solution-body" style="display: none;">
+<div id="sol-body-34" class="solution-body" style="display: none;">
 <p>This is what you want your figure to look like:</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-280"></span>
@@ -685,9 +688,9 @@ Figure 18.2: Change in day of flowering for woody plants in Minnesota 1941 - 201
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-73" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-73', 'sol-start-73')"></span>
+► Solution<span id="sol-start-35" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-35', 'sol-start-35')"></span>
 </p>
-<div id="sol-body-73" class="solution-body" style="display: none;">
+<div id="sol-body-35" class="solution-body" style="display: none;">
 <p>Just so we are all in agreement - our question is: Has climate change changed the phenology of American Elm in Ramsey County, Minnesota?</p>
 <p>But do we already have all the data we need?</p>
 <p class="solution-end">
@@ -719,7 +722,7 @@ Figure 18.2: Change in day of flowering for woody plants in Minnesota 1941 - 201
 <div class="question-body">
 <p>Filter your data so that it only contains entries for Ramsey Country.</p>
 <p>Plot your data to determine if your prediction was correct; add a simple linear trend line to your plot to help identify the overall pattern.</p>
-<p>Give your visualization a title and legend and describe your results. Be specific, i.e. consider how much the flowering data has shifted. For your interpretation/discussion identify at least two possible mechanisms that could be causing this pattern.</p>
+<p>Make sure to give your visualization a title and add a legend.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
@@ -727,9 +730,9 @@ Figure 18.2: Change in day of flowering for woody plants in Minnesota 1941 - 201
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-74" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-74', 'sol-start-74')"></span>
+► Solution<span id="sol-start-36" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-36', 'sol-start-36')"></span>
 </p>
-<div id="sol-body-74" class="solution-body" style="display: none;">
+<div id="sol-body-36" class="solution-body" style="display: none;">
 <p>This is what your figure should look like.</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-282"></span>
@@ -739,6 +742,59 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 <img src="_main_files/figure-html/unnamed-chunk-282-1.png" alt="Change in flowering data for American Elm in Ramsey Co., MN  (1941 - 1991). Fill of individual points indicates the month of the flowering date, the linear trendline is indicated in red." width="672">
 </div>
 <p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:phen-15" class="question">
+<p class="question-begin">
+► Question 18.15
+</p>
+<div class="question-body">
+<p>Determine the rate of change (remember to include units!).</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-37" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-37', 'sol-start-37')"></span>
+</p>
+<div id="sol-body-37" class="solution-body" style="display: none;">
+<p>Hint: You will need to determine the equation of your linear trend line to do this.</p>
+<pre><code>## 
+## Call:
+## lm(formula = day_of_year ~ year, data = elm)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -22.4353  -6.1694   0.4376   8.4882  18.2988 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept) 462.58353  193.35567   2.392   0.0206 *
+## year         -0.18353    0.09835  -1.866   0.0680 .
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 10.34 on 49 degrees of freedom
+## Multiple R-squared:  0.06636,    Adjusted R-squared:  0.0473 
+## F-statistic: 3.482 on 1 and 49 DF,  p-value: 0.06801</code></pre>
+<p>Don’t get too hung up on whether the result is significant or not. The rate is still the rate and you will want to include that in your results.</p>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:phen-15" class="question">
+<p class="question-begin">
+► Question 18.15
+</p>
+<div class="question-body">
+<p>Describe your overall results. Remember, results are more than just figures! Practice being specific, i.e. consider how much the flowering data has shifted and at what rate.</p>
+<p>For your interpretation/discussion identify at least two possible mechanisms that could be causing this pattern<label for="tufte-sn-103" class="margin-toggle sidenote-number">103</label><input type="checkbox" id="tufte-sn-103" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">103</span> You likely notices that you have a low R2 value and the linear regression is not significant. What does that mean in this context? How can you apply that to generating possible mechanisms for the pattern?</span>.</p>
+<p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
@@ -762,9 +818,9 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-75" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-75', 'sol-start-75')"></span>
+► Solution<span id="sol-start-38" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-38', 'sol-start-38')"></span>
 </p>
-<div id="sol-body-75" class="solution-body" style="display: none;">
+<div id="sol-body-38" class="solution-body" style="display: none;">
 <p>Hint: Consider what the ideal temporal and spatial resolution would need to be to “match” your phenology data.</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -775,7 +831,7 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 <p>Go to the DNR <a href="https://arcgis.dnr.state.mn.us/ewr/climatetrends/">Minnesota Climate Trends</a> website to access historical observations for specific Minnesota locations. Use the drop down menus options to select subsets using the check boxes to create a data set that meets the specifications you set out above.</p>
 <p>Unfortunately, the download button doesn’t work. Instead, you should cut and paste the data into a text editor or excel and save it as a tab-delimited file in your <code>data</code> folder. Name it <code>MN_temp.txt</code>.</p>
 <p>Lets read in your temperature data. Unless you added headers in the text file it’s missing them. Similar to the way we can use <code>skip</code> if there are additional lines, we have an argument we can use to specify column names if they are missing.</p>
-<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="phenology.html#cb338-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/MN_temp.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"temperature"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="phenology.html#cb339-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/MN_temp.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"temperature"</span>))</span></code></pre></div>
 <div id="ques:phen-17" class="question">
 <p class="question-begin">
 ► Question 18.17
@@ -790,23 +846,1176 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-76" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-76', 'sol-start-76')"></span>
+► Solution<span id="sol-start-39" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-39', 'sol-start-39')"></span>
 </p>
-<div id="sol-body-76" class="solution-body" style="display: none;">
+<div id="sol-body-39" class="solution-body" style="display: none;">
 <p>Here’s what your figure could look like:</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-284"></span>
+<span style="display:block;" id="fig:unnamed-chunk-285"></span>
 <p class="caption marginnote shownote">
 Figure 18.4: Change in mean March temperature [Fahrenheit] for 1941 - 1991 (blue) and linear trendline (red)
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-284-1.png" alt="Change in mean March temperature [Fahrenheit] for 1941 - 1991 (blue) and linear trendline (red)" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-285-1.png" alt="Change in mean March temperature [Fahrenheit] for 1941 - 1991 (blue) and linear trendline (red)" width="672">
 </div>
-<p>Bonus question: Consider why it might be appropriate to use a line graph for the temperature data but not for the flowering date plot.</p>
+<p>I used a linegraph, which is an option for visualizing change over time as we are doing here in this time series. Using a line graph instead of a scatterplot is appropriate when plotting a categorical data on the x axis<label for="tufte-sn-104" class="margin-toggle sidenote-number">104</label><input type="checkbox" id="tufte-sn-104" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">104</span> years are numbers … but they are not numeric! Rather, they are ordered categorical variables</span>. That means that we have a trendline and a line connecting individual points. This can be helpful because the linear trendline shows us the overall trend of the data while the line connecting the individual points helps us visualize local change from point to point.</p>
+<p>For categorical data we can also use barplots:</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-286"></span>
+<p class="caption marginnote shownote">
+Figure 18.5: Change in mean March temperature [Fahrenheit] for 1941 - 1991 (orange bars).
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-286-1.png" alt="Change in mean March temperature [Fahrenheit] for 1941 - 1991 (orange bars)." width="672">
+</div>
+<p>Why do you think it is better to use a scatter plot or line plot compared to the barplot?</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
+<div id="ques:phen-17" class="question">
+<p class="question-begin">
+► Question 18.17
+</p>
+<div class="question-body">
+<p>For a good presentation of your results, e.g. through a presentation or poster, you would likely want to produce a figure where you have change in flowering date and change in mean temperature for March side by side. Practice making that type of figure here:</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="analyze-relationship-of-flowering-date-and-temperature" class="section level2" number="18.6">
+<h2>
+<span class="header-section-number">18.6</span> Analyze relationship of flowering date and temperature<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('analyze-relationship-of-flowering-date-and-temperature')" onmouseout="reset_tooltip('analyze-relationship-of-flowering-date-and-temperature-tooltip')"><span class="tooltiptext" id="analyze-relationship-of-flowering-date-and-temperature-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div id="ques:phen-17" class="question">
+<p class="question-begin">
+► Question 18.17
+</p>
+<div class="question-body">
+<p>Especially when we look at the two figures side by side the fact we see that there is a trend for earlier flowering dates for American elm and warmer March temperatures. Describe the analysis you want to perform to determine whether there is a significant relationship between the mean temperature in March and the flowering date for the American Elm in Ramsey Co.. Include what your dependent and independent variables are<label for="tufte-sn-105" class="margin-toggle sidenote-number">105</label><input type="checkbox" id="tufte-sn-105" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">105</span> Your are practicing writing up your methods. A good methods section includes not just what you want to do but why you are doing it/what that analysis is meant to achieve. A good way to start for this specific example would be e.g. “To determine whether {variable} depends on {variable}, we will {analysis}</span>.</p>
+<p>Create a plot to visualize the relationship but hold off on the analysis component until the next step.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-40" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-40', 'sol-start-40')"></span>
+</p>
+<div id="sol-body-40" class="solution-body" style="display: none;">
+<p>Hint: To be able to plot temperature vs flowering date those two variables will need to be in the same data set. You can combine them using <code>left_join()</code>.</p>
+<p>Here’s what your figure could look like:</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-287"></span>
+<p class="caption marginnote shownote">
+Figure 18.6: Relationship of mean temperature in March and flowering date for American Elm in Ramsey Co., MN.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-287-1.png" alt="Relationship of mean temperature in March and flowering date for American Elm in Ramsey Co., MN." width="672">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>You’ve already learned how to fit linear regressions using the function <code>lm()</code>. As you can imagine, there is a different function for various models (and occasionally multiple functions for the same type of models) and each comes with a slightly different syntax. It also might be more helpful to have the output e.g. in a <code>data.frame</code> or <code>tibble</code>.</p>
+<p>There is a group of packages that has been designed to make interacting with models more consistent and processing the output in a more user-friendly way. You can install and load them as a group by calling <code>tidymodels</code><label for="tufte-sn-106" class="margin-toggle sidenote-number">106</label><input type="checkbox" id="tufte-sn-106" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">106</span> If you have not already use <code>install.packages("tidymidels") to install.</code></span>. From the name you have probably guessed that these packages have been designed to play well with the <code>tidyverse</code>.</p>
+<p>Here’s how you can run a linear regression using <code>parsnip</code> which is the package designed to fit models using a tidy, unified interface. Essentially, in provides an interface to use different models behind the scene. This means that you can use a consistent syntax instead of having to figure it out for each model. You will see that having already used <code>lm()</code> without the interface that you are already familiar with the formula syntax that is used here.</p>
+<p>The first step will be loading the <code>tidymodels</code> packages and specifying the model we want to use, in this case that would be a linear regression model.</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="phenology.html#cb340-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb340-2"><a href="phenology.html#cb340-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb340-3"><a href="phenology.html#cb340-3" aria-hidden="true" tabindex="-1"></a><span class="fu">linear_reg</span>()                                      <span class="co"># specify model</span></span></code></pre></div>
+<pre><code>## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm</code></pre>
+<p>That’s not too exciting, because after we specify the type of model we need to tell R which engine (method) it should use to fit the model. For example, to use an ordinary least square regression, we would set the method to <code>lm</code><label for="tufte-sn-107" class="margin-toggle sidenote-number">107</label><input type="checkbox" id="tufte-sn-107" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">107</span> You could use the documentation page for <code>linear_reg()</code> to list all the possible engines.</span>.</p>
+<div class="sourceCode" id="cb342"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb342-1"><a href="phenology.html#cb342-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span>                                  <span class="co"># specify model</span></span>
+<span id="cb342-2"><a href="phenology.html#cb342-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>)                                <span class="co"># Define computational engine</span></span></code></pre></div>
+<pre><code>## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm</code></pre>
+<p>It appears we are getting somewhere, the last things we still need to do is use the function <code>fit()</code> to tell it what variables and we want to use to train/fit the model. We use the same formula syntax you are familiar with from using <code>lm()</code>. We will also use the function <code>tidy()</code> to conver the output into a handy <code>tibble</code>/<code>data.frame</code>.</p>
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="phenology.html#cb344-1" aria-hidden="true" tabindex="-1"></a><span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span>                                  <span class="co"># specify model</span></span>
+<span id="cb344-2"><a href="phenology.html#cb344-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span>                            <span class="co"># Define computational engine</span></span>
+<span id="cb344-3"><a href="phenology.html#cb344-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(day_of_year <span class="sc">~</span> temperature, <span class="at">data =</span> elm) <span class="sc">%&gt;%</span>  <span class="co"># define variables</span></span>
+<span id="cb344-4"><a href="phenology.html#cb344-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   148.       4.60       32.1 1.51e-34
+## 2 temperature    -1.57     0.155     -10.1 1.35e-13</code></pre>
+<p>This doesn’t look too different from the output you are used to seeing but we will see down the line that there are additional benefits to using the <code>tidymodels</code> framework when it comes to doing more sophisticated analysis.</p>
+<p>We’ve previously used regressions, mainly because were interested in the slope to be able to calculate a rate of increase or decrease over time. Now we are interested in a relationship between two continuous variables and whether or not one of the (the independent value, in our case temperature) has significant explanatory power for the dependent variable (in this case the flowering date). So let’s think about how we should interpret the results of our regression.</p>
+<p>The <code>(Intercept)</code> term (slope) tells us that for temperature = 0 Fahrenheit, the expected flowering date would be 148. The <code>temperature</code> term tells us that on average for every one degree Fahrenheit decrease in Temperature, we would expect the flowering date to occur 1.57 days earlier.</p>
+<div id="ques:phen-17" class="question">
+<p class="question-begin">
+► Question 18.17
+</p>
+<div class="question-body">
+<p>After first thinking about the purely mathematical explanation, we would want to think about what is biologically meaningful/sensible. Is there part of our interpretation above that biologically doesn’t entirely make sense? What does this tell you about extrapolating beyond the reach of your data?</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:phen-17" class="question">
+<p class="question-begin">
+► Question 18.17
+</p>
+<div class="question-body">
+<p>Discuss your results, make a conclusion about the relationship between American elm flowering data and mean March temperature and then discuss that in the context of our original question.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:phen-17" class="question">
+<p class="question-begin">
+► Question 18.17
+</p>
+<div class="question-body">
+<p>Especially if you are writing a paper or report in the style of “Introduction/Methods/Results/Discussion,” a good discussion starts by reiterating the original (broad) question you asked with short description of how you specifically investigated it, your key results, and then interpreting/discussing those.</p>
+<p>You can essentially follow a fill-in-the-blank-formula, which as you become more comfortable communicating your research will sound a little less formulaic and a little bit more you; adapt the following for your answer:</p>
+<blockquote>
+<p>In this study, I investigated [broad question asked/hypothesis tested]. To achieve this, I [specific data set + analysis used]. We found that [key results: in your case you would make a specific statement about the trend of earlier flowering dates, the trend of warmer March temperatures, and the relationship of temperature and flowering date].</p>
+</blockquote>
+<p>And then you would follow this with a brief discussion of whether your results and how they apply to your initial question, i.e. we are asking whether climate change will impact the phenology of plants - how does this specific example apply to that question?</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="now-you-1" class="section level2" number="18.7">
+<h2>
+<span class="header-section-number">18.7</span> Now you!<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('now-you-1')" onmouseout="reset_tooltip('now-you-1-tooltip')"><span class="tooltiptext" id="now-you-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>We asked a pretty general question to start us off with and used a specific species and a specific phenophase to investigate. To gather further evidence or determine if there are other patterns to observe we would want to investigate the phenology of further organisms.</p>
+<p>Good thing we have a very large data set to work with!</p>
+<div id="ques:phen-" class="question">
+<p class="question-begin">
+► Question 18.18
+</p>
+<div class="question-body">
+<p>Go back to the original data set with all the phenology records (<code>object</code> pheno). To find a good species to investigate we will want to make sure that we have sufficient data to make a meaningful statement about changes in the timing of phenophases.</p>
+<p>Use your data wrangling skills to identify all species in the data set with at least 30 years of data for a specific phenophase and locations (i.e. you want at least 20 entries over at least 20 years).</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-41" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-41', 'sol-start-41')"></span>
+</p>
+<div id="sol-body-41" class="solution-body" style="display: none;">
+<p>Hint: You need to generate a table that looks like this - bonus, organize your table group of species, species, and by years of data available.</p>
+<table style="width:100%;">
+<caption>
+<span id="tab:unnamed-chunk-291">Table 18.2: </span>Minnesota species with at least 30 years of data for a specific phenophase in the Minnesota Phenology database.</caption>
+<colgroup>
+<col width="15%">
+<col width="19%">
+<col width="25%">
+<col width="6%">
+<col width="6%">
+<col width="6%">
+<col width="9%">
+<col width="10%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">group</th>
+<th align="left">species_common_name</th>
+<th align="left">event</th>
+<th align="left">county</th>
+<th align="right">min_year</th>
+<th align="right">max_year</th>
+<th align="right">time_observed</th>
+<th align="right">n_observations</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">AMPHIBIANS &amp; REPTILES</td>
+<td align="left">SPRING PEEPER</td>
+<td align="left">FIRST HEARD</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td align="left">AMPHIBIANS &amp; REPTILES</td>
+<td align="left">WOOD FROG</td>
+<td align="left">FIRST HEARD</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">40</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">AMERICAN ROBIN</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1975</td>
+<td align="right">2011</td>
+<td align="right">36</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">AMERICAN ROBIN</td>
+<td align="left">FIRST FLOCK OF MIGRATORS</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">36</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">AMERICAN ROBIN</td>
+<td align="left">LAST SEEN</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2014</td>
+<td align="right">30</td>
+<td align="right">56</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">BLUE WINGED TEAL</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1980</td>
+<td align="right">2013</td>
+<td align="right">33</td>
+<td align="right">34</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">BUFFLEHEAD</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1982</td>
+<td align="right">2012</td>
+<td align="right">30</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">CANADA GOOSE</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1975</td>
+<td align="right">2011</td>
+<td align="right">36</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">COMMON GOLDENEYE</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1982</td>
+<td align="right">2012</td>
+<td align="right">30</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">COMMON MERGANSER</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1979</td>
+<td align="right">2012</td>
+<td align="right">33</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">DARK EYED JUNCO</td>
+<td align="left">FIRST SEEN</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">EASTERN BLUEBIRD</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1975</td>
+<td align="right">2013</td>
+<td align="right">38</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">GREAT BLUE HERON</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1975</td>
+<td align="right">2013</td>
+<td align="right">38</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">GREEN WINGED TEAL</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1979</td>
+<td align="right">2013</td>
+<td align="right">34</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">HOODED MERGANSER</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1982</td>
+<td align="right">2013</td>
+<td align="right">31</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">KILLDEER</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1975</td>
+<td align="right">2013</td>
+<td align="right">38</td>
+<td align="right">34</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">LESSER SCAUP</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1982</td>
+<td align="right">2012</td>
+<td align="right">30</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">MALLARD</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1975</td>
+<td align="right">2011</td>
+<td align="right">36</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">NORTHERN HARRIER</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1979</td>
+<td align="right">2012</td>
+<td align="right">33</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">NORTHERN PINTAIL</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1979</td>
+<td align="right">2013</td>
+<td align="right">34</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">NORTHERN SHOVELER</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1979</td>
+<td align="right">2012</td>
+<td align="right">33</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">PIED BILLED GREBE</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1982</td>
+<td align="right">2013</td>
+<td align="right">31</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">RED WINGED BLACKBIRD</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1977</td>
+<td align="right">2013</td>
+<td align="right">36</td>
+<td align="right">36</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">RING NECKED DUCK</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1981</td>
+<td align="right">2012</td>
+<td align="right">31</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">RUFFED GROUSE</td>
+<td align="left">FIRST COURTSHIP/TERRITORIAL BEHAVIOR</td>
+<td align="left">ITASCA</td>
+<td align="right">1985</td>
+<td align="right">2016</td>
+<td align="right">31</td>
+<td align="right">48</td>
+</tr>
+<tr class="even">
+<td align="left">BIRDS</td>
+<td align="left">SANDHILL CRANE</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1980</td>
+<td align="right">2013</td>
+<td align="right">33</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="left">BIRDS</td>
+<td align="left">WOOD DUCK</td>
+<td align="left">ARRIVAL</td>
+<td align="left">SHERBURNE</td>
+<td align="right">1979</td>
+<td align="right">2013</td>
+<td align="right">34</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">BELLWORT</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1991</td>
+<td align="right">34</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">BLOODROOT</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1991</td>
+<td align="right">34</td>
+<td align="right">32</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">BLOODROOT</td>
+<td align="left">LAST FLOWER</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1991</td>
+<td align="right">34</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">BRIDAL WREATH</td>
+<td align="left">FLOWERING</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">48</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">CANADA VIOLET</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1959</td>
+<td align="right">1991</td>
+<td align="right">32</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">CAROLINA PUCCOON</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">COMMON MILKWEED</td>
+<td align="left">FLOWERING</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">COMMON SAINT JOHN’S WORT</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">40</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">CROWFOOT</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1961</td>
+<td align="right">1991</td>
+<td align="right">30</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">CUT-LEAVED TOOTHWORT</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">2001</td>
+<td align="right">41</td>
+<td align="right">38</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">DANDELION</td>
+<td align="left">FLOWERING</td>
+<td align="left">ITASCA</td>
+<td align="right">1985</td>
+<td align="right">2016</td>
+<td align="right">31</td>
+<td align="right">33</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">FALSE RUE ANEMONE</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">FALSE SOLOMON’S SEAL</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1990</td>
+<td align="right">30</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">FIREWEED</td>
+<td align="left">FLOWERING</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">GOLDEN RAGWORT</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">37</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">LARGE-FLOWERED TRILLIUM</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1958</td>
+<td align="right">1991</td>
+<td align="right">33</td>
+<td align="right">32</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">LARGE-FLOWERED TRILLIUM</td>
+<td align="left">LAST FLOWER</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1958</td>
+<td align="right">1991</td>
+<td align="right">33</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">MARSH MARIGOLD</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1959</td>
+<td align="right">1991</td>
+<td align="right">32</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">MINNESOTA TROUT-LILY</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">PURPLE TRILLIUM</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1991</td>
+<td align="right">34</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">PURPLE TRILLIUM</td>
+<td align="left">LAST FLOWER</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1991</td>
+<td align="right">34</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">RUE ANEMONE</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1991</td>
+<td align="right">34</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">RUE ANEMONE</td>
+<td align="left">LAST FLOWER</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1991</td>
+<td align="right">34</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">SHARP-LOBED HEPATICA</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1991</td>
+<td align="right">34</td>
+<td align="right">33</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">SHARP-LOBED HEPATICA</td>
+<td align="left">LAST FLOWER</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1958</td>
+<td align="right">1991</td>
+<td align="right">33</td>
+<td align="right">32</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">SHOOTING STAR</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1959</td>
+<td align="right">1990</td>
+<td align="right">31</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">SHOWY LADY’S SLIPPER</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">SKUNK CABBAGE</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1992</td>
+<td align="right">35</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">SKUNK CABBAGE</td>
+<td align="left">LAST FLOWER</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1959</td>
+<td align="right">1991</td>
+<td align="right">32</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">SNOW TRILLIUM</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1957</td>
+<td align="right">1991</td>
+<td align="right">34</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">SNOW TRILLIUM</td>
+<td align="left">LAST FLOWER</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1959</td>
+<td align="right">1991</td>
+<td align="right">32</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">SPREADING DOGBANE</td>
+<td align="left">FIRST FALL COLOR</td>
+<td align="left">ITASCA</td>
+<td align="right">1985</td>
+<td align="right">2016</td>
+<td align="right">31</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">STARFLOWER</td>
+<td align="left">FLOWERING</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">36</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">SWAMP BUTTERCUP</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">31</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">SWAMP MILKWEED</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">FORB</td>
+<td align="left">WHITE TROUT-LILY</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">FORB</td>
+<td align="left">YELLOW TROUT-LILY</td>
+<td align="left">FLOWERING</td>
+<td align="left">HENNEPIN</td>
+<td align="right">1960</td>
+<td align="right">1991</td>
+<td align="right">31</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">MAMMALS</td>
+<td align="left">WHITE TAILED DEER</td>
+<td align="left">FIRST ANTLERS</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">72</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">AMERICAN ELM</td>
+<td align="left">FLOWERING</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">AMERICAN ELM</td>
+<td align="left">LEAF BUDBREAK</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">AMERICAN TAMARACK</td>
+<td align="left">ALL LEAVES COLORED (GROUP)</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">34</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">AMERICAN TAMARACK</td>
+<td align="left">LEAF BUDBREAK</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">45</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">APPLE</td>
+<td align="left">FLOWERING</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">APPLE</td>
+<td align="left">LAST FLOWER</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">APPLE</td>
+<td align="left">LEAF BUDBREAK</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">BEAKED HAZELNUT</td>
+<td align="left">FIRST POLLEN VISIBLE</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">39</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">BIG TOOTHED ASPEN</td>
+<td align="left">LEAF BUDBREAK</td>
+<td align="left">ITASCA</td>
+<td align="right">1985</td>
+<td align="right">2016</td>
+<td align="right">31</td>
+<td align="right">36</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">BUR OAK</td>
+<td align="left">LEAF BUDBREAK</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">COMMON LILAC</td>
+<td align="left">FLOWERING</td>
+<td align="left">ITASCA</td>
+<td align="right">1985</td>
+<td align="right">2016</td>
+<td align="right">31</td>
+<td align="right">31</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">LILAC</td>
+<td align="left">FLOWERING</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">LILAC</td>
+<td align="left">FULL FLOWERING</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">50</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">LILAC</td>
+<td align="left">LEAF BUDBREAK</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">PIN CHERRY [FIRE C, BIRD C]</td>
+<td align="left">FLOWERING</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2015</td>
+<td align="right">31</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">PUSSY WILLOW</td>
+<td align="left">FLOWERING</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">70</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">QUAKING ASPEN</td>
+<td align="left">LEAF BUDBREAK</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">50</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">RED ELDERBERRY</td>
+<td align="left">FLOWERING</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">50</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">RED ELDERBERRY</td>
+<td align="left">LEAF BUDBREAK</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">RED MAPLE</td>
+<td align="left">COLORED LEAVES</td>
+<td align="left">ANOKA</td>
+<td align="right">1984</td>
+<td align="right">2017</td>
+<td align="right">33</td>
+<td align="right">66</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">SILVER MAPLE</td>
+<td align="left">FLOWERING</td>
+<td align="left">RAMSEY</td>
+<td align="right">1941</td>
+<td align="right">1991</td>
+<td align="right">50</td>
+<td align="right">51</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">SPECKLED ALDER [HOARY A]</td>
+<td align="left">FLOWERING</td>
+<td align="left">ITASCA</td>
+<td align="right">1985</td>
+<td align="right">2016</td>
+<td align="right">31</td>
+<td align="right">35</td>
+</tr>
+<tr class="even">
+<td align="left">WOODY</td>
+<td align="left">TAMARACK</td>
+<td align="left">COLORED NEEDLES</td>
+<td align="left">ANOKA</td>
+<td align="right">1984</td>
+<td align="right">2017</td>
+<td align="right">33</td>
+<td align="right">39</td>
+</tr>
+<tr class="odd">
+<td align="left">WOODY</td>
+<td align="left">TREMBLING ASPEN</td>
+<td align="left">LEAF BUDBREAK</td>
+<td align="left">ITASCA</td>
+<td align="right">1984</td>
+<td align="right">2016</td>
+<td align="right">32</td>
+<td align="right">49</td>
+</tr>
+</tbody>
+</table>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>We have already looked at a tree - let’s see if we can broaden the scope of the organisms we investigate and chose examples from different groups of species. For efficiency, we’ll divvy up the work and have everyone chose a different species.</p>
+<div id="ques:phen-" class="question">
+<p class="question-begin">
+► Question 18.18
+</p>
+<div class="question-body">
+<p>Call dibs on the species you would like to investigate. Do a tiny-google and write a 3-5 sentences description of your species. List the phenological questions you could pose about the species you have chosen based on your data set<label for="tufte-sn-108" class="margin-toggle sidenote-number">108</label><input type="checkbox" id="tufte-sn-108" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">108</span> If you were writing a report/paper this would be part of your introduction/background section.</span>.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>We are going to practice putting together all the components of a data science-esque analysis.</p>
+<div class="figure">
+<img src="figures/data-science.png" alt=""><p class="caption">Data Science Process (H.Wickham &amp; Grolemund: R for Data Science</p>
+</div>
+<div id="ques:phen-" class="question">
+<p class="question-begin">
+► Question 18.18
+</p>
+<div class="question-body">
+<p>Chose the phenophase you want to investigate and go through the process of “Transform-Visualize-Analyze/Model” + “Communicate.”</p>
+<ol style="list-style-type: decimal">
+<li>
+<em>Transform</em>: Create a subset of your data set that contains only the data for the species, phenophase, and location you have chosen.</li>
+<li>
+<em>Visualize</em>: Plot the change in the timing of the phenophase you have chosen over time.</li>
+<li>
+<em>Model/Analyze</em>: Calculate the rate of change using a linear regression.</li>
+<li>
+<em>Import/Tidy/Transform</em>: Determine what the appropriate temperature data is to match your phenophase data<label for="tufte-sn-109" class="margin-toggle sidenote-number">109</label><input type="checkbox" id="tufte-sn-109" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">109</span> Remember this will include both matching the geographic location &amp; what time of year the temperature should be from, and time span to compare match the years in your data set</span>, the download, and import it.</li>
+<li>
+<em>Visualize</em>: Plot the change in temperature over time.</li>
+<li>
+<em>Model/Analyze</em>: Calculate the reate of change using a linear regression.</li>
+<li>
+<em>Transform</em>: Combine the phenophase and temperature data.</li>
+<li>
+<em>Visualize</em>: Plot the relationship of temperature &amp; phenophase</li>
+<li>
+<em>Model/Analyze</em>: Determine if the relationship of temperature/phenophase is significant.</li>
+</ol>
+<p>Describe what you are doing as you go, i.e. describe your methods<label for="tufte-sn-110" class="margin-toggle sidenote-number">110</label><input type="checkbox" id="tufte-sn-110" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">110</span> Pro Tip: Use the instructions as your starting point, for some of them you would want to add a detail or two specific to your analysis.</span>.</p>
+<p>Create a final multi-panel figure of your three visualizations and share it with your classmates in our slack channel along with your results (be specific.)</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:phen-" class="question">
+<p class="question-begin">
+► Question 18.18
+</p>
+<div class="question-body">
+<p>Collect the results from all the species/phenophases we have analyzed, this includes the American Elm, your species and those of your classmates and discuss the overall results.</p>
+<ul>
+<li>restate the overall broad question/central hypothesis</li>
+<li>summarize in 2-3 sentences what data set you used (include all the species/phenophase analysis we’ve done as a class) and how your analyzed it.</li>
+<li>summarize the results - which (if any) phenophase now occur earlier/later/have not changed? Which (if any) phenophases are significantly correlated with temperature? How are you reaching these conclusions?</li>
+<li>discuss your results - what mechanisms are consistent with the patterns your have observed? Make sure to connect your final conclusion(s) back to your initial question/hypothesis.</li>
+</ul>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:phen-" class="question">
+<p class="question-begin">
+► Question 18.18
+</p>
+<div class="question-body">
+<p>A final question we should consider is what the potential impacts of changing phenologies could be. Consider that species within a biological community might be differentially impacted by climate change and that some might be directly impacted by climate change resulting in an altered phenology, while other might be indirectly impacted because of an altered phenology for a species they closely interact with (this is called a population asynchrony or phenological mismatch).</p>
+<p>Describe how you could set up an analysis to to test whether one of the species we analyzed might experience a phenological mismatch. Your description should include what how what data you would need and how you would design your analysis.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="acknowledgments-2" class="section level2" number="18.8">
+<h2>
+<span class="header-section-number">18.8</span> Acknowledgments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('acknowledgments-2')" onmouseout="reset_tooltip('acknowledgments-2-tooltip')"><span class="tooltiptext" id="acknowledgments-2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>These activities are based on the EDDIE Phenology Trends and Climate Change in Minnesota module.<label for="tufte-sn-111" class="margin-toggle sidenote-number">111</label><input type="checkbox" id="tufte-sn-111" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">111</span> Freeman, P. (2021). Phenology Trends and Climate Change in Minnesota (Project EDDIE).</span></p>
 
 </div>
 </div></body></html>
@@ -816,7 +2025,7 @@ Figure 18.4: Change in mean March temperature [Fahrenheit] for 1941 - 1991 (blue
 <a href="references.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-14
+2021-10-19
  using 
 R version 4.0.2 (2020-06-22)
 </p>
