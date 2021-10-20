@@ -205,6 +205,7 @@ function reset_tooltip(id) {
 <a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
 <a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="phenology-1.html"><span class="toc-section-number">19</span> Phenology</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -352,18 +353,18 @@ How would you eliminate hook size from the data set?
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="welcome-to-the-tidyverse.html#cb121-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb121-2"><a href="welcome-to-the-tidyverse.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Day, Month, Year, <span class="fu">everything</span>())</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 12
-##      Day Month  Year Site        Species      Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set
-##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
-##  1    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   287   353        10     1
-##  2    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   425   495        10     1
-##  3    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   416   502        15     1
-##  4    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   416   507        10     1
-##  5    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   418   510        15     1
-##  6    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   434   515        10     1
-##  7    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   427   520        15     1
-##  8    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   446   532        10     1
-##  9    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   465   538        10     1
-## 10    28     7  2015 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   450   539        10     1
+##      Day Month  Year Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+##  1    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1
+##  2    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   425   495        10     1
+##  3    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   502        15     1
+##  4    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   507        10     1
+##  5    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   418   510        15     1
+##  6    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   434   515        10     1
+##  7    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   427   520        15     1
+##  8    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1
+##  9    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1
+## 10    28     7  2015 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1
 ## # ... with 2,315 more rows</code></pre>
 <p>There you go. Simple as that.</p>
 </div>
@@ -377,19 +378,19 @@ How would you eliminate hook size from the data set?
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="welcome-to-the-tidyverse.html#cb123-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb123-2"><a href="welcome-to-the-tidyverse.html#cb123-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(Species, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"species"</span>, <span class="st">"genus"</span>), <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 14
-##    Site    Species  species genus Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month
-##    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   287   353        10     1    28     7
-##  2 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   425   495        10     1    28     7
-##  3 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   416   502        15     1    28     7
-##  4 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   416   507        10     1    28     7
-##  5 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   418   510        15     1    28     7
-##  6 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   434   515        10     1    28     7
-##  7 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   427   520        15     1    28     7
-##  8 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   446   532        10     1    28     7
-##  9 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   465   538        10     1    28     7
-## 10 Aransa~ Bagre_m~ Bagre   mari~ U     &lt;NA&gt;              NA   450   539        10     1    28     7
-## # ... with 2,315 more rows, and 1 more variable: Year &lt;dbl&gt;</code></pre>
+##    Site        Species       species genus   Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
+##  2 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015
+##  3 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015
+##  4 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015
+##  5 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015
+##  6 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015
+##  7 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015
+##  8 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
+##  9 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
+## 10 Aransas_Bay Bagre_marinus Bagre   marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
+## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-3" class="question">
 <p class="question-begin">
 ► Question 7.3
@@ -405,18 +406,18 @@ How would you eliminate hook size from the data set?
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="welcome-to-the-tidyverse.html#cb125-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb125-2"><a href="welcome-to-the-tidyverse.html#cb125-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(Date, Day, Month, Year, <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 13
-##    Site    Species   Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set Date     Day Month  Year
-##    &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   287   353        10     1 28_7_~    28     7  2015
-##  2 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   425   495        10     1 28_7_~    28     7  2015
-##  3 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   416   502        15     1 28_7_~    28     7  2015
-##  4 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   416   507        10     1 28_7_~    28     7  2015
-##  5 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   418   510        15     1 28_7_~    28     7  2015
-##  6 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   434   515        10     1 28_7_~    28     7  2015
-##  7 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   427   520        15     1 28_7_~    28     7  2015
-##  8 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   446   532        10     1 28_7_~    28     7  2015
-##  9 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   465   538        10     1 28_7_~    28     7  2015
-## 10 Aransa~ Bagre_ma~ U     &lt;NA&gt;              NA   450   539        10     1 28_7_~    28     7  2015
+##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set Date        Day Month  Year
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1 28_7_2015    28     7  2015
+##  2 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   425   495        10     1 28_7_2015    28     7  2015
+##  3 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   502        15     1 28_7_2015    28     7  2015
+##  4 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   507        10     1 28_7_2015    28     7  2015
+##  5 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   418   510        15     1 28_7_2015    28     7  2015
+##  6 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   434   515        10     1 28_7_2015    28     7  2015
+##  7 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   427   520        15     1 28_7_2015    28     7  2015
+##  8 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1 28_7_2015    28     7  2015
+##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1 28_7_2015    28     7  2015
+## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1 28_7_2015    28     7  2015
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-4" class="question">
 <p class="question-begin">
@@ -446,18 +447,18 @@ How would you eliminate hook size from the data set?
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="welcome-to-the-tidyverse.html#cb127-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb127-2"><a href="welcome-to-the-tidyverse.html#cb127-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Observed_Stage)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 12
-##    Site       Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Redfish_B~ Sphyrna_tibu~ M     MAT              622   668   850        10     1     8     9  2015
-##  2 Redfish_B~ Sphyrna_tibu~ M     MAT              656   710   869        10     1     8     9  2015
-##  3 Redfish_B~ Sphyrna_tibu~ F     MAT              708   770   979        15     2     8     9  2015
-##  4 Corpus_Ch~ Sphyrna_tibu~ M     MAT              695   757   954        10     2    12     9  2016
-##  5 Corpus_Ch~ Sphyrna_tibu~ F     MAT              760   861  1090        10     2    12     9  2016
-##  6 Corpus_Ch~ Sphyrna_tibu~ M     MAT              621   689   856        10     2    27     9  2016
-##  7 Redfish_B~ Sphyrna_tibu~ F     MAT              781   853  1020        10     4    29     9  2016
-##  8 Redfish_B~ Sphyrna_tibu~ M     MAT              721   783   980        10     3    11     8  2017
-##  9 Redfish_B~ Carcharhinus~ U     UND               NA    NA    NA        15     2    16     6  2016
-## 10 Corpus_Ch~ Sphyrna_tibu~ U     UND               NA    NA    NA        10     1    27     9  2016
+##    Site               Species                 Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;              &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Redfish_Bay        Sphyrna_tiburo          M     MAT              622   668   850        10     1     8     9  2015
+##  2 Redfish_Bay        Sphyrna_tiburo          M     MAT              656   710   869        10     1     8     9  2015
+##  3 Redfish_Bay        Sphyrna_tiburo          F     MAT              708   770   979        15     2     8     9  2015
+##  4 Corpus_Christi_Bay Sphyrna_tiburo          M     MAT              695   757   954        10     2    12     9  2016
+##  5 Corpus_Christi_Bay Sphyrna_tiburo          F     MAT              760   861  1090        10     2    12     9  2016
+##  6 Corpus_Christi_Bay Sphyrna_tiburo          M     MAT              621   689   856        10     2    27     9  2016
+##  7 Redfish_Bay        Sphyrna_tiburo          F     MAT              781   853  1020        10     4    29     9  2016
+##  8 Redfish_Bay        Sphyrna_tiburo          M     MAT              721   783   980        10     3    11     8  2017
+##  9 Redfish_Bay        Carcharhinus_brevipinna U     UND               NA    NA    NA        15     2    16     6  2016
+## 10 Corpus_Christi_Bay Sphyrna_tiburo          U     UND               NA    NA    NA        10     1    27     9  2016
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-8" class="question">
 <p class="question-begin">
@@ -476,18 +477,18 @@ How would sort your table by Sex?
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="welcome-to-the-tidyverse.html#cb129-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb129-2"><a href="welcome-to-the-tidyverse.html#cb129-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(FL))</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 12
-##    Site       Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransas_B~ Carcharhinus~ F     &lt;NA&gt;            1042  1140  1410        15     1    25     5  2016
-##  2 Redfish_B~ Carcharhinus~ F     &lt;NA&gt;             812   900  1090        15     1    16     6  2016
-##  3 Redfish_B~ Carcharhinus~ M     &lt;NA&gt;             792   882  1092        15     2    16     6  2016
-##  4 Corpus_Ch~ Sphyrna_tibu~ F     MAT              760   861  1090        10     2    12     9  2016
-##  5 Redfish_B~ Sphyrna_tibu~ F     MAT              781   853  1020        10     4    29     9  2016
-##  6 Corpus_Ch~ Sciaenops_oc~ U     &lt;NA&gt;              NA   841   950        10     3    25     9  2018
-##  7 Redfish_B~ Carcharhinus~ M     &lt;NA&gt;             740   840  1010        15     3    29     9  2016
-##  8 Redfish_B~ Carcharhinus~ M     &lt;NA&gt;             740   820  1020        10     4     1     8  2016
-##  9 Aransas_B~ Carcharhinus~ M     &lt;NA&gt;             720   812   912        15     4    22     9  2016
-## 10 Redfish_B~ Sphyrna_tibu~ M     MAT              721   783   980        10     3    11     8  2017
+##    Site               Species                 Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;              &lt;chr&gt;                   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay        Carcharhinus_leucas     F     &lt;NA&gt;            1042  1140  1410        15     1    25     5  2016
+##  2 Redfish_Bay        Carcharhinus_brevipinna F     &lt;NA&gt;             812   900  1090        15     1    16     6  2016
+##  3 Redfish_Bay        Carcharhinus_brevipinna M     &lt;NA&gt;             792   882  1092        15     2    16     6  2016
+##  4 Corpus_Christi_Bay Sphyrna_tiburo          F     MAT              760   861  1090        10     2    12     9  2016
+##  5 Redfish_Bay        Sphyrna_tiburo          F     MAT              781   853  1020        10     4    29     9  2016
+##  6 Corpus_Christi_Bay Sciaenops_ocellatus     U     &lt;NA&gt;              NA   841   950        10     3    25     9  2018
+##  7 Redfish_Bay        Carcharhinus_leucas     M     &lt;NA&gt;             740   840  1010        15     3    29     9  2016
+##  8 Redfish_Bay        Carcharhinus_brevipinna M     &lt;NA&gt;             740   820  1020        10     4     1     8  2016
+##  9 Aransas_Bay        Carcharhinus_leucas     M     &lt;NA&gt;             720   812   912        15     4    22     9  2016
+## 10 Redfish_Bay        Sphyrna_tiburo          M     MAT              721   783   980        10     3    11     8  2017
 ## # ... with 2,315 more rows</code></pre>
 <p>The function <code>filter()</code> is used to subset a data frame by row.</p>
 <p>We do this using <code>regular expressions</code> and the <code>boolean operators</code> we previously encounter to describe the content of sets of rows.</p>
@@ -495,18 +496,18 @@ How would sort your table by Sex?
 <div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="welcome-to-the-tidyverse.html#cb131-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb131-2"><a href="welcome-to-the-tidyverse.html#cb131-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"Bagre_marinus"</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1,511 x 12
-##    Site        Species      Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
-##  2 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015
-##  3 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015
-##  4 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015
-##  5 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015
-##  6 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015
-##  7 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015
-##  8 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
-##  9 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
-## 10 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
+##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
+##  2 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015
+##  3 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015
+##  4 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015
+##  5 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015
+##  6 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015
+##  7 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015
+##  8 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
+##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
+## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
 ## # ... with 1,501 more rows</code></pre>
 <div id="ques:tidy-9" class="question">
 <p class="question-begin">
@@ -526,18 +527,18 @@ How would you select only rows containing Scalloped Hammerheads (<em>Sphyrna lew
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="welcome-to-the-tidyverse.html#cb133-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb133-2"><a href="welcome-to-the-tidyverse.html#cb133-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Species <span class="sc">==</span> <span class="st">"Bagre_marinus"</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 814 x 12
-##    Site       Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Redfish_B~ Rhizoprionod~ M     &lt;NA&gt;             351   378   433        15     1    29     7  2015
-##  2 Redfish_B~ Sphyrna_tibu~ F     &lt;NA&gt;             470   430   600        10     3    29     7  2015
-##  3 Redfish_B~ Hypanus_amer~ F     &lt;NA&gt;              NA    NA   670        15     3    29     7  2015
-##  4 Redfish_B~ Hypanus_sabi~ F     &lt;NA&gt;              NA    NA   340        10     3    29     7  2015
-##  5 Redfish_B~ Hypanus_amer~ M     &lt;NA&gt;              NA    NA   810        10     4    29     7  2015
-##  6 Corpus_Ch~ Carcharhinus~ F     &lt;NA&gt;             609   670   820        15     1    30     7  2015
-##  7 Corpus_Ch~ Sphyrna_tibu~ M     &lt;NA&gt;             495   485   615        10     2    24     8  2015
-##  8 Corpus_Ch~ Sphyrna_tibu~ F     &lt;NA&gt;             550   370   720        10     2    24     8  2015
-##  9 Corpus_Ch~ Sphyrna_tibu~ M     &lt;NA&gt;             470   505   645        10     3    24     8  2015
-## 10 Corpus_Ch~ Sphyrna_tibu~ F     &lt;NA&gt;             540   565   720        10     3    24     8  2015
+##    Site               Species                    Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;              &lt;chr&gt;                      &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Redfish_Bay        Rhizoprionodon_terraenovae M     &lt;NA&gt;             351   378   433        15     1    29     7  2015
+##  2 Redfish_Bay        Sphyrna_tiburo             F     &lt;NA&gt;             470   430   600        10     3    29     7  2015
+##  3 Redfish_Bay        Hypanus_americanus         F     &lt;NA&gt;              NA    NA   670        15     3    29     7  2015
+##  4 Redfish_Bay        Hypanus_sabina             F     &lt;NA&gt;              NA    NA   340        10     3    29     7  2015
+##  5 Redfish_Bay        Hypanus_americanus         M     &lt;NA&gt;              NA    NA   810        10     4    29     7  2015
+##  6 Corpus_Christi_Bay Carcharhinus_leucas        F     &lt;NA&gt;             609   670   820        15     1    30     7  2015
+##  7 Corpus_Christi_Bay Sphyrna_tiburo             M     &lt;NA&gt;             495   485   615        10     2    24     8  2015
+##  8 Corpus_Christi_Bay Sphyrna_tiburo             F     &lt;NA&gt;             550   370   720        10     2    24     8  2015
+##  9 Corpus_Christi_Bay Sphyrna_tiburo             M     &lt;NA&gt;             470   505   645        10     3    24     8  2015
+## 10 Corpus_Christi_Bay Sphyrna_tiburo             F     &lt;NA&gt;             540   565   720        10     3    24     8  2015
 ## # ... with 804 more rows</code></pre>
 <div id="ques:tidy-10" class="question">
 <p class="question-begin">
@@ -556,35 +557,35 @@ How would you create a dataframe without Scalloped Hammerheads (<em>Sphyrna lewi
 <div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="welcome-to-the-tidyverse.html#cb135-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb135-2"><a href="welcome-to-the-tidyverse.html#cb135-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sciades_felis"</span>, <span class="st">"Bagre_marinus"</span>, <span class="st">"Synodus_foetens"</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2,166 x 12
-##    Site        Species      Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
-##  2 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015
-##  3 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015
-##  4 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015
-##  5 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015
-##  6 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015
-##  7 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015
-##  8 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
-##  9 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
-## 10 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
+##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
+##  2 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015
+##  3 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015
+##  4 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015
+##  5 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015
+##  6 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015
+##  7 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015
+##  8 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
+##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
+## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
 ## # ... with 2,156 more rows</code></pre>
 <p>Again, if you wanted everything but rows containing those values you would preface it with a <code>!</code>.</p>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb137-1"><a href="welcome-to-the-tidyverse.html#cb137-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb137-2"><a href="welcome-to-the-tidyverse.html#cb137-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sciades_felis"</span>, <span class="st">"Bagre_marinus"</span>, <span class="st">"Synodus_foetens"</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 159 x 12
-##    Site       Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;      &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Redfish_B~ Rhizoprionod~ M     &lt;NA&gt;             351   378   433        15     1    29     7  2015
-##  2 Redfish_B~ Sphyrna_tibu~ F     &lt;NA&gt;             470   430   600        10     3    29     7  2015
-##  3 Redfish_B~ Hypanus_amer~ F     &lt;NA&gt;              NA    NA   670        15     3    29     7  2015
-##  4 Redfish_B~ Hypanus_sabi~ F     &lt;NA&gt;              NA    NA   340        10     3    29     7  2015
-##  5 Redfish_B~ Hypanus_amer~ M     &lt;NA&gt;              NA    NA   810        10     4    29     7  2015
-##  6 Corpus_Ch~ Carcharhinus~ F     &lt;NA&gt;             609   670   820        15     1    30     7  2015
-##  7 Corpus_Ch~ Sphyrna_tibu~ M     &lt;NA&gt;             495   485   615        10     2    24     8  2015
-##  8 Corpus_Ch~ Sphyrna_tibu~ F     &lt;NA&gt;             550   370   720        10     2    24     8  2015
-##  9 Corpus_Ch~ Sphyrna_tibu~ M     &lt;NA&gt;             470   505   645        10     3    24     8  2015
-## 10 Corpus_Ch~ Sphyrna_tibu~ F     &lt;NA&gt;             540   565   720        10     3    24     8  2015
+##    Site               Species                    Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;              &lt;chr&gt;                      &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Redfish_Bay        Rhizoprionodon_terraenovae M     &lt;NA&gt;             351   378   433        15     1    29     7  2015
+##  2 Redfish_Bay        Sphyrna_tiburo             F     &lt;NA&gt;             470   430   600        10     3    29     7  2015
+##  3 Redfish_Bay        Hypanus_americanus         F     &lt;NA&gt;              NA    NA   670        15     3    29     7  2015
+##  4 Redfish_Bay        Hypanus_sabina             F     &lt;NA&gt;              NA    NA   340        10     3    29     7  2015
+##  5 Redfish_Bay        Hypanus_americanus         M     &lt;NA&gt;              NA    NA   810        10     4    29     7  2015
+##  6 Corpus_Christi_Bay Carcharhinus_leucas        F     &lt;NA&gt;             609   670   820        15     1    30     7  2015
+##  7 Corpus_Christi_Bay Sphyrna_tiburo             M     &lt;NA&gt;             495   485   615        10     2    24     8  2015
+##  8 Corpus_Christi_Bay Sphyrna_tiburo             F     &lt;NA&gt;             550   370   720        10     2    24     8  2015
+##  9 Corpus_Christi_Bay Sphyrna_tiburo             M     &lt;NA&gt;             470   505   645        10     3    24     8  2015
+## 10 Corpus_Christi_Bay Sphyrna_tiburo             F     &lt;NA&gt;             540   565   720        10     3    24     8  2015
 ## # ... with 149 more rows</code></pre>
 <div id="ques:tidy-11" class="question">
 <p class="question-begin">
@@ -603,18 +604,18 @@ How would you subset a data frame to contain only entries for different species 
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb139-1"><a href="welcome-to-the-tidyverse.html#cb139-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb139-2"><a href="welcome-to-the-tidyverse.html#cb139-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FL <span class="sc">&gt;</span> <span class="dv">440</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 907 x 12
-##    Site        Species      Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
-##  2 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
-##  3 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
-##  4 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   496   565        10     1    28     7  2015
-##  5 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   476   569        10     1    28     7  2015
-##  6 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   495   570        10     1    28     7  2015
-##  7 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   490   575        10     1    28     7  2015
-##  8 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   486   581        10     1    28     7  2015
-##  9 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   503   589        10     1    28     7  2015
-## 10 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   489   590        10     1    28     7  2015
+##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
+##  2 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
+##  3 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
+##  4 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   496   565        10     1    28     7  2015
+##  5 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   476   569        10     1    28     7  2015
+##  6 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   495   570        10     1    28     7  2015
+##  7 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   490   575        10     1    28     7  2015
+##  8 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   486   581        10     1    28     7  2015
+##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   503   589        10     1    28     7  2015
+## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   489   590        10     1    28     7  2015
 ## # ... with 897 more rows</code></pre>
 <div id="ques:tidy-12" class="question">
 <p class="question-begin">
@@ -633,9 +634,9 @@ Create a data frame containing only entries with a forklength &lt; 300.
 <div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="welcome-to-the-tidyverse.html#cb141-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb141-2"><a href="welcome-to-the-tidyverse.html#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"Sphyrna_lewini"</span> <span class="sc">&amp;</span> FL <span class="sc">&lt;</span> <span class="dv">300</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 12
-##   Site          Species     Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##   &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 Corpus_Chris~ Sphyrna_le~ F     &lt;NA&gt;             192   210   280        15     3     6     7  2017</code></pre>
+##   Site               Species        Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##   &lt;chr&gt;              &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Corpus_Christi_Bay Sphyrna_lewini F     &lt;NA&gt;             192   210   280        15     3     6     7  2017</code></pre>
 <div id="ques:tidy-13" class="question">
 <p class="question-begin">
 ► Question 7.10
@@ -653,18 +654,18 @@ How would you subset a data frame to contain only entries for different species 
 <div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="welcome-to-the-tidyverse.html#cb143-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb143-2"><a href="welcome-to-the-tidyverse.html#cb143-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">==</span> <span class="st">"Sphyrna_lewini"</span> <span class="sc">|</span> FL <span class="sc">&lt;</span> <span class="dv">300</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 409 x 12
-##    Site          Species    Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;         &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransas_Bay   Bagre_mar~ U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
-##  2 Aransas_Bay   Bagre_mar~ U     &lt;NA&gt;              NA   285   314        10     2    28     7  2015
-##  3 Corpus_Chris~ Bagre_mar~ U     &lt;NA&gt;              NA   299   348        10     1    30     7  2015
-##  4 Corpus_Chris~ Bagre_mar~ U     &lt;NA&gt;              NA   297   367        10     2    30     7  2015
-##  5 Corpus_Chris~ Bagre_mar~ U     &lt;NA&gt;              NA   298   362        10     3    30     7  2015
-##  6 Corpus_Chris~ Bagre_mar~ U     &lt;NA&gt;              NA   290   350        10     2    24     8  2015
-##  7 Redfish_Bay   Bagre_mar~ U     &lt;NA&gt;              NA   254   284        10     4     8     9  2015
-##  8 Aransas_Bay   Bagre_mar~ U     &lt;NA&gt;              NA    50   574        10     1    25     5  2016
-##  9 Aransas_Bay   Bagre_mar~ U     &lt;NA&gt;              NA   280   340         3     3    25     5  2016
-## 10 Redfish_Bay   Bagre_mar~ U     &lt;NA&gt;              NA   294   353        10     4    16     6  2016
+##    Site               Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##    &lt;chr&gt;              &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Aransas_Bay        Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
+##  2 Aransas_Bay        Bagre_marinus U     &lt;NA&gt;              NA   285   314        10     2    28     7  2015
+##  3 Corpus_Christi_Bay Bagre_marinus U     &lt;NA&gt;              NA   299   348        10     1    30     7  2015
+##  4 Corpus_Christi_Bay Bagre_marinus U     &lt;NA&gt;              NA   297   367        10     2    30     7  2015
+##  5 Corpus_Christi_Bay Bagre_marinus U     &lt;NA&gt;              NA   298   362        10     3    30     7  2015
+##  6 Corpus_Christi_Bay Bagre_marinus U     &lt;NA&gt;              NA   290   350        10     2    24     8  2015
+##  7 Redfish_Bay        Bagre_marinus U     &lt;NA&gt;              NA   254   284        10     4     8     9  2015
+##  8 Aransas_Bay        Bagre_marinus U     &lt;NA&gt;              NA    50   574        10     1    25     5  2016
+##  9 Aransas_Bay        Bagre_marinus U     &lt;NA&gt;              NA   280   340         3     3    25     5  2016
+## 10 Redfish_Bay        Bagre_marinus U     &lt;NA&gt;              NA   294   353        10     4    16     6  2016
 ## # ... with 399 more rows</code></pre>
 <div id="ques:tidy-14" class="question">
 <p class="question-begin">
@@ -687,15 +688,15 @@ How would you select fish that have a forklength either smaller than 200 cm or l
 <span id="cb145-3"><a href="welcome-to-the-tidyverse.html#cb145-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(FL <span class="sc">==</span> <span class="fu">max</span>(FL)) <span class="sc">%&gt;%</span></span>
 <span id="cb145-4"><a href="welcome-to-the-tidyverse.html#cb145-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 7 x 12
-##   Site       Species        Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##   &lt;chr&gt;      &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 Aransas_B~ Rhizoprionodo~ F     &lt;NA&gt;             580   637   790        10     2    25     8  2015
-## 2 Aransas_B~ Carcharhinus_~ F     &lt;NA&gt;            1042  1140  1410        15     1    25     5  2016
-## 3 Aransas_B~ Carcharhinus_~ F     &lt;NA&gt;             690   757   940        10     2    22     6  2017
-## 4 Corpus_Ch~ Sphyrna_lewini F     &lt;NA&gt;             520   578   770        10     1    21     8  2017
-## 5 Corpus_Ch~ Carcharhinus_~ U     &lt;NA&gt;             335   415   475        10     1     3     7  2018
-## 6 Corpus_Ch~ Sciaenops_oce~ U     &lt;NA&gt;              NA   841   950        10     3    25     9  2018
-## 7 Corpus_Ch~ Synodus_foete~ U     &lt;NA&gt;              NA   173   185        10     3    30     6  2016</code></pre>
+##   Site               Species                    Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
+##   &lt;chr&gt;              &lt;chr&gt;                      &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Aransas_Bay        Rhizoprionodon_terraenovae F     &lt;NA&gt;             580   637   790        10     2    25     8  2015
+## 2 Aransas_Bay        Carcharhinus_leucas        F     &lt;NA&gt;            1042  1140  1410        15     1    25     5  2016
+## 3 Aransas_Bay        Carcharhinus_limbatus      F     &lt;NA&gt;             690   757   940        10     2    22     6  2017
+## 4 Corpus_Christi_Bay Sphyrna_lewini             F     &lt;NA&gt;             520   578   770        10     1    21     8  2017
+## 5 Corpus_Christi_Bay Carcharhinus_porosus       U     &lt;NA&gt;             335   415   475        10     1     3     7  2018
+## 6 Corpus_Christi_Bay Sciaenops_ocellatus        U     &lt;NA&gt;              NA   841   950        10     3    25     9  2018
+## 7 Corpus_Christi_Bay Synodus_foetens            U     &lt;NA&gt;              NA   173   185        10     3    30     6  2016</code></pre>
 <p>This is also an example of how we can use the pipe (<code>%&gt;%</code>) to string a bunch of commands, in this example we are saying “take the object catch, and then group rows by Species and then for each group retain only the maximum forklength value for that group and then ungroup them again.”</p>
 <div id="ques:tidy-15" class="question">
 <p class="question-begin">
@@ -775,18 +776,18 @@ How would you produce a table showing all the species caught per station using d
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb151-1"><a href="welcome-to-the-tidyverse.html#cb151-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb151-2"><a href="welcome-to-the-tidyverse.html#cb151-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference =</span> STL <span class="sc">-</span> FL)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 13
-##    Site  Species Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year difference
-##    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
-##  1 Aran~ Bagre_~ U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015         66
-##  2 Aran~ Bagre_~ U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015         70
-##  3 Aran~ Bagre_~ U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015         86
-##  4 Aran~ Bagre_~ U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015         91
-##  5 Aran~ Bagre_~ U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015         92
-##  6 Aran~ Bagre_~ U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015         81
-##  7 Aran~ Bagre_~ U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015         93
-##  8 Aran~ Bagre_~ U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015         86
-##  9 Aran~ Bagre_~ U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015         73
-## 10 Aran~ Bagre_~ U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015         89
+##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year difference
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+##  1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015         66
+##  2 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015         70
+##  3 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015         86
+##  4 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015         91
+##  5 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015         92
+##  6 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015         81
+##  7 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015         93
+##  8 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015         86
+##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015         73
+## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015         89
 ## # ... with 2,315 more rows</code></pre>
 <p>You should now have a column called <code>difference</code> at the end of the data frame<label for="tufte-sn-34" class="margin-toggle sidenote-number">34</label><input type="checkbox" id="tufte-sn-34" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">34</span> Instead of <code>-</code> you can of course use <code>+</code> to add , <code>*</code> to multiple, and <code>/</code> to divide values when creating a new column.</span>.</p>
 <div id="ques:tidy-18" class="question">
@@ -806,19 +807,19 @@ How would you create a new column called ratio, that is the ratio of the fork to
 <div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="welcome-to-the-tidyverse.html#cb153-1" aria-hidden="true" tabindex="-1"></a>catch <span class="sc">%&gt;%</span></span>
 <span id="cb153-2"><a href="welcome-to-the-tidyverse.html#cb153-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">unknown_sex =</span> Sex <span class="sc">==</span> <span class="st">"U"</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 13
-##    Site        Species      Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year
-##    &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015
-##  2 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015
-##  3 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015
-##  4 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015
-##  5 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015
-##  6 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015
-##  7 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015
-##  8 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015
-##  9 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015
-## 10 Aransas_Bay Bagre_marin~ U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015
-## # ... with 2,315 more rows, and 1 more variable: unknown_sex &lt;lgl&gt;</code></pre>
+##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year unknown_sex
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;      
+##  1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015 TRUE       
+##  2 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015 TRUE       
+##  3 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015 TRUE       
+##  4 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015 TRUE       
+##  5 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015 TRUE       
+##  6 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015 TRUE       
+##  7 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015 TRUE       
+##  8 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015 TRUE       
+##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015 TRUE       
+## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015 TRUE       
+## # ... with 2,315 more rows</code></pre>
 <p>You should know have a column called <code>unknown_sex</code> where if the animal that was caught was not sexed contains the value <code>TRUE</code>, if it was identified as male or female it would say <code>FALSE</code>.</p>
 <div id="ques:tidy-19" class="question">
 <p class="question-begin">
@@ -842,18 +843,18 @@ How would you create a new column called post_2017 that is TRUE if fish were cau
 <span id="cb155-3"><a href="welcome-to-the-tidyverse.html#cb155-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">diff_mean =</span> FL<span class="sc">-</span><span class="fu">mean</span>(FL, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
 <pre><code>## # A tibble: 2,325 x 13
 ## # Groups:   Species [14]
-##    Site   Species Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year diff_mean
-##    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
-##  1 Arans~ Bagre_~ U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015  -146.   
-##  2 Arans~ Bagre_~ U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015    -8.35 
-##  3 Arans~ Bagre_~ U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015   -17.4  
-##  4 Arans~ Bagre_~ U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015   -17.4  
-##  5 Arans~ Bagre_~ U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015   -15.4  
-##  6 Arans~ Bagre_~ U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015     0.646
-##  7 Arans~ Bagre_~ U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015    -6.35 
-##  8 Arans~ Bagre_~ U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015    12.6  
-##  9 Arans~ Bagre_~ U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015    31.6  
-## 10 Arans~ Bagre_~ U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015    16.6  
+##    Site        Species       Sex   Observed_Stage   PCL    FL   STL Hook_Size   Set   Day Month  Year diff_mean
+##    &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   287   353        10     1    28     7  2015  -146.   
+##  2 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   425   495        10     1    28     7  2015    -8.35 
+##  3 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   502        15     1    28     7  2015   -17.4  
+##  4 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   416   507        10     1    28     7  2015   -17.4  
+##  5 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   418   510        15     1    28     7  2015   -15.4  
+##  6 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   434   515        10     1    28     7  2015     0.646
+##  7 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   427   520        15     1    28     7  2015    -6.35 
+##  8 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   446   532        10     1    28     7  2015    12.6  
+##  9 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   465   538        10     1    28     7  2015    31.6  
+## 10 Aransas_Bay Bagre_marinus U     &lt;NA&gt;              NA   450   539        10     1    28     7  2015    16.6  
 ## # ... with 2,315 more rows</code></pre>
 <div id="ques:tidy-20" class="question">
 <p class="question-begin">

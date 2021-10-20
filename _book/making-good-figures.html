@@ -201,6 +201,7 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#spatial-visualization"> Spatial visualization</a></li>
 </ul>
 <a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="phenology-1.html"><span class="toc-section-number">19</span> Phenology</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -366,15 +367,13 @@ Figure 17.1: Impacts due to natural disasters (1900 - 2020). Impacts were calcul
 <p>We see that world is both a <code>data.frame</code> and a class <code>sf</code>(simple features) which is a class of R object designed speficically for plotting maps.</p>
 <p>Let’s take a look at the column names</p>
 <div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="making-good-figures.html#cb323-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(world)</span></code></pre></div>
-<pre><code>##  [1] "scalerank"  "featurecla" "labelrank"  "sovereignt" "sov_a3"     "adm0_dif"   "level"     
-##  [8] "type"       "admin"      "adm0_a3"    "geou_dif"   "geounit"    "gu_a3"      "su_dif"    
-## [15] "subunit"    "su_a3"      "brk_diff"   "name"       "name_long"  "brk_a3"     "brk_name"  
-## [22] "brk_group"  "abbrev"     "postal"     "formal_en"  "formal_fr"  "note_adm0"  "note_brk"  
-## [29] "name_sort"  "name_alt"   "mapcolor7"  "mapcolor8"  "mapcolor9"  "mapcolor13" "pop_est"   
-## [36] "gdp_md_est" "pop_year"   "lastcensus" "gdp_year"   "economy"    "income_grp" "wikipedia" 
-## [43] "fips_10"    "iso_a2"     "iso_a3"     "iso_n3"     "un_a3"      "wb_a2"      "wb_a3"     
-## [50] "woe_id"     "adm0_a3_is" "adm0_a3_us" "adm0_a3_un" "adm0_a3_wb" "continent"  "region_un" 
-## [57] "subregion"  "region_wb"  "name_len"   "long_len"   "abbrev_len" "tiny"       "homepart"  
+<pre><code>##  [1] "scalerank"  "featurecla" "labelrank"  "sovereignt" "sov_a3"     "adm0_dif"   "level"      "type"       "admin"     
+## [10] "adm0_a3"    "geou_dif"   "geounit"    "gu_a3"      "su_dif"     "subunit"    "su_a3"      "brk_diff"   "name"      
+## [19] "name_long"  "brk_a3"     "brk_name"   "brk_group"  "abbrev"     "postal"     "formal_en"  "formal_fr"  "note_adm0" 
+## [28] "note_brk"   "name_sort"  "name_alt"   "mapcolor7"  "mapcolor8"  "mapcolor9"  "mapcolor13" "pop_est"    "gdp_md_est"
+## [37] "pop_year"   "lastcensus" "gdp_year"   "economy"    "income_grp" "wikipedia"  "fips_10"    "iso_a2"     "iso_a3"    
+## [46] "iso_n3"     "un_a3"      "wb_a2"      "wb_a3"      "woe_id"     "adm0_a3_is" "adm0_a3_us" "adm0_a3_un" "adm0_a3_wb"
+## [55] "continent"  "region_un"  "subregion"  "region_wb"  "name_len"   "long_len"   "abbrev_len" "tiny"       "homepart"  
 ## [64] "geometry"</code></pre>
 <p>You can see that it contains quote a bit of information including some data about each country. The column <code>geometry</code> has the information about the country “shapes” (multipolygons) we want to plot.</p>
 <div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="making-good-figures.html#cb325-1" aria-hidden="true" tabindex="-1"></a>world <span class="sc">%&gt;%</span></span>
@@ -421,62 +420,48 @@ Figure 17.1: Impacts due to natural disasters (1900 - 2020). Impacts were calcul
 ## Dimension:     XY
 ## Bounding box:  xmin: -70.06611 ymin: -18.01973 xmax: 74.89131 ymax: 60.40581
 ## CRS:           +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0
-##   scalerank      featurecla labelrank     sovereignt sov_a3 adm0_dif level              type
-## 1         3 Admin-0 country         5    Netherlands    NL1        1     2           Country
-## 2         1 Admin-0 country         3    Afghanistan    AFG        0     2 Sovereign country
-## 3         1 Admin-0 country         3         Angola    AGO        0     2 Sovereign country
-## 4         1 Admin-0 country         6 United Kingdom    GB1        1     2        Dependency
-## 5         1 Admin-0 country         6        Albania    ALB        0     2 Sovereign country
-## 6         3 Admin-0 country         6        Finland    FI1        1     2           Country
-##         admin adm0_a3 geou_dif     geounit gu_a3 su_dif     subunit su_a3 brk_diff        name
-## 1       Aruba     ABW        0       Aruba   ABW      0       Aruba   ABW        0       Aruba
-## 2 Afghanistan     AFG        0 Afghanistan   AFG      0 Afghanistan   AFG        0 Afghanistan
-## 3      Angola     AGO        0      Angola   AGO      0      Angola   AGO        0      Angola
-## 4    Anguilla     AIA        0    Anguilla   AIA      0    Anguilla   AIA        0    Anguilla
-## 5     Albania     ALB        0     Albania   ALB      0     Albania   ALB        0     Albania
-## 6       Aland     ALD        0       Aland   ALD      0       Aland   ALD        0       Aland
-##       name_long brk_a3    brk_name brk_group abbrev postal                    formal_en formal_fr
-## 1         Aruba    ABW       Aruba      &lt;NA&gt;  Aruba     AW                        Aruba      &lt;NA&gt;
-## 2   Afghanistan    AFG Afghanistan      &lt;NA&gt;   Afg.     AF Islamic State of Afghanistan      &lt;NA&gt;
-## 3        Angola    AGO      Angola      &lt;NA&gt;   Ang.     AO  People's Republic of Angola      &lt;NA&gt;
-## 4      Anguilla    AIA    Anguilla      &lt;NA&gt;   Ang.     AI                         &lt;NA&gt;      &lt;NA&gt;
-## 5       Albania    ALB     Albania      &lt;NA&gt;   Alb.     AL          Republic of Albania      &lt;NA&gt;
-## 6 Aland Islands    ALD       Aland      &lt;NA&gt;  Aland     AI                Åland Islands      &lt;NA&gt;
-##   note_adm0 note_brk   name_sort name_alt mapcolor7 mapcolor8 mapcolor9 mapcolor13  pop_est
-## 1     Neth.     &lt;NA&gt;       Aruba     &lt;NA&gt;         4         2         2          9   103065
-## 2      &lt;NA&gt;     &lt;NA&gt; Afghanistan     &lt;NA&gt;         5         6         8          7 28400000
-## 3      &lt;NA&gt;     &lt;NA&gt;      Angola     &lt;NA&gt;         3         2         6          1 12799293
-## 4      U.K.     &lt;NA&gt;    Anguilla     &lt;NA&gt;         6         6         6          3    14436
-## 5      &lt;NA&gt;     &lt;NA&gt;     Albania     &lt;NA&gt;         1         4         1          6  3639453
-## 6      Fin.     &lt;NA&gt;       Aland     &lt;NA&gt;         4         1         4          6    27153
-##   gdp_md_est pop_year lastcensus gdp_year                    economy              income_grp
-## 1     2258.0       NA       2010       NA       6. Developing region 2. High income: nonOECD
-## 2    22270.0       NA       1979       NA  7. Least developed region           5. Low income
-## 3   110300.0       NA       1970       NA  7. Least developed region  3. Upper middle income
-## 4      108.9       NA         NA       NA       6. Developing region  3. Upper middle income
-## 5    21810.0       NA       2001       NA       6. Developing region  4. Lower middle income
-## 6     1563.0       NA         NA       NA 2. Developed region: nonG7    1. High income: OECD
-##   wikipedia fips_10 iso_a2 iso_a3 iso_n3 un_a3 wb_a2 wb_a3 woe_id adm0_a3_is adm0_a3_us adm0_a3_un
-## 1        NA    &lt;NA&gt;     AW    ABW    533   533    AW   ABW     NA        ABW        ABW         NA
-## 2        NA    &lt;NA&gt;     AF    AFG    004   004    AF   AFG     NA        AFG        AFG         NA
-## 3        NA    &lt;NA&gt;     AO    AGO    024   024    AO   AGO     NA        AGO        AGO         NA
-## 4        NA    &lt;NA&gt;     AI    AIA    660   660  &lt;NA&gt;  &lt;NA&gt;     NA        AIA        AIA         NA
-## 5        NA    &lt;NA&gt;     AL    ALB    008   008    AL   ALB     NA        ALB        ALB         NA
-## 6        NA    &lt;NA&gt;     AX    ALA    248   248  &lt;NA&gt;  &lt;NA&gt;     NA        ALA        ALD         NA
-##   adm0_a3_wb     continent region_un       subregion                 region_wb name_len long_len
-## 1         NA North America  Americas       Caribbean Latin America &amp; Caribbean        5        5
-## 2         NA          Asia      Asia   Southern Asia                South Asia       11       11
-## 3         NA        Africa    Africa   Middle Africa        Sub-Saharan Africa        6        6
-## 4         NA North America  Americas       Caribbean Latin America &amp; Caribbean        8        8
-## 5         NA        Europe    Europe Southern Europe     Europe &amp; Central Asia        7        7
-## 6         NA        Europe    Europe Northern Europe     Europe &amp; Central Asia        5       13
-##   abbrev_len tiny homepart droughts_total                       geometry
-## 1          5    4       NA             NA MULTIPOLYGON (((-69.89912 1...
-## 2          4   NA        1             65 MULTIPOLYGON (((74.89131 37...
-## 3          4   NA        1             26 MULTIPOLYGON (((14.19082 -5...
-## 4          4   NA       NA              1 MULTIPOLYGON (((-63.00122 1...
-## 5          4   NA        1             12 MULTIPOLYGON (((20.06396 42...
-## 6          5    5       NA             NA MULTIPOLYGON (((20.61133 60...</code></pre>
+##   scalerank      featurecla labelrank     sovereignt sov_a3 adm0_dif level              type       admin adm0_a3 geou_dif
+## 1         3 Admin-0 country         5    Netherlands    NL1        1     2           Country       Aruba     ABW        0
+## 2         1 Admin-0 country         3    Afghanistan    AFG        0     2 Sovereign country Afghanistan     AFG        0
+## 3         1 Admin-0 country         3         Angola    AGO        0     2 Sovereign country      Angola     AGO        0
+## 4         1 Admin-0 country         6 United Kingdom    GB1        1     2        Dependency    Anguilla     AIA        0
+## 5         1 Admin-0 country         6        Albania    ALB        0     2 Sovereign country     Albania     ALB        0
+## 6         3 Admin-0 country         6        Finland    FI1        1     2           Country       Aland     ALD        0
+##       geounit gu_a3 su_dif     subunit su_a3 brk_diff        name     name_long brk_a3    brk_name brk_group abbrev postal
+## 1       Aruba   ABW      0       Aruba   ABW        0       Aruba         Aruba    ABW       Aruba      &lt;NA&gt;  Aruba     AW
+## 2 Afghanistan   AFG      0 Afghanistan   AFG        0 Afghanistan   Afghanistan    AFG Afghanistan      &lt;NA&gt;   Afg.     AF
+## 3      Angola   AGO      0      Angola   AGO        0      Angola        Angola    AGO      Angola      &lt;NA&gt;   Ang.     AO
+## 4    Anguilla   AIA      0    Anguilla   AIA        0    Anguilla      Anguilla    AIA    Anguilla      &lt;NA&gt;   Ang.     AI
+## 5     Albania   ALB      0     Albania   ALB        0     Albania       Albania    ALB     Albania      &lt;NA&gt;   Alb.     AL
+## 6       Aland   ALD      0       Aland   ALD        0       Aland Aland Islands    ALD       Aland      &lt;NA&gt;  Aland     AI
+##                      formal_en formal_fr note_adm0 note_brk   name_sort name_alt mapcolor7 mapcolor8 mapcolor9 mapcolor13
+## 1                        Aruba      &lt;NA&gt;     Neth.     &lt;NA&gt;       Aruba     &lt;NA&gt;         4         2         2          9
+## 2 Islamic State of Afghanistan      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt; Afghanistan     &lt;NA&gt;         5         6         8          7
+## 3  People's Republic of Angola      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;      Angola     &lt;NA&gt;         3         2         6          1
+## 4                         &lt;NA&gt;      &lt;NA&gt;      U.K.     &lt;NA&gt;    Anguilla     &lt;NA&gt;         6         6         6          3
+## 5          Republic of Albania      &lt;NA&gt;      &lt;NA&gt;     &lt;NA&gt;     Albania     &lt;NA&gt;         1         4         1          6
+## 6                Åland Islands      &lt;NA&gt;      Fin.     &lt;NA&gt;       Aland     &lt;NA&gt;         4         1         4          6
+##    pop_est gdp_md_est pop_year lastcensus gdp_year                    economy              income_grp wikipedia fips_10 iso_a2
+## 1   103065     2258.0       NA       2010       NA       6. Developing region 2. High income: nonOECD        NA    &lt;NA&gt;     AW
+## 2 28400000    22270.0       NA       1979       NA  7. Least developed region           5. Low income        NA    &lt;NA&gt;     AF
+## 3 12799293   110300.0       NA       1970       NA  7. Least developed region  3. Upper middle income        NA    &lt;NA&gt;     AO
+## 4    14436      108.9       NA         NA       NA       6. Developing region  3. Upper middle income        NA    &lt;NA&gt;     AI
+## 5  3639453    21810.0       NA       2001       NA       6. Developing region  4. Lower middle income        NA    &lt;NA&gt;     AL
+## 6    27153     1563.0       NA         NA       NA 2. Developed region: nonG7    1. High income: OECD        NA    &lt;NA&gt;     AX
+##   iso_a3 iso_n3 un_a3 wb_a2 wb_a3 woe_id adm0_a3_is adm0_a3_us adm0_a3_un adm0_a3_wb     continent region_un       subregion
+## 1    ABW    533   533    AW   ABW     NA        ABW        ABW         NA         NA North America  Americas       Caribbean
+## 2    AFG    004   004    AF   AFG     NA        AFG        AFG         NA         NA          Asia      Asia   Southern Asia
+## 3    AGO    024   024    AO   AGO     NA        AGO        AGO         NA         NA        Africa    Africa   Middle Africa
+## 4    AIA    660   660  &lt;NA&gt;  &lt;NA&gt;     NA        AIA        AIA         NA         NA North America  Americas       Caribbean
+## 5    ALB    008   008    AL   ALB     NA        ALB        ALB         NA         NA        Europe    Europe Southern Europe
+## 6    ALA    248   248  &lt;NA&gt;  &lt;NA&gt;     NA        ALA        ALD         NA         NA        Europe    Europe Northern Europe
+##                   region_wb name_len long_len abbrev_len tiny homepart droughts_total                       geometry
+## 1 Latin America &amp; Caribbean        5        5          5    4       NA             NA MULTIPOLYGON (((-69.89912 1...
+## 2                South Asia       11       11          4   NA        1             65 MULTIPOLYGON (((74.89131 37...
+## 3        Sub-Saharan Africa        6        6          4   NA        1             26 MULTIPOLYGON (((14.19082 -5...
+## 4 Latin America &amp; Caribbean        8        8          4   NA       NA              1 MULTIPOLYGON (((-63.00122 1...
+## 5     Europe &amp; Central Asia        7        7          4   NA        1             12 MULTIPOLYGON (((20.06396 42...
+## 6     Europe &amp; Central Asia        5       13          5    5       NA             NA MULTIPOLYGON (((20.61133 60...</code></pre>
 <p>Now our <code>world</code> data.frame has a column specifying the number of droughts that occurred.</p>
 <div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="making-good-figures.html#cb333-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> world) <span class="sc">+</span></span>
 <span id="cb333-2"><a href="making-good-figures.html#cb333-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> droughts_total)) <span class="sc">+</span></span>

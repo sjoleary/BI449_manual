@@ -203,6 +203,7 @@ function reset_tooltip(id) {
 <a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
 <a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="phenology-1.html"><span class="toc-section-number">19</span> Phenology</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -444,8 +445,8 @@ Describe what happens when data types are mixed in a single atomic vector?
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="r-functions-objects-vectors---oh-my.html#cb67-1" aria-hidden="true" tabindex="-1"></a>species_longer <span class="ot">&lt;-</span> species[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>)]</span>
 <span id="cb67-2"><a href="r-functions-objects-vectors---oh-my.html#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb67-3"><a href="r-functions-objects-vectors---oh-my.html#cb67-3" aria-hidden="true" tabindex="-1"></a>species_longer</span></code></pre></div>
-<pre><code>## [1] "blacktip"            "blacktip"            "gafftop"             "scallopedhammerhead"
-## [5] "gafftop"             "gafftop"             "bullshark"           "bullshark"</code></pre>
+<pre><code>## [1] "blacktip"            "blacktip"            "gafftop"             "scallopedhammerhead" "gafftop"            
+## [6] "gafftop"             "bullshark"           "bullshark"</code></pre>
 <p>More frequently, we will want to extract certain elements based on a specific condition (conditional subsetting).</p>
 <p>This is done using a logical vector, here <code>TRUE</code> select the element with the same index and <code>FALSE</code> will not.</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="r-functions-objects-vectors---oh-my.html#cb69-1" aria-hidden="true" tabindex="-1"></a>fork_length <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">454</span>, <span class="dv">234</span>, <span class="dv">948</span>, <span class="dv">201</span>)</span>

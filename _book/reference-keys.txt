@@ -52,6 +52,8 @@ fig:unnamed-chunk-285
 fig:unnamed-chunk-286
 fig:unnamed-chunk-287
 tab:unnamed-chunk-291
+fig:unnamed-chunk-296
+fig:unnamed-chunk-309
 what-even-is-data-science
 defining-data-and-science
 what-even-is-data-science-1
@@ -178,3 +180,9 @@ determine-temperature-change-in-ramsey-county
 analyze-relationship-of-flowering-date-and-temperature
 now-you-1
 acknowledgments-2
+phenology-1
+model-checking
+use-the-model-to-predict
+do-we-trust-our-model
+data-splitting
+evaluating-models
