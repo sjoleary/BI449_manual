@@ -339,7 +339,7 @@ ggplot(elm, aes(x = year, y = day_of_year, fill = month)) +
 
 `r msmbstyle::solution_end()`
 
-`r msmbstyle::question_begin(label = "ques:phen-15")`
+`r msmbstyle::question_begin(label = "ques:phen-16")`
 
 Determine the rate of change (remember to include units!).
 
@@ -364,7 +364,7 @@ Don't get too hung up on whether the result is significant or not. The rate is s
 `r msmbstyle::solution_end()`
 
 
-`r msmbstyle::question_begin(label = "ques:phen-15")`
+`r msmbstyle::question_begin(label = "ques:phen-17")`
 
 Describe your overall results. Remember, results are more than just figures! Practice being specific, i.e. consider how much the flowering data has shifted and at what rate. 
 
@@ -377,7 +377,7 @@ For your interpretation/discussion identify at least two possible mechanisms tha
 
 If we want to investigate whether there is a relationship between climate change and change in the flowering date, we need climate data for Ramsey Country for the same time period.
 
-`r msmbstyle::question_begin(label = "ques:phen-16")`
+`r msmbstyle::question_begin(label = "ques:phen-18")`
 
 Describe what your climate data set should look like and argue why you want to include certain variables. Describe the pattern you would expect to see in your climate data over time to support your hypothesis of what is driving the pattern you uncovered in the phenology data set. Be specific.
 
@@ -403,7 +403,7 @@ temp <- read_delim("data/MN_temp.txt", delim = "\t", col_names = c("year", "temp
 
 ```
 
-`r msmbstyle::question_begin(label = "ques:phen-17")`
+`r msmbstyle::question_begin(label = "ques:phen-19")`
 
 Plot your data to determine if your prediction was correct; add a simple linear trend line to your plot to help identify the overall pattern.
 
@@ -446,7 +446,7 @@ Why do you think it is better to use a scatter plot or line plot compared to the
 
 `r msmbstyle::solution_end()`
 
-`r msmbstyle::question_begin(label = "ques:phen-17")`
+`r msmbstyle::question_begin(label = "ques:phen-20")`
 
 For a good presentation of your results, e.g. through a presentation or poster, you would likely want to produce a figure where you have change in flowering date and change in mean temperature for March side by side. Practice making that type of figure here:
 
@@ -455,7 +455,7 @@ For a good presentation of your results, e.g. through a presentation or poster, 
 
 ## Analyze relationship of flowering date and temperature
 
-`r msmbstyle::question_begin(label = "ques:phen-17")`
+`r msmbstyle::question_begin(label = "ques:phen-21")`
 
 Especially when we look at the two figures side by side the fact we see that there is a trend for earlier flowering dates for American elm and warmer March temperatures. Describe the analysis you want to perform to determine whether there is a significant relationship between the mean temperature in March and the flowering date for the American Elm in Ramsey Co.. Include what your dependent and independent variables are^[Your are practicing writing up your methods. A good methods section includes not just what you want to do but why you are doing it/what that analysis is meant to achieve. A good way to start for this specific example would be e.g. "To determine whether {variable} depends on {variable}, we will {analysis}].
 
@@ -529,19 +529,19 @@ We've previously used regressions, mainly because were interested in the slope t
 
 The `(Intercept)` term (slope) tells us that for temperature = 0 Fahrenheit, the expected flowering date would be 148. The `temperature` term tells us that on average for every one degree Fahrenheit decrease in Temperature, we would expect the flowering date to occur 1.57 days earlier.
 
-`r msmbstyle::question_begin(label = "ques:phen-17")`
+`r msmbstyle::question_begin(label = "ques:phen-22")`
 
 After first thinking about the purely mathematical explanation, we would want to think about what is biologically meaningful/sensible. Is there part of our interpretation above that biologically doesn't entirely make sense? What does this tell you about extrapolating beyond the reach of your data?
 
 `r msmbstyle::question_end()`
 
-`r msmbstyle::question_begin(label = "ques:phen-17")`
+`r msmbstyle::question_begin(label = "ques:phen-23")`
 
 Discuss your results, make a conclusion about the relationship between American elm flowering data and mean March temperature and then discuss that in the context of our original question.
 
 `r msmbstyle::question_end()`
 
-`r msmbstyle::question_begin(label = "ques:phen-17")`
+`r msmbstyle::question_begin(label = "ques:phen-24")`
 
 Especially if you are writing a paper or report in the style of "Introduction/Methods/Results/Discussion", a good discussion starts by reiterating the original (broad) question you asked with short description of how you specifically investigated it, your key results, and then interpreting/discussing those.
 
@@ -560,7 +560,7 @@ We asked a pretty general question to start us off with and used a specific spec
 
 Good thing we have a very large data set to work with!
 
-`r msmbstyle::question_begin(label = "ques:phen-")`
+`r msmbstyle::question_begin(label = "ques:phen-25")`
 
 Go back to the original data set with all the phenology records (`object` pheno). To find a good species to investigate we will want to make sure that we have sufficient data to make a meaningful statement about changes in the timing of phenophases.
 
@@ -590,7 +590,7 @@ pheno %>%
 
 We have already looked at a tree - let's see if we can broaden the scope of the organisms we investigate and chose examples from different groups of species. For efficiency, we'll divvy up the work and have everyone chose a different species.
 
-`r msmbstyle::question_begin(label = "ques:phen-")`
+`r msmbstyle::question_begin(label = "ques:phen-26")`
 
 Call dibs on the species you would like to investigate. Do a tiny-google and write a 3-5 sentences description of your species. List the phenological questions you could pose about the species you have chosen based on your data set^[If you were writing a report/paper this would be part of your introduction/background section.]. 
 
@@ -600,7 +600,7 @@ We are going to practice putting together all the components of a data science-e
 
 ![Data Science Process (H.Wickham & Grolemund: R for Data Science](figures/data-science.png)
 
-`r msmbstyle::question_begin(label = "ques:phen-")`
+`r msmbstyle::question_begin(label = "ques:phen-27")`
 
 Chose the phenophase you want to investigate and go through the process of "Transform-Visualize-Analyze/Model" + "Communicate".
 
@@ -620,7 +620,7 @@ Create a final multi-panel figure of your three visualizations and share it with
 
 `r msmbstyle::question_end()`
 
-`r msmbstyle::question_begin(label = "ques:phen-")`
+`r msmbstyle::question_begin(label = "ques:phen-28")`
 
 Collect the results from all the species/phenophases we have analyzed, this includes the American Elm, your species and those of your classmates and discuss the overall results.
 
@@ -632,7 +632,7 @@ Collect the results from all the species/phenophases we have analyzed, this incl
 `r msmbstyle::question_end()`
 
 
-`r msmbstyle::question_begin(label = "ques:phen-")`
+`r msmbstyle::question_begin(label = "ques:phen-29")`
 
 A final question we should consider is what the potential impacts of changing phenologies could be. Consider that species within a biological community might be differentially impacted by climate change and that some might be directly impacted by climate change resulting in an altered phenology, while other might be indirectly impacted because of an altered phenology for a species they closely interact with (this is called a population asynchrony or phenological mismatch).
 

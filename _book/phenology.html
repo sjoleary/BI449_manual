@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-10-19" />
+<meta name="date" content="2021-10-20" />
 
 
 <meta name="description" content="18 Phenology | Data Science for the Natural Environment (FA21)">
@@ -747,9 +747,9 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 </p>
 </div>
 </div>
-<div id="ques:phen-15" class="question">
+<div id="ques:phen-16" class="question">
 <p class="question-begin">
-► Question 18.15
+► Question 18.16
 </p>
 <div class="question-body">
 <p>Determine the rate of change (remember to include units!).</p>
@@ -788,9 +788,9 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 </p>
 </div>
 </div>
-<div id="ques:phen-15" class="question">
+<div id="ques:phen-17" class="question">
 <p class="question-begin">
-► Question 18.15
+► Question 18.17
 </p>
 <div class="question-body">
 <p>Describe your overall results. Remember, results are more than just figures! Practice being specific, i.e. consider how much the flowering data has shifted and at what rate.</p>
@@ -806,9 +806,9 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 <span class="header-section-number">18.5</span> Determine temperature change in Ramsey County<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('determine-temperature-change-in-ramsey-county')" onmouseout="reset_tooltip('determine-temperature-change-in-ramsey-county-tooltip')"><span class="tooltiptext" id="determine-temperature-change-in-ramsey-county-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>If we want to investigate whether there is a relationship between climate change and change in the flowering date, we need climate data for Ramsey Country for the same time period.</p>
-<div id="ques:phen-16" class="question">
+<div id="ques:phen-18" class="question">
 <p class="question-begin">
-► Question 18.16
+► Question 18.18
 </p>
 <div class="question-body">
 <p>Describe what your climate data set should look like and argue why you want to include certain variables. Describe the pattern you would expect to see in your climate data over time to support your hypothesis of what is driving the pattern you uncovered in the phenology data set. Be specific.</p>
@@ -833,9 +833,9 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 <p>Unfortunately, the download button doesn’t work. Instead, you should cut and paste the data into a text editor or excel and save it as a tab-delimited file in your <code>data</code> folder. Name it <code>MN_temp.txt</code>.</p>
 <p>Lets read in your temperature data. Unless you added headers in the text file it’s missing them. Similar to the way we can use <code>skip</code> if there are additional lines, we have an argument we can use to specify column names if they are missing.</p>
 <div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="phenology.html#cb339-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/MN_temp.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"temperature"</span>))</span></code></pre></div>
-<div id="ques:phen-17" class="question">
+<div id="ques:phen-19" class="question">
 <p class="question-begin">
-► Question 18.17
+► Question 18.19
 </p>
 <div class="question-body">
 <p>Plot your data to determine if your prediction was correct; add a simple linear trend line to your plot to help identify the overall pattern.</p>
@@ -873,9 +873,9 @@ Figure 18.5: Change in mean March temperature [Fahrenheit] for 1941 - 1991 (oran
 </p>
 </div>
 </div>
-<div id="ques:phen-17" class="question">
+<div id="ques:phen-20" class="question">
 <p class="question-begin">
-► Question 18.17
+► Question 18.20
 </p>
 <div class="question-body">
 <p>For a good presentation of your results, e.g. through a presentation or poster, you would likely want to produce a figure where you have change in flowering date and change in mean temperature for March side by side. Practice making that type of figure here:</p>
@@ -889,9 +889,9 @@ Figure 18.5: Change in mean March temperature [Fahrenheit] for 1941 - 1991 (oran
 <h2>
 <span class="header-section-number">18.6</span> Analyze relationship of flowering date and temperature<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('analyze-relationship-of-flowering-date-and-temperature')" onmouseout="reset_tooltip('analyze-relationship-of-flowering-date-and-temperature-tooltip')"><span class="tooltiptext" id="analyze-relationship-of-flowering-date-and-temperature-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<div id="ques:phen-17" class="question">
+<div id="ques:phen-21" class="question">
 <p class="question-begin">
-► Question 18.17
+► Question 18.21
 </p>
 <div class="question-body">
 <p>Especially when we look at the two figures side by side the fact we see that there is a trend for earlier flowering dates for American elm and warmer March temperatures. Describe the analysis you want to perform to determine whether there is a significant relationship between the mean temperature in March and the flowering date for the American Elm in Ramsey Co.. Include what your dependent and independent variables are<label for="tufte-sn-105" class="margin-toggle sidenote-number">105</label><input type="checkbox" id="tufte-sn-105" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">105</span> Your are practicing writing up your methods. A good methods section includes not just what you want to do but why you are doing it/what that analysis is meant to achieve. A good way to start for this specific example would be e.g. “To determine whether {variable} depends on {variable}, we will {analysis}</span>.</p>
@@ -949,9 +949,9 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 <p>This doesn’t look too different from the output you are used to seeing but we will see down the line that there are additional benefits to using the <code>tidymodels</code> framework when it comes to doing more sophisticated analysis.</p>
 <p>We’ve previously used regressions, mainly because were interested in the slope to be able to calculate a rate of increase or decrease over time. Now we are interested in a relationship between two continuous variables and whether or not one of the (the independent value, in our case temperature) has significant explanatory power for the dependent variable (in this case the flowering date). So let’s think about how we should interpret the results of our regression.</p>
 <p>The <code>(Intercept)</code> term (slope) tells us that for temperature = 0 Fahrenheit, the expected flowering date would be 148. The <code>temperature</code> term tells us that on average for every one degree Fahrenheit decrease in Temperature, we would expect the flowering date to occur 1.57 days earlier.</p>
-<div id="ques:phen-17" class="question">
+<div id="ques:phen-22" class="question">
 <p class="question-begin">
-► Question 18.17
+► Question 18.22
 </p>
 <div class="question-body">
 <p>After first thinking about the purely mathematical explanation, we would want to think about what is biologically meaningful/sensible. Is there part of our interpretation above that biologically doesn’t entirely make sense? What does this tell you about extrapolating beyond the reach of your data?</p>
@@ -960,9 +960,9 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 </p>
 </div>
 </div>
-<div id="ques:phen-17" class="question">
+<div id="ques:phen-23" class="question">
 <p class="question-begin">
-► Question 18.17
+► Question 18.23
 </p>
 <div class="question-body">
 <p>Discuss your results, make a conclusion about the relationship between American elm flowering data and mean March temperature and then discuss that in the context of our original question.</p>
@@ -971,9 +971,9 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 </p>
 </div>
 </div>
-<div id="ques:phen-17" class="question">
+<div id="ques:phen-24" class="question">
 <p class="question-begin">
-► Question 18.17
+► Question 18.24
 </p>
 <div class="question-body">
 <p>Especially if you are writing a paper or report in the style of “Introduction/Methods/Results/Discussion,” a good discussion starts by reiterating the original (broad) question you asked with short description of how you specifically investigated it, your key results, and then interpreting/discussing those.</p>
@@ -994,9 +994,9 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 </h2>
 <p>We asked a pretty general question to start us off with and used a specific species and a specific phenophase to investigate. To gather further evidence or determine if there are other patterns to observe we would want to investigate the phenology of further organisms.</p>
 <p>Good thing we have a very large data set to work with!</p>
-<div id="ques:phen-" class="question">
+<div id="ques:phen-25" class="question">
 <p class="question-begin">
-► Question 18.18
+► Question 18.25
 </p>
 <div class="question-body">
 <p>Go back to the original data set with all the phenology records (<code>object</code> pheno). To find a good species to investigate we will want to make sure that we have sufficient data to make a meaningful statement about changes in the timing of phenophases.</p>
@@ -1934,9 +1934,9 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 </div>
 </div>
 <p>We have already looked at a tree - let’s see if we can broaden the scope of the organisms we investigate and chose examples from different groups of species. For efficiency, we’ll divvy up the work and have everyone chose a different species.</p>
-<div id="ques:phen-" class="question">
+<div id="ques:phen-26" class="question">
 <p class="question-begin">
-► Question 18.18
+► Question 18.26
 </p>
 <div class="question-body">
 <p>Call dibs on the species you would like to investigate. Do a tiny-google and write a 3-5 sentences description of your species. List the phenological questions you could pose about the species you have chosen based on your data set<label for="tufte-sn-108" class="margin-toggle sidenote-number">108</label><input type="checkbox" id="tufte-sn-108" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">108</span> If you were writing a report/paper this would be part of your introduction/background section.</span>.</p>
@@ -1949,9 +1949,9 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 <div class="figure">
 <img src="figures/data-science.png" alt=""><p class="caption">Data Science Process (H.Wickham &amp; Grolemund: R for Data Science</p>
 </div>
-<div id="ques:phen-" class="question">
+<div id="ques:phen-27" class="question">
 <p class="question-begin">
-► Question 18.18
+► Question 18.27
 </p>
 <div class="question-body">
 <p>Chose the phenophase you want to investigate and go through the process of “Transform-Visualize-Analyze/Model” + “Communicate.”</p>
@@ -1982,9 +1982,9 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 </p>
 </div>
 </div>
-<div id="ques:phen-" class="question">
+<div id="ques:phen-28" class="question">
 <p class="question-begin">
-► Question 18.18
+► Question 18.28
 </p>
 <div class="question-body">
 <p>Collect the results from all the species/phenophases we have analyzed, this includes the American Elm, your species and those of your classmates and discuss the overall results.</p>
@@ -1999,9 +1999,9 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 </p>
 </div>
 </div>
-<div id="ques:phen-" class="question">
+<div id="ques:phen-29" class="question">
 <p class="question-begin">
-► Question 18.18
+► Question 18.29
 </p>
 <div class="question-body">
 <p>A final question we should consider is what the potential impacts of changing phenologies could be. Consider that species within a biological community might be differentially impacted by climate change and that some might be directly impacted by climate change resulting in an altered phenology, while other might be indirectly impacted because of an altered phenology for a species they closely interact with (this is called a population asynchrony or phenological mismatch).</p>
@@ -2026,7 +2026,7 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 <a href="phenology-1.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-19
+2021-10-20
  using 
 R version 4.0.2 (2020-06-22)
 </p>
