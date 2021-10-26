@@ -180,9 +180,13 @@ determine-temperature-change-in-ramsey-county
 analyze-relationship-of-flowering-date-and-temperature
 now-you-1
 acknowledgments-2
-phenology-1
+predictive-modeling
 model-checking
 use-the-model-to-predict
 do-we-trust-our-model
 data-splitting
 evaluating-models
+remote-sensing
+neon-the-power-of-longterm-data-sets
+plot-maps-of-topography-and-plants
+explore-relationship-between-topographic-variable-and-vegetation-patterns

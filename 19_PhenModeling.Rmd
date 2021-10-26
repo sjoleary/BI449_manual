@@ -38,7 +38,7 @@ theme_set(theme_standard)
 
 ```
 
-# Phenology
+# Predictive Modeling
 
 **Learning Objectives**
 

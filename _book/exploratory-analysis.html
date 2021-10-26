@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-10-20" />
+<meta name="date" content="2021-10-26" />
 
 
 <meta name="description" content="16 Exploratory Analysis | Data Science for the Natural Environment (FA21)">
@@ -205,7 +205,8 @@ function reset_tooltip(id) {
 </ul>
 <a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
 <a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
-<a href="phenology-1.html"><span class="toc-section-number">19</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -342,21 +343,21 @@ function reset_tooltip(id) {
 <span id="cb281-2"><a href="exploratory-analysis.html#cb281-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DisNo =</span> <span class="st">`</span><span class="at">Dis No</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb281-3"><a href="exploratory-analysis.html#cb281-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 47
-##   DisNo          Year Seq   Glide `Disaster Group` `Disaster Subgro~ `Disaster Type`  `Disaster Subty~
-##   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;           
-## 1 1900-9002-CPV  1900 9002  &lt;NA&gt;  Natural          Climatological    Drought          Drought         
-## 2 1900-9001-IND  1900 9001  &lt;NA&gt;  Natural          Climatological    Drought          Drought         
-## 3 1902-0012-GTM  1902 0012  &lt;NA&gt;  Natural          Geophysical       Earthquake       Ground movement 
-## 4 1902-0003-GTM  1902 0003  &lt;NA&gt;  Natural          Geophysical       Volcanic activi~ Ash fall        
-## 5 1902-0010-GTM  1902 0010  &lt;NA&gt;  Natural          Geophysical       Volcanic activi~ Ash fall        
-## 6 1903-0006-CAN  1903 0006  &lt;NA&gt;  Natural          Geophysical       Mass movement (~ Rockfall        
+##   DisNo          Year Seq   Glide `Disaster Group` `Disaster Subgroup` `Disaster Type`  `Disaster Subty~
+##   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;               &lt;chr&gt;            &lt;chr&gt;           
+## 1 1900-9002-CPV  1900 9002  &lt;NA&gt;  Natural          Climatological      Drought          Drought         
+## 2 1900-9001-IND  1900 9001  &lt;NA&gt;  Natural          Climatological      Drought          Drought         
+## 3 1902-0012-GTM  1902 0012  &lt;NA&gt;  Natural          Geophysical         Earthquake       Ground movement 
+## 4 1902-0003-GTM  1902 0003  &lt;NA&gt;  Natural          Geophysical         Volcanic activi~ Ash fall        
+## 5 1902-0010-GTM  1902 0010  &lt;NA&gt;  Natural          Geophysical         Volcanic activi~ Ash fall        
+## 6 1903-0006-CAN  1903 0006  &lt;NA&gt;  Natural          Geophysical         Mass movement (~ Rockfall        
 ## # ... with 39 more variables: Disaster Subsubtype &lt;chr&gt;, Event Name &lt;chr&gt;, Country &lt;chr&gt;, ISO &lt;chr&gt;,
 ## #   Region &lt;chr&gt;, Continent &lt;chr&gt;, Location &lt;chr&gt;, Origin &lt;chr&gt;, Associated Dis &lt;chr&gt;,
 ## #   Associated Dis2 &lt;chr&gt;, OFDA Response &lt;chr&gt;, Appeal &lt;chr&gt;, Declaration &lt;chr&gt;,
-## #   Aid Contribution &lt;dbl&gt;, Dis Mag Value &lt;dbl&gt;, Dis Mag Scale &lt;chr&gt;, Latitude &lt;chr&gt;,
-## #   Longitude &lt;chr&gt;, Local Time &lt;chr&gt;, River Basin &lt;chr&gt;, Start Year &lt;dbl&gt;, Start Month &lt;dbl&gt;,
-## #   Start Day &lt;dbl&gt;, End Year &lt;dbl&gt;, End Month &lt;dbl&gt;, End Day &lt;dbl&gt;, Total Deaths &lt;dbl&gt;,
-## #   No Injured &lt;dbl&gt;, No Affected &lt;dbl&gt;, No Homeless &lt;dbl&gt;, Total Affected &lt;dbl&gt;, ...</code></pre>
+## #   Aid Contribution &lt;dbl&gt;, Dis Mag Value &lt;dbl&gt;, Dis Mag Scale &lt;chr&gt;, Latitude &lt;chr&gt;, Longitude &lt;chr&gt;,
+## #   Local Time &lt;chr&gt;, River Basin &lt;chr&gt;, Start Year &lt;dbl&gt;, Start Month &lt;dbl&gt;, Start Day &lt;dbl&gt;,
+## #   End Year &lt;dbl&gt;, End Month &lt;dbl&gt;, End Day &lt;dbl&gt;, Total Deaths &lt;dbl&gt;, No Injured &lt;dbl&gt;,
+## #   No Affected &lt;dbl&gt;, No Homeless &lt;dbl&gt;, Total Affected &lt;dbl&gt;, ...</code></pre>
 <p>This would be pretty annoying if we wanted to rename all of our columns by hand.</p>
 <p>Fortunately, we can leverage the function <code>janitor::clean_names()</code> function<label for="tufte-sn-96" class="margin-toggle sidenote-number">96</label><input type="checkbox" id="tufte-sn-96" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">96</span> the notation format you see here specifies the <code>Rpackage</code> and then the function within it, as <code>package::function()</code>.</span> which is designed to parse letter cases and separators - the default is to convert it to <code>snake_case</code>, i.e. all names are lowercase and words are separated by an underscore, it also deals with duplicate names and special characters.</p>
 <p>Let’s see what this does for us:</p>
@@ -376,10 +377,10 @@ function reset_tooltip(id) {
 ## # ... with 39 more variables: disaster_subsubtype &lt;chr&gt;, event_name &lt;chr&gt;, country &lt;chr&gt;, iso &lt;chr&gt;,
 ## #   region &lt;chr&gt;, continent &lt;chr&gt;, location &lt;chr&gt;, origin &lt;chr&gt;, associated_dis &lt;chr&gt;,
 ## #   associated_dis2 &lt;chr&gt;, ofda_response &lt;chr&gt;, appeal &lt;chr&gt;, declaration &lt;chr&gt;,
-## #   aid_contribution &lt;dbl&gt;, dis_mag_value &lt;dbl&gt;, dis_mag_scale &lt;chr&gt;, latitude &lt;chr&gt;,
-## #   longitude &lt;chr&gt;, local_time &lt;chr&gt;, river_basin &lt;chr&gt;, start_year &lt;dbl&gt;, start_month &lt;dbl&gt;,
-## #   start_day &lt;dbl&gt;, end_year &lt;dbl&gt;, end_month &lt;dbl&gt;, end_day &lt;dbl&gt;, total_deaths &lt;dbl&gt;,
-## #   no_injured &lt;dbl&gt;, no_affected &lt;dbl&gt;, no_homeless &lt;dbl&gt;, total_affected &lt;dbl&gt;, ...</code></pre>
+## #   aid_contribution &lt;dbl&gt;, dis_mag_value &lt;dbl&gt;, dis_mag_scale &lt;chr&gt;, latitude &lt;chr&gt;, longitude &lt;chr&gt;,
+## #   local_time &lt;chr&gt;, river_basin &lt;chr&gt;, start_year &lt;dbl&gt;, start_month &lt;dbl&gt;, start_day &lt;dbl&gt;,
+## #   end_year &lt;dbl&gt;, end_month &lt;dbl&gt;, end_day &lt;dbl&gt;, total_deaths &lt;dbl&gt;, no_injured &lt;dbl&gt;,
+## #   no_affected &lt;dbl&gt;, no_homeless &lt;dbl&gt;, total_affected &lt;dbl&gt;, reconstruction_costs_000_us &lt;lgl&gt;, ...</code></pre>
 <p>That looks much better. Similar to running <code>head()</code> to make sure the first set of lines has read in properly, running <code>tail()</code> gives you a quickly look at whether the end of the file read in correctly as well.</p>
 </div>
 <div id="get-an-overview-of-the-data-set" class="section level2" number="16.4">
@@ -413,9 +414,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-28" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-28', 'sol-start-28')"></span>
+► Solution<span id="sol-start-69" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-69', 'sol-start-69')"></span>
 </p>
-<div id="sol-body-28" class="solution-body" style="display: none;">
+<div id="sol-body-69" class="solution-body" style="display: none;">
 <p>Factors to consider are among other things understanding how many rows/columns there are, what variables are included, whether it is in a tidy format or not, what data type each variable is, and what the range/distribution of values is.</p>
 <p>You can get dimensions of the data set using <code>ncols()</code> and <code>nrows()</code>, <code>str()</code> will give you dimensions, the class, and data types (classes) of individual columns.</p>
 <p class="solution-end">
@@ -1057,8 +1058,8 @@ function reset_tooltip(id) {
 <p>For numerical columns mean values and percentiles can give you an overview of how the data is distributed. However for columns that contain strings or characters we cannot produce those types of summary statistics. Rather, we are probably more interested on how many unique values those columns contain and what those unique entries are.</p>
 <p><code>skim()</code> already gave us the number of unique entries for each column, we have two options we can use to determine what those values are. The first is <code>unique()</code>. This function makes use of the fact that each column is a vector<label for="tufte-sn-97" class="margin-toggle sidenote-number">97</label><input type="checkbox" id="tufte-sn-97" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">97</span> Remember, we can access each column of a dataframe as `df$columnname</span>.</p>
 <div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="exploratory-analysis.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(disaster<span class="sc">$</span>disaster_subgroup)</span></code></pre></div>
-<pre><code>## [1] "Climatological"    "Geophysical"       "Meteorological"    "Hydrological"     
-## [5] "Biological"        "Extra-terrestrial"</code></pre>
+<pre><code>## [1] "Climatological"    "Geophysical"       "Meteorological"    "Hydrological"      "Biological"       
+## [6] "Extra-terrestrial"</code></pre>
 <p>When you run this function it returns a vector; while this might be helpful in some contexts, it would be helpful if we could also view it in a tabular format. Do not fret - <code>tidyverse</code> got you.</p>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="exploratory-analysis.html#cb288-1" aria-hidden="true" tabindex="-1"></a>disaster <span class="sc">%&gt;%</span></span>
 <span id="cb288-2"><a href="exploratory-analysis.html#cb288-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(disaster_subgroup)</span></code></pre></div>
@@ -1112,9 +1113,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-29" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-29', 'sol-start-29')"></span>
+► Solution<span id="sol-start-70" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-70', 'sol-start-70')"></span>
 </p>
-<div id="sol-body-29" class="solution-body" style="display: none;">
+<div id="sol-body-70" class="solution-body" style="display: none;">
 <p>You can calculate summary statistics</p>
 <ul>
 <li>mean, median</li>
@@ -1260,9 +1261,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-30" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-30', 'sol-start-30')"></span>
+► Solution<span id="sol-start-71" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-71', 'sol-start-71')"></span>
 </p>
-<div id="sol-body-30" class="solution-body" style="display: none;">
+<div id="sol-body-71" class="solution-body" style="display: none;">
 <p>You can calculate summary statistics and compare them, but for initial exploration of patterns visualizations are going to be much more handy.</p>
 <p>You could create faceted barplot or have bars next to each other in a figure; faceted historgrams can be helpful too. But especially with increasing number of comparisons, one of the most straightforward ways to compare distributions are boxplots.</p>
 <p>Comparing two categorical values can be challenging - heat plots can be used to visualize the number of observations that fulfill both categories, for two continuous values you can use scatter plots (though these become less useful with increasing number of observations in your data set).</p>
@@ -1480,7 +1481,7 @@ Let’s see if we can fix our legend to something more visible, we might want di
 <a href="making-good-figures.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-20
+2021-10-26
  using 
 R version 4.0.2 (2020-06-22)
 </p>

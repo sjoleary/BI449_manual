@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="19 Predictive Modeling | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-10-26" />
+
+
+<meta name="description" content="19 Predictive Modeling | Data Science for the Natural Environment (FA21)">
+
+<title>19 Predictive Modeling | Data Science for the Natural Environment (FA21)</title>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
+<a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
+<a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
+<a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a id="active-page" href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a><ul class="toc-sections">
+<li class="toc"><a href="#model-checking"> Model checking</a></li>
+<li class="toc"><a href="#use-the-model-to-predict"> Use the model to predict</a></li>
+<li class="toc"><a href="#do-we-trust-our-model"> Do we trust our model?</a></li>
+<li class="toc"><a href="#data-splitting"> Data splitting</a></li>
+<li class="toc"><a href="#evaluating-models"> Evaluating models</a></li>
+</ul>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
+<a href="references.html">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div id="predictive-modeling" class="section level1" number="19">
+<h1>
+<span class="header-section-number">19</span> Predictive Modeling</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this tutorial you should be able to</p>
+<ul>
+<li>assess the quality of a linear regression model</li>
+<li>articulate the problems associated with using the same data set to train and test a model</li>
+<li>contrast over- vs underfitting models to the data</li>
+</ul>
+<p>Open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Phenology project directory.</p>
+<p>Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc.</p>
+<p>Let’s load our packages so we can get started.</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="predictive-modeling.html#cb346-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb346-2"><a href="predictive-modeling.html#cb346-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb346-3"><a href="predictive-modeling.html#cb346-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb346-4"><a href="predictive-modeling.html#cb346-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb346-5"><a href="predictive-modeling.html#cb346-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb346-6"><a href="predictive-modeling.html#cb346-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb346-7"><a href="predictive-modeling.html#cb346-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb346-8"><a href="predictive-modeling.html#cb346-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb346-9"><a href="predictive-modeling.html#cb346-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb346-10"><a href="predictive-modeling.html#cb346-10" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb346-11"><a href="predictive-modeling.html#cb346-11" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
+<div id="model-checking" class="section level2" number="19.1">
+<h2>
+<span class="header-section-number">19.1</span> Model checking<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('model-checking')" onmouseout="reset_tooltip('model-checking-tooltip')"><span class="tooltiptext" id="model-checking-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Our analysis of Flowering date in the American Elm shows that mean temperature in March explains a large proportion of variance observed in the flowering date, i.e. we have an expectation of how much earlier the flowering date will occur over every one degree change in temperature based on the linear regression we performed.</p>
+<p>Can we predict the flowering date?</p>
+<p>Yes, the point of fitting models is that ideally we can model the relationship and then use that model to infer information about our dependent value (flowering date) for values of our independent variable (temperature).</p>
+<p>Let’s go ahead and read phenology data back in and extract the American Elm data for Ramsey Co. and then join that to our temperature data.</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="predictive-modeling.html#cb347-1" aria-hidden="true" tabindex="-1"></a><span class="co"># mean march temperature</span></span>
+<span id="cb347-2"><a href="predictive-modeling.html#cb347-2" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/MN_temp.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"temperature"</span>))</span>
+<span id="cb347-3"><a href="predictive-modeling.html#cb347-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb347-4"><a href="predictive-modeling.html#cb347-4" aria-hidden="true" tabindex="-1"></a><span class="co"># flowering date w/temp</span></span>
+<span id="cb347-5"><a href="predictive-modeling.html#cb347-5" aria-hidden="true" tabindex="-1"></a>pheno <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/mnpn_master_dataset_2018.v2.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb347-6"><a href="predictive-modeling.html#cb347-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb347-7"><a href="predictive-modeling.html#cb347-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species_common_name <span class="sc">==</span> <span class="st">"AMERICAN ELM"</span> <span class="sc">&amp;</span> event <span class="sc">==</span> <span class="st">"FLOWERING"</span> <span class="sc">&amp;</span> county <span class="sc">==</span> <span class="st">"RAMSEY"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb347-8"><a href="predictive-modeling.html#cb347-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, day_of_year) <span class="sc">%&gt;%</span></span>
+<span id="cb347-9"><a href="predictive-modeling.html#cb347-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(temp)</span></code></pre></div>
+<p>Now, let’s create a linear regression modeling the relationship of the flowering date and temperature for the American Elm. This time we will assign it to an object so we can perform some additional steps.</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="predictive-modeling.html#cb348-1" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span>                        <span class="co"># specify model</span></span>
+<span id="cb348-2"><a href="predictive-modeling.html#cb348-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span>                            <span class="co"># Define computational engine</span></span>
+<span id="cb348-3"><a href="predictive-modeling.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(day_of_year <span class="sc">~</span> temperature, <span class="at">data =</span> pheno)    <span class="co"># define variables</span></span></code></pre></div>
+<p>Choosing <code>lm</code> as our computational engine, means that we are performing an ordinary least square regression. Let’s quickly review what that means for how we are fitting our model.</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-296"></span>
+<p class="caption marginnote shownote">
+Figure 19.1: Observed (orange) and corresponding predicted (blue) flowering dates using linear regression model (black line) for American Elm in Ramsey Country.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-296-1.png" alt="Observed (orange) and corresponding predicted (blue) flowering dates using linear regression model (black line) for American Elm in Ramsey Country." width="672">
+</div>
+<p>In this figure you see the observed flowering dates and the corresponding predicted value for each temperature in the data set using the linear regression model. The vertical segments connecting those two points are the <strong>residuals</strong>, i.e. the distance between the observed and predicted value. When we fit the model, we (and by we I mean R) took the residuals, squared them, summed them all up and then tried to minimize that number - i.e. we tried out all possible configurations of the linear trendline until we found the one that minimizes the sum of the squared regressions.</p>
+<p>How do we know how “good” or model is? Well, we can look at the R2 and p-value which tells us how much of the variance in the dependent variable is explained by the independent variable and whether or not that relationship is significant but we should also check our model to determine if a linear regression is an appropriate way to describe the relationship.</p>
+<p>One way we can do this is using a diagnostic plot, called a residuals plot which can be used to determine if there is a relationship between predicted values and residuals.</p>
+<p>Before we can construct this plot we need to calculate our residuals. We can do this using the function <code>augment()</code></p>
+<div class="sourceCode" id="cb349"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb349-1"><a href="predictive-modeling.html#cb349-1" aria-hidden="true" tabindex="-1"></a>lm_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(lm_fit<span class="sc">$</span>fit)</span>
+<span id="cb349-2"><a href="predictive-modeling.html#cb349-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb349-3"><a href="predictive-modeling.html#cb349-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lm_aug) <span class="sc">%&gt;%</span></span>
+<span id="cb349-4"><a href="predictive-modeling.html#cb349-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead><tr class="header">
+<th align="right">day_of_year</th>
+<th align="right">temperature</th>
+<th align="right">.fitted</th>
+<th align="right">.resid</th>
+<th align="right">.hat</th>
+<th align="right">.sigma</th>
+<th align="right">.cooksd</th>
+<th align="right">.std.resid</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">101</td>
+<td align="right">26.60</td>
+<td align="right">105.70702</td>
+<td align="right">-4.7070184</td>
+<td align="right">0.0237040</td>
+<td align="right">6.110531</td>
+<td align="right">0.0074379</td>
+<td align="right">-0.7827467</td>
+</tr>
+<tr class="even">
+<td align="right">93</td>
+<td align="right">34.92</td>
+<td align="right">92.63110</td>
+<td align="right">0.3688984</td>
+<td align="right">0.0415946</td>
+<td align="right">6.148856</td>
+<td align="right">0.0000832</td>
+<td align="right">0.0619153</td>
+</tr>
+<tr class="odd">
+<td align="right">99</td>
+<td align="right">22.67</td>
+<td align="right">111.88350</td>
+<td align="right">-12.8835031</td>
+<td align="right">0.0465936</td>
+<td align="right">5.846741</td>
+<td align="right">0.1148524</td>
+<td align="right">-2.1680089</td>
+</tr>
+<tr class="even">
+<td align="right">118</td>
+<td align="right">25.19</td>
+<td align="right">107.92301</td>
+<td align="right">10.0769910</td>
+<td align="right">0.0296032</td>
+<td align="right">5.969197</td>
+<td align="right">0.0430927</td>
+<td align="right">1.6808243</td>
+</tr>
+<tr class="odd">
+<td align="right">84</td>
+<td align="right">38.53</td>
+<td align="right">86.95754</td>
+<td align="right">-2.9575368</td>
+<td align="right">0.0773935</td>
+<td align="right">6.133015</td>
+<td align="right">0.0107358</td>
+<td align="right">-0.5059272</td>
+</tr>
+<tr class="even">
+<td align="right">83</td>
+<td align="right">40.97</td>
+<td align="right">83.12277</td>
+<td align="right">-0.1227727</td>
+<td align="right">0.1112000</td>
+<td align="right">6.149068</td>
+<td align="right">0.0000286</td>
+<td align="right">-0.0213977</td>
+</tr>
+</tbody>
+</table>
+<p>What augmenting does is for every point in our model calculate the fitted value (<code>.fitted</code>) and the residuals (<code>.resid</code>) among other diagnostic variables.</p>
+<p>From there we can create the residuals plot.</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="predictive-modeling.html#cb350-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(lm_aug, <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span></span>
+<span id="cb350-2"><a href="predictive-modeling.html#cb350-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb350-3"><a href="predictive-modeling.html#cb350-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb350-4"><a href="predictive-modeling.html#cb350-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"predicted value"</span>, <span class="at">y =</span> <span class="st">"residual"</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-298-1.png" width="672"></p>
+<p>When we plot the residuals vs the predicted values we should find a completely random scatter around 0, and no visible patterns among x or y-axis indicating that there is no relationship between the predicted values and the residuals (no clusters, no correlation)<label for="tufte-sn-112" class="margin-toggle sidenote-number">112</label><input type="checkbox" id="tufte-sn-112" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">112</span> The fact that the residuals have no pattern to them tells us that all the important variation has already been captured by our model, indicating we chose a good model!</span>.</p>
+</div>
+<div id="use-the-model-to-predict" class="section level2" number="19.2">
+<h2>
+<span class="header-section-number">19.2</span> Use the model to predict<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('use-the-model-to-predict')" onmouseout="reset_tooltip('use-the-model-to-predict-tooltip')"><span class="tooltiptext" id="use-the-model-to-predict-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Let’s say that we had looked at a bunch of climate models predicting mean March temperatures under various emissions scenarios and based off of that information we want to know what the predicted flowering dates would be for 10 - 65F.</p>
+<p>First, we need to create a new data set with the values we want to predict flowering date for.</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="predictive-modeling.html#cb351-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create data frame with temperature values from 10 - 65F</span></span>
+<span id="cb351-2"><a href="predictive-modeling.html#cb351-2" aria-hidden="true" tabindex="-1"></a>predict_temp <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">temperature =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">65</span>)</span>
+<span id="cb351-3"><a href="predictive-modeling.html#cb351-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb351-4"><a href="predictive-modeling.html#cb351-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predict_temp)</span></code></pre></div>
+<pre><code>##   temperature
+## 1          10
+## 2          11
+## 3          12
+## 4          13
+## 5          14
+## 6          15</code></pre>
+<p>Then we can use the function <code>predict()</code>. This generates a tibble with the predicted flowering dates for each temperature.</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="predictive-modeling.html#cb353-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_fit, <span class="at">new_data =</span> predict_temp)</span>
+<span id="cb353-2"><a href="predictive-modeling.html#cb353-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb353-3"><a href="predictive-modeling.html#cb353-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pred)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 1
+##   .pred
+##   &lt;dbl&gt;
+## 1  132.
+## 2  130.
+## 3  129.
+## 4  127.
+## 5  126.
+## 6  124.</code></pre>
+<p>We can use the same function to calculate confidence intervals.</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="predictive-modeling.html#cb355-1" aria-hidden="true" tabindex="-1"></a>pred_CI <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_fit, <span class="at">new_data =</span> predict_temp,</span>
+<span id="cb355-2"><a href="predictive-modeling.html#cb355-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">type =</span> <span class="st">"conf_int"</span>)</span>
+<span id="cb355-3"><a href="predictive-modeling.html#cb355-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb355-4"><a href="predictive-modeling.html#cb355-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pred_CI)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 2
+##   .pred_lower .pred_upper
+##         &lt;dbl&gt;       &lt;dbl&gt;
+## 1        126.        138.
+## 2        124.        136.
+## 3        123.        134.
+## 4        122.        132.
+## 5        120.        131.
+## 6        119.        129.</code></pre>
+<p>Because all the outputs are tibbles, we can easily combine them all into a single <code>data.frame</code> using <code>bind_cols()</code>:</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="predictive-modeling.html#cb357-1" aria-hidden="true" tabindex="-1"></a>predict_temp <span class="ot">&lt;-</span> predict_temp <span class="sc">%&gt;%</span></span>
+<span id="cb357-2"><a href="predictive-modeling.html#cb357-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(pred) <span class="sc">%&gt;%</span></span>
+<span id="cb357-3"><a href="predictive-modeling.html#cb357-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(pred_CI)</span>
+<span id="cb357-4"><a href="predictive-modeling.html#cb357-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb357-5"><a href="predictive-modeling.html#cb357-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predict_temp)</span></code></pre></div>
+<pre><code>##   temperature    .pred .pred_lower .pred_upper
+## 1          10 131.7960    125.5921    137.9999
+## 2          11 130.2244    124.3198    136.1289
+## 3          12 128.6527    123.0461    134.2594
+## 4          13 127.0811    121.7707    132.3915
+## 5          14 125.5095    120.4935    130.5255
+## 6          15 123.9379    119.2139    128.6618</code></pre>
+<p>Now we can plot our predicted values along with the estimated confidence intervals.</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="predictive-modeling.html#cb359-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(predict_temp, <span class="fu">aes</span>(<span class="at">x =</span> temperature, <span class="at">y =</span> .pred)) <span class="sc">+</span></span>
+<span id="cb359-2"><a href="predictive-modeling.html#cb359-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> .pred_lower,</span>
+<span id="cb359-3"><a href="predictive-modeling.html#cb359-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">ymax =</span> .pred_upper),</span>
+<span id="cb359-4"><a href="predictive-modeling.html#cb359-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb359-5"><a href="predictive-modeling.html#cb359-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb359-6"><a href="predictive-modeling.html#cb359-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"temperature"</span>, <span class="at">y =</span> <span class="st">"predicted flowering date"</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-303-1.png" width="672"></p>
+<p>Not unsurprisingly, our predicted points fall exactly on the calculated trendline, though it is notable that the farther we extrapolate out to temperatures lower or higher than those recorded in our data set our uncertainty increases.</p>
+</div>
+<div id="do-we-trust-our-model" class="section level2" number="19.3">
+<h2>
+<span class="header-section-number">19.3</span> Do we trust our model?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('do-we-trust-our-model')" onmouseout="reset_tooltip('do-we-trust-our-model-tooltip')"><span class="tooltiptext" id="do-we-trust-our-model-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The process of prediction itself is straightforward. We have the equation for the linear model, so all we have to do (or tell R to do) is to plug the values of the <strong>predictor(s)</strong> (our independent variable) in to the model equation and the calculate the predicted value for our <strong>response</strong> (independent) <strong>variable</strong>.</p>
+<p>However, there still are two factors we need to consider that will determine whether or not we can trust our predictions.</p>
+<ol style="list-style-type: decimal">
+<li>There is no guarantee that the model estimates you have are correct.</li>
+<li>There is no guarantee that the model will perform as well with new data as it did with your sample (observed) data.</li>
+</ol>
+<p>Our concern lies in the concept of overfitting vs underfitting.</p>
+<div class="figure">
+<img src="figures/overfitting.png" alt=""><p class="caption">Comparison of underfit (left), optimal (middle), or overfit (right) model.</p>
+</div>
+<p>In this figure you can see that a linear function is not sufficient to describe the pattern in the observed data<label for="tufte-sn-113" class="margin-toggle sidenote-number">113</label><input type="checkbox" id="tufte-sn-113" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">113</span> Think back to us calculating the rate of change for our CO2 and temperature data … where we likely over/under/optimally fitting our data set?</span>. This is described as <strong>underfitting</strong>, i.e. your model is too simple to capture the pattern and as a result you would expect uncertainties in our predicted values. Likely the model would be more accurate for some values (in this case lower values) while for others (high values) our predicted values would not be very trustworthy.</p>
+<p>The panel on the right illustrates what happens when we <strong>overfit</strong> the model to the data. Here, the model fits the data almost perfectly - which means that it describes the noise not the general pattern in the data.</p>
+<p>How can we figure out if we’ve over- or underfit our model? Well, one method is <strong>data splitting</strong> which means we will be able to <strong>cross-validate</strong> our model.</p>
+</div>
+<div id="data-splitting" class="section level2" number="19.4">
+<h2>
+<span class="header-section-number">19.4</span> Data splitting<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('data-splitting')" onmouseout="reset_tooltip('data-splitting-tooltip')"><span class="tooltiptext" id="data-splitting-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Previously, we used all the data available to use to fit a model and understand how to interpret the data. But if we want to know how good our model is at predicting things we can allocate our data to two different tasks, training/fitting the model and then testing the performance of the model.</p>
+<p><strong>Data splitting</strong> means that we will take our data set and split it into a <strong>training</strong> data set that we will use to to fit the model and a <strong>test</strong> data set that we can use to determine how well our model performs.</p>
+<p>The <code>rsample</code> package which is part of the <code>tidymodels</code> network of packages, allows us to randomly subset our data. We will want to have most of our data in the training data set (more data generally means better model) and then keep a small number of observations for testing.</p>
+<p>Because we are randomly sub-setting our data set we need to set our initial seed number which means that every time we run the analysis the same set of random numbers will be generated<label for="tufte-sn-114" class="margin-toggle sidenote-number">114</label><input type="checkbox" id="tufte-sn-114" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">114</span> It is still considered a random subset, even though we get the same random subset every time. We are essentially giving the random draw the starting point to make it reproducible, i.e. anyone who runs the analysis gets the same training and test data set and therefore the same results as us.</span>.</p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="predictive-modeling.html#cb360-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set random seed</span></span>
+<span id="cb360-2"><a href="predictive-modeling.html#cb360-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb360-3"><a href="predictive-modeling.html#cb360-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb360-4"><a href="predictive-modeling.html#cb360-4" aria-hidden="true" tabindex="-1"></a><span class="co"># assign 3/4 of data to training set</span></span>
+<span id="cb360-5"><a href="predictive-modeling.html#cb360-5" aria-hidden="true" tabindex="-1"></a>data_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(pheno, <span class="at">prop =</span> <span class="dv">3</span><span class="sc">/</span><span class="dv">4</span>)</span>
+<span id="cb360-6"><a href="predictive-modeling.html#cb360-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb360-7"><a href="predictive-modeling.html#cb360-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create two separate data frames</span></span>
+<span id="cb360-8"><a href="predictive-modeling.html#cb360-8" aria-hidden="true" tabindex="-1"></a>train_data <span class="ot">&lt;-</span> <span class="fu">training</span>(data_split)</span>
+<span id="cb360-9"><a href="predictive-modeling.html#cb360-9" aria-hidden="true" tabindex="-1"></a>test_data <span class="ot">&lt;-</span> <span class="fu">testing</span>(data_split)</span></code></pre></div>
+<p>If we look at the dimensions of the two subset we just created we see that they have the same number of observations but they differ in the number of rows roughly at a ratio of 4:1.</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="predictive-modeling.html#cb361-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(train_data)</span></code></pre></div>
+<pre><code>## [1] 38  3</code></pre>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="predictive-modeling.html#cb363-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(test_data)</span></code></pre></div>
+<pre><code>## [1] 13  3</code></pre>
+</div>
+<div id="evaluating-models" class="section level2" number="19.5">
+<h2>
+<span class="header-section-number">19.5</span> Evaluating models<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('evaluating-models')" onmouseout="reset_tooltip('evaluating-models-tooltip')"><span class="tooltiptext" id="evaluating-models-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Our first step is fitting the model using our training data set. This looks exactly like when we fit the model using all of our data except now we will specify <code>train_data</code> as the data frame containing the observations.</p>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="predictive-modeling.html#cb365-1" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span>                        </span>
+<span id="cb365-2"><a href="predictive-modeling.html#cb365-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span>                              </span>
+<span id="cb365-3"><a href="predictive-modeling.html#cb365-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(day_of_year <span class="sc">~</span> temperature, <span class="at">data =</span> train_data)</span>
+<span id="cb365-4"><a href="predictive-modeling.html#cb365-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb365-5"><a href="predictive-modeling.html#cb365-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(lm_fit) <span class="sc">%&gt;%</span></span>
+<span id="cb365-6"><a href="predictive-modeling.html#cb365-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead><tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">145.061292</td>
+<td align="right">5.5356904</td>
+<td align="right">26.204733</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">temperature</td>
+<td align="right">-1.518128</td>
+<td align="right">0.1863277</td>
+<td align="right">-8.147625</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p>Now we need to use our model to predict values for our training data and the combine that output with our test_data that also contains the observed flowering dates.</p>
+<div class="sourceCode" id="cb366"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb366-1"><a href="predictive-modeling.html#cb366-1" aria-hidden="true" tabindex="-1"></a>flowering_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_fit, test_data) <span class="sc">%&gt;%</span></span>
+<span id="cb366-2"><a href="predictive-modeling.html#cb366-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">bind_cols</span>(test_data) <span class="sc">%&gt;%</span></span>
+<span id="cb366-3"><a href="predictive-modeling.html#cb366-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year, temperature, day_of_year, .pred)</span></code></pre></div>
+<p>Let’s take a look at how well our model performs by comparing the observed and predicted flowering dates</p>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="predictive-modeling.html#cb367-1" aria-hidden="true" tabindex="-1"></a>flowering_pred <span class="sc">%&gt;%</span></span>
+<span id="cb367-2"><a href="predictive-modeling.html#cb367-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(.pred)) <span class="sc">%&gt;%</span></span>
+<span id="cb367-3"><a href="predictive-modeling.html#cb367-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead><tr class="header">
+<th align="right">year</th>
+<th align="right">temperature</th>
+<th align="right">day_of_year</th>
+<th align="right">.pred</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="right">1975</td>
+<td align="right">22.00</td>
+<td align="right">116</td>
+<td align="right">111.66247</td>
+</tr>
+<tr class="even">
+<td align="right">1970</td>
+<td align="right">24.09</td>
+<td align="right">114</td>
+<td align="right">108.48958</td>
+</tr>
+<tr class="odd">
+<td align="right">1956</td>
+<td align="right">24.17</td>
+<td align="right">114</td>
+<td align="right">108.36813</td>
+</tr>
+<tr class="even">
+<td align="right">1962</td>
+<td align="right">25.86</td>
+<td align="right">112</td>
+<td align="right">105.80249</td>
+</tr>
+<tr class="odd">
+<td align="right">1954</td>
+<td align="right">26.73</td>
+<td align="right">102</td>
+<td align="right">104.48172</td>
+</tr>
+<tr class="even">
+<td align="right">1982</td>
+<td align="right">27.27</td>
+<td align="right">108</td>
+<td align="right">103.66193</td>
+</tr>
+<tr class="odd">
+<td align="right">1974</td>
+<td align="right">28.50</td>
+<td align="right">107</td>
+<td align="right">101.79463</td>
+</tr>
+<tr class="even">
+<td align="right">1949</td>
+<td align="right">28.51</td>
+<td align="right">102</td>
+<td align="right">101.77945</td>
+</tr>
+<tr class="odd">
+<td align="right">1957</td>
+<td align="right">28.71</td>
+<td align="right">109</td>
+<td align="right">101.47583</td>
+</tr>
+<tr class="even">
+<td align="right">1961</td>
+<td align="right">32.81</td>
+<td align="right">103</td>
+<td align="right">95.25150</td>
+</tr>
+<tr class="odd">
+<td align="right">1983</td>
+<td align="right">33.06</td>
+<td align="right">100</td>
+<td align="right">94.87197</td>
+</tr>
+<tr class="even">
+<td align="right">1963</td>
+<td align="right">33.69</td>
+<td align="right">90</td>
+<td align="right">93.91555</td>
+</tr>
+<tr class="odd">
+<td align="right">1946</td>
+<td align="right">40.97</td>
+<td align="right">83</td>
+<td align="right">82.86357</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s make a plot that will allow us to compare the predicted vs observed values.</p>
+<div class="sourceCode" id="cb368"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb368-1"><a href="predictive-modeling.html#cb368-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(flowering_pred, <span class="fu">aes</span>(<span class="at">x =</span> day_of_year, <span class="at">y =</span> .pred)) <span class="sc">+</span></span>
+<span id="cb368-2"><a href="predictive-modeling.html#cb368-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">color =</span> <span class="st">"darkred"</span>) <span class="sc">+</span></span>
+<span id="cb368-3"><a href="predictive-modeling.html#cb368-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb368-4"><a href="predictive-modeling.html#cb368-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb368-5"><a href="predictive-modeling.html#cb368-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"observed flowering date"</span>, <span class="at">y =</span> <span class="st">"predicted flowering date"</span>)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-309"></span>
+<p class="caption marginnote shownote">
+Figure 19.2: Comparison of predicted vs. observed flowering date for training data set. The dashed black line indicates perfect predictions, the red line is the linear trendline showing relationship of observed vs predicted values.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-309-1.png" alt="Comparison of predicted vs. observed flowering date for training data set. The dashed black line indicates perfect predictions, the red line is the linear trendline showing relationship of observed vs predicted values." width="672">
+</div>
+<p>If we had “perfect” predictions, our linear trendline should fall on top of the dashed line indicating perfect predictions.</p>
+<p>One way we can quantify this is calculating the <strong>root-mean-square deviation</strong> (RMSE) which is the standard deviation of the residuals, i.e. the prediction errors. We can calculate this using the package <code>yardstick</code> which contains functions to assess model performance.</p>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="predictive-modeling.html#cb369-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(flowering_pred, </span>
+<span id="cb369-2"><a href="predictive-modeling.html#cb369-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">truth =</span> day_of_year, </span>
+<span id="cb369-3"><a href="predictive-modeling.html#cb369-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">estimate =</span> .pred) <span class="sc">%&gt;%</span></span>
+<span id="cb369-4"><a href="predictive-modeling.html#cb369-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead><tr class="header">
+<th align="left">.metric</th>
+<th align="left">.estimator</th>
+<th align="right">.estimate</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">rmse</td>
+<td align="left">standard</td>
+<td align="right">5.036233</td>
+</tr></tbody>
+</table>
+<p>In general, a smaller RMSE indicates a better model fit but on it’s own the number does not really tell us much.</p>
+<p>Let’s compare that to the RMSE for our training data:</p>
+<div class="sourceCode" id="cb370"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb370-1"><a href="predictive-modeling.html#cb370-1" aria-hidden="true" tabindex="-1"></a>lm_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(lm_fit<span class="sc">$</span>fit)</span>
+<span id="cb370-2"><a href="predictive-modeling.html#cb370-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb370-3"><a href="predictive-modeling.html#cb370-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmse</span>(lm_aug, </span>
+<span id="cb370-4"><a href="predictive-modeling.html#cb370-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">truth =</span> day_of_year, </span>
+<span id="cb370-5"><a href="predictive-modeling.html#cb370-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">estimate =</span> .fitted) <span class="sc">%&gt;%</span></span>
+<span id="cb370-6"><a href="predictive-modeling.html#cb370-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead><tr class="header">
+<th align="left">.metric</th>
+<th align="left">.estimator</th>
+<th align="right">.estimate</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="left">rmse</td>
+<td align="left">standard</td>
+<td align="right">6.346058</td>
+</tr></tbody>
+</table>
+<p>By comparing these two values we can see that our model performs similarly well for the training data set used to make the model and also for the test data set that was not used to make the model.</p>
+<p>The fact that the observation were not used to inform the initial model, means that our comparison of the observed vs fitted values are not biased.</p>
+<p>If the model was overfit (i.e. it modeled the noise not the overall pattern) we would expect our model to perform poorly in terms of predictions for observations that were not included in the initial data set used to fit the model.</p>
+<p>There are some additional processes that go into optimizing models but we’ll hold it here for now.</p>
+
+</div>
+</div></body></html>
+
+<p style="text-align: center;">
+<a href="phenology.html"><button class="btn btn-default">Previous</button></a>
+<a href="remote-sensing.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-10-26
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

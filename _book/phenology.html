@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-10-20" />
+<meta name="date" content="2021-10-26" />
 
 
 <meta name="description" content="18 Phenology | Data Science for the Natural Environment (FA21)">
@@ -205,7 +205,8 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#now-you-1"> Now you!</a></li>
 <li class="toc"><a href="#acknowledgments-2"> Acknowledgments</a></li>
 </ul>
-<a href="phenology-1.html"><span class="toc-section-number">19</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -293,9 +294,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-31" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-31', 'sol-start-31')"></span>
+► Solution<span id="sol-start-72" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-72', 'sol-start-72')"></span>
 </p>
-<div id="sol-body-31" class="solution-body" style="display: none;">
+<div id="sol-body-72" class="solution-body" style="display: none;">
 <p>That’s right - <code>skim()</code> will give you all the information in one handy place!</p>
 <div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="phenology.html#cb336-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(pheno)</span></code></pre></div>
 <p><!--
@@ -528,9 +529,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-32" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-32', 'sol-start-32')"></span>
+► Solution<span id="sol-start-73" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-73', 'sol-start-73')"></span>
 </p>
-<div id="sol-body-32" class="solution-body" style="display: none;">
+<div id="sol-body-73" class="solution-body" style="display: none;">
 <p>The <code>dplyr</code> verb that can help you out here is <code>distinct()</code> - go ahead and create those tables.</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -585,9 +586,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-33" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-33', 'sol-start-33')"></span>
+► Solution<span id="sol-start-74" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-74', 'sol-start-74')"></span>
 </p>
-<div id="sol-body-33" class="solution-body" style="display: none;">
+<div id="sol-body-74" class="solution-body" style="display: none;">
 <p>Since we are interested in distributions, you would want to look at histograms or boxplots - this is one way your figure could look like:</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-278"></span>
@@ -634,9 +635,9 @@ Figure 18.1: Distribution of life history events throughout the year for Minneso
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-34" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-34', 'sol-start-34')"></span>
+► Solution<span id="sol-start-75" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-75', 'sol-start-75')"></span>
 </p>
-<div id="sol-body-34" class="solution-body" style="display: none;">
+<div id="sol-body-75" class="solution-body" style="display: none;">
 <p>This is what you want your figure to look like:</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-280"></span>
@@ -689,9 +690,9 @@ Figure 18.2: Change in day of flowering for woody plants in Minnesota 1941 - 201
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-35" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-35', 'sol-start-35')"></span>
+► Solution<span id="sol-start-76" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-76', 'sol-start-76')"></span>
 </p>
-<div id="sol-body-35" class="solution-body" style="display: none;">
+<div id="sol-body-76" class="solution-body" style="display: none;">
 <p>Just so we are all in agreement - our question is: Has climate change changed the phenology of American Elm in Ramsey County, Minnesota?</p>
 <p>But do we already have all the data we need?</p>
 <p class="solution-end">
@@ -731,9 +732,9 @@ Figure 18.2: Change in day of flowering for woody plants in Minnesota 1941 - 201
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-36" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-36', 'sol-start-36')"></span>
+► Solution<span id="sol-start-77" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-77', 'sol-start-77')"></span>
 </p>
-<div id="sol-body-36" class="solution-body" style="display: none;">
+<div id="sol-body-77" class="solution-body" style="display: none;">
 <p>This is what your figure should look like.</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-282"></span>
@@ -760,9 +761,9 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-37" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-37', 'sol-start-37')"></span>
+► Solution<span id="sol-start-78" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-78', 'sol-start-78')"></span>
 </p>
-<div id="sol-body-37" class="solution-body" style="display: none;">
+<div id="sol-body-78" class="solution-body" style="display: none;">
 <p>Hint: You will need to determine the equation of your linear trend line to do this.</p>
 <pre><code>## 
 ## Call:
@@ -819,9 +820,9 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-38" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-38', 'sol-start-38')"></span>
+► Solution<span id="sol-start-79" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-79', 'sol-start-79')"></span>
 </p>
-<div id="sol-body-38" class="solution-body" style="display: none;">
+<div id="sol-body-79" class="solution-body" style="display: none;">
 <p>Hint: Consider what the ideal temporal and spatial resolution would need to be to “match” your phenology data.</p>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -847,9 +848,9 @@ Figure 18.3: Change in flowering data for American Elm in Ramsey Co., MN (1941 -
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-39" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-39', 'sol-start-39')"></span>
+► Solution<span id="sol-start-80" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-80', 'sol-start-80')"></span>
 </p>
-<div id="sol-body-39" class="solution-body" style="display: none;">
+<div id="sol-body-80" class="solution-body" style="display: none;">
 <p>Here’s what your figure could look like:</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-285"></span>
@@ -903,9 +904,9 @@ Figure 18.5: Change in mean March temperature [Fahrenheit] for 1941 - 1991 (oran
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-40" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-40', 'sol-start-40')"></span>
+► Solution<span id="sol-start-81" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-81', 'sol-start-81')"></span>
 </p>
-<div id="sol-body-40" class="solution-body" style="display: none;">
+<div id="sol-body-81" class="solution-body" style="display: none;">
 <p>Hint: To be able to plot temperature vs flowering date those two variables will need to be in the same data set. You can combine them using <code>left_join()</code>.</p>
 <p>Here’s what your figure could look like:</p>
 <div class="figure">
@@ -1008,9 +1009,9 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-41" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-41', 'sol-start-41')"></span>
+► Solution<span id="sol-start-82" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-82', 'sol-start-82')"></span>
 </p>
-<div id="sol-body-41" class="solution-body" style="display: none;">
+<div id="sol-body-82" class="solution-body" style="display: none;">
 <p>Hint: You need to generate a table that looks like this - bonus, organize your table group of species, species, and by years of data available.</p>
 <table style="width:100%;">
 <caption>
@@ -2023,10 +2024,10 @@ Figure 18.6: Relationship of mean temperature in March and flowering date for Am
 
 <p style="text-align: center;">
 <a href="making-good-figures.html"><button class="btn btn-default">Previous</button></a>
-<a href="phenology-1.html"><button class="btn btn-default">Next</button></a>
+<a href="predictive-modeling.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-20
+2021-10-26
  using 
 R version 4.0.2 (2020-06-22)
 </p>

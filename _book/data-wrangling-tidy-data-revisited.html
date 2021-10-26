@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-10-20" />
+<meta name="date" content="2021-10-26" />
 
 
 <meta name="description" content="12 Data Wrangling &amp; Tidy data Revisited | Data Science for the Natural Environment (FA21)">
@@ -200,7 +200,8 @@ function reset_tooltip(id) {
 <a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
 <a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
 <a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
-<a href="phenology-1.html"><span class="toc-section-number">19</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -236,14 +237,14 @@ function reset_tooltip(id) {
 <span id="cb194-2"><a href="data-wrangling-tidy-data-revisited.html#cb194-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb194-3"><a href="data-wrangling-tidy-data-revisited.html#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(relig_income)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 11
-##   religion    `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k` `$100-150k` `&gt;150k`
-##   &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
-## 1 Agnostic         27        34        60        81        76       137        122         109      84
-## 2 Atheist          12        27        37        52        35        70         73          59      74
-## 3 Buddhist         27        21        30        34        33        58         62          39      53
-## 4 Catholic        418       617       732       670       638      1116        949         792     633
-## 5 Don’t know~      15        14        15        11        10        35         21          17      18
-## 6 Evangelica~     575       869      1064       982       881      1486        949         723     414
+##   religion      `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k` `$100-150k` `&gt;150k`
+##   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Agnostic           27        34        60        81        76       137        122         109      84
+## 2 Atheist            12        27        37        52        35        70         73          59      74
+## 3 Buddhist           27        21        30        34        33        58         62          39      53
+## 4 Catholic          418       617       732       670       638      1116        949         792     633
+## 5 Don’t know/r~      15        14        15        11        10        35         21          17      18
+## 6 Evangelical ~     575       869      1064       982       881      1486        949         723     414
 ## # ... with 1 more variable: Don't know/refused &lt;dbl&gt;</code></pre>
 <p>Remember, a tidy data set has three interrelated rules</p>
 <ol style="list-style-type: decimal">
@@ -265,9 +266,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-13" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-13', 'sol-start-13')"></span>
+► Solution<span id="sol-start-54" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-54', 'sol-start-54')"></span>
 </p>
-<div id="sol-body-13" class="solution-body" style="display: none;">
+<div id="sol-body-54" class="solution-body" style="display: none;">
 <ul>
 <li>variables:
 <ul>
@@ -296,9 +297,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-14" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-14', 'sol-start-14')"></span>
+► Solution<span id="sol-start-55" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-55', 'sol-start-55')"></span>
 </p>
-<div id="sol-body-14" class="solution-body" style="display: none;">
+<div id="sol-body-55" class="solution-body" style="display: none;">
 <div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb196-1"><a href="data-wrangling-tidy-data-revisited.html#cb196-1" aria-hidden="true" tabindex="-1"></a>tidy <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb196-2"><a href="data-wrangling-tidy-data-revisited.html#cb196-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"income"</span>, <span class="at">values_to =</span> <span class="st">"frequency"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">11</span>)</span>
 <span id="cb196-3"><a href="data-wrangling-tidy-data-revisited.html#cb196-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -328,21 +329,21 @@ function reset_tooltip(id) {
 <span id="cb198-2"><a href="data-wrangling-tidy-data-revisited.html#cb198-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb198-3"><a href="data-wrangling-tidy-data-revisited.html#cb198-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 79
-##   artist  track   date.entered   wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12
-##   &lt;chr&gt;   &lt;chr&gt;   &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 2 Pac   Baby D~ 2000-02-26      87    82    72    77    87    94    99    NA    NA    NA    NA    NA
-## 2 2Ge+her The Ha~ 2000-09-02      91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA
-## 3 3 Door~ Krypto~ 2000-04-08      81    70    68    67    66    57    54    53    51    51    51    51
-## 4 3 Door~ Loser   2000-10-21      76    76    72    69    67    65    55    59    62    61    61    59
-## 5 504 Bo~ Wobble~ 2000-04-15      57    34    25    17    17    31    36    49    53    57    64    70
-## 6 98^0    Give M~ 2000-08-19      51    39    34    26    26    19     2     2     3     6     7    22
+##   artist   track    date.entered   wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12
+##   &lt;chr&gt;    &lt;chr&gt;    &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 2 Pac    Baby Do~ 2000-02-26      87    82    72    77    87    94    99    NA    NA    NA    NA    NA
+## 2 2Ge+her  The Har~ 2000-09-02      91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA
+## 3 3 Doors~ Krypton~ 2000-04-08      81    70    68    67    66    57    54    53    51    51    51    51
+## 4 3 Doors~ Loser    2000-10-21      76    76    72    69    67    65    55    59    62    61    61    59
+## 5 504 Boyz Wobble ~ 2000-04-15      57    34    25    17    17    31    36    49    53    57    64    70
+## 6 98^0     Give Me~ 2000-08-19      51    39    34    26    26    19     2     2     3     6     7    22
 ## # ... with 64 more variables: wk13 &lt;dbl&gt;, wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;, wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;,
 ## #   wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;, wk24 &lt;dbl&gt;, wk25 &lt;dbl&gt;, wk26 &lt;dbl&gt;,
 ## #   wk27 &lt;dbl&gt;, wk28 &lt;dbl&gt;, wk29 &lt;dbl&gt;, wk30 &lt;dbl&gt;, wk31 &lt;dbl&gt;, wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;, wk34 &lt;dbl&gt;,
 ## #   wk35 &lt;dbl&gt;, wk36 &lt;dbl&gt;, wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;, wk39 &lt;dbl&gt;, wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;, wk42 &lt;dbl&gt;,
 ## #   wk43 &lt;dbl&gt;, wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, wk48 &lt;dbl&gt;, wk49 &lt;dbl&gt;, wk50 &lt;dbl&gt;,
 ## #   wk51 &lt;dbl&gt;, wk52 &lt;dbl&gt;, wk53 &lt;dbl&gt;, wk54 &lt;dbl&gt;, wk55 &lt;dbl&gt;, wk56 &lt;dbl&gt;, wk57 &lt;dbl&gt;, wk58 &lt;dbl&gt;,
-## #   wk59 &lt;dbl&gt;, wk60 &lt;dbl&gt;, wk61 &lt;dbl&gt;, wk62 &lt;dbl&gt;, wk63 &lt;dbl&gt;, wk64 &lt;dbl&gt;, wk65 &lt;dbl&gt;, ...</code></pre>
+## #   wk59 &lt;dbl&gt;, wk60 &lt;dbl&gt;, wk61 &lt;dbl&gt;, wk62 &lt;dbl&gt;, wk63 &lt;dbl&gt;, wk64 &lt;dbl&gt;, wk65 &lt;dbl&gt;, wk66 &lt;lgl&gt;, ...</code></pre>
 <div id="ques:t3" class="question">
 <p class="question-begin">
 ► Question 12.3
@@ -356,9 +357,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-15" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-15', 'sol-start-15')"></span>
+► Solution<span id="sol-start-56" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-56', 'sol-start-56')"></span>
 </p>
-<div id="sol-body-15" class="solution-body" style="display: none;">
+<div id="sol-body-56" class="solution-body" style="display: none;">
 <ul>
 <li>variables:
 <ul>
@@ -387,9 +388,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-16" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-16', 'sol-start-16')"></span>
+► Solution<span id="sol-start-57" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-57', 'sol-start-57')"></span>
 </p>
-<div id="sol-body-16" class="solution-body" style="display: none;">
+<div id="sol-body-57" class="solution-body" style="display: none;">
 <p>Previously, we used column position to gather, we can also use column names. We can also use the argument <code>values_drop_na = TRUE</code> to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are <code>NA</code>. By enabling the <code>values_drop_na</code> option it saves us a step of having to use <code>filter()</code> to get rid of those unnecessary rows.</p>
 <div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb200-1"><a href="data-wrangling-tidy-data-revisited.html#cb200-1" aria-hidden="true" tabindex="-1"></a>tidy <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
 <span id="cb200-2"><a href="data-wrangling-tidy-data-revisited.html#cb200-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"week"</span>, <span class="at">values_to =</span> <span class="st">"rank"</span>, wk1<span class="sc">:</span>wk76, <span class="at">values_drop_na =</span> <span class="cn">FALSE</span>)</span>
@@ -426,9 +427,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-17" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-17', 'sol-start-17')"></span>
+► Solution<span id="sol-start-58" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-58', 'sol-start-58')"></span>
 </p>
-<div id="sol-body-17" class="solution-body" style="display: none;">
+<div id="sol-body-58" class="solution-body" style="display: none;">
 <p>Previously we used column position to gather, we can also use column names to indicate which columns are being gathered into a key-value pair.</p>
 <p>Helpful argument of <code>pivot_longer()</code> that we haven’t explored yet is <code>values_drop_na = TRUE</code> to drop missing values. In this example, not all songs stay in the billboard for all 76 weeks that are tracked, once we pivot to a tidy (long) format that will result in a lot of observations (rows) that are <code>NA</code>. By enabling the <code>values_drop_na</code> option it saves us a step of having to use <code>filter()</code> to get rid of those unnecessary rows.</p>
 <div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb202-1"><a href="data-wrangling-tidy-data-revisited.html#cb202-1" aria-hidden="true" tabindex="-1"></a>tidy <span class="sc">%&gt;%</span></span>
@@ -476,21 +477,21 @@ function reset_tooltip(id) {
 <span id="cb206-3"><a href="data-wrangling-tidy-data-revisited.html#cb206-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb206-4"><a href="data-wrangling-tidy-data-revisited.html#cb206-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(who)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 60
-##   country     iso2  iso3   year new_sp_m014 new_sp_m1524 new_sp_m2534 new_sp_m3544 new_sp_m4554
-##   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;int&gt;       &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;
-## 1 Afghanistan AF    AFG    1980          NA           NA           NA           NA           NA
-## 2 Afghanistan AF    AFG    1981          NA           NA           NA           NA           NA
-## 3 Afghanistan AF    AFG    1982          NA           NA           NA           NA           NA
-## 4 Afghanistan AF    AFG    1983          NA           NA           NA           NA           NA
-## 5 Afghanistan AF    AFG    1984          NA           NA           NA           NA           NA
-## 6 Afghanistan AF    AFG    1985          NA           NA           NA           NA           NA
-## # ... with 51 more variables: new_sp_m5564 &lt;int&gt;, new_sp_m65 &lt;int&gt;, new_sp_f014 &lt;int&gt;,
-## #   new_sp_f1524 &lt;int&gt;, new_sp_f2534 &lt;int&gt;, new_sp_f3544 &lt;int&gt;, new_sp_f4554 &lt;int&gt;,
-## #   new_sp_f5564 &lt;int&gt;, new_sp_f65 &lt;int&gt;, new_sn_m014 &lt;int&gt;, new_sn_m1524 &lt;int&gt;, new_sn_m2534 &lt;int&gt;,
-## #   new_sn_m3544 &lt;int&gt;, new_sn_m4554 &lt;int&gt;, new_sn_m5564 &lt;int&gt;, new_sn_m65 &lt;int&gt;, new_sn_f014 &lt;int&gt;,
-## #   new_sn_f1524 &lt;int&gt;, new_sn_f2534 &lt;int&gt;, new_sn_f3544 &lt;int&gt;, new_sn_f4554 &lt;int&gt;,
-## #   new_sn_f5564 &lt;int&gt;, new_sn_f65 &lt;int&gt;, new_ep_m014 &lt;int&gt;, new_ep_m1524 &lt;int&gt;, new_ep_m2534 &lt;int&gt;,
-## #   new_ep_m3544 &lt;int&gt;, new_ep_m4554 &lt;int&gt;, new_ep_m5564 &lt;int&gt;, new_ep_m65 &lt;int&gt;, ...</code></pre>
+##   country     iso2  iso3   year new_sp_m014 new_sp_m1524 new_sp_m2534 new_sp_m3544 new_sp_m4554 new_sp_m5564
+##   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;int&gt;       &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;
+## 1 Afghanistan AF    AFG    1980          NA           NA           NA           NA           NA           NA
+## 2 Afghanistan AF    AFG    1981          NA           NA           NA           NA           NA           NA
+## 3 Afghanistan AF    AFG    1982          NA           NA           NA           NA           NA           NA
+## 4 Afghanistan AF    AFG    1983          NA           NA           NA           NA           NA           NA
+## 5 Afghanistan AF    AFG    1984          NA           NA           NA           NA           NA           NA
+## 6 Afghanistan AF    AFG    1985          NA           NA           NA           NA           NA           NA
+## # ... with 50 more variables: new_sp_m65 &lt;int&gt;, new_sp_f014 &lt;int&gt;, new_sp_f1524 &lt;int&gt;,
+## #   new_sp_f2534 &lt;int&gt;, new_sp_f3544 &lt;int&gt;, new_sp_f4554 &lt;int&gt;, new_sp_f5564 &lt;int&gt;, new_sp_f65 &lt;int&gt;,
+## #   new_sn_m014 &lt;int&gt;, new_sn_m1524 &lt;int&gt;, new_sn_m2534 &lt;int&gt;, new_sn_m3544 &lt;int&gt;, new_sn_m4554 &lt;int&gt;,
+## #   new_sn_m5564 &lt;int&gt;, new_sn_m65 &lt;int&gt;, new_sn_f014 &lt;int&gt;, new_sn_f1524 &lt;int&gt;, new_sn_f2534 &lt;int&gt;,
+## #   new_sn_f3544 &lt;int&gt;, new_sn_f4554 &lt;int&gt;, new_sn_f5564 &lt;int&gt;, new_sn_f65 &lt;int&gt;, new_ep_m014 &lt;int&gt;,
+## #   new_ep_m1524 &lt;int&gt;, new_ep_m2534 &lt;int&gt;, new_ep_m3544 &lt;int&gt;, new_ep_m4554 &lt;int&gt;, new_ep_m5564 &lt;int&gt;,
+## #   new_ep_m65 &lt;int&gt;, new_ep_f014 &lt;int&gt;, new_ep_f1524 &lt;int&gt;, new_ep_f2534 &lt;int&gt;, ...</code></pre>
 <p>Is this a tidy data set?</p>
 <p>Nope - this is a typical, real-life messy data set… so, let’s tidy it up.</p>
 <div id="ques:t6" class="question">
@@ -506,9 +507,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-18" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-18', 'sol-start-18')"></span>
+► Solution<span id="sol-start-59" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-59', 'sol-start-59')"></span>
 </p>
-<div id="sol-body-18" class="solution-body" style="display: none;">
+<div id="sol-body-59" class="solution-body" style="display: none;">
 <ul>
 <li>variables:
 <ul>
@@ -561,9 +562,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-19" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-19', 'sol-start-19')"></span>
+► Solution<span id="sol-start-60" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-60', 'sol-start-60')"></span>
 </p>
-<div id="sol-body-19" class="solution-body" style="display: none;">
+<div id="sol-body-60" class="solution-body" style="display: none;">
 <p>Correct, we must separate this column into multiple columns using <code>separate()</code><label for="tufte-sn-53" class="margin-toggle sidenote-number">53</label><input type="checkbox" id="tufte-sn-53" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">53</span> There is an unhelpful formatting issue where instead of <code>new_rel</code> (easy to separate, and other entries have this format with the underscore) the entries are <code>newrel</code> so we will add a line of code using a function from the <code>stringr</code> package to fix that first.</span></p>
 <p>Because the values are not consistently separated using an <code>_</code>, we have to use a two step process where we first create new column called <code>sexagegrp</code> and the separate that into <code>sex</code> and <code>agegrp</code> using positional information.</p>
 <div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb210-1"><a href="data-wrangling-tidy-data-revisited.html#cb210-1" aria-hidden="true" tabindex="-1"></a>tidy <span class="ot">&lt;-</span> tidy <span class="sc">%&gt;%</span></span>
@@ -599,9 +600,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-20" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-20', 'sol-start-20')"></span>
+► Solution<span id="sol-start-61" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-61', 'sol-start-61')"></span>
 </p>
-<div id="sol-body-20" class="solution-body" style="display: none;">
+<div id="sol-body-61" class="solution-body" style="display: none;">
 <p>Exactly, <code>select()</code> can be used to remove columns, we don’t need the column <code>new</code> since that is identical for all observations and we don’t need three columns describing country information.</p>
 <div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="data-wrangling-tidy-data-revisited.html#cb212-1" aria-hidden="true" tabindex="-1"></a>tidy <span class="ot">&lt;-</span> tidy <span class="sc">%&gt;%</span></span>
 <span id="cb212-2"><a href="data-wrangling-tidy-data-revisited.html#cb212-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>new, <span class="sc">-</span>iso2, <span class="sc">-</span>iso3)</span>
@@ -634,9 +635,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-21" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-21', 'sol-start-21')"></span>
+► Solution<span id="sol-start-62" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-62', 'sol-start-62')"></span>
 </p>
-<div id="sol-body-21" class="solution-body" style="display: none;">
+<div id="sol-body-62" class="solution-body" style="display: none;">
 <div class="sourceCode" id="cb214"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb214-1"><a href="data-wrangling-tidy-data-revisited.html#cb214-1" aria-hidden="true" tabindex="-1"></a>tidy <span class="sc">%&gt;%</span></span>
 <span id="cb214-2"><a href="data-wrangling-tidy-data-revisited.html#cb214-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"United States of America"</span> <span class="sc">&amp;</span> year <span class="sc">&gt;=</span> <span class="dv">1990</span> <span class="sc">&amp;</span> year <span class="sc">&lt;=</span> <span class="dv">2000</span> <span class="sc">&amp;</span> sex <span class="sc">==</span> <span class="st">"f"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb214-3"><a href="data-wrangling-tidy-data-revisited.html#cb214-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
@@ -667,9 +668,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-22" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-22', 'sol-start-22')"></span>
+► Solution<span id="sol-start-63" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-63', 'sol-start-63')"></span>
 </p>
-<div id="sol-body-22" class="solution-body" style="display: none;">
+<div id="sol-body-63" class="solution-body" style="display: none;">
 <p>We pivot!</p>
 <div class="sourceCode" id="cb216"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb216-1"><a href="data-wrangling-tidy-data-revisited.html#cb216-1" aria-hidden="true" tabindex="-1"></a>tidy <span class="sc">%&gt;%</span></span>
 <span id="cb216-2"><a href="data-wrangling-tidy-data-revisited.html#cb216-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">==</span> <span class="st">"United States of America"</span> <span class="sc">&amp;</span> year <span class="sc">&gt;=</span> <span class="dv">1990</span> <span class="sc">&amp;</span> year <span class="sc">&lt;=</span> <span class="dv">2000</span> <span class="sc">&amp;</span> sex <span class="sc">==</span> <span class="st">"f"</span>) <span class="sc">%&gt;%</span></span>
@@ -697,7 +698,7 @@ function reset_tooltip(id) {
 <a href="climate-change.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-20
+2021-10-26
  using 
 R version 4.0.2 (2020-06-22)
 </p>
