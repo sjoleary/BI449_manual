@@ -230,15 +230,15 @@ function reset_tooltip(id) {
 </ul>
 <p>Download the <a href="https://drive.google.com/drive/folders/18Sl718Ua5F_-UqHtzFgkMo5uo22Q_JJp?usp=sharing">04_ExploratoryAnalysis</a> project folder. Once you have downloaded it, unzip the project directory into your <code>BI449</code> directory.</p>
 <p>To get some practice setting up your own project files, you might notice that this one does not yet have an <code>Rproj</code> file or any <code>Rmarkdown</code> files in it. So the first thing we want to do is create a new R project. To do this open <code>Rstudio</code> then use the dropdown menu in the top right corner to select <code>New Project</code> and from there <code>New Project in an existing directory</code>. From there, navigate to and select the project create an R project.</p>
-<p>Once you have created and opened the project you should see the project name in the top right corner per usual<label for="tufte-sn-92" class="margin-toggle sidenote-number">92</label><input type="checkbox" id="tufte-sn-92" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">92</span> Pro tip: If you run into issues where an Rmarkdown won’t render or file paths aren’t working (especially if things were working previously) one of your first steps should be to double check that the correct <code>Rproj</code> is loaded.</span>.</p>
+<p>Once you have created and opened the project you should see the project name in the top right corner per usual<label for="tufte-sn-90" class="margin-toggle sidenote-number">90</label><input type="checkbox" id="tufte-sn-90" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">90</span> Pro tip: If you run into issues where an Rmarkdown won’t render or file paths aren’t working (especially if things were working previously) one of your first steps should be to double check that the correct <code>Rproj</code> is loaded.</span>.</p>
 <p>Open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Exploratory Analysis project directory. That’s right - training wheels are off … you will need to add all of your own headers, plain text etc. Set up the <code>YAML</code> header so that you are the author and when knitted the date will reflect the date of the creation of the document.</p>
 <p>When you create a new <code>Rmarkdown</code> file, it loads a template, i.e. it shows you standard formatting options, it also means that you already have content so e.g. if you wanted to test out that you have your <code>YAML</code> header set up correctly or you are testing out a new theme, you could just knit the file and see what happens. Of course, since you are going to add your own content you should delete that automatically inserted content.</p>
 <p>Now that you have some experience using <code>Rmarkdown</code> files to document your work in a reproducible way, you have probably started making a list of preferences (e.g. printing chunk out put in the console or in the document itself) and a list of things you find annoying. We have already seen a few options to customize individual code chunks by adding arguments between the curly brackets. <code>r</code> indicates the engine (coding language) and we’ve also inserted <code>fig.height</code> and <code>fig.width</code> to alter the plot size in the final knitted document.</p>
 <p>You can also use the setup chunk to set global settings, i.e. set certain things once for the entire document.</p>
-<p>When you opened a new <code>Rmarkdown</code> file, you should have seen a code chunk in the very top that has been named <code>setup</code><label for="tufte-sn-93" class="margin-toggle sidenote-number">93</label><input type="checkbox" id="tufte-sn-93" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">93</span> you can name any code chunk by inserting a name right after indicating <code>r</code> as your engine. This can be helpful because you can use the navigation menu to navigate directly to a code chunk.</span>; you will also see that it has the additional argument <code>include=FALSE</code> between the curly brackets. This means that when you knit your document, that code chunk will be run, but the code itself will not be visible in the knitted <code>html</code> document.</p>
-<p>In that code chunk you should see <code>knitr::opts_chunk$set(echo = TRUE)</code> - this is already setting a global format for all codes which is that when you knit the document it will print (echo) the code chunk itself and not just the output. You can add additional arguments e.g. <code>warning = FALSE</code>, <code>error = FALSE</code>, <code>message = FALSE</code> will turn off the messages, warnings and errors being printed out when knitting the document<label for="tufte-sn-94" class="margin-toggle sidenote-number">94</label><input type="checkbox" id="tufte-sn-94" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">94</span> You will still see them in the console so you can still troubleshoot a needed, it just means you don’t have it included in the outcome fo your document</span>.</p>
+<p>When you opened a new <code>Rmarkdown</code> file, you should have seen a code chunk in the very top that has been named <code>setup</code><label for="tufte-sn-91" class="margin-toggle sidenote-number">91</label><input type="checkbox" id="tufte-sn-91" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">91</span> you can name any code chunk by inserting a name right after indicating <code>r</code> as your engine. This can be helpful because you can use the navigation menu to navigate directly to a code chunk.</span>; you will also see that it has the additional argument <code>include=FALSE</code> between the curly brackets. This means that when you knit your document, that code chunk will be run, but the code itself will not be visible in the knitted <code>html</code> document.</p>
+<p>In that code chunk you should see <code>knitr::opts_chunk$set(echo = TRUE)</code> - this is already setting a global format for all codes which is that when you knit the document it will print (echo) the code chunk itself and not just the output. You can add additional arguments e.g. <code>warning = FALSE</code>, <code>error = FALSE</code>, <code>message = FALSE</code> will turn off the messages, warnings and errors being printed out when knitting the document<label for="tufte-sn-92" class="margin-toggle sidenote-number">92</label><input type="checkbox" id="tufte-sn-92" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">92</span> You will still see them in the console so you can still troubleshoot a needed, it just means you don’t have it included in the outcome fo your document</span>.</p>
 <p>Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc.</p>
-<p>Let’s load our packages so we can get started. You will likely have to install <code>janitor</code> and <code>skimr</code> before you can load them<label for="tufte-sn-95" class="margin-toggle sidenote-number">95</label><input type="checkbox" id="tufte-sn-95" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">95</span> Remember, you only have to do this once … this is the type of thing where it is more convenient to run it directly in the console so it is not re-run every time you knit your document.</span>.</p>
+<p>Let’s load our packages so we can get started. You will likely have to install <code>janitor</code> and <code>skimr</code> before you can load them<label for="tufte-sn-93" class="margin-toggle sidenote-number">93</label><input type="checkbox" id="tufte-sn-93" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">93</span> Remember, you only have to do this once … this is the type of thing where it is more convenient to run it directly in the console so it is not re-run every time you knit your document.</span>.</p>
 <div class="sourceCode" id="cb277"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb277-1"><a href="exploratory-analysis.html#cb277-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
 <span id="cb277-2"><a href="exploratory-analysis.html#cb277-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb277-3"><a href="exploratory-analysis.html#cb277-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
@@ -312,30 +312,22 @@ function reset_tooltip(id) {
 <p>Even though data has read in correctly does not necessarily mean that it is in the most use-able format … remember plotting and filtering data sets requires typing variable names in over and over again. Therefore, we want to make sure that everything is set up in a way where we will be able to avoid mistakes that are mostly due to typos.</p>
 <p>For example, let’s take a look at the column names:</p>
 <div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="exploratory-analysis.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(disaster)</span></code></pre></div>
-<pre><code>##  [1] "Dis No"                          "Year"                           
-##  [3] "Seq"                             "Glide"                          
-##  [5] "Disaster Group"                  "Disaster Subgroup"              
-##  [7] "Disaster Type"                   "Disaster Subtype"               
-##  [9] "Disaster Subsubtype"             "Event Name"                     
-## [11] "Country"                         "ISO"                            
-## [13] "Region"                          "Continent"                      
-## [15] "Location"                        "Origin"                         
-## [17] "Associated Dis"                  "Associated Dis2"                
-## [19] "OFDA Response"                   "Appeal"                         
-## [21] "Declaration"                     "Aid Contribution"               
-## [23] "Dis Mag Value"                   "Dis Mag Scale"                  
-## [25] "Latitude"                        "Longitude"                      
-## [27] "Local Time"                      "River Basin"                    
-## [29] "Start Year"                      "Start Month"                    
-## [31] "Start Day"                       "End Year"                       
-## [33] "End Month"                       "End Day"                        
-## [35] "Total Deaths"                    "No Injured"                     
-## [37] "No Affected"                     "No Homeless"                    
-## [39] "Total Affected"                  "Reconstruction Costs ('000 US$)"
-## [41] "Insured Damages ('000 US$)"      "Total Damages ('000 US$)"       
-## [43] "CPI"                             "Adm Level"                      
-## [45] "Admin1 Code"                     "Admin2 Code"                    
-## [47] "Geo Locations"</code></pre>
+<pre><code>##  [1] "Dis No"                          "Year"                            "Seq"                            
+##  [4] "Glide"                           "Disaster Group"                  "Disaster Subgroup"              
+##  [7] "Disaster Type"                   "Disaster Subtype"                "Disaster Subsubtype"            
+## [10] "Event Name"                      "Country"                         "ISO"                            
+## [13] "Region"                          "Continent"                       "Location"                       
+## [16] "Origin"                          "Associated Dis"                  "Associated Dis2"                
+## [19] "OFDA Response"                   "Appeal"                          "Declaration"                    
+## [22] "Aid Contribution"                "Dis Mag Value"                   "Dis Mag Scale"                  
+## [25] "Latitude"                        "Longitude"                       "Local Time"                     
+## [28] "River Basin"                     "Start Year"                      "Start Month"                    
+## [31] "Start Day"                       "End Year"                        "End Month"                      
+## [34] "End Day"                         "Total Deaths"                    "No Injured"                     
+## [37] "No Affected"                     "No Homeless"                     "Total Affected"                 
+## [40] "Reconstruction Costs ('000 US$)" "Insured Damages ('000 US$)"      "Total Damages ('000 US$)"       
+## [43] "CPI"                             "Adm Level"                       "Admin1 Code"                    
+## [46] "Admin2 Code"                     "Geo Locations"</code></pre>
 <p>Apparently, they have not read our guidelines for naming things. Column headers with special characters and spaces are super annoying, you might recall from our previous adventures in data wrangling that every time we want to call a column with spaces we are going to have to use back ticks to tell R that it isn’t separate words but a single name.</p>
 <p>Now is probably a good time to learn how to rename columns. The most straightforward way is using <code>rename()</code>.</p>
 <p>Let’s say we wanted to rename <code>Dis No</code> to <code>DisNo</code> the syntax is simple <code>NewName = OldName</code>.</p>
@@ -343,44 +335,42 @@ function reset_tooltip(id) {
 <span id="cb281-2"><a href="exploratory-analysis.html#cb281-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DisNo =</span> <span class="st">`</span><span class="at">Dis No</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb281-3"><a href="exploratory-analysis.html#cb281-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 47
-##   DisNo          Year Seq   Glide `Disaster Group` `Disaster Subgroup` `Disaster Type`  `Disaster Subty~
-##   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;               &lt;chr&gt;            &lt;chr&gt;           
-## 1 1900-9002-CPV  1900 9002  &lt;NA&gt;  Natural          Climatological      Drought          Drought         
-## 2 1900-9001-IND  1900 9001  &lt;NA&gt;  Natural          Climatological      Drought          Drought         
-## 3 1902-0012-GTM  1902 0012  &lt;NA&gt;  Natural          Geophysical         Earthquake       Ground movement 
-## 4 1902-0003-GTM  1902 0003  &lt;NA&gt;  Natural          Geophysical         Volcanic activi~ Ash fall        
-## 5 1902-0010-GTM  1902 0010  &lt;NA&gt;  Natural          Geophysical         Volcanic activi~ Ash fall        
-## 6 1903-0006-CAN  1903 0006  &lt;NA&gt;  Natural          Geophysical         Mass movement (~ Rockfall        
-## # ... with 39 more variables: Disaster Subsubtype &lt;chr&gt;, Event Name &lt;chr&gt;, Country &lt;chr&gt;, ISO &lt;chr&gt;,
-## #   Region &lt;chr&gt;, Continent &lt;chr&gt;, Location &lt;chr&gt;, Origin &lt;chr&gt;, Associated Dis &lt;chr&gt;,
-## #   Associated Dis2 &lt;chr&gt;, OFDA Response &lt;chr&gt;, Appeal &lt;chr&gt;, Declaration &lt;chr&gt;,
-## #   Aid Contribution &lt;dbl&gt;, Dis Mag Value &lt;dbl&gt;, Dis Mag Scale &lt;chr&gt;, Latitude &lt;chr&gt;, Longitude &lt;chr&gt;,
-## #   Local Time &lt;chr&gt;, River Basin &lt;chr&gt;, Start Year &lt;dbl&gt;, Start Month &lt;dbl&gt;, Start Day &lt;dbl&gt;,
-## #   End Year &lt;dbl&gt;, End Month &lt;dbl&gt;, End Day &lt;dbl&gt;, Total Deaths &lt;dbl&gt;, No Injured &lt;dbl&gt;,
-## #   No Affected &lt;dbl&gt;, No Homeless &lt;dbl&gt;, Total Affected &lt;dbl&gt;, ...</code></pre>
+##   DisNo    Year Seq   Glide `Disaster Group` `Disaster Subgro~ `Disaster Type`  `Disaster Subty~ `Disaster Subsub~ `Event Name` Country
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;             &lt;chr&gt;        &lt;chr&gt;  
+## 1 1900-9~  1900 9002  &lt;NA&gt;  Natural          Climatological    Drought          Drought          &lt;NA&gt;              &lt;NA&gt;         Cabo V~
+## 2 1900-9~  1900 9001  &lt;NA&gt;  Natural          Climatological    Drought          Drought          &lt;NA&gt;              &lt;NA&gt;         India  
+## 3 1902-0~  1902 0012  &lt;NA&gt;  Natural          Geophysical       Earthquake       Ground movement  &lt;NA&gt;              &lt;NA&gt;         Guatem~
+## 4 1902-0~  1902 0003  &lt;NA&gt;  Natural          Geophysical       Volcanic activi~ Ash fall         &lt;NA&gt;              Santa Maria  Guatem~
+## 5 1902-0~  1902 0010  &lt;NA&gt;  Natural          Geophysical       Volcanic activi~ Ash fall         &lt;NA&gt;              Santa Maria  Guatem~
+## 6 1903-0~  1903 0006  &lt;NA&gt;  Natural          Geophysical       Mass movement (~ Rockfall         &lt;NA&gt;              &lt;NA&gt;         Canada 
+## # ... with 36 more variables: ISO &lt;chr&gt;, Region &lt;chr&gt;, Continent &lt;chr&gt;, Location &lt;chr&gt;, Origin &lt;chr&gt;, Associated Dis &lt;chr&gt;,
+## #   Associated Dis2 &lt;chr&gt;, OFDA Response &lt;chr&gt;, Appeal &lt;chr&gt;, Declaration &lt;chr&gt;, Aid Contribution &lt;dbl&gt;, Dis Mag Value &lt;dbl&gt;,
+## #   Dis Mag Scale &lt;chr&gt;, Latitude &lt;chr&gt;, Longitude &lt;chr&gt;, Local Time &lt;chr&gt;, River Basin &lt;chr&gt;, Start Year &lt;dbl&gt;, Start Month &lt;dbl&gt;,
+## #   Start Day &lt;dbl&gt;, End Year &lt;dbl&gt;, End Month &lt;dbl&gt;, End Day &lt;dbl&gt;, Total Deaths &lt;dbl&gt;, No Injured &lt;dbl&gt;, No Affected &lt;dbl&gt;,
+## #   No Homeless &lt;dbl&gt;, Total Affected &lt;dbl&gt;, Reconstruction Costs ('000 US$) &lt;lgl&gt;, Insured Damages ('000 US$) &lt;dbl&gt;,
+## #   Total Damages ('000 US$) &lt;dbl&gt;, CPI &lt;dbl&gt;, Adm Level &lt;chr&gt;, Admin1 Code &lt;chr&gt;, Admin2 Code &lt;chr&gt;, Geo Locations &lt;chr&gt;</code></pre>
 <p>This would be pretty annoying if we wanted to rename all of our columns by hand.</p>
-<p>Fortunately, we can leverage the function <code>janitor::clean_names()</code> function<label for="tufte-sn-96" class="margin-toggle sidenote-number">96</label><input type="checkbox" id="tufte-sn-96" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">96</span> the notation format you see here specifies the <code>Rpackage</code> and then the function within it, as <code>package::function()</code>.</span> which is designed to parse letter cases and separators - the default is to convert it to <code>snake_case</code>, i.e. all names are lowercase and words are separated by an underscore, it also deals with duplicate names and special characters.</p>
+<p>Fortunately, we can leverage the function <code>janitor::clean_names()</code> function<label for="tufte-sn-94" class="margin-toggle sidenote-number">94</label><input type="checkbox" id="tufte-sn-94" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">94</span> the notation format you see here specifies the <code>Rpackage</code> and then the function within it, as <code>package::function()</code>.</span> which is designed to parse letter cases and separators - the default is to convert it to <code>snake_case</code>, i.e. all names are lowercase and words are separated by an underscore, it also deals with duplicate names and special characters.</p>
 <p>Let’s see what this does for us:</p>
 <div class="sourceCode" id="cb283"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb283-1"><a href="exploratory-analysis.html#cb283-1" aria-hidden="true" tabindex="-1"></a>disaster <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/nat-disasters_emdat-query-2021-10-05.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">skip =</span> <span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb283-2"><a href="exploratory-analysis.html#cb283-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
 <span id="cb283-3"><a href="exploratory-analysis.html#cb283-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb283-4"><a href="exploratory-analysis.html#cb283-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(disaster)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 47
-##   dis_no         year seq   glide disaster_group disaster_subgroup disaster_type       disaster_subtype
-##   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;             &lt;chr&gt;               &lt;chr&gt;           
-## 1 1900-9002-CPV  1900 9002  &lt;NA&gt;  Natural        Climatological    Drought             Drought         
-## 2 1900-9001-IND  1900 9001  &lt;NA&gt;  Natural        Climatological    Drought             Drought         
-## 3 1902-0012-GTM  1902 0012  &lt;NA&gt;  Natural        Geophysical       Earthquake          Ground movement 
-## 4 1902-0003-GTM  1902 0003  &lt;NA&gt;  Natural        Geophysical       Volcanic activity   Ash fall        
-## 5 1902-0010-GTM  1902 0010  &lt;NA&gt;  Natural        Geophysical       Volcanic activity   Ash fall        
-## 6 1903-0006-CAN  1903 0006  &lt;NA&gt;  Natural        Geophysical       Mass movement (dry) Rockfall        
-## # ... with 39 more variables: disaster_subsubtype &lt;chr&gt;, event_name &lt;chr&gt;, country &lt;chr&gt;, iso &lt;chr&gt;,
-## #   region &lt;chr&gt;, continent &lt;chr&gt;, location &lt;chr&gt;, origin &lt;chr&gt;, associated_dis &lt;chr&gt;,
-## #   associated_dis2 &lt;chr&gt;, ofda_response &lt;chr&gt;, appeal &lt;chr&gt;, declaration &lt;chr&gt;,
-## #   aid_contribution &lt;dbl&gt;, dis_mag_value &lt;dbl&gt;, dis_mag_scale &lt;chr&gt;, latitude &lt;chr&gt;, longitude &lt;chr&gt;,
-## #   local_time &lt;chr&gt;, river_basin &lt;chr&gt;, start_year &lt;dbl&gt;, start_month &lt;dbl&gt;, start_day &lt;dbl&gt;,
-## #   end_year &lt;dbl&gt;, end_month &lt;dbl&gt;, end_day &lt;dbl&gt;, total_deaths &lt;dbl&gt;, no_injured &lt;dbl&gt;,
-## #   no_affected &lt;dbl&gt;, no_homeless &lt;dbl&gt;, total_affected &lt;dbl&gt;, reconstruction_costs_000_us &lt;lgl&gt;, ...</code></pre>
+##   dis_no    year seq   glide disaster_group disaster_subgroup disaster_type  disaster_subtype disaster_subsub~ event_name country iso  
+##   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;             &lt;chr&gt;          &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;
+## 1 1900-90~  1900 9002  &lt;NA&gt;  Natural        Climatological    Drought        Drought          &lt;NA&gt;             &lt;NA&gt;       Cabo V~ CPV  
+## 2 1900-90~  1900 9001  &lt;NA&gt;  Natural        Climatological    Drought        Drought          &lt;NA&gt;             &lt;NA&gt;       India   IND  
+## 3 1902-00~  1902 0012  &lt;NA&gt;  Natural        Geophysical       Earthquake     Ground movement  &lt;NA&gt;             &lt;NA&gt;       Guatem~ GTM  
+## 4 1902-00~  1902 0003  &lt;NA&gt;  Natural        Geophysical       Volcanic acti~ Ash fall         &lt;NA&gt;             Santa Mar~ Guatem~ GTM  
+## 5 1902-00~  1902 0010  &lt;NA&gt;  Natural        Geophysical       Volcanic acti~ Ash fall         &lt;NA&gt;             Santa Mar~ Guatem~ GTM  
+## 6 1903-00~  1903 0006  &lt;NA&gt;  Natural        Geophysical       Mass movement~ Rockfall         &lt;NA&gt;             &lt;NA&gt;       Canada  CAN  
+## # ... with 35 more variables: region &lt;chr&gt;, continent &lt;chr&gt;, location &lt;chr&gt;, origin &lt;chr&gt;, associated_dis &lt;chr&gt;,
+## #   associated_dis2 &lt;chr&gt;, ofda_response &lt;chr&gt;, appeal &lt;chr&gt;, declaration &lt;chr&gt;, aid_contribution &lt;dbl&gt;, dis_mag_value &lt;dbl&gt;,
+## #   dis_mag_scale &lt;chr&gt;, latitude &lt;chr&gt;, longitude &lt;chr&gt;, local_time &lt;chr&gt;, river_basin &lt;chr&gt;, start_year &lt;dbl&gt;, start_month &lt;dbl&gt;,
+## #   start_day &lt;dbl&gt;, end_year &lt;dbl&gt;, end_month &lt;dbl&gt;, end_day &lt;dbl&gt;, total_deaths &lt;dbl&gt;, no_injured &lt;dbl&gt;, no_affected &lt;dbl&gt;,
+## #   no_homeless &lt;dbl&gt;, total_affected &lt;dbl&gt;, reconstruction_costs_000_us &lt;lgl&gt;, insured_damages_000_us &lt;dbl&gt;,
+## #   total_damages_000_us &lt;dbl&gt;, cpi &lt;dbl&gt;, adm_level &lt;chr&gt;, admin1_code &lt;chr&gt;, admin2_code &lt;chr&gt;, geo_locations &lt;chr&gt;</code></pre>
 <p>That looks much better. Similar to running <code>head()</code> to make sure the first set of lines has read in properly, running <code>tail()</code> gives you a quickly look at whether the end of the file read in correctly as well.</p>
 </div>
 <div id="get-an-overview-of-the-data-set" class="section level2" number="16.4">
@@ -414,9 +404,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-69" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-69', 'sol-start-69')"></span>
+► Solution<span id="sol-start-75" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-75', 'sol-start-75')"></span>
 </p>
-<div id="sol-body-69" class="solution-body" style="display: none;">
+<div id="sol-body-75" class="solution-body" style="display: none;">
 <p>Factors to consider are among other things understanding how many rows/columns there are, what variables are included, whether it is in a tidy format or not, what data type each variable is, and what the range/distribution of values is.</p>
 <p>You can get dimensions of the data set using <code>ncols()</code> and <code>nrows()</code>, <code>str()</code> will give you dimensions, the class, and data types (classes) of individual columns.</p>
 <p class="solution-end">
@@ -1056,10 +1046,9 @@ function reset_tooltip(id) {
 </tbody>
 </table>
 <p>For numerical columns mean values and percentiles can give you an overview of how the data is distributed. However for columns that contain strings or characters we cannot produce those types of summary statistics. Rather, we are probably more interested on how many unique values those columns contain and what those unique entries are.</p>
-<p><code>skim()</code> already gave us the number of unique entries for each column, we have two options we can use to determine what those values are. The first is <code>unique()</code>. This function makes use of the fact that each column is a vector<label for="tufte-sn-97" class="margin-toggle sidenote-number">97</label><input type="checkbox" id="tufte-sn-97" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">97</span> Remember, we can access each column of a dataframe as `df$columnname</span>.</p>
+<p><code>skim()</code> already gave us the number of unique entries for each column, we have two options we can use to determine what those values are. The first is <code>unique()</code>. This function makes use of the fact that each column is a vector<label for="tufte-sn-95" class="margin-toggle sidenote-number">95</label><input type="checkbox" id="tufte-sn-95" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">95</span> Remember, we can access each column of a dataframe as `df$columnname</span>.</p>
 <div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="exploratory-analysis.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(disaster<span class="sc">$</span>disaster_subgroup)</span></code></pre></div>
-<pre><code>## [1] "Climatological"    "Geophysical"       "Meteorological"    "Hydrological"      "Biological"       
-## [6] "Extra-terrestrial"</code></pre>
+<pre><code>## [1] "Climatological"    "Geophysical"       "Meteorological"    "Hydrological"      "Biological"        "Extra-terrestrial"</code></pre>
 <p>When you run this function it returns a vector; while this might be helpful in some contexts, it would be helpful if we could also view it in a tabular format. Do not fret - <code>tidyverse</code> got you.</p>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="exploratory-analysis.html#cb288-1" aria-hidden="true" tabindex="-1"></a>disaster <span class="sc">%&gt;%</span></span>
 <span id="cb288-2"><a href="exploratory-analysis.html#cb288-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(disaster_subgroup)</span></code></pre></div>
@@ -1113,9 +1102,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-70" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-70', 'sol-start-70')"></span>
+► Solution<span id="sol-start-76" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-76', 'sol-start-76')"></span>
 </p>
-<div id="sol-body-70" class="solution-body" style="display: none;">
+<div id="sol-body-76" class="solution-body" style="display: none;">
 <p>You can calculate summary statistics</p>
 <ul>
 <li>mean, median</li>
@@ -1144,7 +1133,7 @@ function reset_tooltip(id) {
 </p>
 </div>
 </div>
-<p>Let’s start by figuring out how many observations fall into each sub-category of natural disasters<label for="tufte-sn-98" class="margin-toggle sidenote-number">98</label><input type="checkbox" id="tufte-sn-98" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">98</span> We finally get to see the alternative to <code>stat = "identity"</code> in using barplots! To plot distribution of categorical variable you are now telling <code>ggplot</code> to count the number of observations for each category</span>.</p>
+<p>Let’s start by figuring out how many observations fall into each sub-category of natural disasters<label for="tufte-sn-96" class="margin-toggle sidenote-number">96</label><input type="checkbox" id="tufte-sn-96" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">96</span> We finally get to see the alternative to <code>stat = "identity"</code> in using barplots! To plot distribution of categorical variable you are now telling <code>ggplot</code> to count the number of observations for each category</span>.</p>
 <div class="sourceCode" id="cb290"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb290-1"><a href="exploratory-analysis.html#cb290-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(disaster, <span class="fu">aes</span>(<span class="at">x =</span> disaster_subgroup)) <span class="sc">+</span></span>
 <span id="cb290-2"><a href="exploratory-analysis.html#cb290-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-230-1.png" width="672"></p>
@@ -1172,7 +1161,7 @@ function reset_tooltip(id) {
 <span id="cb294-5"><a href="exploratory-analysis.html#cb294-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us)) <span class="sc">+</span></span>
 <span id="cb294-6"><a href="exploratory-analysis.html#cb294-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-234-1.png" width="672"></p>
-<p>That looks like we might have some outliers that are skewing our histogram. We can try looking at e.g. a square root scale, which skews the y-axis in a systematic way<label for="tufte-sn-99" class="margin-toggle sidenote-number">99</label><input type="checkbox" id="tufte-sn-99" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">99</span> This is the type of thing where in order to not be unintentionally mislead you would always want to add “Note, the skewed y-scale”</span>.</p>
+<p>That looks like we might have some outliers that are skewing our histogram. We can try looking at e.g. a square root scale, which skews the y-axis in a systematic way<label for="tufte-sn-97" class="margin-toggle sidenote-number">97</label><input type="checkbox" id="tufte-sn-97" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">97</span> This is the type of thing where in order to not be unintentionally mislead you would always want to add “Note, the skewed y-scale”</span>.</p>
 <div class="sourceCode" id="cb295"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb295-1"><a href="exploratory-analysis.html#cb295-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(damages, <span class="fu">aes</span>(<span class="at">x =</span> total_damages_000_us)) <span class="sc">+</span></span>
 <span id="cb295-2"><a href="exploratory-analysis.html#cb295-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
 <span id="cb295-3"><a href="exploratory-analysis.html#cb295-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_sqrt</span>()</span></code></pre></div>
@@ -1247,7 +1236,7 @@ function reset_tooltip(id) {
 </tr>
 </tbody>
 </table>
-<p>After you’ve explored patterns within variables you are interested in you are also going to want to explore relationships (<strong>Covariation</strong>) among variables<label for="tufte-sn-100" class="margin-toggle sidenote-number">100</label><input type="checkbox" id="tufte-sn-100" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">100</span> Remember, when we start looking at correlation, we always need to be careful about how/when we infer causation!</span>.</p>
+<p>After you’ve explored patterns within variables you are interested in you are also going to want to explore relationships (<strong>Covariation</strong>) among variables<label for="tufte-sn-98" class="margin-toggle sidenote-number">98</label><input type="checkbox" id="tufte-sn-98" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">98</span> Remember, when we start looking at correlation, we always need to be careful about how/when we infer causation!</span>.</p>
 <div id="ques:eda-9" class="question">
 <p class="question-begin">
 ► Question 16.9
@@ -1261,9 +1250,9 @@ function reset_tooltip(id) {
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-71" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-71', 'sol-start-71')"></span>
+► Solution<span id="sol-start-77" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-77', 'sol-start-77')"></span>
 </p>
-<div id="sol-body-71" class="solution-body" style="display: none;">
+<div id="sol-body-77" class="solution-body" style="display: none;">
 <p>You can calculate summary statistics and compare them, but for initial exploration of patterns visualizations are going to be much more handy.</p>
 <p>You could create faceted barplot or have bars next to each other in a figure; faceted historgrams can be helpful too. But especially with increasing number of comparisons, one of the most straightforward ways to compare distributions are boxplots.</p>
 <p>Comparing two categorical values can be challenging - heat plots can be used to visualize the number of observations that fulfill both categories, for two continuous values you can use scatter plots (though these become less useful with increasing number of observations in your data set).</p>
@@ -1394,7 +1383,7 @@ Let’s see if we can fix our legend to something more visible, we might want di
 <h2>
 <span class="header-section-number">16.7</span> Iterate your exploration<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('iterate-your-exploration')" onmouseout="reset_tooltip('iterate-your-exploration-tooltip')"><span class="tooltiptext" id="iterate-your-exploration-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>Now that we have an answer(ish) to our question - the first thing we should do is question our answer<label for="tufte-sn-101" class="margin-toggle sidenote-number">101</label><input type="checkbox" id="tufte-sn-101" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">101</span> especially if your answer conforms to your <em>a priori</em> expectations!</span>. Always consider limitations of your data, whether there are alternative explanations, if your data has some inherent issues you need to be aware of etc. It can also be helpful to find at least one external data source to assess whether your answers are roughly in line with other (expected) measurements.</p>
+<p>Now that we have an answer(ish) to our question - the first thing we should do is question our answer<label for="tufte-sn-99" class="margin-toggle sidenote-number">99</label><input type="checkbox" id="tufte-sn-99" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">99</span> especially if your answer conforms to your <em>a priori</em> expectations!</span>. Always consider limitations of your data, whether there are alternative explanations, if your data has some inherent issues you need to be aware of etc. It can also be helpful to find at least one external data source to assess whether your answers are roughly in line with other (expected) measurements.</p>
 <p>It is called an exploratory analysis for a reason, because it is just the beginning. Usually this is the beginning of a more sophisticated analysis. Important questions to ask always include</p>
 <ul>
 <li>Is your data appropriate for the question your are asking?</li>

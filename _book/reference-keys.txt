@@ -54,6 +54,8 @@ fig:unnamed-chunk-287
 tab:unnamed-chunk-291
 fig:unnamed-chunk-296
 fig:unnamed-chunk-309
+fig:unnamed-chunk-326
+fig:unnamed-chunk-328
 what-even-is-data-science
 defining-data-and-science
 what-even-is-data-science-1
@@ -189,4 +191,6 @@ evaluating-models
 remote-sensing
 neon-the-power-of-longterm-data-sets
 plot-maps-of-topography-and-plants
-explore-relationship-between-topographic-variable-and-vegetation-patterns
+explore-relationships-between-topographic-variable-and-vegetation-patterns
+comparison-of-relationship-of-vegetation-and-topography-across-the-us
+fig:unnamed-chunk-15

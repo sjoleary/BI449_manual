@@ -269,7 +269,7 @@ Create a new object with the fork length in centimeters. Then change then change
 </p>
 </div>
 </div>
-<p><strong>More thoughts on naming things</strong><label for="tufte-sn-19" class="margin-toggle sidenote-number">19</label><input type="checkbox" id="tufte-sn-19" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">19</span> You will soon discover that coding is 90% naming things.</span></p>
+<p><strong>More thoughts on naming things</strong><label for="tufte-sn-17" class="margin-toggle sidenote-number">17</label><input type="checkbox" id="tufte-sn-17" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">17</span> You will soon discover that coding is 90% naming things.</span></p>
 <p>Theoretically, we can name objects anything we want - but before that gets out of hand let’s think about some guidelines for naming objects.</p>
 <ul>
 <li>Make them simple, specific, and not too long (otherwise you will end up with a lot of typing to do and difficulties remembering which object is which).</li>
@@ -328,7 +328,7 @@ Create a new object with the fork length in centimeters. Then change then change
 </h2>
 <p>When we installed <code>R packages</code> earlier we mentioned that they are sets of predefined <code>functions</code>. These are essentially mini-scripts that automate using specific sets of commands. So instead of having to run multiple lines of code (this can be 10s - 100s of lines code) you <em>call</em> the function instead.</p>
 <p>Each function usually requires multiple inputs (<em>arguments</em>) and once executed return a <code>value</code> (though this is not always the case).</p>
-<p>For example the function <code>round()</code> can be used to round a number<label for="tufte-sn-20" class="margin-toggle sidenote-number">20</label><input type="checkbox" id="tufte-sn-20" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">20</span> This is an excellent example of naming things well!</span>.</p>
+<p>For example the function <code>round()</code> can be used to round a number<label for="tufte-sn-18" class="margin-toggle sidenote-number">18</label><input type="checkbox" id="tufte-sn-18" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">18</span> This is an excellent example of naming things well!</span>.</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="r-functions-objects-vectors---oh-my.html#cb36-1" aria-hidden="true" tabindex="-1"></a>fork_length_cm <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fl">34.8821</span>)</span></code></pre></div>
 <p>If we print the value of our object we see the following value is returned.</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="r-functions-objects-vectors---oh-my.html#cb37-1" aria-hidden="true" tabindex="-1"></a>fork_length_cm</span></code></pre></div>
@@ -358,7 +358,7 @@ Create a new object with the fork length in centimeters. Then change then change
 <h2>
 <span class="header-section-number">4.5</span> Vectors (data types I)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('vectors-data-types-i')" onmouseout="reset_tooltip('vectors-data-types-i-tooltip')"><span class="tooltiptext" id="vectors-data-types-i-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>Now that we’ve figured out what objects and functions are let’s get to know the two data types we will be spending the most time with this semester - <code>vectors</code> and data frames (<code>data.frame</code>)<label for="tufte-sn-21" class="margin-toggle sidenote-number">21</label><input type="checkbox" id="tufte-sn-21" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">21</span> Other data types include lists (<code>list</code>), factors (<code>factor</code>) matrices (<code>matrix</code>), and arrays (<code>array</code>); we’ll introduce those later on.</span>.</p>
+<p>Now that we’ve figured out what objects and functions are let’s get to know the two data types we will be spending the most time with this semester - <code>vectors</code> and data frames (<code>data.frame</code>)<label for="tufte-sn-19" class="margin-toggle sidenote-number">19</label><input type="checkbox" id="tufte-sn-19" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">19</span> Other data types include lists (<code>list</code>), factors (<code>factor</code>) matrices (<code>matrix</code>), and arrays (<code>array</code>); we’ll introduce those later on.</span>.</p>
 <p>The most simple data type in R is the (atomic) <code>vector</code> which is a linear vector of a single type. There are six main types -</p>
 <ul>
 <li>
@@ -435,7 +435,7 @@ Describe what happens when data types are mixed in a single atomic vector?
 </div>
 </div>
 <p>We already discovered that we can combine vectors - but can we extract certain components from vectors? Indeed, there are a variety of ways that we can subset vectors.</p>
-<p>The most simple way is using square brackets to indicate which element (or elements) we can’t extract. In R, indices start at 1.<label for="tufte-sn-22" class="margin-toggle sidenote-number">22</label><input type="checkbox" id="tufte-sn-22" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">22</span> This is not the case for all programming languages, e.g. Perl, Python, or C++ start with 0.</span></p>
+<p>The most simple way is using square brackets to indicate which element (or elements) we can’t extract. In R, indices start at 1.<label for="tufte-sn-20" class="margin-toggle sidenote-number">20</label><input type="checkbox" id="tufte-sn-20" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">20</span> This is not the case for all programming languages, e.g. Perl, Python, or C++ start with 0.</span></p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="r-functions-objects-vectors---oh-my.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract second element</span></span>
 <span id="cb63-2"><a href="r-functions-objects-vectors---oh-my.html#cb63-2" aria-hidden="true" tabindex="-1"></a>species[<span class="dv">2</span>]</span></code></pre></div>
 <pre><code>## [1] "blacktip"</code></pre>
@@ -446,8 +446,8 @@ Describe what happens when data types are mixed in a single atomic vector?
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="r-functions-objects-vectors---oh-my.html#cb67-1" aria-hidden="true" tabindex="-1"></a>species_longer <span class="ot">&lt;-</span> species[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">1</span>, <span class="dv">1</span>)]</span>
 <span id="cb67-2"><a href="r-functions-objects-vectors---oh-my.html#cb67-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb67-3"><a href="r-functions-objects-vectors---oh-my.html#cb67-3" aria-hidden="true" tabindex="-1"></a>species_longer</span></code></pre></div>
-<pre><code>## [1] "blacktip"            "blacktip"            "gafftop"             "scallopedhammerhead"
-## [5] "gafftop"             "gafftop"             "bullshark"           "bullshark"</code></pre>
+<pre><code>## [1] "blacktip"            "blacktip"            "gafftop"             "scallopedhammerhead" "gafftop"             "gafftop"            
+## [7] "bullshark"           "bullshark"</code></pre>
 <p>More frequently, we will want to extract certain elements based on a specific condition (conditional subsetting).</p>
 <p>This is done using a logical vector, here <code>TRUE</code> select the element with the same index and <code>FALSE</code> will not.</p>
 <div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="r-functions-objects-vectors---oh-my.html#cb69-1" aria-hidden="true" tabindex="-1"></a>fork_length <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">454</span>, <span class="dv">234</span>, <span class="dv">948</span>, <span class="dv">201</span>)</span>
@@ -462,7 +462,7 @@ Describe what happens when data types are mixed in a single atomic vector?
 <p>We can use this to subset our vector directly.</p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="r-functions-objects-vectors---oh-my.html#cb73-1" aria-hidden="true" tabindex="-1"></a>fork_length[<span class="fu">c</span>(fork_length <span class="sc">&gt;</span> <span class="dv">300</span>)]</span></code></pre></div>
 <pre><code>## [1] 454 948</code></pre>
-<p>There are a series of <code>boolean expressions</code><label for="tufte-sn-23" class="margin-toggle sidenote-number">23</label><input type="checkbox" id="tufte-sn-23" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">23</span> logical statements that are either true or false</span> we can use for subsetting vectors. Most of them you are probaly already familiar with because math.</p>
+<p>There are a series of <code>boolean expressions</code><label for="tufte-sn-21" class="margin-toggle sidenote-number">21</label><input type="checkbox" id="tufte-sn-21" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">21</span> logical statements that are either true or false</span> we can use for subsetting vectors. Most of them you are probaly already familiar with because math.</p>
 <ul>
 <li>
 <code>&gt;</code> and <code>&lt;</code> (greater/less than)</li>
@@ -490,7 +490,7 @@ Describe what happens when data types are mixed in a single atomic vector?
 </p>
 </div>
 </div>
-<p>R is set apart from other programming languages because it was designed to analyze data<label for="tufte-sn-24" class="margin-toggle sidenote-number">24</label><input type="checkbox" id="tufte-sn-24" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">24</span> some people will argue that it is a ‘statistical language’ rather than a true programming language … don’t listen to them!</span> it has straightfoward ways to deal with missing data (<code>NA</code> or <code>na</code> values) because those are quite common in real world data sets.</p>
+<p>R is set apart from other programming languages because it was designed to analyze data<label for="tufte-sn-22" class="margin-toggle sidenote-number">22</label><input type="checkbox" id="tufte-sn-22" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">22</span> some people will argue that it is a ‘statistical language’ rather than a true programming language … don’t listen to them!</span> it has straightfoward ways to deal with missing data (<code>NA</code> or <code>na</code> values) because those are quite common in real world data sets.</p>
 <p>Let’s create a vector with a missing value.</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="r-functions-objects-vectors---oh-my.html#cb75-1" aria-hidden="true" tabindex="-1"></a>total_length <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">560</span>, <span class="cn">NA</span>, <span class="dv">1021</span>, <span class="dv">250</span>)</span></code></pre></div>
 <p>Let’s say we want to calculate the mean value.</p>

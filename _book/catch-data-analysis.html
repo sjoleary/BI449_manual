@@ -232,7 +232,7 @@ function reset_tooltip(id) {
 <li>What environmental predictors can we use to predict presence of elasmobranchs?</li>
 </ol>
 <p>We are going to stick to the first two questions to practice our data wrangling skills (and possibly pick up a few new ones …)</p>
-<p>You should have a <code>NurseryAnalysis.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-38" class="margin-toggle sidenote-number">38</label><input type="checkbox" id="tufte-sn-38" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">38</span> You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
+<p>You should have a <code>NurseryAnalysis.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-36" class="margin-toggle sidenote-number">36</label><input type="checkbox" id="tufte-sn-36" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">36</span> You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
 <p>As always, let’s start by loading our packages needed for this analysis.</p>
 <p>We are missing one package that we will need to install the first time, it contains a specialized function that we will need down the line.</p>
 <div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="catch-data-analysis.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install packages</span></span>
@@ -261,7 +261,7 @@ Produce a table that contains the number of times a species was caught at each s
 </p>
 </div>
 </div>
-<p>Your table should look something like this.<label for="tufte-sn-39" class="margin-toggle sidenote-number">39</label><input type="checkbox" id="tufte-sn-39" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">39</span> Pro tip: you can use <code>replace(is.na(.), 0)</code> to replace <code>NA</code> values in all columns with a <code>0</code>.</span></p>
+<p>Your table should look something like this.<label for="tufte-sn-37" class="margin-toggle sidenote-number">37</label><input type="checkbox" id="tufte-sn-37" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">37</span> Pro tip: you can use <code>replace(is.na(.), 0)</code> to replace <code>NA</code> values in all columns with a <code>0</code>.</span></p>
 <p><!--
 <caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-116">Table 8.1: </span>Number of individuals per caught per site and overall across all sites and years.</span><!--</caption>--></p>
 <table>
@@ -359,7 +359,7 @@ Determine how many individuals have information on their life history stage.
 </p>
 </div>
 </div>
-<p>Another way to determine the life history stage is to used previously information on length-at-maturity and how quickly YOY grow during their first year of life. This information is species-specific and has been determined for various species using life-history studies that rely on data sets that contain information on size, level of maturity and age<label for="tufte-sn-40" class="margin-toggle sidenote-number">40</label><input type="checkbox" id="tufte-sn-40" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">40</span> Sharks can be aged using their vertebrae similar to how we can use growth rings on trees to age them.</span>.</p>
+<p>Another way to determine the life history stage is to used previously information on length-at-maturity and how quickly YOY grow during their first year of life. This information is species-specific and has been determined for various species using life-history studies that rely on data sets that contain information on size, level of maturity and age<label for="tufte-sn-38" class="margin-toggle sidenote-number">38</label><input type="checkbox" id="tufte-sn-38" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">38</span> Sharks can be aged using their vertebrae similar to how we can use growth rings on trees to age them.</span>.</p>
 <div id="ques:missed" class="question">
 <p class="question-begin">
 ► Question 8.3
@@ -409,7 +409,7 @@ Determine how many individuals have information on their life history stage.
 </ul>
 <p>First, conceptually describe how you could add this information to your data sheet in excel as a new column called <code>Estimated_Stage</code>.</p>
 <p>Now, let’s consider how we could use our data wrangling skills to add a new column <code>Estimated_Stage</code> that contains life history stage based on length estimates. Let’s first work this out for the two species above to keep it simple.</p>
-<p>When confronted with a more complex problems like this it can be helpful to first walk through the individual steps necessary<label for="tufte-sn-41" class="margin-toggle sidenote-number">41</label><input type="checkbox" id="tufte-sn-41" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">41</span> Some people find it helpful to write things out in ‘pseudo-code’ first and then work out what the code needs to look like for the specific language they are working in</span>.</p>
+<p>When confronted with a more complex problems like this it can be helpful to first walk through the individual steps necessary<label for="tufte-sn-39" class="margin-toggle sidenote-number">39</label><input type="checkbox" id="tufte-sn-39" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">39</span> Some people find it helpful to write things out in ‘pseudo-code’ first and then work out what the code needs to look like for the specific language they are working in</span>.</p>
 <p>Briefly describe what you think our approach should look like - even if you don’t know the functions you need to achieve this.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -418,11 +418,11 @@ Determine how many individuals have information on their life history stage.
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-48" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-48', 'sol-start-48')"></span>
+► Solution<span id="sol-start-54" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-54', 'sol-start-54')"></span>
 </p>
-<div id="sol-body-48" class="solution-body" style="display: none;">
+<div id="sol-body-54" class="solution-body" style="display: none;">
 <p>There are two approaches we can take.</p>
-<p>The first one would involve sub-setting your <code>data.frame</code> using <code>filter()</code> to contain only individuals that fulfill the conditions of specific length ranges that fit the ranges above for each life history stage and the add a new column with the correctly assigned life history stage<label for="tufte-sn-42" class="margin-toggle sidenote-number">42</label><input type="checkbox" id="tufte-sn-42" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">42</span> Remember, you can use <code>&amp;</code> and <code>|</code> to combine two conditions</span>.</p>
+<p>The first one would involve sub-setting your <code>data.frame</code> using <code>filter()</code> to contain only individuals that fulfill the conditions of specific length ranges that fit the ranges above for each life history stage and the add a new column with the correctly assigned life history stage<label for="tufte-sn-40" class="margin-toggle sidenote-number">40</label><input type="checkbox" id="tufte-sn-40" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">40</span> Remember, you can use <code>&amp;</code> and <code>|</code> to combine two conditions</span>.</p>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="catch-data-analysis.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C. brevipinna, Carlson &amp; Baremore 2005</span></span>
 <span id="cb176-2"><a href="catch-data-analysis.html#cb176-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb176-3"><a href="catch-data-analysis.html#cb176-3" aria-hidden="true" tabindex="-1"></a>C.brevipinna_YOY <span class="ot">&lt;-</span> <span class="fu">filter</span>(elasmos, Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">812</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">844</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">844</span>) <span class="sc">%&gt;%</span></span>
@@ -852,7 +852,7 @@ Briefly discuss what measures we could use to determine effort.
 </p>
 </div>
 </div>
-<p>We are going to calculate effort as “hook hours.” To do this we need to know how many hooks were on the line per set<label for="tufte-sn-43" class="margin-toggle sidenote-number">43</label><input type="checkbox" id="tufte-sn-43" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">43</span> A set means that baited hooks on leaders (individual lines) where attached to the main line and that main line was then “set” in the water for a given period of time before pulling it back in and determining which fish were caught on hooks.</span> and how long the entire line was in the water per set (this is called soak time), then we can easily calculate hook hours of each set as the number of hooks multiplied by the soak time. And then we can divide the number of e.g. sharks caught on a set (“catch) by hook hours (”effort”) to calculate CPUE.</p>
+<p>We are going to calculate effort as “hook hours.” To do this we need to know how many hooks were on the line per set<label for="tufte-sn-41" class="margin-toggle sidenote-number">41</label><input type="checkbox" id="tufte-sn-41" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">41</span> A set means that baited hooks on leaders (individual lines) where attached to the main line and that main line was then “set” in the water for a given period of time before pulling it back in and determining which fish were caught on hooks.</span> and how long the entire line was in the water per set (this is called soak time), then we can easily calculate hook hours of each set as the number of hooks multiplied by the soak time. And then we can divide the number of e.g. sharks caught on a set (“catch) by hook hours (”effort”) to calculate CPUE.</p>
 <p>Your <code>data</code> folder contains as tab-delimited file with set meta-data. This includes information that describes the set itself including date of the set, site, soak time, and location and also parameters describing the conditions of the set such as temperature, salinity, depth, and dissolved oxygen.</p>
 <p>Let’s read in the data set.</p>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="catch-data-analysis.html#cb180-1" aria-hidden="true" tabindex="-1"></a>set_meta <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/set_data.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
@@ -871,9 +871,9 @@ Take a quick look at the data set to determine what columns are included and wha
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-49" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-49', 'sol-start-49')"></span>
+► Solution<span id="sol-start-55" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-55', 'sol-start-55')"></span>
 </p>
-<div id="sol-body-49" class="solution-body" style="display: none;">
+<div id="sol-body-55" class="solution-body" style="display: none;">
 <p>Correct, a simple <code>mutate()</code> will do the trick.</p>
 <div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="catch-data-analysis.html#cb181-1" aria-hidden="true" tabindex="-1"></a>set_meta <span class="ot">&lt;-</span> set_meta <span class="sc">%&gt;%</span></span>
 <span id="cb181-2"><a href="catch-data-analysis.html#cb181-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Hook_Hours =</span> Hooks <span class="sc">*</span> Soak_Time)</span></code></pre></div>
@@ -898,9 +898,9 @@ If we look at our elasmo data.frame you will notice that we have a column called
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-50" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-50', 'sol-start-50')"></span>
+► Solution<span id="sol-start-56" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-56', 'sol-start-56')"></span>
 </p>
-<div id="sol-body-50" class="solution-body" style="display: none;">
+<div id="sol-body-56" class="solution-body" style="display: none;">
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="catch-data-analysis.html#cb182-1" aria-hidden="true" tabindex="-1"></a>elasmos <span class="ot">&lt;-</span> elasmos <span class="sc">%&gt;%</span></span>
 <span id="cb182-2"><a href="catch-data-analysis.html#cb182-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(Set_ID, Year, Month, Day, Set, <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb182-3"><a href="catch-data-analysis.html#cb182-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Set_ID)</span></code></pre></div>
@@ -924,9 +924,9 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-51" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-51', 'sol-start-51')"></span>
+► Solution<span id="sol-start-57" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-57', 'sol-start-57')"></span>
 </p>
-<div id="sol-body-51" class="solution-body" style="display: none;">
+<div id="sol-body-57" class="solution-body" style="display: none;">
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="catch-data-analysis.html#cb183-1" aria-hidden="true" tabindex="-1"></a>elasmos_set <span class="ot">&lt;-</span> elasmos <span class="sc">%&gt;%</span></span>
 <span id="cb183-2"><a href="catch-data-analysis.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Set_ID)</span></code></pre></div>
 <p class="solution-end">
@@ -950,7 +950,7 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 <p>Having multiple tables containing data pertaining to the same question is referred to as <strong>relational data</strong> - we are interested in how the contents of a pair of table related to each other, not just the individual data sets. Combining two tables is called a <strong>join</strong>. In this case the type of join we want to execute is called a <strong>mutating join</strong> which means we can add new variables from one <code>data.frame</code> (<code>set_meta</code>) to matching observations in another (<code>elasmos_set</code>).</p>
 <p>In order to do that we need to have one column (the <strong>key</strong>) that way the function can match observations in one <code>data.frame</code> by that <strong>key</strong> and then copy the matching observations in the columns from the second <code>data.frame</code> across.</p>
 <p>When performing a <strong>join</strong>, new columns are added to the right. We will use the function <code>full_join()</code> which means that all the rows from the left and right <code>data.frame</code> will be retained - when we used <code>count()</code> that excluded sets where no sharks were caught, by using a <code>full_join()</code> we can add those back in.</p>
-<p>We currently do not have a matching column between the two data sets, so our first step will be to add a new column called <code>Set_ID</code> to our <code>set_meta</code> <code>data.frame</code>, then we can use <code>full_join()</code> to join the two tables. The argument <code>by</code> can be used to specify the column to use as the key. For our example here we have a column with the same name - in general, the function is “smart” enough to identify shared columns and so you do not necessarily have to specify it<label for="tufte-sn-44" class="margin-toggle sidenote-number">44</label><input type="checkbox" id="tufte-sn-44" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">44</span> You can pull up the help page using <code>?full_join</code> to learn how to join tables that have multiple columns in common or that might have a column in common though it is named differently between the two tables.</span>.</p>
+<p>We currently do not have a matching column between the two data sets, so our first step will be to add a new column called <code>Set_ID</code> to our <code>set_meta</code> <code>data.frame</code>, then we can use <code>full_join()</code> to join the two tables. The argument <code>by</code> can be used to specify the column to use as the key. For our example here we have a column with the same name - in general, the function is “smart” enough to identify shared columns and so you do not necessarily have to specify it<label for="tufte-sn-42" class="margin-toggle sidenote-number">42</label><input type="checkbox" id="tufte-sn-42" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">42</span> You can pull up the help page using <code>?full_join</code> to learn how to join tables that have multiple columns in common or that might have a column in common though it is named differently between the two tables.</span>.</p>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="catch-data-analysis.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add set id column</span></span>
 <span id="cb184-2"><a href="catch-data-analysis.html#cb184-2" aria-hidden="true" tabindex="-1"></a>set_meta <span class="ot">&lt;-</span> set_meta <span class="sc">%&gt;%</span></span>
 <span id="cb184-3"><a href="catch-data-analysis.html#cb184-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(Set_ID, Year, Month, Day, Set, <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
@@ -990,7 +990,7 @@ Now create a new object called elasmos_set that contains the number of sharks ca
 </tr>
 </tbody>
 </table>
-<p>We are going to perform a Kruskal-Wallis rank sum test to determine if there is significant heterogeneity among sites<label for="tufte-sn-45" class="margin-toggle sidenote-number">45</label><input type="checkbox" id="tufte-sn-45" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">45</span> You are probably more familiar with the framework of using an ANOVA to test for significant heterogeneity and pairwise t-tests to test for equality of means of a set of values. KW is similar but is a non-parametric approach and does not make assumptions about the distribution of values.</span>.</p>
+<p>We are going to perform a Kruskal-Wallis rank sum test to determine if there is significant heterogeneity among sites<label for="tufte-sn-43" class="margin-toggle sidenote-number">43</label><input type="checkbox" id="tufte-sn-43" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">43</span> You are probably more familiar with the framework of using an ANOVA to test for significant heterogeneity and pairwise t-tests to test for equality of means of a set of values. KW is similar but is a non-parametric approach and does not make assumptions about the distribution of values.</span>.</p>
 <div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="catch-data-analysis.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KW to test for significant heterogeneity</span></span>
 <span id="cb186-2"><a href="catch-data-analysis.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(CPUE <span class="sc">~</span> Site, <span class="at">data =</span> elasmos_set)</span></code></pre></div>
 <pre><code>## 
@@ -1034,9 +1034,9 @@ Choose one species and calculate the CPUE per set. For convenience convert CPUE 
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-52" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-52', 'sol-start-52')"></span>
+► Solution<span id="sol-start-58" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-58', 'sol-start-58')"></span>
 </p>
-<div id="sol-body-52" class="solution-body" style="display: none;">
+<div id="sol-body-58" class="solution-body" style="display: none;">
 <p>This is what that could look like for a single species.</p>
 <p><!--
 <caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-132">Table 8.4: </span>Catch per unit effort (1000 hook hours) for each site.</span><!--</caption>--></p>
@@ -1052,7 +1052,7 @@ Choose one species and calculate the CPUE per set. For convenience convert CPUE 
 <td align="right">1.76</td>
 </tr></tbody>
 </table>
-<p>We actually want to have this information for all species, rather than create individual <code>data.frame</code>s for each species and then combine those using <code>bind_rows()</code>, I will show you a more efficient way of coding this using a <code>for loop</code><label for="tufte-sn-46" class="margin-toggle sidenote-number">46</label><input type="checkbox" id="tufte-sn-46" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">46</span> There are a few other ways of during this but for now let’s just stick to the fact that this is an efficient way to get results.</span>.</p>
+<p>We actually want to have this information for all species, rather than create individual <code>data.frame</code>s for each species and then combine those using <code>bind_rows()</code>, I will show you a more efficient way of coding this using a <code>for loop</code><label for="tufte-sn-44" class="margin-toggle sidenote-number">44</label><input type="checkbox" id="tufte-sn-44" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">44</span> There are a few other ways of during this but for now let’s just stick to the fact that this is an efficient way to get results.</span>.</p>
 <div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="catch-data-analysis.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create empty list</span></span>
 <span id="cb190-2"><a href="catch-data-analysis.html#cb190-2" aria-hidden="true" tabindex="-1"></a>species_CPUE <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
 <span id="cb190-3"><a href="catch-data-analysis.html#cb190-3" aria-hidden="true" tabindex="-1"></a></span>

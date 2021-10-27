@@ -25,7 +25,8 @@ library(msmbstyle)
 knitr::opts_chunk$set(tidy = FALSE, 
                       cache.extra = packageVersion('msmbstyle'),
                       warning = FALSE,
-                      message = FALSE)
+                      message = FALSE,
+                      error = FALSE)
 
 
 options(htmltools.dir.version = FALSE)
@@ -55,17 +56,24 @@ Your first step is creating a new R project in your project folder. To do this o
 
 Next, open a new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Remote Sensing project directory. Use the setup chunk to set your global settings for the document using the options you've learned about in the last few projects. Remember, you should always check your `html` document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. We are going to need some specific packages for mapping; if you have not already you will need to install the following^[Remember, you only need to do this once, so you should type these functions directly into the console rather than have a code chunk which will try to run every time you knit the document.]
 
+Before we start we need to install a few packages if you have not already. We will start with `Rcpp` - you likely already have this installed but you want to make sure you have the most uptodate version.
+
 ```{r eval=FALSE}
 
+install.packages("Rcpp")
+install.packages("rgdal")
+install.packages("raster")
+install.packages("sf")
+install.packages("corrplot")
+
 install.packages("rnaturalearthhires", 
-                 repos = "http://packages.ropensci.org", 
-                 type = "source")
+                 repos = "http://packages.ropensci.org")
 
 install.packages("ggspatial")
 
 ```
 
-We will also need the package `sf`,`rgdal`, `raster`, and `corrplot`. If you are on a Mac and it asks you to install from source, say no.
+If you are on a Mac and it asks you to install from source, say no.
 
 Let's load our packages so we can get started.
 
@@ -76,15 +84,15 @@ library(tidyverse)
 library(janitor)
 library(skimr)
 
+library(knitr)
+
 library(rgdal)
 library(raster)
 library(ggplot2)
 library(viridisLite)
 library(corrplot)
+library(Hmisc)
 
-
-# won't need this set of libraries 
-# unless you want to plot the final figure yourself
 library(ggplot2)
 library(sf)
 library(ggspatial)
@@ -101,9 +109,9 @@ options(scipen=999)
 
 `r msmbstyle::question_begin(label = "ques:rem-1")`
 
-Watch this [short introduction](https://www.youtube.com/watch?v=38JQXPubMoA) to the National Ecological Observatory Network (NEON) and read this [overview of the field stations and domains](https://www.neonscience.org/field-sites/about-field-sites) withing the network of monitoring stations.
+Watch this [short introduction](https://www.youtube.com/watch?v=38JQXPubMoA) to the National Ecological Observatory Network (NEON) and read this [overview of the field stations and domains](https://www.neonscience.org/field-sites/about-field-sites) within the network of monitoring stations.
 
-Briefly outline what NEON is, how it is designed, what data is being measured, and what the central goal is and how the design supports this mission.
+Briefly outline what NEON is, how it is designed, what data is being measured, what the central goal is, and how the design supports this mission.
 
 Discuss the value of long-term monitoring stations and standardized data gathering.
 
@@ -112,9 +120,9 @@ Discuss the value of long-term monitoring stations and standardized data gatheri
 
 ## Plot maps of topography and plants
 
-The data set we are going to start out with is from the Sierra Nevada mountains in California from a region called [Soaproot Saddle](https://www.neonscience.org/field-sites/soap). 
+The data set we are going to start out with is from a NEON station in the Sierra Nevada mountains in California from a region called [Soaproot Saddle](https://www.neonscience.org/field-sites/soap).
 
-We are going to load three raster data sets.
+You already have several `*.tif` files in your data folder. These are `raster` data sets with information on NDVI and topology that were sampled for this NEON sites.
 
 `r msmbstyle::question_begin(label = "ques:rem-2")`
 
@@ -122,11 +130,13 @@ Briefly describe how a raster data set encodes information.
 
 `r msmbstyle::question_end()`
 
-Load **Digital Terrain Model** data (DTM).
+First we will load **Digital Terrain Model** data (DTM) which was obtained using LiDAR.
 
 ```{r}
 
 dtm <- raster("data/NEON_D17_SOAP_DP3_298000_4100000_DTM.tif")
+
+class(dtm)
 
 ```
 
@@ -136,7 +146,7 @@ Briefly describe what data the terrain model raster data set contains.
 
 `r msmbstyle::question_end()`
 
-Load **Digital Surface Model**, LiDAR first returns, topography + vegetation
+Next, we will read in the  **Digital Surface Model** LiDAR raster data set.
 
 ```{r}
 
@@ -150,7 +160,33 @@ Briefly describe what data the surface model raster data set contains.
 
 `r msmbstyle::question_end()`
 
-Load **Normalized Difference vegetation index** (NDVI)
+We already have information on elevation, but let's calculate slope and aspect as additional metrics to describe the topology. 
+
+We will use degrees as a measure for slope based on the DTM raster data set.
+
+```{r}
+
+slope <- terrain(dtm, opt = "slope", unit = "degrees", neighbors = 8)
+
+```
+
+To determine aspect, we will calculate the "northness" as the cosine of aspect, which will read in radians^[Radian is the SI unit for measuring angles; it is a dimensionless value.].
+
+```{r}
+
+# calculate aspect
+aspect <- terrain(dtm, opt = "aspect", unit = "radians", neighbors = 8)
+
+# calculate northness
+north <- cos(aspect)
+
+```
+
+This means that we can now describe the topography of the monitoring site using elevation, slope, and aspect.
+
+Our overarching question is the extent to which topography impacts vegetation. We will use two variables to describe "levels of vegetation", first the Normalized difference vegetation index (NDVI) and second vegetation height.
+
+Spectral imaging was used to determine the **Normalized Difference vegetation index** (NDVI) for our monitoring station.
 
 ```{r}
 
@@ -164,7 +200,7 @@ Describe what NDVI measures and how it can be used to assess vegetation.
 
 `r msmbstyle::question_end()`
 
-We can calculate the vegetation height as DSM - DTM.
+We can calculate the *vegetation height* as DSM - DTM.
 
 ```{r}
 
@@ -172,60 +208,22 @@ veg_ht <- dsm - dtm
 
 ```
 
-Next, let's stack the data so we can plot it all in the same plot
+Currently, we have several individual raster objects, each forming a different layer describing topography and vegetation for the same locations.
+
+We can combine all these individual layers into a raster stack. This is a list, and each element is a different raster layer. Doing this has some advantages, for example, it is straight forward to make a single plot combining these different layers.
+
 
 ```{r}
 
 # create raster stack
-all_data <- stack(dtm, dsm, ndvi, veg_ht)
+all_data <- stack(dtm, dsm, slope, north, ndvi, veg_ht)
 
 # rename raster layers
-names(all_data) <- c("DTM", "DSM", "NDVI", "Vegetation.Height")
+names(all_data) <- c("DTM", "DSM", "slope", "north", "NDVI", "Vegetation.Height")
 
 ```
 
-Now we can create maps for each of our raster files^[this may take a second to plot ... you are processing a bunch of data!].
-
-```{r}
-
-plot(all_data, 
-     col = viridis(255))
-
-```
-
-We already have information on elevation, but let's calculate slope and aspect as additional metrics to describe the topology.
-
-We will use degrees as a measure for slope.
-
-```{r}
-
-slope <- terrain(dtm, opt = "slope", unit = "degrees", neighbors = 8)
-
-```
-
-For aspect we will calculate "northness" (cosine of aspect) which will read in radians^[Radian is the SI unit for measuring angles; it is a dimensionless value.].
-
-```{r}
-
-# calculate aspect
-aspect <- terrain(dtm, opt = "aspect", unit = "radians", neighbors = 8)
-
-# calculate northness
-north <- cos(aspect)
-
-```
-
-Let's add these layers to our raster stack to make it easy to plot everything in a single plot.
-
-```{r}
-
-all_data$slope <- slope
-
-all_data$north <- north
-
-```
-
-Now we can plot all six maps.
+Now we can create maps for each of our raster files^[this may take a second to plot ... you are processing a bunch of data!]. We will use the function `plot()` instead of our usual `ggplot` options to keep it simple.
 
 ```{r}
 
@@ -255,13 +253,13 @@ Argue which topographic metric you think should have a strong association with v
 `r msmbstyle::question_end()`
 
 
-## Explore relationship between topographic variable and vegetation patterns
+## Explore relationships between topographic variable and vegetation patterns
 
-First, lets convert our raster layers into data frames for easier use. We'll start by creating an empty data frame with as many rows as there are cells in our `raster` objects. Then we can use the function `extract()` the entire extent of the raster layer, i.e. we are pulling out all the information for each pixel and putting it into a set of columns[^3]. The `extent` argument, tells R to pull out all the information in the `raster` object^[Recall, each column of a dataframe is a vector].
+First, lets convert our raster layers into data frames for easier use. We'll start by creating an empty data frame with as many rows as there are cells in our `raster` objects. Then we can use the function `extract()` the entire extent of the raster layer, i.e. we are pulling out all the information for each pixel and putting it into a set of columns[^3]. The `extent` argument, tells R to pull out all the information in the `raster` object^[Recall, each column of a `data.frame` is a vector].
 
 ```{r}
 
-# create and empty dataframe for our data set
+# create and empty data frame
 df <- as.data.frame(matrix(NA, nrow = ncell(dtm), ncol=0))
 
 # extract vegetation height
@@ -277,32 +275,54 @@ df$dtm  <- raster::extract(dtm, extent(dtm))
 df$slope  <- raster::extract(slope, extent(slope))
 
 # extract aspect
-df$north <- raster::extract(north, extent(north))
+df$north <- raster::extract(north, extent(north)) 
 
-head(df) %>%
-  kable()
+head(df)
 
 ```
 
-Note, that we no longer have spatial information, however, values in the same row do correspond to the same pixel location in our raster object.
+Note, that we no longer have spatial information (coordinates), however, values in the same row do correspond to the same pixel location in our raster object.
 
-Because we have so much data, we will take a 1% subset of the data to decrease the computation power and time needed. Because our data set is so large (1 Million rows!), we would expect that a random subset is representative of the relationships as a whole.
+`r msmbstyle::question_begin(label = "ques:rem-9")`
 
-`dplyr::slice_sample()` can be used to specify the proportion of rows that you would like to retain. The function will return a random subsample.
+Note, that some of the slope and north values are `NaN` - why do you think that is?
+
+`r msmbstyle::question_end()`
+
+Let's go ahead and remove those values.
+
+```{r}
+
+df <- df %>%
+  filter(!is.na(slope)) %>%
+  filter(!is.na(north))
+
+head(df)
+
+```
+
+Because we have so much data, we will take a 1% subset of the data to decrease the computational power and time needed. 
+
+Because our data set is so large (1 Million rows!), we would expect that a random subset is representative of the relationships as a whole.
+
+`dplyr::slice_sample()` can be used to specify the proportion of rows that you would like to retain. The function will return a random sub sample.
 
 ```{r}
 
 # set seed for reproducibility
 set.seed(42)
 
+# randomly select 1% of rows
 df_sub <- df %>%
   slice_sample(prop = 0.01)
 
 ```
 
-Let's take a look at the relationship between vegetation variables and topographic variables. To do this efficiently using the `tidyverse` principles, need to pivot our data set. Ultimately, we want to have a data set with one column with our topography parameters, one with the topography measurements, one with vegetation variables and one with measurements.
+Now, let's take a look at the relationship between the vegetation and topographic variables. 
 
-```{r}
+To do this efficiently using the `tidyverse` principles and some `ggplot` magic, need to pivot our data set. Ultimately, we want to have a data set with one column with our topography parameters, one with the topography measurements, one with vegetation variables and one with measurements; then we will be able to use `facet_grid()` to plot all combinations of variables.
+
+```{r fig.cap="Relationship of topography and vegetation. Topography is described as elevation (dtm, in meters), northness (radians), and slope (degrees); vegetation is assessed using NDVI and vegetation height.", fig.width=9, fig.height=10}
 
 df_plot <- df_sub %>%
   pivot_longer(names_to = "topog_param", values_to = "topog_meas", 3:5) %>%
@@ -311,15 +331,126 @@ df_plot <- df_sub %>%
 ggplot(df_plot, aes(x = topog_meas, y = veget_meas)) +
   geom_point(alpha = 0.25, size = .75) +
   facet_grid(veget_param ~ topog_param, scales = "free") +
-  geom_smooth(method = "lm")
+  labs(x = "Topography", y = "Vegetation") +
+  theme_facet
 
 ```
 
-`r msmbstyle::question_begin(label = "ques:rem-9")`
+`r msmbstyle::question_begin(label = "ques:rem-10")`
 
-Use the scatter plots to make predictions about statistical relationships. Consider whether any of these plots look like they are visualizing strong relationships.
+Use the scatte rplots to make predictions about statistical relationships. Consider whether any of these plots look like they are visualizing strong relationships.
 
 Argue whether you think larger data sets make it easier or harder to identify distinct relationships "by eye".
 
 `r msmbstyle::question_end()`
 
+Let's determine whether these variables are correlated using the Pearson correlation coefficients. We can use ``Hmisc::rcorr`` to calculate all pairwise correlations and test whether the relationships are significant.
+
+```{r}
+
+P_corr <- rcorr(as.matrix(df), type="pearson")
+
+```
+
+The output is a list. Recall that we can access individual components of a list using `$`. In this case `P_corr$r` contains the correlation coefficients, and `P_corr$p` contains the p-values.
+
+Visualizing correlations in a correlation plot can be helpful for a quick overview when you are working with a lot of different values, we can do this using the function `corrplot()`.
+
+```{r fig.cap="Pairwise relationships of all topographical and vegetation variables measured using Pearson's correlation coefficient."}
+
+corrplot(P_corr$r)
+
+```
+
+Alternatively, you can print the correlation coefficients as a matrix.
+
+```{r}
+
+P_corr$r
+
+```
+
+`r msmbstyle::question_begin(label = "ques:rem-11")`
+
+Describe whether or not these relationships conform to your predictions when you looked at the maps and when you looked at the scatter plots and discuss what could be causing differences from your expectations.
+
+`r msmbstyle::question_end()`
+
+We can also print our p-values:
+
+```{r}
+
+P_corr$P
+
+```
+
+`r msmbstyle::question_begin(label = "ques:rem-12")`
+
+Assess whether or not all of your relationships are statistically significant. Discuss the importance of p-values for large data sets.
+
+`r msmbstyle::question_end()`
+
+Let's coerce our correlation coefficients into something a bit more tidy, we'll also add the abbreviation for the site we've been looking at.
+
+```{r}
+
+tidy_cor <- as.data.frame(P_corr$r) %>%
+  rownames_to_column("Param1") %>%
+  pivot_longer(names_to = "Param2", values_to = "pearson", 2:6) %>%
+  filter(Param1 %in% c("veg_ht", "ndvi")) %>%
+  filter(!Param2 %in% c("veg_ht", "ndvi")) %>%
+  mutate(Site = "SOAP")
+
+```
+
+Let's write that data frame out as a text file in our results folder.
+
+```{r}
+
+write_delim(tidy_cor, "results/SOAP_correlation.txt", delim = "\t")
+
+```
+
+
+## Comparison of relationship of vegetation and topography across the US
+
+Let's take a look at the different [NEON sites](https://www.neonscience.org/field-sites/explore-field-sites) across the US and choose locations from the contiguous 48.
+
+We are going to come up with a sampling design to compare impact of topography on vegetation across domains and regions. We can access the elevetion and NDVI data sets from the [Data Portal](https://data.neonscience.org/data-products/explore).
+
+`r msmbstyle::question_begin(label = "ques:rem-13")`
+
+List the sites that were chosen and describe the sampling design behind using this specific set of locations.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:rem-14")`
+
+Briefly describe what patterns you expect to see, consider e.g. whether you think that you will observe the same relationship across all locations. Look up the sites you have chosen to make informed predictions.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:rem-15")`
+
+For your assigned sites go through the following process:
+
+1.  read in the DTM, DSM, and NDVI `*tif` files as `raster` objects you downloaded from the data portal
+2.  Calculate vegetation height, slope, and northness and create a raster stack to plot the six panel plot.
+3.  Based on your plots predict which relationship you think will have a stronger association with vegetation height, determine if vegetation patterns overall appear to be influenced by topography, and note any other observations for this set of maps on their own and in relation to the California set.
+4.  convert your raster table to a data.frame and take a 1% subset.
+5.  plot the correlations between vegetation and topographic variables.
+6.  calculate the correlations.
+7.  convert your results into a tidy data set and add the location abbreviation.
+8.  write your results into a text file.
+
+Share your correlation results in the `#hwassignments` channel on slack.
+
+`r msmbstyle::question_end()`
+
+We will compile all of the results into a map, so you can see how the impact of topographic variables varies across our studies locations.
+
+`r msmbstyle::question_begin(label = "ques:rem-16")`
+
+Compare the overall patterns of correlation across the United States. Identify patterns and determine if the relate to geographic variables discussed in class. Identify mechanisms that could explain these observations.
+
+`r msmbstyle::question_end()`
