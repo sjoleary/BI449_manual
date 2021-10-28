@@ -93,7 +93,6 @@ library(viridisLite)
 library(corrplot)
 library(Hmisc)
 
-library(ggplot2)
 library(sf)
 library(ggspatial)
 library(rnaturalearth)
@@ -442,15 +441,149 @@ For your assigned sites go through the following process:
 6.  calculate the correlations.
 7.  convert your results into a tidy data set and add the location abbreviation.
 8.  write your results into a text file.
+9.  Briefly summarize your key results (what are the most significant relationships at the site you explored? Which don't seem to be important)
 
-Share your correlation results in the `#hwassignments` channel on slack.
+Share your correlation results (text file) in the `#hwassignments` channel on slack.
 
 `r msmbstyle::question_end()`
 
 We will compile all of the results into a map, so you can see how the impact of topographic variables varies across our studies locations.
 
+First, let's read in a text file that has all the NEON sites and information on their geographic location. We are only interested in sites from the contiguous 48 so we will remove locations in Alaska, Hawaii, and Puerto Rico.
+
+```{r}
+
+sites <- read_delim("data/neon_sites.txt", delim = "\t") %>%
+  clean_names() %>%
+  separate(site_type, into = c("tmp", "site_cat"), sep = " ", remove = FALSE) %>%
+  dplyr::select(-tmp) %>%
+  filter(!state %in% c("AK", "HI", "PR"))
+
+head(sites)
+
+```
+
+Let's start simple by creating a map that has all of our NEON sites on it.
+
+First, we need to get a shapefile that we will use as our basemap - because we are going to want to orient ourselves within the US, we will also pull information we can use to plot state lines.
+
+```{r}
+
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+us_states <- ne_states(country = "United States of America", returnclass = "sf")
+
+```
+
+We are not going to want to plot the entire world, so let's identify the lat/longs for the four corners of the box we want to plot but pulling information on the minimum and maximum latitude & longitude of our NEON sites and then adding a small buffer around it.
+
+Then we can plot our map.
+
+```{r fig.cap="NEON sites in contiguous US"}
+
+# lat/long for map extend
+x_min <- min(sites$longitude) - 2
+x_max <- max(sites$longitude) + 2
+y_min <- min(sites$latitude) - 2
+y_max <- max(sites$latitude) + 2
+
+# set font sizes for text labels
+site_size <- 2
+
+
+# set color for fill
+map_color <- "#a8d481"
+
+# create plot
+ggplot() +
+  geom_sf(data = world, color = "black", fill = map_color) +  # plot outline of countries
+  geom_sf(data = us_states, color = "black", fill = NA) +     # plot outline of states
+  coord_sf(xlim = c(x_min, x_max),
+           ylim = c(y_min, y_max)) +                          # plot boundaries for map
+  geom_text(data = sites, aes(x = longitude, y = latitude,    # add sites as labels
+                              label = site_id, color = site_cat),
+            size = site_size) +
+  scale_color_manual(values = c("darkblue", "darkred"))
+
+```
+
+NEON sites are intentionally designed so aquatic and terrestrial sites are ideally right next to each other, so those are plotting right on top of each other.
+
+Instead of the site id's we could also make the same map with points for locations.
+
+```{r fig.cap="NEON site locations"}
+
+# create plot
+ggplot() +
+  geom_sf(data = world, color = "black", fill = map_color) +  # plot outline of countries
+  geom_sf(data = us_states, color = "black", fill = NA) +     # plot outline of states
+  coord_sf(xlim = c(x_min, x_max),
+           ylim = c(y_min, y_max)) +                          # plot boundaries for map
+  geom_point(data = sites, aes(x = longitude, y = latitude,    # add sites as labels
+                              fill = site_cat),
+             shape = 21, size = 2, alpha = 0.5) +
+  scale_fill_manual(values = c("darkblue", "darkred"))
+
+```
+
+If we want to compare differences in the relationships of topographic variables across all the sites we plotted, we could use the same method to plot the correlation coefficients, in addition to the site labels; all we need to do is add the correlation coefficients into our `sites` data.frame^[Once we have information for multiple sites, you will need to either read in all the text files with results and use `bind_rows` to create a single dataframe, or we will also allow for some outside R action, where you just cut and paste them all into a single text file and read that in.].
+
+For example, we could create a map for slope and NDVI like this:
+
+```{r fig.cap="Pearson correlation coefficient for slope and NDVI for all assessed sites"}
+
+# add correlation coefficients
+sites_pears <- sites %>%
+  left_join(tidy_cor, by = c("site_id" = "Site")) %>%
+  filter(!is.na(pearson)) %>%                          # retain only sites with pearson coefficient estimated
+  filter(Param1 == "ndvi" & Param2 == "slope")         # choose veg & topog relationship to map
+
+
+# set font sizes for text labels
+site_size <- 4
+cor_size <- 5
+
+# create plot
+ggplot() +
+  geom_sf(data = world, color = "black", fill = map_color) +  # plot outline of countries
+  geom_sf(data = us_states, color = "black", fill = NA) +     # plot outline of states
+  coord_sf(xlim = c(x_min, x_max),
+           ylim = c(y_min, y_max)) +                          # plot boundaries for map
+  geom_text(data = sites_pears, aes(x = longitude, y = latitude,    # add sites as labels
+                              label = site_id, color = "darkblue"),
+            size = site_size) +
+  geom_text(data = sites_pears, aes(x = longitude, y = latitude,    # add pearson coefficient as labels
+                              label = round(pearson, digits = 2), color = "darkred"),
+            size = cor_size, nudge_y = -1) +                # shift label below actual coordinates
+  scale_color_manual(values = c("darkblue", "darkred")) +
+  theme(legend.position = "none")
+
+
+```
+
+
 `r msmbstyle::question_begin(label = "ques:rem-16")`
 
-Compare the overall patterns of correlation across the United States. Identify patterns and determine if the relate to geographic variables discussed in class. Identify mechanisms that could explain these observations.
+Choose either NDVI or vegetation height and make a map showing the correlation coefficients for all sites that were compared for elevation, slope, and northness. Make sure your maps have titles, and that all the site names and correlation coefficients are legible in your map. Use `fig.height` and `fig.width` to adjust the size of your figures in your html document that you submit.
+
+Compare the overall patterns of correlation across the United States and discuss your results - speculate on how these topographic parameters could be playing a role in differences in vegetation in different eco-domains across the United States.
 
 `r msmbstyle::question_end()`
+
+
+
+
+
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+## Acknowledgments
+
+These activities are based on the EDDIE Remote Sensing module.^[Dahlin, K. M. (2021). Remote Sensing of Plants and Topography in R (Project EDDIE)..]
+

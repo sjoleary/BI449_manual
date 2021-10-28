@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-10-26" />
+<meta name="date" content="2021-10-27" />
 
 
 <meta name="description" content="20 Remote Sensing | Data Science for the Natural Environment (FA21)">
@@ -25,6 +25,14 @@
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
 <link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
 <link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -94,6 +102,28 @@ code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warni
 </style>
 
 
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
 
 <link rel="stylesheet" href="msmb.css" type="text/css" />
 <script>
@@ -172,6 +202,7 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#plot-maps-of-topography-and-plants"> Plot maps of topography and plants</a></li>
 <li class="toc"><a href="#explore-relationships-between-topographic-variable-and-vegetation-patterns"> Explore relationships between topographic variable and vegetation patterns</a></li>
 <li class="toc"><a href="#comparison-of-relationship-of-vegetation-and-topography-across-the-us"> Comparison of relationship of vegetation and topography across the US</a></li>
+<li class="toc"><a href="#acknowledgments-3"> Acknowledgments</a></li>
 </ul>
 <a href="references.html">References</a>
 </div>
@@ -198,43 +229,42 @@ function reset_tooltip(id) {
 </ul>
 <p>Download the <a href="https://drive.google.com/drive/folders/1r2B4wa0hRGxK8aoNaoeQhULn3j2cFZNA?usp=sharing">06_RemoteSensing</a> project folder. Once you have downloaded it, unzip the project directory into your <code>BI449</code> directory.</p>
 <p>Your first step is creating a new R project in your project folder. To do this open <code>Rstudio</code> then use the drop down menu in the top right corner to select <code>New Project</code> and from there <code>New Project in an existing directory</code>. From there, navigate to and select the project folder create an R project. Remember, your <code>Rproj</code> sets the working directory so you need to make sure that it is in your project folder.</p>
-<p>Next, open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Remote Sensing project directory. Use the setup chunk to set your global settings for the document using the options you’ve learned about in the last few projects. Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. We are going to need some specific packages for mapping; if you have not already you will need to install the following<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> Remember, you only need to do this once, so you should type these functions directly into the console rather than have a code chunk which will try to run every time you knit the document.</span></p>
+<p>Next, open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Remote Sensing project directory. Use the setup chunk to set your global settings for the document using the options you’ve learned about in the last few projects. Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. We are going to need some specific packages for mapping; if you have not already you will need to install the following<label for="tufte-sn-113" class="margin-toggle sidenote-number">113</label><input type="checkbox" id="tufte-sn-113" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">113</span> Remember, you only need to do this once, so you should type these functions directly into the console rather than have a code chunk which will try to run every time you knit the document.</span></p>
 <p>Before we start we need to install a few packages if you have not already. We will start with <code>Rcpp</code> - you likely already have this installed but you want to make sure you have the most uptodate version.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="remote-sensing.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"Rcpp"</span>)</span>
-<span id="cb1-2"><a href="remote-sensing.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rgdal"</span>)</span>
-<span id="cb1-3"><a href="remote-sensing.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"raster"</span>)</span>
-<span id="cb1-4"><a href="remote-sensing.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"sf"</span>)</span>
-<span id="cb1-5"><a href="remote-sensing.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"corrplot"</span>)</span>
-<span id="cb1-6"><a href="remote-sensing.html#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="remote-sensing.html#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rnaturalearthhires"</span>, </span>
-<span id="cb1-8"><a href="remote-sensing.html#cb1-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">repos =</span> <span class="st">"http://packages.ropensci.org"</span>)</span>
-<span id="cb1-9"><a href="remote-sensing.html#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="remote-sensing.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggspatial"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="remote-sensing.html#cb371-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"Rcpp"</span>)</span>
+<span id="cb371-2"><a href="remote-sensing.html#cb371-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rgdal"</span>)</span>
+<span id="cb371-3"><a href="remote-sensing.html#cb371-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"raster"</span>)</span>
+<span id="cb371-4"><a href="remote-sensing.html#cb371-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"sf"</span>)</span>
+<span id="cb371-5"><a href="remote-sensing.html#cb371-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"corrplot"</span>)</span>
+<span id="cb371-6"><a href="remote-sensing.html#cb371-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb371-7"><a href="remote-sensing.html#cb371-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rnaturalearthhires"</span>, </span>
+<span id="cb371-8"><a href="remote-sensing.html#cb371-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">repos =</span> <span class="st">"http://packages.ropensci.org"</span>)</span>
+<span id="cb371-9"><a href="remote-sensing.html#cb371-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb371-10"><a href="remote-sensing.html#cb371-10" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggspatial"</span>)</span></code></pre></div>
 <p>If you are on a Mac and it asks you to install from source, say no.</p>
 <p>Let’s load our packages so we can get started.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="remote-sensing.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
-<span id="cb2-2"><a href="remote-sensing.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-3"><a href="remote-sensing.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
-<span id="cb2-4"><a href="remote-sensing.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
-<span id="cb2-5"><a href="remote-sensing.html#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="remote-sensing.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb2-7"><a href="remote-sensing.html#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="remote-sensing.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgdal)</span>
-<span id="cb2-9"><a href="remote-sensing.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
-<span id="cb2-10"><a href="remote-sensing.html#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-11"><a href="remote-sensing.html#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridisLite)</span>
-<span id="cb2-12"><a href="remote-sensing.html#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
-<span id="cb2-13"><a href="remote-sensing.html#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
-<span id="cb2-14"><a href="remote-sensing.html#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-15"><a href="remote-sensing.html#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-16"><a href="remote-sensing.html#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb2-17"><a href="remote-sensing.html#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggspatial)</span>
-<span id="cb2-18"><a href="remote-sensing.html#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)</span>
-<span id="cb2-19"><a href="remote-sensing.html#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearthhires)</span>
-<span id="cb2-20"><a href="remote-sensing.html#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearthdata)</span>
-<span id="cb2-21"><a href="remote-sensing.html#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="remote-sensing.html#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
-<span id="cb2-23"><a href="remote-sensing.html#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="remote-sensing.html#cb372-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb372-2"><a href="remote-sensing.html#cb372-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb372-3"><a href="remote-sensing.html#cb372-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb372-4"><a href="remote-sensing.html#cb372-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb372-5"><a href="remote-sensing.html#cb372-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb372-6"><a href="remote-sensing.html#cb372-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb372-7"><a href="remote-sensing.html#cb372-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb372-8"><a href="remote-sensing.html#cb372-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgdal)</span>
+<span id="cb372-9"><a href="remote-sensing.html#cb372-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span>
+<span id="cb372-10"><a href="remote-sensing.html#cb372-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb372-11"><a href="remote-sensing.html#cb372-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridisLite)</span>
+<span id="cb372-12"><a href="remote-sensing.html#cb372-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb372-13"><a href="remote-sensing.html#cb372-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Hmisc)</span>
+<span id="cb372-14"><a href="remote-sensing.html#cb372-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb372-15"><a href="remote-sensing.html#cb372-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb372-16"><a href="remote-sensing.html#cb372-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggspatial)</span>
+<span id="cb372-17"><a href="remote-sensing.html#cb372-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb372-18"><a href="remote-sensing.html#cb372-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearthhires)</span>
+<span id="cb372-19"><a href="remote-sensing.html#cb372-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearthdata)</span>
+<span id="cb372-20"><a href="remote-sensing.html#cb372-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb372-21"><a href="remote-sensing.html#cb372-21" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb372-22"><a href="remote-sensing.html#cb372-22" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
 <div id="neon-the-power-of-longterm-data-sets" class="section level2" number="20.1">
 <h2>
 <span class="header-section-number">20.1</span> NEON &amp; the power of longterm data sets<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('neon-the-power-of-longterm-data-sets')" onmouseout="reset_tooltip('neon-the-power-of-longterm-data-sets-tooltip')"><span class="tooltiptext" id="neon-the-power-of-longterm-data-sets-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -271,9 +301,9 @@ function reset_tooltip(id) {
 </div>
 </div>
 <p>First we will load <strong>Digital Terrain Model</strong> data (DTM) which was obtained using LiDAR.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="remote-sensing.html#cb3-1" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">raster</span>(<span class="st">"data/NEON_D17_SOAP_DP3_298000_4100000_DTM.tif"</span>)</span>
-<span id="cb3-2"><a href="remote-sensing.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="remote-sensing.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dtm)</span></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb373-1"><a href="remote-sensing.html#cb373-1" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">raster</span>(<span class="st">"data/NEON_D17_SOAP_DP3_298000_4100000_DTM.tif"</span>)</span>
+<span id="cb373-2"><a href="remote-sensing.html#cb373-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb373-3"><a href="remote-sensing.html#cb373-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(dtm)</span></code></pre></div>
 <pre><code>## [1] "RasterLayer"
 ## attr(,"package")
 ## [1] "raster"</code></pre>
@@ -289,7 +319,7 @@ function reset_tooltip(id) {
 </div>
 </div>
 <p>Next, we will read in the <strong>Digital Surface Model</strong> LiDAR raster data set.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="remote-sensing.html#cb5-1" aria-hidden="true" tabindex="-1"></a>dsm <span class="ot">&lt;-</span> <span class="fu">raster</span>(<span class="st">"data/NEON_D17_SOAP_DP3_298000_4100000_DSM.tif"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb375"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb375-1"><a href="remote-sensing.html#cb375-1" aria-hidden="true" tabindex="-1"></a>dsm <span class="ot">&lt;-</span> <span class="fu">raster</span>(<span class="st">"data/NEON_D17_SOAP_DP3_298000_4100000_DSM.tif"</span>)</span></code></pre></div>
 <div id="ques:rem-4" class="question">
 <p class="question-begin">
 ► Question 20.4
@@ -303,17 +333,17 @@ function reset_tooltip(id) {
 </div>
 <p>We already have information on elevation, but let’s calculate slope and aspect as additional metrics to describe the topology.</p>
 <p>We will use degrees as a measure for slope based on the DTM raster data set.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="remote-sensing.html#cb6-1" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dtm, <span class="at">opt =</span> <span class="st">"slope"</span>, <span class="at">unit =</span> <span class="st">"degrees"</span>, <span class="at">neighbors =</span> <span class="dv">8</span>)</span></code></pre></div>
-<p>To determine aspect, we will calculate the “northness” as the cosine of aspect, which will read in radians<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> Radian is the SI unit for measuring angles; it is a dimensionless value.</span>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="remote-sensing.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate aspect</span></span>
-<span id="cb7-2"><a href="remote-sensing.html#cb7-2" aria-hidden="true" tabindex="-1"></a>aspect <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dtm, <span class="at">opt =</span> <span class="st">"aspect"</span>, <span class="at">unit =</span> <span class="st">"radians"</span>, <span class="at">neighbors =</span> <span class="dv">8</span>)</span>
-<span id="cb7-3"><a href="remote-sensing.html#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="remote-sensing.html#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate northness</span></span>
-<span id="cb7-5"><a href="remote-sensing.html#cb7-5" aria-hidden="true" tabindex="-1"></a>north <span class="ot">&lt;-</span> <span class="fu">cos</span>(aspect)</span></code></pre></div>
+<div class="sourceCode" id="cb376"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb376-1"><a href="remote-sensing.html#cb376-1" aria-hidden="true" tabindex="-1"></a>slope <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dtm, <span class="at">opt =</span> <span class="st">"slope"</span>, <span class="at">unit =</span> <span class="st">"degrees"</span>, <span class="at">neighbors =</span> <span class="dv">8</span>)</span></code></pre></div>
+<p>To determine aspect, we will calculate the “northness” as the cosine of aspect, which will read in radians<label for="tufte-sn-114" class="margin-toggle sidenote-number">114</label><input type="checkbox" id="tufte-sn-114" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">114</span> Radian is the SI unit for measuring angles; it is a dimensionless value.</span>.</p>
+<div class="sourceCode" id="cb377"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb377-1"><a href="remote-sensing.html#cb377-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate aspect</span></span>
+<span id="cb377-2"><a href="remote-sensing.html#cb377-2" aria-hidden="true" tabindex="-1"></a>aspect <span class="ot">&lt;-</span> <span class="fu">terrain</span>(dtm, <span class="at">opt =</span> <span class="st">"aspect"</span>, <span class="at">unit =</span> <span class="st">"radians"</span>, <span class="at">neighbors =</span> <span class="dv">8</span>)</span>
+<span id="cb377-3"><a href="remote-sensing.html#cb377-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb377-4"><a href="remote-sensing.html#cb377-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate northness</span></span>
+<span id="cb377-5"><a href="remote-sensing.html#cb377-5" aria-hidden="true" tabindex="-1"></a>north <span class="ot">&lt;-</span> <span class="fu">cos</span>(aspect)</span></code></pre></div>
 <p>This means that we can now describe the topography of the monitoring site using elevation, slope, and aspect.</p>
 <p>Our overarching question is the extent to which topography impacts vegetation. We will use two variables to describe “levels of vegetation,” first the Normalized difference vegetation index (NDVI) and second vegetation height.</p>
 <p>Spectral imaging was used to determine the <strong>Normalized Difference vegetation index</strong> (NDVI) for our monitoring station.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="remote-sensing.html#cb8-1" aria-hidden="true" tabindex="-1"></a>ndvi <span class="ot">&lt;-</span> <span class="fu">raster</span>(<span class="st">"data/NEON_D17_SOAP_DP3_298000_4100000_NDVI.tif"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb378"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb378-1"><a href="remote-sensing.html#cb378-1" aria-hidden="true" tabindex="-1"></a>ndvi <span class="ot">&lt;-</span> <span class="fu">raster</span>(<span class="st">"data/NEON_D17_SOAP_DP3_298000_4100000_NDVI.tif"</span>)</span></code></pre></div>
 <div id="ques:rem-5" class="question">
 <p class="question-begin">
 ► Question 20.5
@@ -326,18 +356,18 @@ function reset_tooltip(id) {
 </div>
 </div>
 <p>We can calculate the <em>vegetation height</em> as DSM - DTM.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="remote-sensing.html#cb9-1" aria-hidden="true" tabindex="-1"></a>veg_ht <span class="ot">&lt;-</span> dsm <span class="sc">-</span> dtm</span></code></pre></div>
+<div class="sourceCode" id="cb379"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb379-1"><a href="remote-sensing.html#cb379-1" aria-hidden="true" tabindex="-1"></a>veg_ht <span class="ot">&lt;-</span> dsm <span class="sc">-</span> dtm</span></code></pre></div>
 <p>Currently, we have several individual raster objects, each forming a different layer describing topography and vegetation for the same locations.</p>
 <p>We can combine all these individual layers into a raster stack. This is a list, and each element is a different raster layer. Doing this has some advantages, for example, it is straight forward to make a single plot combining these different layers.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="remote-sensing.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create raster stack</span></span>
-<span id="cb10-2"><a href="remote-sensing.html#cb10-2" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">stack</span>(dtm, dsm, slope, north, ndvi, veg_ht)</span>
-<span id="cb10-3"><a href="remote-sensing.html#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="remote-sensing.html#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rename raster layers</span></span>
-<span id="cb10-5"><a href="remote-sensing.html#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"DTM"</span>, <span class="st">"DSM"</span>, <span class="st">"slope"</span>, <span class="st">"north"</span>, <span class="st">"NDVI"</span>, <span class="st">"Vegetation.Height"</span>)</span></code></pre></div>
-<p>Now we can create maps for each of our raster files<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> this may take a second to plot … you are processing a bunch of data!</span>. We will use the function <code>plot()</code> instead of our usual <code>ggplot</code> options to keep it simple.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="remote-sensing.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(all_data, </span>
-<span id="cb11-2"><a href="remote-sensing.html#cb11-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">255</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<div class="sourceCode" id="cb380"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb380-1"><a href="remote-sensing.html#cb380-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create raster stack</span></span>
+<span id="cb380-2"><a href="remote-sensing.html#cb380-2" aria-hidden="true" tabindex="-1"></a>all_data <span class="ot">&lt;-</span> <span class="fu">stack</span>(dtm, dsm, slope, north, ndvi, veg_ht)</span>
+<span id="cb380-3"><a href="remote-sensing.html#cb380-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb380-4"><a href="remote-sensing.html#cb380-4" aria-hidden="true" tabindex="-1"></a><span class="co"># rename raster layers</span></span>
+<span id="cb380-5"><a href="remote-sensing.html#cb380-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"DTM"</span>, <span class="st">"DSM"</span>, <span class="st">"slope"</span>, <span class="st">"north"</span>, <span class="st">"NDVI"</span>, <span class="st">"Vegetation.Height"</span>)</span></code></pre></div>
+<p>Now we can create maps for each of our raster files<label for="tufte-sn-115" class="margin-toggle sidenote-number">115</label><input type="checkbox" id="tufte-sn-115" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">115</span> this may take a second to plot … you are processing a bunch of data!</span>. We will use the function <code>plot()</code> instead of our usual <code>ggplot</code> options to keep it simple.</p>
+<div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="remote-sensing.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(all_data, </span>
+<span id="cb381-2"><a href="remote-sensing.html#cb381-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">255</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-322-1.png" width="672"></p>
 <p>Let’s consider what correlations we would expect to find based on these six maps.</p>
 <div id="ques:rem-6" class="question">
 <p class="question-begin">
@@ -377,26 +407,26 @@ function reset_tooltip(id) {
 <h2>
 <span class="header-section-number">20.3</span> Explore relationships between topographic variable and vegetation patterns<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('explore-relationships-between-topographic-variable-and-vegetation-patterns')" onmouseout="reset_tooltip('explore-relationships-between-topographic-variable-and-vegetation-patterns-tooltip')"><span class="tooltiptext" id="explore-relationships-between-topographic-variable-and-vegetation-patterns-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>First, lets convert our raster layers into data frames for easier use. We’ll start by creating an empty data frame with as many rows as there are cells in our <code>raster</code> objects. Then we can use the function <code>extract()</code> the entire extent of the raster layer, i.e. we are pulling out all the information for each pixel and putting it into a set of columns[^3]. The <code>extent</code> argument, tells R to pull out all the information in the <code>raster</code> object<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> Recall, each column of a <code>data.frame</code> is a vector</span>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="remote-sensing.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create and empty data frame</span></span>
-<span id="cb12-2"><a href="remote-sensing.html#cb12-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncell</span>(dtm), <span class="at">ncol=</span><span class="dv">0</span>))</span>
-<span id="cb12-3"><a href="remote-sensing.html#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="remote-sensing.html#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract vegetation height</span></span>
-<span id="cb12-5"><a href="remote-sensing.html#cb12-5" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>veg_ht <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(veg_ht, <span class="fu">extent</span>(veg_ht))</span>
-<span id="cb12-6"><a href="remote-sensing.html#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="remote-sensing.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># extract ndvi</span></span>
-<span id="cb12-8"><a href="remote-sensing.html#cb12-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>ndvi <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(ndvi, <span class="fu">extent</span>(ndvi))</span>
-<span id="cb12-9"><a href="remote-sensing.html#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="remote-sensing.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># extract dtm</span></span>
-<span id="cb12-11"><a href="remote-sensing.html#cb12-11" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>dtm  <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(dtm, <span class="fu">extent</span>(dtm))</span>
-<span id="cb12-12"><a href="remote-sensing.html#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="remote-sensing.html#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># extract slope</span></span>
-<span id="cb12-14"><a href="remote-sensing.html#cb12-14" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>slope  <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(slope, <span class="fu">extent</span>(slope))</span>
-<span id="cb12-15"><a href="remote-sensing.html#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="remote-sensing.html#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># extract aspect</span></span>
-<span id="cb12-17"><a href="remote-sensing.html#cb12-17" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>north <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(north, <span class="fu">extent</span>(north)) </span>
-<span id="cb12-18"><a href="remote-sensing.html#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="remote-sensing.html#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
+<p>First, lets convert our raster layers into data frames for easier use. We’ll start by creating an empty data frame with as many rows as there are cells in our <code>raster</code> objects. Then we can use the function <code>extract()</code> the entire extent of the raster layer, i.e. we are pulling out all the information for each pixel and putting it into a set of columns[^3]. The <code>extent</code> argument, tells R to pull out all the information in the <code>raster</code> object<label for="tufte-sn-116" class="margin-toggle sidenote-number">116</label><input type="checkbox" id="tufte-sn-116" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">116</span> Recall, each column of a <code>data.frame</code> is a vector</span>.</p>
+<div class="sourceCode" id="cb382"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb382-1"><a href="remote-sensing.html#cb382-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create and empty data frame</span></span>
+<span id="cb382-2"><a href="remote-sensing.html#cb382-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> <span class="fu">ncell</span>(dtm), <span class="at">ncol=</span><span class="dv">0</span>))</span>
+<span id="cb382-3"><a href="remote-sensing.html#cb382-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb382-4"><a href="remote-sensing.html#cb382-4" aria-hidden="true" tabindex="-1"></a><span class="co"># extract vegetation height</span></span>
+<span id="cb382-5"><a href="remote-sensing.html#cb382-5" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>veg_ht <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(veg_ht, <span class="fu">extent</span>(veg_ht))</span>
+<span id="cb382-6"><a href="remote-sensing.html#cb382-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb382-7"><a href="remote-sensing.html#cb382-7" aria-hidden="true" tabindex="-1"></a><span class="co"># extract ndvi</span></span>
+<span id="cb382-8"><a href="remote-sensing.html#cb382-8" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>ndvi <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(ndvi, <span class="fu">extent</span>(ndvi))</span>
+<span id="cb382-9"><a href="remote-sensing.html#cb382-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb382-10"><a href="remote-sensing.html#cb382-10" aria-hidden="true" tabindex="-1"></a><span class="co"># extract dtm</span></span>
+<span id="cb382-11"><a href="remote-sensing.html#cb382-11" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>dtm  <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(dtm, <span class="fu">extent</span>(dtm))</span>
+<span id="cb382-12"><a href="remote-sensing.html#cb382-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb382-13"><a href="remote-sensing.html#cb382-13" aria-hidden="true" tabindex="-1"></a><span class="co"># extract slope</span></span>
+<span id="cb382-14"><a href="remote-sensing.html#cb382-14" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>slope  <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(slope, <span class="fu">extent</span>(slope))</span>
+<span id="cb382-15"><a href="remote-sensing.html#cb382-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb382-16"><a href="remote-sensing.html#cb382-16" aria-hidden="true" tabindex="-1"></a><span class="co"># extract aspect</span></span>
+<span id="cb382-17"><a href="remote-sensing.html#cb382-17" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>north <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(north, <span class="fu">extent</span>(north)) </span>
+<span id="cb382-18"><a href="remote-sensing.html#cb382-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb382-19"><a href="remote-sensing.html#cb382-19" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
 <pre><code>##      veg_ht      ndvi     dtm slope north
 ## 1 7.8100586 0.8477020 1297.25   NaN   NaN
 ## 2 8.9599609 0.8142292 1297.36   NaN   NaN
@@ -417,11 +447,11 @@ function reset_tooltip(id) {
 </div>
 </div>
 <p>Let’s go ahead and remove those values.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="remote-sensing.html#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb14-2"><a href="remote-sensing.html#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(slope)) <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="remote-sensing.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(north))</span>
-<span id="cb14-4"><a href="remote-sensing.html#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="remote-sensing.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
+<div class="sourceCode" id="cb384"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb384-1"><a href="remote-sensing.html#cb384-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb384-2"><a href="remote-sensing.html#cb384-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(slope)) <span class="sc">%&gt;%</span></span>
+<span id="cb384-3"><a href="remote-sensing.html#cb384-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(north))</span>
+<span id="cb384-4"><a href="remote-sensing.html#cb384-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb384-5"><a href="remote-sensing.html#cb384-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
 <pre><code>##       veg_ht      ndvi     dtm    slope      north
 ## 1 6.46008301 0.8252837 1297.20 11.99227 -0.8944847
 ## 2 6.85998535 0.8504076 1297.03 18.01359 -0.9609535
@@ -432,29 +462,29 @@ function reset_tooltip(id) {
 <p>Because we have so much data, we will take a 1% subset of the data to decrease the computational power and time needed.</p>
 <p>Because our data set is so large (1 Million rows!), we would expect that a random subset is representative of the relationships as a whole.</p>
 <p><code>dplyr::slice_sample()</code> can be used to specify the proportion of rows that you would like to retain. The function will return a random sub sample.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="remote-sensing.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set seed for reproducibility</span></span>
-<span id="cb16-2"><a href="remote-sensing.html#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb16-3"><a href="remote-sensing.html#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="remote-sensing.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># randomly select 1% of rows</span></span>
-<span id="cb16-5"><a href="remote-sensing.html#cb16-5" aria-hidden="true" tabindex="-1"></a>df_sub <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb16-6"><a href="remote-sensing.html#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.01</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb386"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb386-1"><a href="remote-sensing.html#cb386-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set seed for reproducibility</span></span>
+<span id="cb386-2"><a href="remote-sensing.html#cb386-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb386-3"><a href="remote-sensing.html#cb386-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb386-4"><a href="remote-sensing.html#cb386-4" aria-hidden="true" tabindex="-1"></a><span class="co"># randomly select 1% of rows</span></span>
+<span id="cb386-5"><a href="remote-sensing.html#cb386-5" aria-hidden="true" tabindex="-1"></a>df_sub <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb386-6"><a href="remote-sensing.html#cb386-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">prop =</span> <span class="fl">0.01</span>)</span></code></pre></div>
 <p>Now, let’s take a look at the relationship between the vegetation and topographic variables.</p>
 <p>To do this efficiently using the <code>tidyverse</code> principles and some <code>ggplot</code> magic, need to pivot our data set. Ultimately, we want to have a data set with one column with our topography parameters, one with the topography measurements, one with vegetation variables and one with measurements; then we will be able to use <code>facet_grid()</code> to plot all combinations of variables.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="remote-sensing.html#cb17-1" aria-hidden="true" tabindex="-1"></a>df_plot <span class="ot">&lt;-</span> df_sub <span class="sc">%&gt;%</span></span>
-<span id="cb17-2"><a href="remote-sensing.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"topog_param"</span>, <span class="at">values_to =</span> <span class="st">"topog_meas"</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="remote-sensing.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"veget_param"</span>, <span class="at">values_to =</span> <span class="st">"veget_meas"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span>
-<span id="cb17-4"><a href="remote-sensing.html#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="remote-sensing.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_plot, <span class="fu">aes</span>(<span class="at">x =</span> topog_meas, <span class="at">y =</span> veget_meas)) <span class="sc">+</span></span>
-<span id="cb17-6"><a href="remote-sensing.html#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">size =</span> .<span class="dv">75</span>) <span class="sc">+</span></span>
-<span id="cb17-7"><a href="remote-sensing.html#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(veget_param <span class="sc">~</span> topog_param, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb17-8"><a href="remote-sensing.html#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Topography"</span>, <span class="at">y =</span> <span class="st">"Vegetation"</span>) <span class="sc">+</span></span>
-<span id="cb17-9"><a href="remote-sensing.html#cb17-9" aria-hidden="true" tabindex="-1"></a>  theme_facet</span></code></pre></div>
+<div class="sourceCode" id="cb387"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb387-1"><a href="remote-sensing.html#cb387-1" aria-hidden="true" tabindex="-1"></a>df_plot <span class="ot">&lt;-</span> df_sub <span class="sc">%&gt;%</span></span>
+<span id="cb387-2"><a href="remote-sensing.html#cb387-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"topog_param"</span>, <span class="at">values_to =</span> <span class="st">"topog_meas"</span>, <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb387-3"><a href="remote-sensing.html#cb387-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"veget_param"</span>, <span class="at">values_to =</span> <span class="st">"veget_meas"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)</span>
+<span id="cb387-4"><a href="remote-sensing.html#cb387-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb387-5"><a href="remote-sensing.html#cb387-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_plot, <span class="fu">aes</span>(<span class="at">x =</span> topog_meas, <span class="at">y =</span> veget_meas)) <span class="sc">+</span></span>
+<span id="cb387-6"><a href="remote-sensing.html#cb387-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>, <span class="at">size =</span> .<span class="dv">75</span>) <span class="sc">+</span></span>
+<span id="cb387-7"><a href="remote-sensing.html#cb387-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(veget_param <span class="sc">~</span> topog_param, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb387-8"><a href="remote-sensing.html#cb387-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Topography"</span>, <span class="at">y =</span> <span class="st">"Vegetation"</span>) <span class="sc">+</span></span>
+<span id="cb387-9"><a href="remote-sensing.html#cb387-9" aria-hidden="true" tabindex="-1"></a>  theme_facet</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-15"></span>
+<span style="display:block;" id="fig:unnamed-chunk-326"></span>
 <p class="caption marginnote shownote">
 Figure 20.1: Relationship of topography and vegetation. Topography is described as elevation (dtm, in meters), northness (radians), and slope (degrees); vegetation is assessed using NDVI and vegetation height.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-15-1.png" alt="Relationship of topography and vegetation. Topography is described as elevation (dtm, in meters), northness (radians), and slope (degrees); vegetation is assessed using NDVI and vegetation height." width="864">
+<img src="_main_files/figure-html/unnamed-chunk-326-1.png" alt="Relationship of topography and vegetation. Topography is described as elevation (dtm, in meters), northness (radians), and slope (degrees); vegetation is assessed using NDVI and vegetation height." width="864">
 </div>
 <div id="ques:rem-10" class="question">
 <p class="question-begin">
@@ -469,19 +499,19 @@ Figure 20.1: Relationship of topography and vegetation. Topography is described 
 </div>
 </div>
 <p>Let’s determine whether these variables are correlated using the Pearson correlation coefficients. We can use <code>Hmisc::rcorr</code> to calculate all pairwise correlations and test whether the relationships are significant.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="remote-sensing.html#cb18-1" aria-hidden="true" tabindex="-1"></a>P_corr <span class="ot">&lt;-</span> <span class="fu">rcorr</span>(<span class="fu">as.matrix</span>(df), <span class="at">type=</span><span class="st">"pearson"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb388"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb388-1"><a href="remote-sensing.html#cb388-1" aria-hidden="true" tabindex="-1"></a>P_corr <span class="ot">&lt;-</span> <span class="fu">rcorr</span>(<span class="fu">as.matrix</span>(df), <span class="at">type=</span><span class="st">"pearson"</span>)</span></code></pre></div>
 <p>The output is a list. Recall that we can access individual components of a list using <code>$</code>. In this case <code>P_corr$r</code> contains the correlation coefficients, and <code>P_corr$p</code> contains the p-values.</p>
 <p>Visualizing correlations in a correlation plot can be helpful for a quick overview when you are working with a lot of different values, we can do this using the function <code>corrplot()</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="remote-sensing.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(P_corr<span class="sc">$</span>r)</span></code></pre></div>
+<div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="remote-sensing.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(P_corr<span class="sc">$</span>r)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-17"></span>
+<span style="display:block;" id="fig:unnamed-chunk-328"></span>
 <p class="caption marginnote shownote">
 Figure 20.2: Pairwise relationships of all topographical and vegetation variables measured using Pearson’s correlation coefficient.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-17-1.png" alt="Pairwise relationships of all topographical and vegetation variables measured using Pearson's correlation coefficient." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-328-1.png" alt="Pairwise relationships of all topographical and vegetation variables measured using Pearson's correlation coefficient." width="672">
 </div>
 <p>Alternatively, you can print the correlation coefficients as a matrix.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="remote-sensing.html#cb20-1" aria-hidden="true" tabindex="-1"></a>P_corr<span class="sc">$</span>r</span></code></pre></div>
+<div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="remote-sensing.html#cb390-1" aria-hidden="true" tabindex="-1"></a>P_corr<span class="sc">$</span>r</span></code></pre></div>
 <pre><code>##             veg_ht        ndvi         dtm        slope        north
 ## veg_ht  1.00000000  0.15271745 -0.10739489  0.054293139  0.049763864
 ## ndvi    0.15271745  1.00000000 -0.09762246  0.204216049  0.031199918
@@ -500,7 +530,7 @@ Figure 20.2: Pairwise relationships of all topographical and vegetation variable
 </div>
 </div>
 <p>We can also print our p-values:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="remote-sensing.html#cb22-1" aria-hidden="true" tabindex="-1"></a>P_corr<span class="sc">$</span>P</span></code></pre></div>
+<div class="sourceCode" id="cb392"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb392-1"><a href="remote-sensing.html#cb392-1" aria-hidden="true" tabindex="-1"></a>P_corr<span class="sc">$</span>P</span></code></pre></div>
 <pre><code>##        veg_ht ndvi dtm            slope            north
 ## veg_ht     NA    0   0 0.00000000000000 0.00000000000000
 ## ndvi        0   NA   0 0.00000000000000 0.00000000000000
@@ -519,14 +549,14 @@ Figure 20.2: Pairwise relationships of all topographical and vegetation variable
 </div>
 </div>
 <p>Let’s coerce our correlation coefficients into something a bit more tidy, we’ll also add the abbreviation for the site we’ve been looking at.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="remote-sensing.html#cb24-1" aria-hidden="true" tabindex="-1"></a>tidy_cor <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(P_corr<span class="sc">$</span>r) <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a href="remote-sensing.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"Param1"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="remote-sensing.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"Param2"</span>, <span class="at">values_to =</span> <span class="st">"pearson"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a href="remote-sensing.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Param1 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"veg_ht"</span>, <span class="st">"ndvi"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb24-5"><a href="remote-sensing.html#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Param2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"veg_ht"</span>, <span class="st">"ndvi"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb24-6"><a href="remote-sensing.html#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Site =</span> <span class="st">"SOAP"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb394"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb394-1"><a href="remote-sensing.html#cb394-1" aria-hidden="true" tabindex="-1"></a>tidy_cor <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(P_corr<span class="sc">$</span>r) <span class="sc">%&gt;%</span></span>
+<span id="cb394-2"><a href="remote-sensing.html#cb394-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"Param1"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb394-3"><a href="remote-sensing.html#cb394-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"Param2"</span>, <span class="at">values_to =</span> <span class="st">"pearson"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb394-4"><a href="remote-sensing.html#cb394-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Param1 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"veg_ht"</span>, <span class="st">"ndvi"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb394-5"><a href="remote-sensing.html#cb394-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>Param2 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"veg_ht"</span>, <span class="st">"ndvi"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb394-6"><a href="remote-sensing.html#cb394-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Site =</span> <span class="st">"SOAP"</span>)</span></code></pre></div>
 <p>Let’s write that data frame out as a text file in our results folder.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="remote-sensing.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_delim</span>(tidy_cor, <span class="st">"results/SOAP_correlation.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb395"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb395-1"><a href="remote-sensing.html#cb395-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_delim</span>(tidy_cor, <span class="st">"results/SOAP_correlation.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
 </div>
 <div id="comparison-of-relationship-of-vegetation-and-topography-across-the-us" class="section level2" number="20.4">
 <h2>
@@ -571,25 +601,144 @@ Figure 20.2: Pairwise relationships of all topographical and vegetation variable
 <li>calculate the correlations.</li>
 <li>convert your results into a tidy data set and add the location abbreviation.</li>
 <li>write your results into a text file.</li>
+<li>Briefly summarize your key results (what are the most significant relationships at the site you explored? Which don’t seem to be important)</li>
 </ol>
-<p>Share your correlation results in the <code>#hwassignments</code> channel on slack.</p>
+<p>Share your correlation results (text file) in the <code>#hwassignments</code> channel on slack.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
 <p>We will compile all of the results into a map, so you can see how the impact of topographic variables varies across our studies locations.</p>
+<p>First, let’s read in a text file that has all the NEON sites and information on their geographic location. We are only interested in sites from the contiguous 48 so we will remove locations in Alaska, Hawaii, and Puerto Rico.</p>
+<div class="sourceCode" id="cb396"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb396-1"><a href="remote-sensing.html#cb396-1" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/neon_sites.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb396-2"><a href="remote-sensing.html#cb396-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb396-3"><a href="remote-sensing.html#cb396-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(site_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"tmp"</span>, <span class="st">"site_cat"</span>), <span class="at">sep =</span> <span class="st">" "</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb396-4"><a href="remote-sensing.html#cb396-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>tmp) <span class="sc">%&gt;%</span></span>
+<span id="cb396-5"><a href="remote-sensing.html#cb396-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>state <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"AK"</span>, <span class="st">"HI"</span>, <span class="st">"PR"</span>))</span>
+<span id="cb396-6"><a href="remote-sensing.html#cb396-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb396-7"><a href="remote-sensing.html#cb396-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sites)</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 9
+##   site_name                                      site_id domain_number state latitude longitude site_type       site_cat  site_subtype 
+##   &lt;chr&gt;                                          &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;        
+## 1 Abby Road                                      ABBY    D16           WA        45.8    -122.  Relocatable Te~ Terrestr~ &lt;NA&gt;         
+## 2 Arikaree River                                 ARIK    D10           CO        39.8    -102.  Core Aquatic    Aquatic   Wadeable Str~
+## 3 Ordway-Swisher Biological Station - Barco Lake BARC    D03           FL        29.7     -82.0 Core Aquatic    Aquatic   Lake         
+## 4 Bartlett Experimental Forest                   BART    D01           NH        44.1     -71.3 Relocatable Te~ Terrestr~ &lt;NA&gt;         
+## 5 Upper Big Creek                                BIGC    D17           CA        37.1    -119.  Relocatable Aq~ Aquatic   Wadeable Str~
+## 6 Blandy Experimental Farm                       BLAN    D02           VA        39.1     -78.1 Relocatable Te~ Terrestr~ &lt;NA&gt;</code></pre>
+<p>Let’s start simple by creating a map that has all of our NEON sites on it.</p>
+<p>First, we need to get a shapefile that we will use as our basemap - because we are going to want to orient ourselves within the US, we will also pull information we can use to plot state lines.</p>
+<div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="remote-sensing.html#cb398-1" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">scale =</span> <span class="st">"medium"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
+<span id="cb398-2"><a href="remote-sensing.html#cb398-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb398-3"><a href="remote-sensing.html#cb398-3" aria-hidden="true" tabindex="-1"></a>us_states <span class="ot">&lt;-</span> <span class="fu">ne_states</span>(<span class="at">country =</span> <span class="st">"United States of America"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span></code></pre></div>
+<p>We are not going to want to plot the entire world, so let’s identify the lat/longs for the four corners of the box we want to plot but pulling information on the minimum and maximum latitude &amp; longitude of our NEON sites and then adding a small buffer around it.</p>
+<p>Then we can plot our map.</p>
+<div class="sourceCode" id="cb399"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb399-1"><a href="remote-sensing.html#cb399-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lat/long for map extend</span></span>
+<span id="cb399-2"><a href="remote-sensing.html#cb399-2" aria-hidden="true" tabindex="-1"></a>x_min <span class="ot">&lt;-</span> <span class="fu">min</span>(sites<span class="sc">$</span>longitude) <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb399-3"><a href="remote-sensing.html#cb399-3" aria-hidden="true" tabindex="-1"></a>x_max <span class="ot">&lt;-</span> <span class="fu">max</span>(sites<span class="sc">$</span>longitude) <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb399-4"><a href="remote-sensing.html#cb399-4" aria-hidden="true" tabindex="-1"></a>y_min <span class="ot">&lt;-</span> <span class="fu">min</span>(sites<span class="sc">$</span>latitude) <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb399-5"><a href="remote-sensing.html#cb399-5" aria-hidden="true" tabindex="-1"></a>y_max <span class="ot">&lt;-</span> <span class="fu">max</span>(sites<span class="sc">$</span>latitude) <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb399-6"><a href="remote-sensing.html#cb399-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb399-7"><a href="remote-sensing.html#cb399-7" aria-hidden="true" tabindex="-1"></a><span class="co"># set font sizes for text labels</span></span>
+<span id="cb399-8"><a href="remote-sensing.html#cb399-8" aria-hidden="true" tabindex="-1"></a>site_size <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb399-9"><a href="remote-sensing.html#cb399-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb399-10"><a href="remote-sensing.html#cb399-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb399-11"><a href="remote-sensing.html#cb399-11" aria-hidden="true" tabindex="-1"></a><span class="co"># set color for fill</span></span>
+<span id="cb399-12"><a href="remote-sensing.html#cb399-12" aria-hidden="true" tabindex="-1"></a>map_color <span class="ot">&lt;-</span> <span class="st">"#a8d481"</span></span>
+<span id="cb399-13"><a href="remote-sensing.html#cb399-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb399-14"><a href="remote-sensing.html#cb399-14" aria-hidden="true" tabindex="-1"></a><span class="co"># create plot</span></span>
+<span id="cb399-15"><a href="remote-sensing.html#cb399-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb399-16"><a href="remote-sensing.html#cb399-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> map_color) <span class="sc">+</span>  <span class="co"># plot outline of countries</span></span>
+<span id="cb399-17"><a href="remote-sensing.html#cb399-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> us_states, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span>     <span class="co"># plot outline of states</span></span>
+<span id="cb399-18"><a href="remote-sensing.html#cb399-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(x_min, x_max),</span>
+<span id="cb399-19"><a href="remote-sensing.html#cb399-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(y_min, y_max)) <span class="sc">+</span>                          <span class="co"># plot boundaries for map</span></span>
+<span id="cb399-20"><a href="remote-sensing.html#cb399-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> sites, <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude,    <span class="co"># add sites as labels</span></span>
+<span id="cb399-21"><a href="remote-sensing.html#cb399-21" aria-hidden="true" tabindex="-1"></a>                              <span class="at">label =</span> site_id, <span class="at">color =</span> site_cat),</span>
+<span id="cb399-22"><a href="remote-sensing.html#cb399-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> site_size) <span class="sc">+</span></span>
+<span id="cb399-23"><a href="remote-sensing.html#cb399-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>))</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-335"></span>
+<p class="caption marginnote shownote">
+Figure 20.3: NEON sites in contiguous US
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-335-1.png" alt="NEON sites in contiguous US" width="672">
+</div>
+<p>NEON sites are intentionally designed so aquatic and terrestrial sites are ideally right next to each other, so those are plotting right on top of each other.</p>
+<p>Instead of the site id’s we could also make the same map with points for locations.</p>
+<div class="sourceCode" id="cb400"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb400-1"><a href="remote-sensing.html#cb400-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create plot</span></span>
+<span id="cb400-2"><a href="remote-sensing.html#cb400-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb400-3"><a href="remote-sensing.html#cb400-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> map_color) <span class="sc">+</span>  <span class="co"># plot outline of countries</span></span>
+<span id="cb400-4"><a href="remote-sensing.html#cb400-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> us_states, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span>     <span class="co"># plot outline of states</span></span>
+<span id="cb400-5"><a href="remote-sensing.html#cb400-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(x_min, x_max),</span>
+<span id="cb400-6"><a href="remote-sensing.html#cb400-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(y_min, y_max)) <span class="sc">+</span>                          <span class="co"># plot boundaries for map</span></span>
+<span id="cb400-7"><a href="remote-sensing.html#cb400-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> sites, <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude,    <span class="co"># add sites as labels</span></span>
+<span id="cb400-8"><a href="remote-sensing.html#cb400-8" aria-hidden="true" tabindex="-1"></a>                              <span class="at">fill =</span> site_cat),</span>
+<span id="cb400-9"><a href="remote-sensing.html#cb400-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb400-10"><a href="remote-sensing.html#cb400-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>))</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-336"></span>
+<p class="caption marginnote shownote">
+Figure 20.4: NEON site locations
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-336-1.png" alt="NEON site locations" width="672">
+</div>
+<p>If we want to compare differences in the relationships of topographic variables across all the sites we plotted, we could use the same method to plot the correlation coefficients, in addition to the site labels; all we need to do is add the correlation coefficients into our <code>sites</code> data.frame<label for="tufte-sn-117" class="margin-toggle sidenote-number">117</label><input type="checkbox" id="tufte-sn-117" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">117</span> Once we have information for multiple sites, you will need to either read in all the text files with results and use <code>bind_rows</code> to create a single dataframe, or we will also allow for some outside R action, where you just cut and paste them all into a single text file and read that in.</span>.</p>
+<p>For example, we could create a map for slope and NDVI like this:</p>
+<div class="sourceCode" id="cb401"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb401-1"><a href="remote-sensing.html#cb401-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add correlation coefficients</span></span>
+<span id="cb401-2"><a href="remote-sensing.html#cb401-2" aria-hidden="true" tabindex="-1"></a>sites_pears <span class="ot">&lt;-</span> sites <span class="sc">%&gt;%</span></span>
+<span id="cb401-3"><a href="remote-sensing.html#cb401-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(tidy_cor, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_id"</span> <span class="ot">=</span> <span class="st">"Site"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb401-4"><a href="remote-sensing.html#cb401-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(pearson)) <span class="sc">%&gt;%</span>                          <span class="co"># retain only sites with pearson coefficient estimated</span></span>
+<span id="cb401-5"><a href="remote-sensing.html#cb401-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Param1 <span class="sc">==</span> <span class="st">"ndvi"</span> <span class="sc">&amp;</span> Param2 <span class="sc">==</span> <span class="st">"slope"</span>)         <span class="co"># choose veg &amp; topog relationship to map</span></span>
+<span id="cb401-6"><a href="remote-sensing.html#cb401-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb401-7"><a href="remote-sensing.html#cb401-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb401-8"><a href="remote-sensing.html#cb401-8" aria-hidden="true" tabindex="-1"></a><span class="co"># set font sizes for text labels</span></span>
+<span id="cb401-9"><a href="remote-sensing.html#cb401-9" aria-hidden="true" tabindex="-1"></a>site_size <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb401-10"><a href="remote-sensing.html#cb401-10" aria-hidden="true" tabindex="-1"></a>cor_size <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb401-11"><a href="remote-sensing.html#cb401-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb401-12"><a href="remote-sensing.html#cb401-12" aria-hidden="true" tabindex="-1"></a><span class="co"># create plot</span></span>
+<span id="cb401-13"><a href="remote-sensing.html#cb401-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb401-14"><a href="remote-sensing.html#cb401-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> map_color) <span class="sc">+</span>  <span class="co"># plot outline of countries</span></span>
+<span id="cb401-15"><a href="remote-sensing.html#cb401-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> us_states, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span>     <span class="co"># plot outline of states</span></span>
+<span id="cb401-16"><a href="remote-sensing.html#cb401-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(x_min, x_max),</span>
+<span id="cb401-17"><a href="remote-sensing.html#cb401-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(y_min, y_max)) <span class="sc">+</span>                          <span class="co"># plot boundaries for map</span></span>
+<span id="cb401-18"><a href="remote-sensing.html#cb401-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> sites_pears, <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude,    <span class="co"># add sites as labels</span></span>
+<span id="cb401-19"><a href="remote-sensing.html#cb401-19" aria-hidden="true" tabindex="-1"></a>                              <span class="at">label =</span> site_id, <span class="at">color =</span> <span class="st">"darkblue"</span>),</span>
+<span id="cb401-20"><a href="remote-sensing.html#cb401-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> site_size) <span class="sc">+</span></span>
+<span id="cb401-21"><a href="remote-sensing.html#cb401-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> sites_pears, <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude,    <span class="co"># add pearson coefficient as labels</span></span>
+<span id="cb401-22"><a href="remote-sensing.html#cb401-22" aria-hidden="true" tabindex="-1"></a>                              <span class="at">label =</span> <span class="fu">round</span>(pearson, <span class="at">digits =</span> <span class="dv">2</span>), <span class="at">color =</span> <span class="st">"darkred"</span>),</span>
+<span id="cb401-23"><a href="remote-sensing.html#cb401-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> cor_size, <span class="at">nudge_y =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span>                <span class="co"># shift label below actual coordinates</span></span>
+<span id="cb401-24"><a href="remote-sensing.html#cb401-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>)) <span class="sc">+</span></span>
+<span id="cb401-25"><a href="remote-sensing.html#cb401-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-337"></span>
+<p class="caption marginnote shownote">
+Figure 20.5: Pearson correlation coefficient for slope and NDVI for all assessed sites
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-337-1.png" alt="Pearson correlation coefficient for slope and NDVI for all assessed sites" width="672">
+</div>
 <div id="ques:rem-16" class="question">
 <p class="question-begin">
 ► Question 20.16
 </p>
 <div class="question-body">
-<p>Compare the overall patterns of correlation across the United States. Identify patterns and determine if the relate to geographic variables discussed in class. Identify mechanisms that could explain these observations.</p>
+<p>Choose either NDVI or vegetation height and make a map showing the correlation coefficients for all sites that were compared for elevation, slope, and northness. Make sure your maps have titles, and that all the site names and correlation coefficients are legible in your map. Use <code>fig.height</code> and <code>fig.width</code> to adjust the size of your figures in your html document that you submit.</p>
+<p>Compare the overall patterns of correlation across the United States and discuss your results - speculate on how these topographic parameters could be playing a role in differences in vegetation in different eco-domains across the United States.</p>
 <p class="question-end">
 <span class="fa fa-square-o solution-icon"></span>
 </p>
 </div>
 </div>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</div>
+<div id="acknowledgments-3" class="section level2" number="20.5">
+<h2>
+<span class="header-section-number">20.5</span> Acknowledgments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('acknowledgments-3')" onmouseout="reset_tooltip('acknowledgments-3-tooltip')"><span class="tooltiptext" id="acknowledgments-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>These activities are based on the EDDIE Remote Sensing module.<label for="tufte-sn-118" class="margin-toggle sidenote-number">118</label><input type="checkbox" id="tufte-sn-118" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">118</span> Dahlin, K. M. (2021). Remote Sensing of Plants and Topography in R (Project EDDIE)..</span></p>
 
 </div>
 </div></body></html>
@@ -599,7 +748,7 @@ Figure 20.2: Pairwise relationships of all topographical and vegetation variable
 <a href="references.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-26
+2021-10-27
  using 
 R version 4.0.2 (2020-06-22)
 </p>
