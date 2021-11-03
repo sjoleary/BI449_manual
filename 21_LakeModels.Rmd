@@ -1,0 +1,433 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      cache.extra = packageVersion('msmbstyle'),
+                      warning = FALSE,
+                      message = FALSE,
+                      error = FALSE)
+
+
+options(htmltools.dir.version = FALSE)
+
+source("scr/ggplot.R")
+
+theme_set(theme_standard)
+
+```
+
+# Simulated Data for hypothesis testing
+
+**Learning Objectives**
+
+After completing this tutorial you should be able to
+
+* formulate the importance of simulated data to exploring complex questions
+* set up and run the General Lake Model (GLM) to simulate lake thermal structure
+* design climate scenarios, simulate their effect on lake thermal structure, and interpret the model output
+
+Download the [07_LakeSimulations](https://drive.google.com/drive/folders/1dEt-_hHPelpNLsVww5WRATAQzXrG0oVE?usp=sharing) project folder. Once you have downloaded it, unzip the project directory into your `BI449` directory.
+
+Your first step is creating a new R project in your project folder. To do this open `Rstudio` then use the drop down menu in the top right corner to select `New Project` and from there `New Project in an existing directory`. From there, navigate to and select the project folder create an R project. Remember, your `Rproj` sets the working directory so you need to make sure that it is in your project folder.
+
+Next, open a new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Lake Modeling project directory. Use the setup chunk to set your global settings for the document using the options you've learned about in the last few projects. Remember, you should always check your `html` document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. 
+
+Before we start we need to install a few packages if you have not already done so. Remember, if you have a code chunk with code to install packages it will run every time you knit your document or use the `run all chunks` options. It is best to either comment out those lines of code, inactivate the code chunk using `eval=FALSE` or just run them directly in the console.
+
+```{r eval=FALSE}
+
+install.packages("sp")
+install.packages("devtools")
+
+# this will likely take a few minutes
+# if successful will say "DONE (GLMr)" at end of output
+devtools::install_github("CareyLabVT/GLMr", force = TRUE)
+
+# this will also take a few minutes
+# you might get a pop up asking if you want to compile from source
+devtools::install_github("CareyLabVT/glmtools", force = TRUE)
+
+
+```
+
+Let's load our packages so we can get started.
+
+```{r}
+
+# load libraries
+library(tidyverse)
+
+library(sp)
+library(GLMr)
+library(glmtools)
+
+# turn of sci notation
+options(scipen=999)
+
+```
+
+
+## Macrosystems ecology
+
+`r msmbstyle::question_begin(label = "ques:sim-1")`
+
+Briefly describe the central questions explore in macrosystems ecology and outline some of the challenges to the field.
+
+`r msmbstyle::question_end()`
+
+
+## The power of simulated data
+
+`r msmbstyle::question_begin(label = "ques:sim-2")`
+
+Describe benefits and challenges of using simulated to investigate complex questions, especially in the context of global change ecology.
+
+`r msmbstyle::question_end()`
+
+In this module, we are going to set up a lake model to explore how different climate scenarios will impact the thermal structure of a lake.
+
+
+## Get to know the model
+
+We are going to start off by plotting water temperature data using a default model lake and real climate forcing data to get to know the model.
+
+We are going to use additional scripts/files that will allow you to tell the General Lake Model (GLM) how you want the model to be run. The GLM is not written in R, rather we have wrapper functions written in R that allow us to interface with the model. The advantage of doing this is that we can run the model and then interpret the output in the same environment.
+
+We will use `*.nml` scripts to run the GLM simulations. This script sets all the initial conditions of the lake we want to simulate, i.e. id defines the parameters. It includes various sections including `glm_setup`, `morphometry`, and `metereology`.
+
+We are going to run all of our simulations in separate directories that will contain input files/scripts defining parameters, all output will also be written to that directory. If you check the file structure for our project directory you will notice that we have a folder called `sim`. This already contains a file called `glm2.nml` for a default lake We will create a vector with our path, that way we won't constantly have to type in the path, instead we can use the object name.
+
+
+```{r}
+
+# set path for nml file
+nml_file <- "sim/glm2.nml"
+
+# read in nml file
+nml <- read_nml(nml_file)
+
+# see contents
+print(nml)
+
+```
+
+Let's take a look at the various values that have been set for different parameters that determine how we will be running our simulation.
+
+First, let's find out what our lake is called.
+
+```{r}
+
+# query lake name
+get_nml_value(nml, "lake_name")
+
+```
+
+`r msmbstyle::question_begin(label = "ques:sim-3")`
+
+Use the `get_nml_value()` function to query additional parameters that have been set in your `*.nml` file. You can do this by changinge `lake_name` to `lake_depth`, `latitude`, and `longitude`.
+
+`r msmbstyle::question_end()`
+
+Now, let's take a closer look at the meteorological input data for the duration of our simulation.
+
+```{r fig.width=8, fig.height=15, fig.cap="Metereological data describing drivers of thermal structure of Lake Awesome."}
+
+plot_meteo(nml_file)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:sim-4")`
+
+Briefly describe what meteorological data has been defined for this simulation run.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-5")`
+
+Use the information you've pulled from the `nml` file to describe where your lake is located and what the maximum depth is.
+
+This lake is based on a real lake. Figure out where this lake is located (what the name of the lake is) and argue whether you think the metereolgical data is reasonable for the model lake.
+
+`r msmbstyle::question_end()`
+
+
+## Run simulation & compare to real data
+
+Because this is a real lake we also have observed data from sensors in the lake.
+
+`r msmbstyle::question_begin(label = "ques:sim-6")`
+
+Outline the importance of being able to assess the quality of a model and simulated data using observed data.
+
+`r msmbstyle::question_end()`
+
+Now, let's get to the good stuff and actually run the simulation; to run this simulation it will pull data from the `nml` file describing the lake along with information on drivers from the `met_hourly.csv` file in your `sim` folder.
+
+```{r}
+
+# run model
+run_glm("sim/", verbose = TRUE)
+
+```
+
+If you check your `sim` directory, you should now see output files that have been added (check the modified dates). 
+
+The important files is `output.nc` which contains all the output data from our simulation. Again, we'll create a vector with the path to the output file. This is our baseline simulated data based on observed conditions recorded in the `met_hourly.csv` file.
+
+```{r}
+
+baseline <- file.path("sim", 'output.nc')
+
+```
+
+Now, let's pull the data describing daily surface water temperatures in the lake during our baseline simulation and store it in a `data.frame` so we can compare it to our climate scenario down the road.
+
+```{r}
+
+# create data frame with surface temperature
+surf_temp <- get_var(file = baseline, "temp", reference = "surface", z_out = c(1)) %>%
+  rename(Baseline_Temp = temp_1)
+
+```
+
+For now, let's visualize our simulated water temperatures using a heat map.
+
+```{r fig.cap="Thermal structure for our simulated lake."}
+
+plot_temp(file = baseline, fig_path = FALSE)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:sim-7")`
+
+Briefly describe how the data is being displayed in this figure and how it should be interpreted.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-8")`
+
+Describe the seasonal pattern of thermal structure in this lake across seasons. Be specific, e.g. use the color gradient scale to identify when the lake is the warmest, what maximum and minimum temperatures are.
+
+`r msmbstyle::question_end()`
+
+
+In your `sim` filder there is an additional filed called `field_data.csv` contains the observed data for buoys in the lake. Let's compare how modeled data (`baseline`) compares to the observed field data for our lake.
+
+```{r fig.width=8, fig.height=10, fig.cap="Comparison of field data and simulated temperatures."}
+
+# define observed field data
+field_file <- file.path("sim", "field_data.csv")
+
+# plot simulated vs observed data
+plot_temp_compare(baseline, field_file)
+
+```
+
+The top panel shows the observed data measured at different epths and times using high-frequency sensors on a buoy, each measurement is depicted by black circles. The heatmap represents the extrapolated values between sensors.
+
+The bottom panel shows the modeled data.
+
+`r msmbstyle::question_begin(label = "ques:sim-9")`
+
+Briefly assess how well the model replicates the real-world lake (explain how you are coming to this conclusion); include information on the water temperatures and thermocline depths in your comparison.
+
+`r msmbstyle::question_end()`
+
+
+We can also compare different physical lake characteristics between the simulated and observed lake.
+
+First, let's take a look at what metrics we can compare.
+
+```{r}
+
+sim_metrics(with_nml = FALSE)
+
+```
+
+We can extract the observed and simulated thermocline depths for these metrics and compare them to assess the quality of our model. 
+
+Let's start with pulling out information on the thermocline depths and return them as a `data.frame`.
+
+```{r}
+
+therm_depths <- compare_to_field(baseline, field_file, metric = "thermo.depth", 
+                                 as_value = TRUE, na.rm = TRUE)
+
+head(therm_depths)
+
+```
+
+
+`r msmbstyle::question_begin(label = "ques:sim-10")`
+
+Plot the observed vs. simulated thermocline depths to compare the model and observed data.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+This can be done in a straight forward way using a line plot.
+
+```{r fig.cap="Comparison of modeled and observed thermoclines."}
+
+therm_depths %>%
+  pivot_longer(names_to = "dataset", values_to = "thermo_depth", 2:3) %>%
+  ggplot(aes(x = DateTime, y = thermo_depth, color = dataset)) +
+  geom_line(size = 1) +
+  scale_color_manual(values = c("darkblue", "darkred")) +
+  labs(x = "Date", y = "Thermocline depth [m]")
+
+```
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-11")`
+
+Extract the observed and model water temperatures into a `data.frame` called `water_temp` and create a plot to compare them.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+Before you plot your data take a look at the data set - you'll notice that there are multiple observations for the same time point.
+
+Let's use a scatter plot instead of a line plot to make sure we can see all the data.
+
+```{r fig.cap="Comparison of modeled and observed water temperatures."}
+
+water_temp <- compare_to_field(baseline, field_file, metric = "water.temperature",
+                               as_value = TRUE, na.rm = TRUE)
+
+water_temp %>%
+  pivot_longer(names_to = "dataset", values_to = "water_temp", 2:3) %>%
+  ggplot(aes(x = DateTime, y = water_temp, color = dataset)) +
+  geom_point(shape = 1) +
+  scale_color_manual(values = c("darkblue", "darkred")) +
+  labs(x = "Date", y = "Water temperature [C]")
+
+```
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-12")`
+
+Extract the observed and model water densities into a `data.frame` called `water_density` and create a plot to compare them.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-13")`
+
+Explain why water temperature and water densities have multiple data points for each day. Compare and contrast the patterns you observe between the two plots and explain the mechanism linking the two metrics.
+
+Define the terms epilimnion, hypolimnion, thermocline, stratification, and isothermal. Use these terms to describe the seasonal pattern of water temperatures and stratification
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-14")`
+
+Use your comparisons of observed and modeled data for various metrics (thermocline, water temperatures, water density) to assess the quality of our lake model and argue whether or not our modeled output is a good representation of the observed lake water temperatures.
+
+`r msmbstyle::question_end()`
+
+
+## Develop your own climate scenario
+
+Now that we have an idea of how to interact with the model, and we've tested the quality of our model by comparing observed and simulated data sets let's use the model to simulate a data set for a specific climate model.
+
+You are going to develop two climate scenarios involving an extreme event (e.g. hurricane) and a more gradual change (e.g. increase in observed air temperature). Find a partner and share the work!
+
+For some inspiration on your climate scenario you can check out a [visualization of high and low emission scenarios](http://climatedata.us/) and how they impact temperature and precipitation. You can also take a look at [global projections](http://climatemodels.uchicago.edu/maps) to see how much change is expected for various models and metrics.
+
+`r msmbstyle::question_begin(label = "ques:sim-15")`
+
+For each climate scenario describe which meteorological variables (air temperature, precipitation, wind) you will modify, by how much, and when during your simulations you will modify the variables you have specified.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-16")`
+
+Outline how you would expect your climate change scenario to affect the thermal structure in Awesome Lake but in terms of water temperature and in stratification timing and strength.
+
+`r msmbstyle::question_end()`
+
+Next, you will need to modify the input data (`met_hourly.csv`) to reflect the climate scenario you want to run. 
+
+**Make sure to follow the instructions on how to do this closely to make sure that you will be able to use your input file without issues to run the model.**
+
+In your project folder create a new folder called `sim1`. Then make a copy of `met_hourly.csv` and place it into that folder and rename it `sim1_met_hourly.csv`. Be sure to do this *before* you open it and make any changes to the file. Also add a copy of `glm2.nml` to this folder.
+
+Before you start - any time you open a `*_met_hourly.csv` file in Microsoft Excel it will alter the date/time formatting of the file so that `GLM` cannot read it. To avoid this error you will need to follow the steps below any time you change your `met` file.
+
+1. Just to be safe, copy and paste an extra version of the `met_hourly.csv` file in your `sim` folder so that you have a backup instead you make mistakes and want to go back to it. rename it `met_hourly_original.csv` or similar and be sure **not** to open this file in excel.
+2. Open the `sim1/sim1_met_hourly.csv` file in Excel. Manipulate the input variables to reflect the weather event/climate scenario you have designed^[A note on units: rain should be in meters per day, usually we measure precipitation in mm/d but make sure to convert to m/d by multiplying by 0.001 when you enter it into your `met` file]. The oder of columns does not matter but you can only have one of for each variable and the columns names **should not be changed**.
+3. Once you have finished editing your file, reformat your date/time column.
+  + highlight the `time` column in Excel
+  + click on `Format Cells` and then on `Custom`
+  + in the `Type` or `Formatting` box, change the default to `YYYY-MM-DD hh:mm:ss` exactly - this is the only format that GLM recognizes.
+  + save the file once you are done and close the `csv` file - any time you open the file in Excel you will need to format this column and save the change!
+4. Read in the altered `met_hourly` file, convert the format of the date/time column and write it back out to file.
+
+```{r eval=FALSE}
+
+# this is the base R syntax instead of our usual tidyverse syntax
+metdata <- read.csv("sim1/sim1_met_hourly.csv", header = TRUE)
+
+# convert date/time format
+metdata$time <-as.POSIXct(strptime(metdata$time, "%Y-%m-%d %H:%M:%S", tz="EST")) 
+
+# write back to file
+write.csv(metdata, "sim1/sim1_met_hourly.csv", row.names=FALSE, quote=FALSE)
+
+```
+
+**Any time you alter the `met` file you will need to go back through these steps!**
+
+Next, we will need to edit the `glm2.nml` file to change the name of your input meteorological file so that it knows what file it should be looking for.
+
+Open the `nml` file in a text editor and scroll down to the metereology section. Here, change the `meteo_fl` entry to your new file name (`sim1_met_hourly.csv`) for your climate scenario^[Make sure that your quotes `'` around the file name are upright and not slanted!].
+
+Once you have completed this you are ready to run your climate scenarios. You should be creating the updated files to match one of the climate scenarios (folder `sim1`) and then you will "swap" folder & files with your partner ... you can either rename everything to `sim2` or agree with your partner ahead of time which of you will prep the `sim2`^[Note that you will need to make several changes to the code and in the files so that everything for your second climate scenario is `sim2`.].
+
+
+## Run climate scenario 1
+
+
+
+## Run climate scenario 2
+
+
+
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+## Acknowledgments
+
+These activities are based on the EDDIE Climate Change Effects on Lake Temperatures module.^[Carey, C.C., S. Aditya, K. Subratie, V. Daneshmand, R. Figueiredo, and K.J. Farrell. 24 August 2020. Macrosystems EDDIE: Climate Change Effects on Lake Temperatures. Macrosystems EDDIE Module 1, Version 2.]

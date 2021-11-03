@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-10-27" />
+<meta name="date" content="2021-11-03" />
 
 
 <meta name="description" content="20 Remote Sensing | Data Science for the Natural Environment (FA21)">
@@ -204,6 +204,7 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#comparison-of-relationship-of-vegetation-and-topography-across-the-us"> Comparison of relationship of vegetation and topography across the US</a></li>
 <li class="toc"><a href="#acknowledgments-3"> Acknowledgments</a></li>
 </ul>
+<a href="simulated-data-for-hypothesis-testing.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -619,14 +620,14 @@ Figure 20.2: Pairwise relationships of all topographical and vegetation variable
 <span id="cb396-6"><a href="remote-sensing.html#cb396-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb396-7"><a href="remote-sensing.html#cb396-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sites)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 9
-##   site_name                                      site_id domain_number state latitude longitude site_type       site_cat  site_subtype 
-##   &lt;chr&gt;                                          &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;        
-## 1 Abby Road                                      ABBY    D16           WA        45.8    -122.  Relocatable Te~ Terrestr~ &lt;NA&gt;         
-## 2 Arikaree River                                 ARIK    D10           CO        39.8    -102.  Core Aquatic    Aquatic   Wadeable Str~
-## 3 Ordway-Swisher Biological Station - Barco Lake BARC    D03           FL        29.7     -82.0 Core Aquatic    Aquatic   Lake         
-## 4 Bartlett Experimental Forest                   BART    D01           NH        44.1     -71.3 Relocatable Te~ Terrestr~ &lt;NA&gt;         
-## 5 Upper Big Creek                                BIGC    D17           CA        37.1    -119.  Relocatable Aq~ Aquatic   Wadeable Str~
-## 6 Blandy Experimental Farm                       BLAN    D02           VA        39.1     -78.1 Relocatable Te~ Terrestr~ &lt;NA&gt;</code></pre>
+##   site_name                                      site_id domain_number state latitude longitude site_type               site_cat    site_subtype  
+##   &lt;chr&gt;                                          &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;       &lt;chr&gt;         
+## 1 Abby Road                                      ABBY    D16           WA        45.8    -122.  Relocatable Terrestrial Terrestrial &lt;NA&gt;          
+## 2 Arikaree River                                 ARIK    D10           CO        39.8    -102.  Core Aquatic            Aquatic     Wadeable Stre~
+## 3 Ordway-Swisher Biological Station - Barco Lake BARC    D03           FL        29.7     -82.0 Core Aquatic            Aquatic     Lake          
+## 4 Bartlett Experimental Forest                   BART    D01           NH        44.1     -71.3 Relocatable Terrestrial Terrestrial &lt;NA&gt;          
+## 5 Upper Big Creek                                BIGC    D17           CA        37.1    -119.  Relocatable Aquatic     Aquatic     Wadeable Stre~
+## 6 Blandy Experimental Farm                       BLAN    D02           VA        39.1     -78.1 Relocatable Terrestrial Terrestrial &lt;NA&gt;</code></pre>
 <p>Let’s start simple by creating a map that has all of our NEON sites on it.</p>
 <p>First, we need to get a shapefile that we will use as our basemap - because we are going to want to orient ourselves within the US, we will also pull information we can use to plot state lines.</p>
 <div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="remote-sensing.html#cb398-1" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">scale =</span> <span class="st">"medium"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
@@ -738,17 +739,17 @@ Figure 20.5: Pearson correlation coefficient for slope and NDVI for all assessed
 <h2>
 <span class="header-section-number">20.5</span> Acknowledgments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('acknowledgments-3')" onmouseout="reset_tooltip('acknowledgments-3-tooltip')"><span class="tooltiptext" id="acknowledgments-3-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>These activities are based on the EDDIE Remote Sensing module.<label for="tufte-sn-118" class="margin-toggle sidenote-number">118</label><input type="checkbox" id="tufte-sn-118" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">118</span> Dahlin, K. M. (2021). Remote Sensing of Plants and Topography in R (Project EDDIE)..</span></p>
+<p>These activities are based on the EDDIE Remote Sensing module.<label for="tufte-sn-118" class="margin-toggle sidenote-number">118</label><input type="checkbox" id="tufte-sn-118" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">118</span> Dahlin, K. M. (2021). Remote Sensing of Plants and Topography in R (Project EDDIE).</span></p>
 
 </div>
 </div></body></html>
 
 <p style="text-align: center;">
 <a href="predictive-modeling.html"><button class="btn btn-default">Previous</button></a>
-<a href="references.html"><button class="btn btn-default">Next</button></a>
+<a href="simulated-data-for-hypothesis-testing.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-10-27
+2021-11-03
  using 
 R version 4.0.2 (2020-06-22)
 </p>

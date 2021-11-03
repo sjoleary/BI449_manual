@@ -585,5 +585,5 @@ Compare the overall patterns of correlation across the United States and discuss
 
 ## Acknowledgments
 
-These activities are based on the EDDIE Remote Sensing module.^[Dahlin, K. M. (2021). Remote Sensing of Plants and Topography in R (Project EDDIE)..]
+These activities are based on the EDDIE Remote Sensing module.^[Dahlin, K. M. (2021). Remote Sensing of Plants and Topography in R (Project EDDIE).]
 

@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="21 Simulated Data for hypothesis testing | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-11-03" />
+
+
+<meta name="description" content="21 Simulated Data for hypothesis testing | Data Science for the Natural Environment (FA21)">
+
+<title>21 Simulated Data for hypothesis testing | Data Science for the Natural Environment (FA21)</title>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
+<a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
+<a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
+<a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
+<a id="active-page" href="simulated-data-for-hypothesis-testing.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing</a><ul class="toc-sections">
+<li class="toc"><a href="#macrosystems-ecology"> Macrosystems ecology</a></li>
+<li class="toc"><a href="#the-power-of-simulated-data"> The power of simulated data</a></li>
+<li class="toc"><a href="#get-to-know-the-model"> Get to know the model</a></li>
+<li class="toc"><a href="#run-simulation-compare-to-real-data"> Run simulation &amp; compare to real data</a></li>
+<li class="toc"><a href="#develop-your-own-climate-scenario"> Develop your own climate scenario</a></li>
+<li class="toc"><a href="#run-climate-scenario-1"> Run climate scenario 1</a></li>
+<li class="toc"><a href="#run-climate-scenario-2"> Run climate scenario 2</a></li>
+<li class="toc"><a href="#acknowledgments-4"> Acknowledgments</a></li>
+</ul>
+<a href="references.html">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div id="simulated-data-for-hypothesis-testing" class="section level1" number="21">
+<h1>
+<span class="header-section-number">21</span> Simulated Data for hypothesis testing</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this tutorial you should be able to</p>
+<ul>
+<li>formulate the importance of simulated data to exploring complex questions</li>
+<li>set up and run the General Lake Model (GLM) to simulate lake thermal structure</li>
+<li>design climate scenarios, simulate their effect on lake thermal structure, and interpret the model output</li>
+</ul>
+<p>Download the <a href="https://drive.google.com/drive/folders/1dEt-_hHPelpNLsVww5WRATAQzXrG0oVE?usp=sharing">07_LakeSimulations</a> project folder. Once you have downloaded it, unzip the project directory into your <code>BI449</code> directory.</p>
+<p>Your first step is creating a new R project in your project folder. To do this open <code>Rstudio</code> then use the drop down menu in the top right corner to select <code>New Project</code> and from there <code>New Project in an existing directory</code>. From there, navigate to and select the project folder create an R project. Remember, your <code>Rproj</code> sets the working directory so you need to make sure that it is in your project folder.</p>
+<p>Next, open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Lake Modeling project directory. Use the setup chunk to set your global settings for the document using the options you’ve learned about in the last few projects. Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc.</p>
+<p>Before we start we need to install a few packages if you have not already done so. Remember, if you have a code chunk with code to install packages it will run every time you knit your document or use the <code>run all chunks</code> options. It is best to either comment out those lines of code, inactivate the code chunk using <code>eval=FALSE</code> or just run them directly in the console.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="simulated-data-for-hypothesis-testing.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"sp"</span>)</span>
+<span id="cb1-2"><a href="simulated-data-for-hypothesis-testing.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb1-3"><a href="simulated-data-for-hypothesis-testing.html#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="simulated-data-for-hypothesis-testing.html#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># this will likely take a few minutes</span></span>
+<span id="cb1-5"><a href="simulated-data-for-hypothesis-testing.html#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># if successful will say "DONE (GLMr)" at end of output</span></span>
+<span id="cb1-6"><a href="simulated-data-for-hypothesis-testing.html#cb1-6" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"CareyLabVT/GLMr"</span>, <span class="at">force =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-7"><a href="simulated-data-for-hypothesis-testing.html#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="simulated-data-for-hypothesis-testing.html#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># this will also take a few minutes</span></span>
+<span id="cb1-9"><a href="simulated-data-for-hypothesis-testing.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># you might get a pop up asking if you want to compile from source</span></span>
+<span id="cb1-10"><a href="simulated-data-for-hypothesis-testing.html#cb1-10" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"CareyLabVT/glmtools"</span>, <span class="at">force =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<p>Let’s load our packages so we can get started.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="simulated-data-for-hypothesis-testing.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb2-2"><a href="simulated-data-for-hypothesis-testing.html#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="simulated-data-for-hypothesis-testing.html#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="simulated-data-for-hypothesis-testing.html#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb2-5"><a href="simulated-data-for-hypothesis-testing.html#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GLMr)</span>
+<span id="cb2-6"><a href="simulated-data-for-hypothesis-testing.html#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmtools)</span>
+<span id="cb2-7"><a href="simulated-data-for-hypothesis-testing.html#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="simulated-data-for-hypothesis-testing.html#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb2-9"><a href="simulated-data-for-hypothesis-testing.html#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
+<div id="macrosystems-ecology" class="section level2" number="21.1">
+<h2>
+<span class="header-section-number">21.1</span> Macrosystems ecology<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('macrosystems-ecology')" onmouseout="reset_tooltip('macrosystems-ecology-tooltip')"><span class="tooltiptext" id="macrosystems-ecology-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div id="ques:sim-1" class="question">
+<p class="question-begin">
+► Question 21.1
+</p>
+<div class="question-body">
+<p>Briefly describe the central questions explore in macrosystems ecology and outline some of the challenges to the field.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="the-power-of-simulated-data" class="section level2" number="21.2">
+<h2>
+<span class="header-section-number">21.2</span> The power of simulated data<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-power-of-simulated-data')" onmouseout="reset_tooltip('the-power-of-simulated-data-tooltip')"><span class="tooltiptext" id="the-power-of-simulated-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div id="ques:sim-2" class="question">
+<p class="question-begin">
+► Question 21.2
+</p>
+<div class="question-body">
+<p>Describe benefits and challenges of using simulated to investigate complex questions, especially in the context of global change ecology.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>In this module, we are going to set up a lake model to explore how different climate scenarios will impact the thermal structure of a lake.</p>
+</div>
+<div id="get-to-know-the-model" class="section level2" number="21.3">
+<h2>
+<span class="header-section-number">21.3</span> Get to know the model<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('get-to-know-the-model')" onmouseout="reset_tooltip('get-to-know-the-model-tooltip')"><span class="tooltiptext" id="get-to-know-the-model-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>We are going to start off by plotting water temperature data using a default model lake and real climate forcing data to get to know the model.</p>
+<p>We are going to use additional scripts/files that will allow you to tell the General Lake Model (GLM) how you want the model to be run. The GLM is not written in R, rather we have wrapper functions written in R that allow us to interface with the model. The advantage of doing this is that we can run the model and then interpret the output in the same environment.</p>
+<p>We will use <code>*.nml</code> scripts to run the GLM simulations. This script sets all the initial conditions of the lake we want to simulate, i.e. id defines the parameters. It includes various sections including <code>glm_setup</code>, <code>morphometry</code>, and <code>metereology</code>.</p>
+<p>We are going to run all of our simulations in separate directories that will contain input files/scripts defining parameters, all output will also be written to that directory. If you check the file structure for our project directory you will notice that we have a folder called <code>sim</code>. This already contains a file called <code>glm2.nml</code> for a default lake We will create a vector with our path, that way we won’t constantly have to type in the path, instead we can use the object name.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="simulated-data-for-hypothesis-testing.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set path for nml file</span></span>
+<span id="cb3-2"><a href="simulated-data-for-hypothesis-testing.html#cb3-2" aria-hidden="true" tabindex="-1"></a>nml_file <span class="ot">&lt;-</span> <span class="st">"sim/glm2.nml"</span></span>
+<span id="cb3-3"><a href="simulated-data-for-hypothesis-testing.html#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="simulated-data-for-hypothesis-testing.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in nml file</span></span>
+<span id="cb3-5"><a href="simulated-data-for-hypothesis-testing.html#cb3-5" aria-hidden="true" tabindex="-1"></a>nml <span class="ot">&lt;-</span> <span class="fu">read_nml</span>(nml_file)</span>
+<span id="cb3-6"><a href="simulated-data-for-hypothesis-testing.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="simulated-data-for-hypothesis-testing.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># see contents</span></span>
+<span id="cb3-8"><a href="simulated-data-for-hypothesis-testing.html#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(nml)</span></code></pre></div>
+<pre><code>## &amp;glm_setup
+##    sim_name = 'GLMSimulation'
+##    max_layers = 500
+##    min_layer_vol = 0.025
+##    min_layer_thick = 0.5
+##    max_layer_thick = 1.5
+##    Kw = 0.6
+##    coef_mix_conv = 0.125
+##    coef_wind_stir = 0.23
+##    coef_mix_shear = 0.2
+##    coef_mix_turb = 0.51
+##    coef_mix_KH = 0.3
+##    coef_mix_hyp = 0.5
+## /
+## &amp;morphometry
+##    lake_name = 'AwesomeLake'
+##    latitude = 32.82
+##    longitude = 35.59
+##    bsn_len = 21000
+##    bsn_wid = 13000
+##    bsn_vals = 45
+##    H = -252.9, -251.9, -250.9, -249.9, -248.9, -247.9, -246.9, -245.9, -244.9, -243.9, -242.9, -241.9, -240.9, -239.9, -238.9, -237.9, -236.9, -235.9, -234.9, -233.9, -232.9, -231.9, -230.9, -229.9, -228.9, -227.9, -226.9, -225.9, -224.9, -223.9, -222.9, -221.9, -220.9, -219.9, -218.9, -217.9, -216.9, -215.9, -214.9, -213.9, -212.9, -211.9, -208.9, -207.9, -203.9
+##    A = 0, 9250000, 15200000, 17875000, 21975000, 26625000, 31700000, 33950000, 38250000, 41100000, 46800000, 51675000, 55725000, 60200000, 64675000, 69600000, 74475000, 79850000, 85400000, 90975000, 96400000, 102000000, 107000000, 113000000, 118000000, 123000000, 128000000, 132000000, 136000000, 139000000, 143000000, 146000000, 148000000, 150000000, 151000000, 153000000, 155000000, 157000000, 158000000, 160000000, 161000000, 162000000, 167000000, 170000000, 173000000
+## /
+## &amp;time
+##    timefmt = 2
+##    start = '2000-03-31 00:00:00'
+##    stop = '2001-01-01 00:00:00'
+##    dt = 3600
+##    timezone = 2
+## /
+## &amp;output
+##    out_dir = '.'
+##    out_fn = 'output'
+##    nsave = 24
+##    csv_lake_fname = 'lake'
+##    csv_outlet_allinone = .false.
+##    csv_outlet_fname = 'outlet_'
+##    csv_outlet_nvars = 3
+##    csv_outlet_vars = 'flow','temp','salt'
+##    csv_ovrflw_fname = 'overflow'
+## /
+## &amp;init_profiles
+##    lake_depth = 41
+##    num_depths = 5
+##    the_depths = 1, 10, 20, 30, 40
+##    the_temps = 18, 18, 18, 18, 18
+##    the_sals = 0.5, 0.5, 0.5, 0.5, 0.5
+## /
+## &amp;meteorology
+##    met_sw = .true.
+##    lw_type = 'LW_IN'
+##    rain_sw = .false.
+##    atm_stab = .false.
+##    catchrain = .false.
+##    rad_mode = 1
+##    albedo_mode = 1
+##    cloud_mode = 4
+##    subdaily = .true.
+##    meteo_fl = 'met_hourly.csv'
+##    wind_factor = 1
+##    rain_factor = 1
+##    sw_factor = 1
+##    lw_factor = 1
+##    at_factor = 1
+##    rh_factor = 1
+##    ce = 0.0013
+##    ch = 0.0013
+##    cd = 0.0013
+##    rain_threshold = 0.01
+##    runoff_coef = 0.3
+## /
+## &amp;bird_model
+##    AP = 973
+##    Oz = 0.279
+##    WatVap = 1.1
+##    AOD500 = 0.033
+##    AOD380 = 0.038
+##    Albedo = 0.2
+## /
+## &amp;inflow
+##    num_inflows = 0
+## /
+## &amp;outflow
+##    num_outlet = 0
+## /
+## &amp;snowice
+##    snow_albedo_factor = 1
+##    snow_rho_max = 300
+##    snow_rho_min = 50
+## /
+## &amp;sed_heat
+##    sed_temp_mean = 9.7
+##    sed_temp_amplitude = 2.7
+##    sed_temp_peak_doy = 242.5
+## /</code></pre>
+<p>Let’s take a look at the various values that have been set for different parameters that determine how we will be running our simulation.</p>
+<p>First, let’s find out what our lake is called.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="simulated-data-for-hypothesis-testing.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># query lake name</span></span>
+<span id="cb5-2"><a href="simulated-data-for-hypothesis-testing.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_nml_value</span>(nml, <span class="st">"lake_name"</span>)</span></code></pre></div>
+<pre><code>## [1] "AwesomeLake"</code></pre>
+<div id="ques:sim-3" class="question">
+<p class="question-begin">
+► Question 21.3
+</p>
+<div class="question-body">
+<p>Use the <code>get_nml_value()</code> function to query additional parameters that have been set in your <code>*.nml</code> file. You can do this by changinge <code>lake_name</code> to <code>lake_depth</code>, <code>latitude</code>, and <code>longitude</code>.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Now, let’s take a closer look at the meteorological input data for the duration of our simulation.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="simulated-data-for-hypothesis-testing.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_meteo</span>(nml_file)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-6"></span>
+<p class="caption marginnote shownote">
+Figure 21.1: Metereological data describing drivers of thermal structure of Lake Awesome.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-6-1.png" alt="Metereological data describing drivers of thermal structure of Lake Awesome." width="768">
+</div>
+<div id="ques:sim-4" class="question">
+<p class="question-begin">
+► Question 21.4
+</p>
+<div class="question-body">
+<p>Briefly describe what meteorological data has been defined for this simulation run.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:sim-5" class="question">
+<p class="question-begin">
+► Question 21.5
+</p>
+<div class="question-body">
+<p>Use the information you’ve pulled from the <code>nml</code> file to describe where your lake is located and what the maximum depth is.</p>
+<p>This lake is based on a real lake. Figure out where this lake is located (what the name of the lake is) and argue whether you think the metereolgical data is reasonable for the model lake.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="run-simulation-compare-to-real-data" class="section level2" number="21.4">
+<h2>
+<span class="header-section-number">21.4</span> Run simulation &amp; compare to real data<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('run-simulation-compare-to-real-data')" onmouseout="reset_tooltip('run-simulation-compare-to-real-data-tooltip')"><span class="tooltiptext" id="run-simulation-compare-to-real-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Because this is a real lake we also have observed data from sensors in the lake.</p>
+<div id="ques:sim-6" class="question">
+<p class="question-begin">
+► Question 21.6
+</p>
+<div class="question-body">
+<p>Outline the importance of being able to assess the quality of a model and simulated data using observed data.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Now, let’s get to the good stuff and actually run the simulation; to run this simulation it will pull data from the <code>nml</code> file describing the lake along with information on drivers from the <code>met_hourly.csv</code> file in your <code>sim</code> folder.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="simulated-data-for-hypothesis-testing.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run model</span></span>
+<span id="cb8-2"><a href="simulated-data-for-hypothesis-testing.html#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(<span class="st">"sim/"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>If you check your <code>sim</code> directory, you should now see output files that have been added (check the modified dates).</p>
+<p>The important files is <code>output.nc</code> which contains all the output data from our simulation. Again, we’ll create a vector with the path to the output file. This is our baseline simulated data based on observed conditions recorded in the <code>met_hourly.csv</code> file.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="simulated-data-for-hypothesis-testing.html#cb10-1" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim"</span>, <span class="st">'output.nc'</span>)</span></code></pre></div>
+<p>Now, let’s pull the data describing daily surface water temperatures in the lake during our baseline simulation and store it in a <code>data.frame</code> so we can compare it to our climate scenario down the road.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="simulated-data-for-hypothesis-testing.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create data frame with surface temperature</span></span>
+<span id="cb11-2"><a href="simulated-data-for-hypothesis-testing.html#cb11-2" aria-hidden="true" tabindex="-1"></a>surf_temp <span class="ot">&lt;-</span> <span class="fu">get_var</span>(<span class="at">file =</span> baseline, <span class="st">"temp"</span>, <span class="at">reference =</span> <span class="st">"surface"</span>, <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="simulated-data-for-hypothesis-testing.html#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Baseline_Temp =</span> temp_1)</span></code></pre></div>
+<p>For now, let’s visualize our simulated water temperatures using a heat map.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="simulated-data-for-hypothesis-testing.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp</span>(<span class="at">file =</span> baseline, <span class="at">fig_path =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-10"></span>
+<p class="caption marginnote shownote">
+Figure 21.2: Thermal structure for our simulated lake.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-10-1.png" alt="Thermal structure for our simulated lake." width="672">
+</div>
+<div id="ques:sim-7" class="question">
+<p class="question-begin">
+► Question 21.7
+</p>
+<div class="question-body">
+<p>Briefly describe how the data is being displayed in this figure and how it should be interpreted.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:sim-8" class="question">
+<p class="question-begin">
+► Question 21.8
+</p>
+<div class="question-body">
+<p>Describe the seasonal pattern of thermal structure in this lake across seasons. Be specific, e.g. use the color gradient scale to identify when the lake is the warmest, what maximum and minimum temperatures are.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>In your <code>sim</code> filder there is an additional filed called <code>field_data.csv</code> contains the observed data for buoys in the lake. Let’s compare how modeled data (<code>baseline</code>) compares to the observed field data for our lake.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="simulated-data-for-hypothesis-testing.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define observed field data</span></span>
+<span id="cb13-2"><a href="simulated-data-for-hypothesis-testing.html#cb13-2" aria-hidden="true" tabindex="-1"></a>field_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim"</span>, <span class="st">"field_data.csv"</span>)</span>
+<span id="cb13-3"><a href="simulated-data-for-hypothesis-testing.html#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="simulated-data-for-hypothesis-testing.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot simulated vs observed data</span></span>
+<span id="cb13-5"><a href="simulated-data-for-hypothesis-testing.html#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp_compare</span>(baseline, field_file)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-11"></span>
+<p class="caption marginnote shownote">
+Figure 21.3: Comparison of field data and simulated temperatures.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-11-1.png" alt="Comparison of field data and simulated temperatures." width="768">
+</div>
+<p>The top panel shows the observed data measured at different epths and times using high-frequency sensors on a buoy, each measurement is depicted by black circles. The heatmap represents the extrapolated values between sensors.</p>
+<p>The bottom panel shows the modeled data.</p>
+<div id="ques:sim-9" class="question">
+<p class="question-begin">
+► Question 21.9
+</p>
+<div class="question-body">
+<p>Briefly assess how well the model replicates the real-world lake (explain how you are coming to this conclusion); include information on the water temperatures and thermocline depths in your comparison.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>We can also compare different physical lake characteristics between the simulated and observed lake.</p>
+<p>First, let’s take a look at what metrics we can compare.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="simulated-data-for-hypothesis-testing.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sim_metrics</span>(<span class="at">with_nml =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] "buoyancy.freq"     "center.buoyancy"   "thermo.depth"      "water.density"     "water.temperature"</code></pre>
+<p>We can extract the observed and simulated thermocline depths for these metrics and compare them to assess the quality of our model.</p>
+<p>Let’s start with pulling out information on the thermocline depths and return them as a <code>data.frame</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="simulated-data-for-hypothesis-testing.html#cb16-1" aria-hidden="true" tabindex="-1"></a>therm_depths <span class="ot">&lt;-</span> <span class="fu">compare_to_field</span>(baseline, field_file, <span class="at">metric =</span> <span class="st">"thermo.depth"</span>, </span>
+<span id="cb16-2"><a href="simulated-data-for-hypothesis-testing.html#cb16-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">as_value =</span> <span class="cn">TRUE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-3"><a href="simulated-data-for-hypothesis-testing.html#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="simulated-data-for-hypothesis-testing.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(therm_depths)</span></code></pre></div>
+<pre><code>##               DateTime      obs       mod
+## 7  2000-04-06 01:00:00 11.78483  3.409255
+## 8  2000-04-07 01:00:00 11.79451  8.287353
+## 9  2000-04-08 01:00:00 14.53049 20.472547
+## 10 2000-04-09 01:00:00 15.72452 21.391872
+## 12 2000-04-11 01:00:00 19.94560 26.142652
+## 13 2000-04-12 01:00:00 19.94391  3.153735</code></pre>
+<div id="ques:sim-10" class="question">
+<p class="question-begin">
+► Question 21.10
+</p>
+<div class="question-body">
+<p>Plot the observed vs. simulated thermocline depths to compare the model and observed data.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-44" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-44', 'sol-start-44')"></span>
+</p>
+<div id="sol-body-44" class="solution-body" style="display: none;">
+<p>This can be done in a straight forward way using a line plot.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="simulated-data-for-hypothesis-testing.html#cb18-1" aria-hidden="true" tabindex="-1"></a>therm_depths <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="simulated-data-for-hypothesis-testing.html#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"dataset"</span>, <span class="at">values_to =</span> <span class="st">"thermo_depth"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="simulated-data-for-hypothesis-testing.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DateTime, <span class="at">y =</span> thermo_depth, <span class="at">color =</span> dataset)) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="simulated-data-for-hypothesis-testing.html#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="simulated-data-for-hypothesis-testing.html#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>)) <span class="sc">+</span></span>
+<span id="cb18-6"><a href="simulated-data-for-hypothesis-testing.html#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Thermocline depth [m]"</span>)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-14"></span>
+<p class="caption marginnote shownote">
+Figure 21.4: Comparison of modeled and observed thermoclines.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-14-1.png" alt="Comparison of modeled and observed thermoclines." width="672">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:sim-11" class="question">
+<p class="question-begin">
+► Question 21.11
+</p>
+<div class="question-body">
+<p>Extract the observed and model water temperatures into a <code>data.frame</code> called <code>water_temp</code> and create a plot to compare them.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-45" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-45', 'sol-start-45')"></span>
+</p>
+<div id="sol-body-45" class="solution-body" style="display: none;">
+<p>Before you plot your data take a look at the data set - you’ll notice that there are multiple observations for the same time point.</p>
+<p>Let’s use a scatter plot instead of a line plot to make sure we can see all the data.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="simulated-data-for-hypothesis-testing.html#cb19-1" aria-hidden="true" tabindex="-1"></a>water_temp <span class="ot">&lt;-</span> <span class="fu">compare_to_field</span>(baseline, field_file, <span class="at">metric =</span> <span class="st">"water.temperature"</span>,</span>
+<span id="cb19-2"><a href="simulated-data-for-hypothesis-testing.html#cb19-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">as_value =</span> <span class="cn">TRUE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-3"><a href="simulated-data-for-hypothesis-testing.html#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="simulated-data-for-hypothesis-testing.html#cb19-4" aria-hidden="true" tabindex="-1"></a>water_temp <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="simulated-data-for-hypothesis-testing.html#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"dataset"</span>, <span class="at">values_to =</span> <span class="st">"water_temp"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-6"><a href="simulated-data-for-hypothesis-testing.html#cb19-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DateTime, <span class="at">y =</span> water_temp, <span class="at">color =</span> dataset)) <span class="sc">+</span></span>
+<span id="cb19-7"><a href="simulated-data-for-hypothesis-testing.html#cb19-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb19-8"><a href="simulated-data-for-hypothesis-testing.html#cb19-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>)) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="simulated-data-for-hypothesis-testing.html#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Water temperature [C]"</span>)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-15"></span>
+<p class="caption marginnote shownote">
+Figure 21.5: Comparison of modeled and observed water temperatures.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-15-1.png" alt="Comparison of modeled and observed water temperatures." width="672">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:sim-12" class="question">
+<p class="question-begin">
+► Question 21.12
+</p>
+<div class="question-body">
+<p>Extract the observed and model water densities into a <code>data.frame</code> called <code>water_density</code> and create a plot to compare them.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:sim-13" class="question">
+<p class="question-begin">
+► Question 21.13
+</p>
+<div class="question-body">
+<p>Explain why water temperature and water densities have multiple data points for each day. Compare and contrast the patterns you observe between the two plots and explain the mechanism linking the two metrics.</p>
+<p>Define the terms epilimnion, hypolimnion, thermocline, stratification, and isothermal. Use these terms to describe the seasonal pattern of water temperatures and stratification</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:sim-14" class="question">
+<p class="question-begin">
+► Question 21.14
+</p>
+<div class="question-body">
+<p>Use your comparisons of observed and modeled data for various metrics (thermocline, water temperatures, water density) to assess the quality of our lake model and argue whether or not our modeled output is a good representation of the observed lake water temperatures.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="develop-your-own-climate-scenario" class="section level2" number="21.5">
+<h2>
+<span class="header-section-number">21.5</span> Develop your own climate scenario<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('develop-your-own-climate-scenario')" onmouseout="reset_tooltip('develop-your-own-climate-scenario-tooltip')"><span class="tooltiptext" id="develop-your-own-climate-scenario-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Now that we have an idea of how to interact with the model, and we’ve tested the quality of our model by comparing observed and simulated data sets let’s use the model to simulate a data set for a specific climate model.</p>
+<p>You are going to develop two climate scenarios involving an extreme event (e.g. hurricane) and a more gradual change (e.g. increase in observed air temperature). Find a partner and share the work!</p>
+<p>For some inspiration on your climate scenario you can check out a <a href="http://climatedata.us/">visualization of high and low emission scenarios</a> and how they impact temperature and precipitation. You can also take a look at <a href="http://climatemodels.uchicago.edu/maps">global projections</a> to see how much change is expected for various models and metrics.</p>
+<div id="ques:sim-15" class="question">
+<p class="question-begin">
+► Question 21.15
+</p>
+<div class="question-body">
+<p>For each climate scenario describe which meteorological variables (air temperature, precipitation, wind) you will modify, by how much, and when during your simulations you will modify the variables you have specified.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:sim-16" class="question">
+<p class="question-begin">
+► Question 21.16
+</p>
+<div class="question-body">
+<p>Outline how you would expect your climate change scenario to affect the thermal structure in Awesome Lake but in terms of water temperature and in stratification timing and strength.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Next, you will need to modify the input data (<code>met_hourly.csv</code>) to reflect the climate scenario you want to run.</p>
+<p><strong>Make sure to follow the instructions on how to do this closely to make sure that you will be able to use your input file without issues to run the model.</strong></p>
+<p>In your project folder create a new folder called <code>sim1</code>. Then make a copy of <code>met_hourly.csv</code> and place it into that folder and rename it <code>sim1_met_hourly.csv</code>. Be sure to do this <em>before</em> you open it and make any changes to the file. Also add a copy of <code>glm2.nml</code> to this folder.</p>
+<p>Before you start - any time you open a <code>*_met_hourly.csv</code> file in Microsoft Excel it will alter the date/time formatting of the file so that <code>GLM</code> cannot read it. To avoid this error you will need to follow the steps below any time you change your <code>met</code> file.</p>
+<ol style="list-style-type: decimal">
+<li>Just to be safe, copy and paste an extra version of the <code>met_hourly.csv</code> file in your <code>sim</code> folder so that you have a backup instead you make mistakes and want to go back to it. rename it <code>met_hourly_original.csv</code> or similar and be sure <strong>not</strong> to open this file in excel.</li>
+<li>Open the <code>sim1/sim1_met_hourly.csv</code> file in Excel. Manipulate the input variables to reflect the weather event/climate scenario you have designed<label for="tufte-sn-1" class="margin-toggle sidenote-number">1</label><input type="checkbox" id="tufte-sn-1" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">1</span> A note on units: rain should be in meters per day, usually we measure precipitation in mm/d but make sure to convert to m/d by multiplying by 0.001 when you enter it into your <code>met</code> file</span>. The oder of columns does not matter but you can only have one of for each variable and the columns names <strong>should not be changed</strong>.</li>
+<li>Once you have finished editing your file, reformat your date/time column.</li>
+</ol>
+<ul>
+<li>highlight the <code>time</code> column in Excel</li>
+<li>click on <code>Format Cells</code> and then on <code>Custom</code>
+</li>
+<li>in the <code>Type</code> or <code>Formatting</code> box, change the default to <code>YYYY-MM-DD hh:mm:ss</code> exactly - this is the only format that GLM recognizes.</li>
+<li>save the file once you are done and close the <code>csv</code> file - any time you open the file in Excel you will need to format this column and save the change!</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Read in the altered <code>met_hourly</code> file, convert the format of the date/time column and write it back out to file.</li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="simulated-data-for-hypothesis-testing.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># this is the base R syntax instead of our usual tidyverse syntax</span></span>
+<span id="cb20-2"><a href="simulated-data-for-hypothesis-testing.html#cb20-2" aria-hidden="true" tabindex="-1"></a>metdata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"sim1/sim1_met_hourly.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-3"><a href="simulated-data-for-hypothesis-testing.html#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="simulated-data-for-hypothesis-testing.html#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert date/time format</span></span>
+<span id="cb20-5"><a href="simulated-data-for-hypothesis-testing.html#cb20-5" aria-hidden="true" tabindex="-1"></a>metdata<span class="sc">$</span>time <span class="ot">&lt;-</span><span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(metdata<span class="sc">$</span>time, <span class="st">"%Y-%m-%d %H:%M:%S"</span>, <span class="at">tz=</span><span class="st">"EST"</span>)) </span>
+<span id="cb20-6"><a href="simulated-data-for-hypothesis-testing.html#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="simulated-data-for-hypothesis-testing.html#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># write back to file</span></span>
+<span id="cb20-8"><a href="simulated-data-for-hypothesis-testing.html#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(metdata, <span class="st">"sim1/sim1_met_hourly.csv"</span>, <span class="at">row.names=</span><span class="cn">FALSE</span>, <span class="at">quote=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><strong>Any time you alter the <code>met</code> file you will need to go back through these steps!</strong></p>
+<p>Next, we will need to edit the <code>glm2.nml</code> file to change the name of your input meteorological file so that it knows what file it should be looking for.</p>
+<p>Open the <code>nml</code> file in a text editor and scroll down to the metereology section. Here, change the <code>meteo_fl</code> entry to your new file name (<code>sim1_met_hourly.csv</code>) for your climate scenario<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> Make sure that your quotes <code>'</code> around the file name are upright and not slanted!</span>.</p>
+<p>Once you have completed this you are ready to run your climate scenarios. You should be creating the updated files to match one of the climate scenarios (folder <code>sim1</code>) and then you will “swap” folder &amp; files with your partner … you can either rename everything to <code>sim2</code> or agree with your partner ahead of time which of you will prep the <code>sim2</code><label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> Note that you will need to make several changes to the code and in the files so that everything for your second climate scenario is <code>sim2</code>.</span>.</p>
+</div>
+<div id="run-climate-scenario-1" class="section level2" number="21.6">
+<h2>
+<span class="header-section-number">21.6</span> Run climate scenario 1<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('run-climate-scenario-1')" onmouseout="reset_tooltip('run-climate-scenario-1-tooltip')"><span class="tooltiptext" id="run-climate-scenario-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+</div>
+<div id="run-climate-scenario-2" class="section level2" number="21.7">
+<h2>
+<span class="header-section-number">21.7</span> Run climate scenario 2<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('run-climate-scenario-2')" onmouseout="reset_tooltip('run-climate-scenario-2-tooltip')"><span class="tooltiptext" id="run-climate-scenario-2-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</div>
+<div id="acknowledgments-4" class="section level2" number="21.8">
+<h2>
+<span class="header-section-number">21.8</span> Acknowledgments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('acknowledgments-4')" onmouseout="reset_tooltip('acknowledgments-4-tooltip')"><span class="tooltiptext" id="acknowledgments-4-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>These activities are based on the EDDIE Climate Change Effects on Lake Temperatures module.<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> Carey, C.C., S. Aditya, K. Subratie, V. Daneshmand, R. Figueiredo, and K.J. Farrell. 24 August 2020. Macrosystems EDDIE: Climate Change Effects on Lake Temperatures. Macrosystems EDDIE Module 1, Version 2.</span></p>
+
+</div>
+</div></body></html>
+
+<p style="text-align: center;">
+<a href="remote-sensing.html"><button class="btn btn-default">Previous</button></a>
+<a href="references.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-11-03
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

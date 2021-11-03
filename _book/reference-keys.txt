@@ -59,6 +59,8 @@ fig:unnamed-chunk-328
 fig:unnamed-chunk-335
 fig:unnamed-chunk-336
 fig:unnamed-chunk-337
+fig:unnamed-chunk-351
+fig:unnamed-chunk-352
 what-even-is-data-science
 defining-data-and-science
 what-even-is-data-science-1
@@ -197,3 +199,16 @@ plot-maps-of-topography-and-plants
 explore-relationships-between-topographic-variable-and-vegetation-patterns
 comparison-of-relationship-of-vegetation-and-topography-across-the-us
 acknowledgments-3
+simulated-data-for-hypothesis-testing
+macrosystems-ecology
+the-power-of-simulated-data
+get-to-know-the-model
+run-simulation-compare-to-real-data
+develop-your-own-climate-scenario
+run-climate-scenario-1
+run-climate-scenario-2
+acknowledgments-4
+fig:unnamed-chunk-10
+fig:unnamed-chunk-11
+fig:unnamed-chunk-14
+fig:unnamed-chunk-15
