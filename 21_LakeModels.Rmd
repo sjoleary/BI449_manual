@@ -37,7 +37,7 @@ theme_set(theme_standard)
 
 ```
 
-# Simulated Data for hypothesis testing
+# Simulated Data for hypothesis testing I
 
 **Learning Objectives**
 
@@ -77,6 +77,7 @@ Let's load our packages so we can get started.
 
 # load libraries
 library(tidyverse)
+library(patchwork)
 
 library(sp)
 library(GLMr)
@@ -366,12 +367,6 @@ For each climate scenario describe which meteorological variables (air temperatu
 
 `r msmbstyle::question_end()`
 
-`r msmbstyle::question_begin(label = "ques:sim-16")`
-
-Outline how you would expect your climate change scenario to affect the thermal structure in Awesome Lake but in terms of water temperature and in stratification timing and strength.
-
-`r msmbstyle::question_end()`
-
 Next, you will need to modify the input data (`met_hourly.csv`) to reflect the climate scenario you want to run. 
 
 **Make sure to follow the instructions on how to do this closely to make sure that you will be able to use your input file without issues to run the model.**
@@ -383,42 +378,187 @@ Before you start - any time you open a `*_met_hourly.csv` file in Microsoft Exce
 1. Just to be safe, copy and paste an extra version of the `met_hourly.csv` file in your `sim` folder so that you have a backup instead you make mistakes and want to go back to it. rename it `met_hourly_original.csv` or similar and be sure **not** to open this file in excel.
 2. Open the `sim1/sim1_met_hourly.csv` file in Excel. Manipulate the input variables to reflect the weather event/climate scenario you have designed^[A note on units: rain should be in meters per day, usually we measure precipitation in mm/d but make sure to convert to m/d by multiplying by 0.001 when you enter it into your `met` file]. The oder of columns does not matter but you can only have one of for each variable and the columns names **should not be changed**.
 3. Once you have finished editing your file, reformat your date/time column.
-  + highlight the `time` column in Excel
-  + click on `Format Cells` and then on `Custom`
-  + in the `Type` or `Formatting` box, change the default to `YYYY-MM-DD hh:mm:ss` exactly - this is the only format that GLM recognizes.
-  + save the file once you are done and close the `csv` file - any time you open the file in Excel you will need to format this column and save the change!
+    + highlight the `time` column in Excel
+    + click on `Format Cells` and then on `Custom`
+    + in the `Type` or `Formatting` box, change the default to `YYYY-MM-DD hh:mm:ss` exactly - this is the only format that GLM recognizes.
+    + save the file once you are done and close the `csv` file - any time you open the file in Excel you will need to format this column and save the change!
 4. Read in the altered `met_hourly` file, convert the format of the date/time column and write it back out to file.
 
 ```{r eval=FALSE}
 
-# this is the base R syntax instead of our usual tidyverse syntax
-metdata <- read.csv("sim1/sim1_met_hourly.csv", header = TRUE)
-
-# convert date/time format
-metdata$time <-as.POSIXct(strptime(metdata$time, "%Y-%m-%d %H:%M:%S", tz="EST")) 
-
+# read in altered met file & convert time format for GLM
+metadata <- read_delim("sim/met_hourly_plus2.csv", delim = ",") %>%
+  mutate(time = as.POSIXct(strptime(time, "%Y-%m-%d %H:%M:%S", tz="EST"))
+         
 # write back to file
-write.csv(metdata, "sim1/sim1_met_hourly.csv", row.names=FALSE, quote=FALSE)
+write_delim(metadata, "sim/sim1_met_hourly.csv", delim = ",")
 
 ```
 
 **Any time you alter the `met` file you will need to go back through these steps!**
 
-Next, we will need to edit the `glm2.nml` file to change the name of your input meteorological file so that it knows what file it should be looking for.
+Before we can run the simulations, we will also need to edit the `glm2.nml` file to change the name of your input meteorological file so that it knows what file it should be looking for to get the meteorological data to run the model with.
 
-Open the `nml` file in a text editor and scroll down to the metereology section. Here, change the `meteo_fl` entry to your new file name (`sim1_met_hourly.csv`) for your climate scenario^[Make sure that your quotes `'` around the file name are upright and not slanted!].
+Open the `nml` file that you have placed in your `sim1` folder in a text editor and scroll down to the meteorology section. Here, change the `meteo_fl` entry to your new file name (`sim1_met_hourly.csv`) for your climate scenario^[Pro tip: Us the Find options to locate the `nml` file. Details count: Make sure that your quotes `'` around the file name are upright and not slanted!].
 
-Once you have completed this you are ready to run your climate scenarios. You should be creating the updated files to match one of the climate scenarios (folder `sim1`) and then you will "swap" folder & files with your partner ... you can either rename everything to `sim2` or agree with your partner ahead of time which of you will prep the `sim2`^[Note that you will need to make several changes to the code and in the files so that everything for your second climate scenario is `sim2`.].
+Once you've edited the `met` file name in your `nml` file, double check that you've made sure that it's correct. You can do this by reading in the file.
+
+```{r eval=FALSE}
+
+# change the path to new sim folder
+nml_file <-  "sim1/glm2.nml"
+
+# read altered nml file
+nml <- read_nml(nml_file)
+
+# check met file name
+get_nml_value(nml, "meteo_fl")
+
+```
+
+If you made the changes correctly the output should list the name of the meterological file you specified that describes your weather/climate scenario (`sim1_met_hourly.csv`).
+
+Once you have completed this you are ready to run your climate scenarios. You should be creating the input files to match one of the climate scenarios you will be running (folder `sim1`) and then you will "swap" folder & files with your partner ... you can either rename everything to `sim2` or agree with your partner ahead of time which of you will prep the `sim2`^[Note that you will need to make several changes to the code and in the files so that everything for your second climate scenario is `sim2`.].
 
 
 ## Run climate scenario 1
+
+`r msmbstyle::question_begin(label = "ques:sim-16")`
+
+Give a one sentence description of the scenario you are running and then outline how you would expect your climate change scenario to affect the thermal structure in Awesome Lake both in terms of water temperature and in stratification timing and strength.
+
+`r msmbstyle::question_end()`
+
+Now, let's run the scenario.
+
+```{r eval=FALSE}
+
+# run model for climate scenario
+run_glm("sim1/", verbose = TRUE)
+
+```
+
+Our next step will be specifying the file path for our output so we can use the functions from `glmtools` to process the simulation output. Since this is our first climate scenario, we'll name the variable `climate1`. Contrast this with our variable `baseline` that has the simulated output for current, typical meteorological conditions across a year based on the `met_hourly.csv` input file. Keep in mind that we use the same parameters to describe the link for both simulations - so we are keeping the lake the same and comparing different scenarios for the drivers of thermal structure^[The other type of comparison you could make is having the same conditions for drivers and two or more different lakes.].
+
+```{r eval=FALSE}
+
+# define file path for output
+climate1 <- file.path("sim1", "output.nc")
+
+```
+
+Next, let's pull the surface temperature for our first climate scenario^[Recall, that we did this earlier or our baseline scenario and stored that information in the `data.frame` `surf_temp`.].
+
+```{r eval=FALSE}
+
+surf_temp_cl1 <- get_var(file = climate1, "temp", reference = "surface", z_out = c(1)) %>%
+  rename(Scenario1_Temp = temp_1)
+
+```
+
+
 
 
 
 ## Run climate scenario 2
 
+`r msmbstyle::question_begin(label = "ques:sim-17")`
+
+Give a one sentence description of the scenario you are running and then outline how you would expect your climate change scenario to affect the thermal structure in Awesome Lake both in terms of water temperature and in stratification timing and strength.
+
+`r msmbstyle::question_end()`
+
+Now, let's run the scenario. Make sure that your folder `sim2` has the appropriate `met` data and that you have changed the filename in the `nml` file accordingly.
+
+```{r eval=FALSE}
+
+# run model for climate scenario
+run_glm("sim2/", verbose = TRUE)
+
+```
 
 
+Again, we will want to specify the file path for our output - we'll name this variable `climate2`. So now we have three file path variables `baseline`, `climate1`, and `climate2`. We will use those in the next section to plot the results of our simulations.
+
+```{r eval=FALSE}
+
+# define file path for output
+climate2 <- file.path("sim2", "output.nc")
+
+```
+
+Next, let's pull the surface temperature for our second scenario climate scenario.
+
+```{r eval=FALSE}
+
+surf_temp_cl2 <- get_var(file = climate1, "temp", reference = "surface", z_out = c(1)) %>%
+  rename(Scenario2_Temp = temp_1)
+
+```
+
+
+## Compare your results
+
+We have three scenarios to compare, your `baseline` which is the scenario based on current conditions, a simulation of a short-term climate/weather event (`climate1`), and a gradual change (`climate2`)^[Depending on how you set this up the names might be swapped for your scenarios].
+
+`r msmbstyle::question_begin(label = "ques:sim-18")`
+
+Use your data wrangling skills to create a single data frame that contains the surface temperature for your baseline data and your two climate scenarios and create plot that allows you to compare how surface temperature changes over the simulated time period for all three scenarios.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label = "ques:sim-19")`
+
+Describe your results using the figure you just created. Remember to start with the general trends and patterns first and then highlight notable details. Be specific (consider things like min/max temperature, changes over time etc.).
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-20")`
+
+Create a plot showing the thermal structure of Lake Awesome for your baseline scenario, scenario 1 & 2.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+You will want to create heatplots showing temperature by depth across the simulated time periods. You can combine them into a single plot (think about what your layout should look like) using `patchwork`. Remember, to use `fig.height` and `fig.width` to adjust the size of your figure so that you have an easily readable figure once you knit your document.
+
+You will be needing to use the function `plot_temp()` as we did above. Change the syntax accordingly. You will need to change the `file` argument to plot each scenario. Remember, we have stored the information for the output files of the simulations in the vectors `baseline`, `climate1`, and `climate2`.
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-21")`
+
+Compare and contrast the thermal structure of Lake Awesome for the simulations of your baseline amd two climate scenarios based on the figure above. Be specific - key things to think about are min/max temperatures, stratification vs isothermal, depth of the thermocline, how patterns change over time).
+
+Remember, this should be just a description - hang onto your discussion & interpretation of your results for the next question!
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::question_begin(label = "ques:sim-22")`
+
+Discuss your results. Things to consider: Do your results support or contradict your hypotheses (how you were expecting the surface temperature and thermal structure to change for each sceneario), what drivers did you manipulate and what mechanisms are in play in how they alter thermal structure (which cause heating/cooling/mixing?), consider temporal and spatial patterns (depth), what impacts might this have on organisms living in the lake?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::question_begin(label = "ques:sim-23")`
+
+Over the course of the semester we have discussed that (data) science is an iterative process, where we ask initial questions/formulate an initial hypothesis, test/explore it and then once we are done we generally have additional questions to explore.
+
+Based on what you have learned from running one simulation each for a gradual change (climate) and an extreme event (weather/climate), outline how would your refine your question and design and experiment running a series of simulations.  
+
+`r msmbstyle::question_end()`
+
+
+</br>
+
+</br>
+
+</br>
+
+</br>
 
 </br>
 
