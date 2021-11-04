@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="8 Catch data analysis | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-11-04" />
+
+
+<meta name="description" content="8 Catch data analysis | Data Science for the Natural Environment (FA21)">
+
+<title>8 Catch data analysis | Data Science for the Natural Environment (FA21)</title>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a id="active-page" href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a><ul class="toc-sections">
+<li class="toc"><a href="#composition-of-elasmobranch-communities-compare-across-sites"> Composition of elasmobranch communities compare across sites</a></li>
+<li class="toc"><a href="#comparison-of-cpue-per-species-across-sites"> Comparison of CPUE per species across sites</a></li>
+<li class="toc"><a href="#comparison-of-cpue-for-different-life-history-stages"> Comparison of CPUE for different life history stages</a></li>
+</ul>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
+<a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
+<a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
+<a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
+<a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
+<a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
+<a href="references.html">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<div id="catch-data-analysis" class="section level1" number="8">
+<h1>
+<span class="header-section-number">8</span> Catch data analysis</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this activity you should be able to</p>
+<ul>
+<li>understand the differences between absolute abundance, relative abundance, and catch per unit effort (CPUE) and how to use them appropriately.</li>
+<li><code>bind_rows()</code></li>
+<li><code>left_join()</code></li>
+<li>understand what a “conditional mutate” is.</li>
+</ul>
+<p>Now that you’ve got your basic data wrangling skills down, let’s see what we can learn from the long-lining survey data. Remember, the overarching goal of the study was to answer these questions:</p>
+<ol style="list-style-type: decimal">
+<li>How does the composition of elasmobranch communities compare across sites?</li>
+<li>How does the catch-per-unit-effort (CPUE) per species and life history compare across sites?</li>
+<li>What do the sex ratios look like?</li>
+<li>What environmental predictors can we use to predict presence of elasmobranchs?</li>
+</ol>
+<p>We are going to stick to the first two questions to practice our data wrangling skills (and possibly pick up a few new ones …)</p>
+<p>You should have a <code>NurseryAnalysis.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-36" class="margin-toggle sidenote-number">36</label><input type="checkbox" id="tufte-sn-36" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">36</span> You should do this even if you are adding code yourself or if you are using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
+<p>As always, let’s start by loading our packages needed for this analysis.</p>
+<p>We are missing one package that we will need to install the first time, it contains a specialized function that we will need down the line.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="catch-data-analysis.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install packages</span></span>
+<span id="cb173-2"><a href="catch-data-analysis.html#cb173-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("FSA")</span></span></code></pre></div>
+<p>Now let’s load our packages.</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="catch-data-analysis.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb174-2"><a href="catch-data-analysis.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb174-3"><a href="catch-data-analysis.html#cb174-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb174-4"><a href="catch-data-analysis.html#cb174-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FSA)</span></code></pre></div>
+<div id="composition-of-elasmobranch-communities-compare-across-sites" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> Composition of elasmobranch communities compare across sites<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('composition-of-elasmobranch-communities-compare-across-sites')" onmouseout="reset_tooltip('composition-of-elasmobranch-communities-compare-across-sites-tooltip')"><span class="tooltiptext" id="composition-of-elasmobranch-communities-compare-across-sites-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Let’s start by reading in the data set we will use for this analysis.</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="catch-data-analysis.html#cb175-1" aria-hidden="true" tabindex="-1"></a>elasmos <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/longline_elasmobranchs.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
+<div id="ques:shn-1" class="question">
+<p class="question-begin">
+► Question 8.1
+</p>
+<div class="question-body">
+<p>
+Produce a table that contains the number of times a species was caught at each site and overall during the long-lining survey and give a brief description of the pattern(s) you see. Briefly, compare the list of species that were caught to the species identified in the longterm TWPD gill net monitoring program.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Your table should look something like this.<label for="tufte-sn-37" class="margin-toggle sidenote-number">37</label><input type="checkbox" id="tufte-sn-37" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">37</span> Pro tip: you can use <code>replace(is.na(.), 0)</code> to replace <code>NA</code> values in all columns with a <code>0</code>.</span></p>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-116">Table 8.1: </span>Number of individuals per caught per site and overall across all sites and years.</span><!--</caption>--></p>
+<table>
+<thead><tr class="header">
+<th align="left">Species</th>
+<th align="right">Aransas_Bay</th>
+<th align="right">Corpus_Christi_Bay</th>
+<th align="right">Redfish_Bay</th>
+<th align="right">Total</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="right">12</td>
+<td align="right">46</td>
+<td align="right">12</td>
+<td align="right">70</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_leucas</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">Carcharhinus_limbatus</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_porosus</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypanus_americanus</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">Hypanus_sabina</td>
+<td align="right">9</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">Rhinoptera_bonasus</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Rhizoprionodon_terraenovae</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">8</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="left">Sphyrna_lewini</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="left">Sphyrna_tiburo</td>
+<td align="right">1</td>
+<td align="right">18</td>
+<td align="right">16</td>
+<td align="right">35</td>
+</tr>
+</tbody>
+</table>
+<p>We are not only interested in which species we can observe at each site, we also want to know what at what life stages different species are using the estuaries. Typically, we can classify sharks as young-of-the-year (YOY), juveniles (JUV), or mature (MAT). There are ways to observe this in the field, for example YOY can be identified using their umbilical scar and in male sharks whether or not the claspers are calcified is an indication of maturity.</p>
+<div id="ques:shn-2" class="question">
+<p class="question-begin">
+► Question 8.2
+</p>
+<div class="question-body">
+<p>
+Determine how many individuals have information on their life history stage.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Another way to determine the life history stage is to used previously information on length-at-maturity and how quickly YOY grow during their first year of life. This information is species-specific and has been determined for various species using life-history studies that rely on data sets that contain information on size, level of maturity and age<label for="tufte-sn-38" class="margin-toggle sidenote-number">38</label><input type="checkbox" id="tufte-sn-38" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">38</span> Sharks can be aged using their vertebrae similar to how we can use growth rings on trees to age them.</span>.</p>
+<div id="ques:missed" class="question">
+<p class="question-begin">
+► Question 8.3
+</p>
+<div class="question-body">
+<p>For example, Carlson and Baremore 2005 <span class="citation">(<a href="#ref-Carlson2005" role="doc-biblioref">Carlson and Baremore 2005</a>)</span> determined the following length/history stage relationships for spinner sharks (<em>C. brevipinna</em>)</p>
+<ul>
+<li>YOY
+<ul>
+<li>females &lt; 844mm</li>
+<li>males &lt; 812mm</li>
+</ul>
+</li>
+<li>Juveniles
+<ul>
+<li>females 844 - 1360mm</li>
+<li>males 812 - 1380mm</li>
+</ul>
+</li>
+<li>mature (adults)
+<ul>
+<li>females &gt; 1360 mm</li>
+<li>males &gt; 1380 mm</li>
+</ul>
+</li>
+</ul>
+<p>While Neer et al. 2005 published these details for bull sharks (<em>C. leucas</em>)</p>
+<ul>
+<li>YOY
+<ul>
+<li>females &lt; 700mm</li>
+<li>males &lt; 700mm</li>
+</ul>
+</li>
+<li>Juveniles
+<ul>
+<li>females 700 - 2250mm</li>
+<li>males 700 - 2100mm</li>
+</ul>
+</li>
+<li>mature (adults)
+<ul>
+<li>females &gt; 2250mm</li>
+<li>males &gt; 2100mm</li>
+</ul>
+</li>
+</ul>
+<p>First, conceptually describe how you could add this information to your data sheet in excel as a new column called <code>Estimated_Stage</code>.</p>
+<p>Now, let’s consider how we could use our data wrangling skills to add a new column <code>Estimated_Stage</code> that contains life history stage based on length estimates. Let’s first work this out for the two species above to keep it simple.</p>
+<p>When confronted with a more complex problems like this it can be helpful to first walk through the individual steps necessary<label for="tufte-sn-39" class="margin-toggle sidenote-number">39</label><input type="checkbox" id="tufte-sn-39" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">39</span> Some people find it helpful to write things out in ‘pseudo-code’ first and then work out what the code needs to look like for the specific language they are working in</span>.</p>
+<p>Briefly describe what you think our approach should look like - even if you don’t know the functions you need to achieve this.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-7" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-7', 'sol-start-7')"></span>
+</p>
+<div id="sol-body-7" class="solution-body" style="display: none;">
+<p>There are two approaches we can take.</p>
+<p>The first one would involve sub-setting your <code>data.frame</code> using <code>filter()</code> to contain only individuals that fulfill the conditions of specific length ranges that fit the ranges above for each life history stage and the add a new column with the correctly assigned life history stage<label for="tufte-sn-40" class="margin-toggle sidenote-number">40</label><input type="checkbox" id="tufte-sn-40" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">40</span> Remember, you can use <code>&amp;</code> and <code>|</code> to combine two conditions</span>.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="catch-data-analysis.html#cb176-1" aria-hidden="true" tabindex="-1"></a><span class="co"># C. brevipinna, Carlson &amp; Baremore 2005</span></span>
+<span id="cb176-2"><a href="catch-data-analysis.html#cb176-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-3"><a href="catch-data-analysis.html#cb176-3" aria-hidden="true" tabindex="-1"></a>C.brevipinna_YOY <span class="ot">&lt;-</span> <span class="fu">filter</span>(elasmos, Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">812</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">844</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">844</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb176-4"><a href="catch-data-analysis.html#cb176-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estimated_Stage=</span><span class="st">"YOY"</span>)</span>
+<span id="cb176-5"><a href="catch-data-analysis.html#cb176-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-6"><a href="catch-data-analysis.html#cb176-6" aria-hidden="true" tabindex="-1"></a>C.brevipinna_JUV <span class="ot">&lt;-</span> <span class="fu">filter</span>(elasmos, Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">812</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">1380</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">844</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">1360</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">844</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">1360</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb176-7"><a href="catch-data-analysis.html#cb176-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estimated_Stage=</span><span class="st">"JUV"</span>)</span>
+<span id="cb176-8"><a href="catch-data-analysis.html#cb176-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-9"><a href="catch-data-analysis.html#cb176-9" aria-hidden="true" tabindex="-1"></a>C.brevipinna_MAT <span class="ot">&lt;-</span> <span class="fu">filter</span>(elasmos, Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">1380</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">1360</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">1360</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb176-10"><a href="catch-data-analysis.html#cb176-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estimated_Stage=</span><span class="st">"MAT"</span>)</span>
+<span id="cb176-11"><a href="catch-data-analysis.html#cb176-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-12"><a href="catch-data-analysis.html#cb176-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-13"><a href="catch-data-analysis.html#cb176-13" aria-hidden="true" tabindex="-1"></a><span class="co"># C. leucas, Neer et al. 2005</span></span>
+<span id="cb176-14"><a href="catch-data-analysis.html#cb176-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-15"><a href="catch-data-analysis.html#cb176-15" aria-hidden="true" tabindex="-1"></a>C.leucas_YOY <span class="ot">&lt;-</span> <span class="fu">filter</span>(elasmos, Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">700</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb176-16"><a href="catch-data-analysis.html#cb176-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estimated_Stage=</span><span class="st">"YOY"</span>)</span>
+<span id="cb176-17"><a href="catch-data-analysis.html#cb176-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-18"><a href="catch-data-analysis.html#cb176-18" aria-hidden="true" tabindex="-1"></a>C.leucas_JUV <span class="ot">&lt;-</span> <span class="fu">filter</span>(elasmos, Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">700</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">2100</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">700</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">2250</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">700</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">2250</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb176-19"><a href="catch-data-analysis.html#cb176-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estimated_Stage=</span><span class="st">"JUV"</span>)</span>
+<span id="cb176-20"><a href="catch-data-analysis.html#cb176-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb176-21"><a href="catch-data-analysis.html#cb176-21" aria-hidden="true" tabindex="-1"></a>C.leucas_MAT <span class="ot">&lt;-</span> <span class="fu">filter</span>(elasmos, Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">2100</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">2250</span> <span class="sc">|</span> Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">2250</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb176-22"><a href="catch-data-analysis.html#cb176-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estimated_Stage=</span><span class="st">"MAT"</span>)</span></code></pre></div>
+<p>Now you have a bunch of individual <code>data.frames</code> that we need to put back together into a single <code>data.frame</code>. We can do this using <code>bind_rows()</code> which will combine <code>data.frames</code> that have the same set of columns.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="catch-data-analysis.html#cb177-1" aria-hidden="true" tabindex="-1"></a>elasmos_stage <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(C.brevipinna_YOY, C.brevipinna_JUV, C.brevipinna_MAT,</span>
+<span id="cb177-2"><a href="catch-data-analysis.html#cb177-2" aria-hidden="true" tabindex="-1"></a>                           C.leucas_YOY, C.leucas_JUV, C.leucas_MAT)</span></code></pre></div>
+<p>This fits into our general scheme of “split-apply-combine” except that we actually created multiple objects during our “split” stage. Is there a way to do this without creating individual objects?</p>
+<p>Indeed, our second option circumvents having to first create subsets of the initial <code>data.frame</code> using something called a “conditional mutate.”</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb178-1"><a href="catch-data-analysis.html#cb178-1" aria-hidden="true" tabindex="-1"></a>elasmos_stage <span class="ot">&lt;-</span> elasmos <span class="sc">%&gt;%</span></span>
+<span id="cb178-2"><a href="catch-data-analysis.html#cb178-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Carcharhinus_leucas"</span>, <span class="st">"Carcharhinus_brevipinna"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb178-3"><a href="catch-data-analysis.html#cb178-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Estimated_Stage =</span> <span class="fu">case_when</span>(Species <span class="sc">==</span> <span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">812</span> <span class="sc">|</span></span>
+<span id="cb178-4"><a href="catch-data-analysis.html#cb178-4" aria-hidden="true" tabindex="-1"></a>                                       Species <span class="sc">==</span> <span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">844</span> <span class="sc">|</span></span>
+<span id="cb178-5"><a href="catch-data-analysis.html#cb178-5" aria-hidden="true" tabindex="-1"></a>                                       Species <span class="sc">==</span> <span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">844</span> <span class="sc">~</span> <span class="st">"YOY"</span>,</span>
+<span id="cb178-6"><a href="catch-data-analysis.html#cb178-6" aria-hidden="true" tabindex="-1"></a>         Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">812</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">1380</span> <span class="sc">|</span></span>
+<span id="cb178-7"><a href="catch-data-analysis.html#cb178-7" aria-hidden="true" tabindex="-1"></a>           Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">844</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">1360</span> <span class="sc">|</span></span>
+<span id="cb178-8"><a href="catch-data-analysis.html#cb178-8" aria-hidden="true" tabindex="-1"></a>           Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">844</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">1360</span> <span class="sc">~</span> <span class="st">"JUV"</span>,</span>
+<span id="cb178-9"><a href="catch-data-analysis.html#cb178-9" aria-hidden="true" tabindex="-1"></a>         Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">1380</span> <span class="sc">|</span></span>
+<span id="cb178-10"><a href="catch-data-analysis.html#cb178-10" aria-hidden="true" tabindex="-1"></a>           Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">1360</span> <span class="sc">|</span></span>
+<span id="cb178-11"><a href="catch-data-analysis.html#cb178-11" aria-hidden="true" tabindex="-1"></a>           Species<span class="sc">==</span><span class="st">"Carcharhinus_brevipinna"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">1360</span> <span class="sc">~</span> <span class="st">"MAT"</span>,</span>
+<span id="cb178-12"><a href="catch-data-analysis.html#cb178-12" aria-hidden="true" tabindex="-1"></a>         Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">700</span> <span class="sc">~</span> <span class="st">"YOY"</span>,</span>
+<span id="cb178-13"><a href="catch-data-analysis.html#cb178-13" aria-hidden="true" tabindex="-1"></a>         Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">700</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">2100</span> <span class="sc">|</span> </span>
+<span id="cb178-14"><a href="catch-data-analysis.html#cb178-14" aria-hidden="true" tabindex="-1"></a>           Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">700</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">2250</span> <span class="sc">|</span> </span>
+<span id="cb178-15"><a href="catch-data-analysis.html#cb178-15" aria-hidden="true" tabindex="-1"></a>           Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">700</span> <span class="sc">&amp;</span> FL<span class="sc">&lt;=</span><span class="dv">2250</span> <span class="sc">~</span> <span class="st">"JUV"</span>,</span>
+<span id="cb178-16"><a href="catch-data-analysis.html#cb178-16" aria-hidden="true" tabindex="-1"></a>         Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"M"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">2100</span> <span class="sc">|</span> </span>
+<span id="cb178-17"><a href="catch-data-analysis.html#cb178-17" aria-hidden="true" tabindex="-1"></a>           Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"F"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">2250</span> <span class="sc">|</span> </span>
+<span id="cb178-18"><a href="catch-data-analysis.html#cb178-18" aria-hidden="true" tabindex="-1"></a>           Species<span class="sc">==</span><span class="st">"Carcharhinus_leucas"</span> <span class="sc">&amp;</span> Sex<span class="sc">==</span><span class="st">"U"</span> <span class="sc">&amp;</span> FL<span class="sc">&gt;</span><span class="dv">2250</span> <span class="sc">~</span> <span class="st">"MAT"</span>))</span></code></pre></div>
+<p>This is of course a fairly complicated conditional mutate as we are generally combining multiple conditions per category. In this case we could also leave out the <code>|</code> and instead add a <code>~ STAGE</code> to each line depending on our coding preferences.</p>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Normally, we would have to extend our code to estimate life history stage for all of our sampled individuals but I have done this for you and you can load that file from your <code>data</code> folder.</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb179-1"><a href="catch-data-analysis.html#cb179-1" aria-hidden="true" tabindex="-1"></a>elasmos <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/elasmos_complete.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
+<div id="ques:shn-3" class="question">
+<p class="question-begin">
+► Question 8.4
+</p>
+<div class="question-body">
+<p>
+Use this data set to create a table with the number of individuals per life history stage caught at each site.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-121">Table 8.2: </span>Number of individuals per species caught at each site by life history stage.</span><!--</caption>--></p>
+<table>
+<thead><tr class="header">
+<th align="left">Species</th>
+<th align="left">Site</th>
+<th align="right">Total</th>
+<th align="right">YOY</th>
+<th align="right">JUV</th>
+<th align="right">MAT</th>
+<th align="right">UND</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="left">Aransas_Bay</td>
+<td align="right">12</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">46</td>
+<td align="right">45</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="left">Redfish_Bay</td>
+<td align="right">12</td>
+<td align="right">8</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_leucas</td>
+<td align="left">Aransas_Bay</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Carcharhinus_leucas</td>
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_leucas</td>
+<td align="left">Redfish_Bay</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Carcharhinus_limbatus</td>
+<td align="left">Aransas_Bay</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_limbatus</td>
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Carcharhinus_porosus</td>
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Hypanus_americanus</td>
+<td align="left">Aransas_Bay</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypanus_americanus</td>
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Hypanus_americanus</td>
+<td align="left">Redfish_Bay</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypanus_sabina</td>
+<td align="left">Aransas_Bay</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">9</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Hypanus_sabina</td>
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">2</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Rhinoptera_bonasus</td>
+<td align="left">Redfish_Bay</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Rhizoprionodon_terraenovae</td>
+<td align="left">Aransas_Bay</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Rhizoprionodon_terraenovae</td>
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">5</td>
+<td align="right">5</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Rhizoprionodon_terraenovae</td>
+<td align="left">Redfish_Bay</td>
+<td align="right">8</td>
+<td align="right">8</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Sphyrna_lewini</td>
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">4</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Sphyrna_tiburo</td>
+<td align="left">Aransas_Bay</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Sphyrna_tiburo</td>
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">18</td>
+<td align="right">0</td>
+<td align="right">14</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Sphyrna_tiburo</td>
+<td align="left">Redfish_Bay</td>
+<td align="right">16</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<div id="ques:shn-4" class="question">
+<p class="question-begin">
+► Question 8.5
+</p>
+<div class="question-body">
+<p>
+Briefly describe your results to compare total catch across sites accounting for differences in life history stage.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:shnn-4" class="question">
+<p class="question-begin">
+► Question 8.6
+</p>
+<div class="question-body">
+<p>
+Subset your data to contain only YOY and generate a table to investigate whether they were caught across all years sampling occured. Summarize your results in 2-3 sentences.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<table>
+<thead><tr class="header">
+<th align="left">Site</th>
+<th align="left">Species</th>
+<th align="right">2015</th>
+<th align="right">2016</th>
+<th align="right">2017</th>
+<th align="right">2018</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Aransas_Bay</td>
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+</tr>
+<tr class="even">
+<td align="left">Aransas_Bay</td>
+<td align="left">Rhizoprionodon_terraenovae</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Corpus_Christi_Bay</td>
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">16</td>
+<td align="right">23</td>
+</tr>
+<tr class="even">
+<td align="left">Corpus_Christi_Bay</td>
+<td align="left">Carcharhinus_leucas</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">Corpus_Christi_Bay</td>
+<td align="left">Carcharhinus_limbatus</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Corpus_Christi_Bay</td>
+<td align="left">Rhizoprionodon_terraenovae</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">1</td>
+<td align="right">1</td>
+</tr>
+<tr class="odd">
+<td align="left">Corpus_Christi_Bay</td>
+<td align="left">Sphyrna_lewini</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Redfish_Bay</td>
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">4</td>
+</tr>
+<tr class="odd">
+<td align="left">Redfish_Bay</td>
+<td align="left">Rhizoprionodon_terraenovae</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Redfish_Bay</td>
+<td align="left">Sphyrna_tiburo</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="comparison-of-cpue-per-species-across-sites" class="section level2" number="8.2">
+<h2>
+<span class="header-section-number">8.2</span> Comparison of CPUE per species across sites<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('comparison-of-cpue-per-species-across-sites')" onmouseout="reset_tooltip('comparison-of-cpue-per-species-across-sites-tooltip')"><span class="tooltiptext" id="comparison-of-cpue-per-species-across-sites-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div id="ques:shn-5" class="question">
+<p class="question-begin">
+► Question 8.7
+</p>
+<div class="question-body">
+<p>
+Consider disadvantages of using absolute counts of occurence to compare composition across sites. What measure could you use instead of total catch to fix this issue?
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Catch-per-unit-effort (CPUE) is a indirect measure of abundance. Essentially, it is a way to measure relative abundance and be able to account for differences in sampling effort - the key is defining how you will measure “effort.”</p>
+<div id="ques:shn-6" class="question">
+<p class="question-begin">
+► Question 8.8
+</p>
+<div class="question-body">
+<p>
+Briefly discuss what measures we could use to determine effort.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>We are going to calculate effort as “hook hours.” To do this we need to know how many hooks were on the line per set<label for="tufte-sn-41" class="margin-toggle sidenote-number">41</label><input type="checkbox" id="tufte-sn-41" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">41</span> A set means that baited hooks on leaders (individual lines) where attached to the main line and that main line was then “set” in the water for a given period of time before pulling it back in and determining which fish were caught on hooks.</span> and how long the entire line was in the water per set (this is called soak time), then we can easily calculate hook hours of each set as the number of hooks multiplied by the soak time. And then we can divide the number of e.g. sharks caught on a set (“catch) by hook hours (”effort”) to calculate CPUE.</p>
+<p>Your <code>data</code> folder contains as tab-delimited file with set meta-data. This includes information that describes the set itself including date of the set, site, soak time, and location and also parameters describing the conditions of the set such as temperature, salinity, depth, and dissolved oxygen.</p>
+<p>Let’s read in the data set.</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb180-1"><a href="catch-data-analysis.html#cb180-1" aria-hidden="true" tabindex="-1"></a>set_meta <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/set_data.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
+<div id="ques:shn-7" class="question">
+<p class="question-begin">
+► Question 8.9
+</p>
+<div class="question-body">
+<p>
+Take a quick look at the data set to determine what columns are included and what information we can learn about each individual set. How can you amend the data set to include hook hours?
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-8" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-8', 'sol-start-8')"></span>
+</p>
+<div id="sol-body-8" class="solution-body" style="display: none;">
+<p>Correct, a simple <code>mutate()</code> will do the trick.</p>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb181-1"><a href="catch-data-analysis.html#cb181-1" aria-hidden="true" tabindex="-1"></a>set_meta <span class="ot">&lt;-</span> set_meta <span class="sc">%&gt;%</span></span>
+<span id="cb181-2"><a href="catch-data-analysis.html#cb181-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Hook_Hours =</span> Hooks <span class="sc">*</span> Soak_Time)</span></code></pre></div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Next we need to count the number of sharks caught per set.</p>
+<div id="ques:shn-8" class="question">
+<p class="question-begin">
+► Question 8.10
+</p>
+<div class="question-body">
+<p>
+If we look at our elasmo data.frame you will notice that we have a column called Set but that number indicates the nth set of a give sample day. How can you add a column called Set_ID that consists of the date and the set number?
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-9" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-9', 'sol-start-9')"></span>
+</p>
+<div id="sol-body-9" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb182-1"><a href="catch-data-analysis.html#cb182-1" aria-hidden="true" tabindex="-1"></a>elasmos <span class="ot">&lt;-</span> elasmos <span class="sc">%&gt;%</span></span>
+<span id="cb182-2"><a href="catch-data-analysis.html#cb182-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(Set_ID, Year, Month, Day, Set, <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb182-3"><a href="catch-data-analysis.html#cb182-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Set_ID)</span></code></pre></div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:shn-9" class="question">
+<p class="question-begin">
+► Question 8.11
+</p>
+<div class="question-body">
+<p>
+Now create a new object called elasmos_set that contains the number of sharks caught per set.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-10" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-10', 'sol-start-10')"></span>
+</p>
+<div id="sol-body-10" class="solution-body" style="display: none;">
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb183-1"><a href="catch-data-analysis.html#cb183-1" aria-hidden="true" tabindex="-1"></a>elasmos_set <span class="ot">&lt;-</span> elasmos <span class="sc">%&gt;%</span></span>
+<span id="cb183-2"><a href="catch-data-analysis.html#cb183-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(Set_ID)</span></code></pre></div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Now we have two <code>data.frame</code>s one contains the information on how many sharks were caught per set and a second one that contains information about the set, including hook hours. This means that our next step will need to be to combine these two data sets.</p>
+<div id="ques:shn-10" class="question">
+<p class="question-begin">
+► Question 8.12
+</p>
+<div class="question-body">
+<p>Earlier we learned about <code>bind_rows()</code> which allows us to combine two <code>data.frame</code>s that contain identical columns, i.e. row-wise. There is an equivalent function called <code>bind_columns()</code> which allows us to combine <code>data.frame</code>s column-wise.</p>
+<p>Consider what the problem would be in using <code>bind_columns()</code> to combine these two data sets.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Having multiple tables containing data pertaining to the same question is referred to as <strong>relational data</strong> - we are interested in how the contents of a pair of table related to each other, not just the individual data sets. Combining two tables is called a <strong>join</strong>. In this case the type of join we want to execute is called a <strong>mutating join</strong> which means we can add new variables from one <code>data.frame</code> (<code>set_meta</code>) to matching observations in another (<code>elasmos_set</code>).</p>
+<p>In order to do that we need to have one column (the <strong>key</strong>) that way the function can match observations in one <code>data.frame</code> by that <strong>key</strong> and then copy the matching observations in the columns from the second <code>data.frame</code> across.</p>
+<p>When performing a <strong>join</strong>, new columns are added to the right. We will use the function <code>full_join()</code> which means that all the rows from the left and right <code>data.frame</code> will be retained - when we used <code>count()</code> that excluded sets where no sharks were caught, by using a <code>full_join()</code> we can add those back in.</p>
+<p>We currently do not have a matching column between the two data sets, so our first step will be to add a new column called <code>Set_ID</code> to our <code>set_meta</code> <code>data.frame</code>, then we can use <code>full_join()</code> to join the two tables. The argument <code>by</code> can be used to specify the column to use as the key. For our example here we have a column with the same name - in general, the function is “smart” enough to identify shared columns and so you do not necessarily have to specify it<label for="tufte-sn-42" class="margin-toggle sidenote-number">42</label><input type="checkbox" id="tufte-sn-42" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">42</span> You can pull up the help page using <code>?full_join</code> to learn how to join tables that have multiple columns in common or that might have a column in common though it is named differently between the two tables.</span>.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb184-1"><a href="catch-data-analysis.html#cb184-1" aria-hidden="true" tabindex="-1"></a><span class="co"># add set id column</span></span>
+<span id="cb184-2"><a href="catch-data-analysis.html#cb184-2" aria-hidden="true" tabindex="-1"></a>set_meta <span class="ot">&lt;-</span> set_meta <span class="sc">%&gt;%</span></span>
+<span id="cb184-3"><a href="catch-data-analysis.html#cb184-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(Set_ID, Year, Month, Day, Set, <span class="at">sep =</span> <span class="st">"_"</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb184-4"><a href="catch-data-analysis.html#cb184-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb184-5"><a href="catch-data-analysis.html#cb184-5" aria-hidden="true" tabindex="-1"></a><span class="co"># join data sets</span></span>
+<span id="cb184-6"><a href="catch-data-analysis.html#cb184-6" aria-hidden="true" tabindex="-1"></a>elasmos_set <span class="ot">&lt;-</span> elasmos_set <span class="sc">%&gt;%</span></span>
+<span id="cb184-7"><a href="catch-data-analysis.html#cb184-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(set_meta) <span class="sc">%&gt;%</span></span>
+<span id="cb184-8"><a href="catch-data-analysis.html#cb184-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">n =</span> <span class="dv">0</span>))</span></code></pre></div>
+<p>Note the notation <code>elasmo_set &lt;- full_join(elasmos_set, set_meta, by = "Set_ID")</code> will produce the same result.</p>
+<p>Now we can calculate CPUE for sharks per site.</p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb185-1"><a href="catch-data-analysis.html#cb185-1" aria-hidden="true" tabindex="-1"></a>elasmos_set <span class="ot">&lt;-</span> elasmos_set <span class="sc">%&gt;%</span></span>
+<span id="cb185-2"><a href="catch-data-analysis.html#cb185-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CPUE =</span> n<span class="sc">/</span>Hook_Hours)</span></code></pre></div>
+<p>And from that we can easily calculate mean and standard deviation CPUE of catching sharks by site.</p>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-129">Table 8.3: </span>mean +/- sd CPUE</span><!--</caption>--></p>
+<table>
+<thead><tr class="header">
+<th align="left">Site</th>
+<th align="right">mean_CPUE</th>
+<th align="right">std_CPUE</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Aransas_Bay</td>
+<td align="right">0.0048954</td>
+<td align="right">0.0089735</td>
+</tr>
+<tr class="even">
+<td align="left">Corpus_Christi_Bay</td>
+<td align="right">0.0135243</td>
+<td align="right">0.0185803</td>
+</tr>
+<tr class="odd">
+<td align="left">Redfish_Bay</td>
+<td align="right">0.0069282</td>
+<td align="right">0.0114742</td>
+</tr>
+</tbody>
+</table>
+<p>We are going to perform a Kruskal-Wallis rank sum test to determine if there is significant heterogeneity among sites<label for="tufte-sn-43" class="margin-toggle sidenote-number">43</label><input type="checkbox" id="tufte-sn-43" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">43</span> You are probably more familiar with the framework of using an ANOVA to test for significant heterogeneity and pairwise t-tests to test for equality of means of a set of values. KW is similar but is a non-parametric approach and does not make assumptions about the distribution of values.</span>.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb186-1"><a href="catch-data-analysis.html#cb186-1" aria-hidden="true" tabindex="-1"></a><span class="co"># KW to test for significant heterogeneity</span></span>
+<span id="cb186-2"><a href="catch-data-analysis.html#cb186-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(CPUE <span class="sc">~</span> Site, <span class="at">data =</span> elasmos_set)</span></code></pre></div>
+<pre><code>## 
+##  Kruskal-Wallis rank sum test
+## 
+## data:  CPUE by Site
+## Kruskal-Wallis chi-squared = 12.325, df = 2, p-value = 0.002106</code></pre>
+<p>And we will follow that using a Dunn’s test for pairwise comparisons.</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="catch-data-analysis.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="co"># post-hoc Dunn test</span></span>
+<span id="cb188-2"><a href="catch-data-analysis.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dunnTest</span>(CPUE <span class="sc">~</span> Site, <span class="at">data =</span> elasmos_set, <span class="at">method =</span> <span class="st">"bh"</span>)</span></code></pre></div>
+<pre><code>##                         Comparison          Z      P.unadj       P.adj
+## 1 Aransas_Bay - Corpus_Christi_Bay -3.3553910 0.0007925288 0.002377586
+## 2        Aransas_Bay - Redfish_Bay -0.7980727 0.4248282807 0.424828281
+## 3 Corpus_Christi_Bay - Redfish_Bay  2.5669868 0.0102586520 0.015387978</code></pre>
+<div id="ques:shn-11" class="question">
+<p class="question-begin">
+► Question 8.13
+</p>
+<div class="question-body">
+<p>
+Briefly describe your results and discuss what this result could mean for our overarching question of identifying shark nurseries.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Of course, we are interested how CPUE compares across species and sites.</p>
+<div id="ques:shn-12" class="question">
+<p class="question-begin">
+► Question 8.14
+</p>
+<div class="question-body">
+<p>
+Choose one species and calculate the CPUE per set. For convenience convert CPUE to effort per 1000 hook hours and then calculate the mean CPUE per 1000 hooks per site for that species.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-11" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-11', 'sol-start-11')"></span>
+</p>
+<div id="sol-body-11" class="solution-body" style="display: none;">
+<p>This is what that could look like for a single species.</p>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-132">Table 8.4: </span>Catch per unit effort (1000 hook hours) for each site.</span><!--</caption>--></p>
+<table>
+<thead><tr class="header">
+<th align="right">Aransas_Bay</th>
+<th align="right">Corpus_Christi_Bay</th>
+<th align="right">Redfish_Bay</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right">1.91</td>
+<td align="right">7.88</td>
+<td align="right">1.76</td>
+</tr></tbody>
+</table>
+<p>We actually want to have this information for all species, rather than create individual <code>data.frame</code>s for each species and then combine those using <code>bind_rows()</code>, I will show you a more efficient way of coding this using a <code>for loop</code><label for="tufte-sn-44" class="margin-toggle sidenote-number">44</label><input type="checkbox" id="tufte-sn-44" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">44</span> There are a few other ways of during this but for now let’s just stick to the fact that this is an efficient way to get results.</span>.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb190-1"><a href="catch-data-analysis.html#cb190-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create empty list</span></span>
+<span id="cb190-2"><a href="catch-data-analysis.html#cb190-2" aria-hidden="true" tabindex="-1"></a>species_CPUE <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb190-3"><a href="catch-data-analysis.html#cb190-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-4"><a href="catch-data-analysis.html#cb190-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate hook hours for each species per site</span></span>
+<span id="cb190-5"><a href="catch-data-analysis.html#cb190-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(species <span class="cf">in</span> <span class="fu">unique</span>(elasmos<span class="sc">$</span>Species)){</span>
+<span id="cb190-6"><a href="catch-data-analysis.html#cb190-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb190-7"><a href="catch-data-analysis.html#cb190-7" aria-hidden="true" tabindex="-1"></a>  species_CPUE[[species]] <span class="ot">&lt;-</span> elasmos <span class="sc">%&gt;%</span></span>
+<span id="cb190-8"><a href="catch-data-analysis.html#cb190-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Species <span class="sc">==</span> species) <span class="sc">%&gt;%</span></span>
+<span id="cb190-9"><a href="catch-data-analysis.html#cb190-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(Set_ID) <span class="sc">%&gt;%</span></span>
+<span id="cb190-10"><a href="catch-data-analysis.html#cb190-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">full_join</span>(set_meta) <span class="sc">%&gt;%</span></span>
+<span id="cb190-11"><a href="catch-data-analysis.html#cb190-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">n =</span> <span class="dv">0</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb190-12"><a href="catch-data-analysis.html#cb190-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">CPUE =</span> n<span class="sc">/</span>Hook_Hours,</span>
+<span id="cb190-13"><a href="catch-data-analysis.html#cb190-13" aria-hidden="true" tabindex="-1"></a>           <span class="at">CPUE_1000 =</span> CPUE <span class="sc">*</span> <span class="dv">1000</span>)</span>
+<span id="cb190-14"><a href="catch-data-analysis.html#cb190-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-15"><a href="catch-data-analysis.html#cb190-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb190-16"><a href="catch-data-analysis.html#cb190-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb190-17"><a href="catch-data-analysis.html#cb190-17" aria-hidden="true" tabindex="-1"></a><span class="co"># combine data frames in list into single </span></span>
+<span id="cb190-18"><a href="catch-data-analysis.html#cb190-18" aria-hidden="true" tabindex="-1"></a>CPUE <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(species_CPUE, <span class="at">.id =</span> <span class="st">"Species"</span>)</span></code></pre></div>
+<p>Similarly, we would want to run KW tests to determine if there are significant differences among sites.</p>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb191-1"><a href="catch-data-analysis.html#cb191-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create empty dataframe for results</span></span>
+<span id="cb191-2"><a href="catch-data-analysis.html#cb191-2" aria-hidden="true" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">setNames</span>(<span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">2</span>, <span class="at">nrow =</span> <span class="dv">0</span>)), </span>
+<span id="cb191-3"><a href="catch-data-analysis.html#cb191-3" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">c</span>(<span class="st">"Species"</span>, <span class="st">"pvalue"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb191-4"><a href="catch-data-analysis.html#cb191-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Species =</span> <span class="fu">as.character</span>(Species),</span>
+<span id="cb191-5"><a href="catch-data-analysis.html#cb191-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">pvalue =</span> <span class="fu">as.numeric</span>(pvalue))</span>
+<span id="cb191-6"><a href="catch-data-analysis.html#cb191-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb191-7"><a href="catch-data-analysis.html#cb191-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(species <span class="cf">in</span> <span class="fu">unique</span>(CPUE<span class="sc">$</span>Species)){</span>
+<span id="cb191-8"><a href="catch-data-analysis.html#cb191-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb191-9"><a href="catch-data-analysis.html#cb191-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># filter CPUE per species</span></span>
+<span id="cb191-10"><a href="catch-data-analysis.html#cb191-10" aria-hidden="true" tabindex="-1"></a>  tmp <span class="ot">&lt;-</span> CPUE <span class="sc">%&gt;%</span></span>
+<span id="cb191-11"><a href="catch-data-analysis.html#cb191-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(Species <span class="sc">==</span> species)</span>
+<span id="cb191-12"><a href="catch-data-analysis.html#cb191-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb191-13"><a href="catch-data-analysis.html#cb191-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># KW to test for significant heterogeneity</span></span>
+<span id="cb191-14"><a href="catch-data-analysis.html#cb191-14" aria-hidden="true" tabindex="-1"></a>  KW <span class="ot">&lt;-</span> <span class="fu">kruskal.test</span>(CPUE <span class="sc">~</span> Site, <span class="at">data =</span> tmp)</span>
+<span id="cb191-15"><a href="catch-data-analysis.html#cb191-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb191-16"><a href="catch-data-analysis.html#cb191-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># extract p-value</span></span>
+<span id="cb191-17"><a href="catch-data-analysis.html#cb191-17" aria-hidden="true" tabindex="-1"></a>  df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">"Species"</span> <span class="ot">=</span> species,</span>
+<span id="cb191-18"><a href="catch-data-analysis.html#cb191-18" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"pvalue"</span> <span class="ot">=</span> <span class="fu">as.numeric</span>(KW<span class="sc">$</span>p.value))</span>
+<span id="cb191-19"><a href="catch-data-analysis.html#cb191-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb191-20"><a href="catch-data-analysis.html#cb191-20" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(results, df)</span>
+<span id="cb191-21"><a href="catch-data-analysis.html#cb191-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb191-22"><a href="catch-data-analysis.html#cb191-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Let’s calculate mean CPUE per species and site, turn that into a wide table for easier comparison and add the p-values.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb192-1"><a href="catch-data-analysis.html#cb192-1" aria-hidden="true" tabindex="-1"></a>CPUE_sign <span class="ot">&lt;-</span> CPUE <span class="sc">%&gt;%</span></span>
+<span id="cb192-2"><a href="catch-data-analysis.html#cb192-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Species, Site) <span class="sc">%&gt;%</span></span>
+<span id="cb192-3"><a href="catch-data-analysis.html#cb192-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_CPUE =</span> <span class="fu">mean</span>(CPUE_1000)) <span class="sc">%&gt;%</span></span>
+<span id="cb192-4"><a href="catch-data-analysis.html#cb192-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> Site, <span class="at">values_from =</span> mean_CPUE) <span class="sc">%&gt;%</span></span>
+<span id="cb192-5"><a href="catch-data-analysis.html#cb192-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(results) <span class="sc">%&gt;%</span></span>
+<span id="cb192-6"><a href="catch-data-analysis.html#cb192-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(Species)</span></code></pre></div>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-136">Table 8.5: </span>Catch per unit effort (per 1000 hook hours) for each species by site.</span><!--</caption>--></p>
+<table>
+<thead><tr class="header">
+<th align="left">Species</th>
+<th align="right">Aransas_Bay</th>
+<th align="right">Corpus_Christi_Bay</th>
+<th align="right">Redfish_Bay</th>
+<th align="right">pvalue</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="right">1.91</td>
+<td align="right">7.88</td>
+<td align="right">1.76</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_leucas</td>
+<td align="right">0.49</td>
+<td align="right">0.52</td>
+<td align="right">0.14</td>
+<td align="right">0.54</td>
+</tr>
+<tr class="odd">
+<td align="left">Carcharhinus_limbatus</td>
+<td align="right">0.14</td>
+<td align="right">0.18</td>
+<td align="right">0.00</td>
+<td align="right">0.60</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_porosus</td>
+<td align="right">0.00</td>
+<td align="right">0.15</td>
+<td align="right">0.00</td>
+<td align="right">0.37</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypanus_americanus</td>
+<td align="right">0.49</td>
+<td align="right">0.14</td>
+<td align="right">1.08</td>
+<td align="right">0.25</td>
+</tr>
+<tr class="even">
+<td align="left">Hypanus_sabina</td>
+<td align="right">1.50</td>
+<td align="right">0.29</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+</tr>
+<tr class="odd">
+<td align="left">Rhinoptera_bonasus</td>
+<td align="right">0.00</td>
+<td align="right">0.00</td>
+<td align="right">0.16</td>
+<td align="right">0.37</td>
+</tr>
+<tr class="even">
+<td align="left">Rhizoprionodon_terraenovae</td>
+<td align="right">0.14</td>
+<td align="right">0.90</td>
+<td align="right">1.29</td>
+<td align="right">0.22</td>
+</tr>
+<tr class="odd">
+<td align="left">Sphyrna_lewini</td>
+<td align="right">0.00</td>
+<td align="right">0.50</td>
+<td align="right">0.00</td>
+<td align="right">0.02</td>
+</tr>
+<tr class="even">
+<td align="left">Sphyrna_tiburo</td>
+<td align="right">0.22</td>
+<td align="right">2.96</td>
+<td align="right">2.49</td>
+<td align="right">0.00</td>
+</tr>
+</tbody>
+</table>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:shn-13" class="question">
+<p class="question-begin">
+► Question 8.15
+</p>
+<div class="question-body">
+<p>
+Briefly describe the results comparing CPUE per species and site and relate that to our overarching question of identifying shark nurseries; you may need to run additional pairwise tests (Dunn’s test) to determine significant differences.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="comparison-of-cpue-for-different-life-history-stages" class="section level2" number="8.3">
+<h2>
+<span class="header-section-number">8.3</span> Comparison of CPUE for different life history stages<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('comparison-of-cpue-for-different-life-history-stages')" onmouseout="reset_tooltip('comparison-of-cpue-for-different-life-history-stages-tooltip')"><span class="tooltiptext" id="comparison-of-cpue-for-different-life-history-stages-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Of course, we are not only interested in which species were caught at each site, we also want to know what life history stages those individuals were at when they were caught.</p>
+<p>We will use a similar strategy as above to create a data frame with CPUE per site, species, and life history stage and produce a table comparing the means.</p>
+<table>
+<thead><tr class="header">
+<th align="left">Species</th>
+<th align="left">Stage</th>
+<th align="right">Aransas_Bay</th>
+<th align="right">Corpus_Christi_Bay</th>
+<th align="right">Redfish_Bay</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="left">JUV</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.4586420</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_brevipinna</td>
+<td align="left">YOY</td>
+<td align="right">1.7476655</td>
+<td align="right">7.7282636</td>
+<td align="right">1.1510114</td>
+</tr>
+<tr class="odd">
+<td align="left">Carcharhinus_leucas</td>
+<td align="left">JUV</td>
+<td align="right">0.4939594</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1356852</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_leucas</td>
+<td align="left">YOY</td>
+<td align="right">0.0000000</td>
+<td align="right">0.5208624</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">Carcharhinus_limbatus</td>
+<td align="left">JUV</td>
+<td align="right">0.1443001</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">Carcharhinus_limbatus</td>
+<td align="left">YOY</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1793918</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">Carcharhinus_porosus</td>
+<td align="left">JUV</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1480200</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">Hypanus_americanus</td>
+<td align="left">JUV</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.4745280</td>
+</tr>
+<tr class="odd">
+<td align="left">Hypanus_americanus</td>
+<td align="left">MAT</td>
+<td align="right">0.4872420</td>
+<td align="right">0.1444389</td>
+<td align="right">0.6094608</td>
+</tr>
+<tr class="even">
+<td align="left">Hypanus_sabina</td>
+<td align="left">MAT</td>
+<td align="right">1.4967373</td>
+<td align="right">0.2940254</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">Rhinoptera_bonasus</td>
+<td align="left">MAT</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1613554</td>
+</tr>
+<tr class="even">
+<td align="left">Rhizoprionodon_terraenovae</td>
+<td align="left">YOY</td>
+<td align="right">0.1443001</td>
+<td align="right">0.8969751</td>
+<td align="right">1.2883663</td>
+</tr>
+<tr class="odd">
+<td align="left">Sphyrna_lewini</td>
+<td align="left">JUV</td>
+<td align="right">0.0000000</td>
+<td align="right">0.3768403</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">Sphyrna_lewini</td>
+<td align="left">YOY</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1210164</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">Sphyrna_tiburo</td>
+<td align="left">JUV</td>
+<td align="right">0.2217289</td>
+<td align="right">2.3097804</td>
+<td align="right">1.4763250</td>
+</tr>
+<tr class="even">
+<td align="left">Sphyrna_tiburo</td>
+<td align="left">MAT</td>
+<td align="right">0.0000000</td>
+<td align="right">0.4454553</td>
+<td align="right">0.8716483</td>
+</tr>
+<tr class="odd">
+<td align="left">Sphyrna_tiburo</td>
+<td align="left">YOY</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.1468072</td>
+</tr>
+</tbody>
+</table>
+<div id="ques:shn-14" class="question">
+<p class="question-begin">
+► Question 8.16
+</p>
+<div class="question-body">
+<p>
+Briefly describe the results comparing CPUE per life history stage and site and relate that to our overarching question of identifying shark nurseries; these results are all statistically significant.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+
+</div>
+</div>
+<h3>References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('NA')" onmouseout="reset_tooltip('NA-tooltip')"><span class="tooltiptext" id="NA-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Carlson2005" class="csl-entry">
+Carlson, John K., and Ivy E. Baremore. 2005. <span>“<span class="nocase">Growth dynamics of the spinner shark (Carcharhinus brevipinna) off the United States southeast and Gulf of Mexico coasts: A comparison of methods</span>.”</span> <em>Fishery Bulletin</em> 103 (2): 280–91. <a href="http://aquaticcommons.org/9614/">http://aquaticcommons.org/9614/</a>.
+</div>
+</div>
+</body></html>
+
+<p style="text-align: center;">
+<a href="welcome-to-the-tidyverse.html"><button class="btn btn-default">Previous</button></a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-11-04
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

@@ -202,7 +202,7 @@ plot-maps-of-topography-and-plants
 explore-relationships-between-topographic-variable-and-vegetation-patterns
 comparison-of-relationship-of-vegetation-and-topography-across-the-us
 acknowledgments-3
-simulated-data-for-hypothesis-testing
+simulated-data-for-hypothesis-testing-i
 macrosystems-ecology
 the-power-of-simulated-data
 get-to-know-the-model
@@ -212,8 +212,6 @@ run-climate-scenario-1
 run-climate-scenario-2
 compare-your-results
 acknowledgments-4
-fig:unnamed-chunk-10
-fig:unnamed-chunk-11
-fig:unnamed-chunk-14
-fig:unnamed-chunk-15
-simulated-data-for-hypothesis-testing-i
+simulated-data-for-hypothesis-testing-ii
+teleconnections
+acknowledgments-5

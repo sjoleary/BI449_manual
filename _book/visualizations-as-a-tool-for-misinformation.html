@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="15 Visualizations as a tool for misinformation | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-11-04" />
+
+
+<meta name="description" content="15 Visualizations as a tool for misinformation | Data Science for the Natural Environment (FA21)">
+
+<title>15 Visualizations as a tool for misinformation | Data Science for the Natural Environment (FA21)</title>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
+<a id="active-page" href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a><ul class="toc-sections">
+<li class="toc"><a href="#terms-and-definitions"> Terms and Definitions</a></li>
+<li class="toc"><a href="#a-strategic-approach-to-identifying-misinformation"> A strategic approach to identifying misinformation</a></li>
+<li class="toc"><a href="#general-stratgies-for-unmasking-manipulative-visualizations"> General stratgies for unmasking manipulative visualizations</a></li>
+<li class="toc"><a href="#acknowledgements"> Acknowledgements</a></li>
+</ul>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
+<a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
+<a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
+<a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
+<a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
+<a href="references.html">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div id="visualizations-as-a-tool-for-misinformation" class="section level1" number="15">
+<h1>
+<span class="header-section-number">15</span> Visualizations as a tool for misinformation</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this tutorial you should be able to</p>
+<ul>
+<li>describe commonly used techniques to use visualizations as a tool for misinformation</li>
+<li>outline a series of simple techniques to identify misinformation</li>
+</ul>
+<p>(in short … be pretty good at calling bullsh*t)</p>
+<p>Open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Visualization/Climate Change project directory.</p>
+<p>That’s right - training wheels are off … you will need to add all of your own headers, plain text etc. We will not be coding for this set of activities so there should be no code chunks in your document! This is a chance for your to practice your <code>Rmarkdown</code> formatting skills.</p>
+<p>Set up the <code>YAML</code> header so that you are the author and when knitted the date will reflect the date of the creation of the document. Try out a new theme and include a table of contents. Include at least one set of bullet points and one numbered list. Use bold and italics where appropriate.</p>
+<div id="terms-and-definitions" class="section level2" number="15.1">
+<h2>
+<span class="header-section-number">15.1</span> Terms and Definitions<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('terms-and-definitions')" onmouseout="reset_tooltip('terms-and-definitions-tooltip')"><span class="tooltiptext" id="terms-and-definitions-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p><label for="tufte-mn-11" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-11" class="margin-toggle"><span class="marginnote">probably not <a href="https://www.york.ac.uk/depts/maths/histstat/lies.htm">Mark Twain</a></span></p>
+<blockquote>
+<p><em>There are three kinds of lies, lies, damned lies, and statistics.</em></p>
+</blockquote>
+<p><label for="tufte-mn-12" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-12" class="margin-toggle"><span class="marginnote">Harry G. Frankfurt</span></p>
+<blockquote>
+<p><em>The bullshitter is neither on the side of the true or the side of the false. His eye is not on the facts at all. He does not reject the authority of the truth, as the liar does, and oppose himself to it. He pays no attention to it at all. By virtue of this, bullshit is a greater enemy of the truth than lies are.</em></p>
+</blockquote>
+<p>In his book On Bullshit, Harry G. Frankfurt distinguishes between a <strong>liar</strong> who knows the truth and deliberately tries to convince somebody of something that is untrue and a <strong>bullshitter</strong> who either does not know the truth or does not care - their focus is solely on persuading the listener. The focus of this distinction is the blatant disregard for truth and a carelessness in how data and facts are used.</p>
+<div id="ques:misinf-1" class="question">
+<p class="question-begin">
+► Question 15.1
+</p>
+<div class="question-body">
+<p>Give a brief definition of misinformation and disinformation. Then compare these definitions with the framework of a liar vs a bullshitter and argue whether or not you agrees with Harry Frankfurt that “<em>bullshit is the greater enemy of the truth than lies are</em>.”</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:misinf-2" class="question">
+<p class="question-begin">
+► Question 15.2
+</p>
+<div class="question-body">
+<p>In 2015, the National Review posted what they claimed to be “the only climate change chart you need to see.”</p>
+<p><img src="figures/NationalReview.jpg" alt="Twitter post from the National Review depicting the “only climate change chart you need to see”">
+Briefly describe the figure and state what you think the message is that the National Review was trying to convey by posting this chart. Argue whether your would classify this as misinformation or disinformation<label for="tufte-sn-80" class="margin-toggle sidenote-number">80</label><input type="checkbox" id="tufte-sn-80" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">80</span> Remember, when you ‘argue’ you should always state how/why it fulfills or illustrates a definition, statement, or set of criteria.</span>.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:misinf-3" class="question">
+<p class="question-begin">
+► Question 15.3
+</p>
+<div class="question-body">
+<p>Climate skepticism comes in different flavors. Early misinformation campaigns were directed at outright denying that global warming is occurring and/or that increased greenhouse gas emissions are the cause, i.e. that we are observing natural climate variability and there is therefore no need for policy to regulate emissions or to change individual behavior.</p>
+<p>Arguably, a new flavor of climate skeptics has emerged in the last years that spend less time arguing about whether or not anthropogenic climate change is happening and focus on arguing that the reaction is overblown. Bjorn Lomborg and Michael Shellenberger are very outspoken representatives for this position and focus a lot of their writing on why “climate alarmists” are not only wrong but potentially harmful.</p>
+<p>Sharpen your bullshit detector by looking up either Lomborg or Shellenberger and sketch out their position, main arguments on why climate change is being overblown, and suggestions for solutions/strategies (or why proposed solutions like cutting emissions are wrong and we should be focusing on other strategies). As part of your descrption, figure out what their background is, i.e. what credentials do they have to position themselves as “climate experts.”</p>
+<p>Briefly discuss this brand of climate skeptics. Point for discussion could include e.g. how their brand differs from what we typically think of as climate deniers, whether you think they have some valid points/arguments, what you think makes them compelling/effective, why you think it might be easier/more difficult to refute their claims (if you disagree), would you place them in categories of misinformation, disinformation, or bullshitter, or do you think it is a valid position to hold etc.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p><label for="tufte-mn-13" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-13" class="margin-toggle"><span class="marginnote">Christopher Ashley Ford</span></p>
+<blockquote>
+<p><em>As I indicated before, having something that sounds scientific to say when making assertions to laymen is not the same as being correct.</em></p>
+</blockquote>
+<div id="ques:misinf-4" class="question">
+<p class="question-begin">
+► Question 15.4
+</p>
+<div class="question-body">
+<p>“Science-y charts” are a commonly employed tool by climate skeptics. Briefly discuss why you think visualizations are especially compelling.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:misinf-5" class="question">
+<p class="question-begin">
+► Question 15.5
+</p>
+<div class="question-body">
+<p>We will do a deep dive into techniques used by climate deniers &amp; skeptics, especially the use of visualizations in the next chapter. In preparation of our climate-specific discussion of misinformation and disinformation (which we’ve already gotten a taste for) create a list of at least five typical statements climate deniers/skeptics typically make and rank them by “level of denial.”</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:misinf-6" class="question">
+<p class="question-begin">
+► Question 15.6
+</p>
+<div class="question-body">
+<p>Reflect on posts you may have seen on social media (or other outlets) where climate deniers/skeptics have made use of visualizations. Briefly, contrast major categories they fall into (scientific(looking) figures, infographics, memes, photographs, bumper stickers/embroidered pillow-style slogans, …) in terms of how/why they are effective, which are more common than others, whether certain groups tend to use different types of visualizations, whether they more commonly are spreading misinformtion or disinformation, … and other things that pop out to you.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="a-strategic-approach-to-identifying-misinformation" class="section level2" number="15.2">
+<h2>
+<span class="header-section-number">15.2</span> A strategic approach to identifying misinformation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('a-strategic-approach-to-identifying-misinformation')" onmouseout="reset_tooltip('a-strategic-approach-to-identifying-misinformation-tooltip')"><span class="tooltiptext" id="a-strategic-approach-to-identifying-misinformation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p><label for="tufte-mn-14" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-14" class="margin-toggle"><span class="marginnote">still not Mark Twain - maybe Churchill?</span></p>
+<blockquote>
+<p><em>A lie can travel halfway around the world while the truth is still putting on its shoes.</em></p>
+</blockquote>
+<p><label for="tufte-mn-15" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-15" class="margin-toggle"><span class="marginnote">Thomas Francklin, Sermons on Various Subjects, 1787</span></p>
+<blockquote>
+<p><em>Falsehood will fly, as it were, on the wings of the wind, and carry its tales to every corner of the earth; whilst truth lags behind; her steps, though sure, are slow and solemn, and she has neither vigor nor activity enough to pursue and overtake her enemy.</em></p>
+</blockquote>
+<p>One of the goals of this course is to equip you with a framework to be able to categorize and assess new information you encounter, or as Neil deGrasse Tyson puts it <em>“To be scientifically literate is to empower yourself to know when someone else is full of bullshit”</em>. The key term here is <strong>to empower yourself</strong>, i.e. develop a set of skills so that you can pro-actively and habitually assess information.</p>
+<div id="ques:misinf-7" class="question">
+<p class="question-begin">
+► Question 15.7
+</p>
+<div class="question-body">
+<p>Think back to a time that you spotted some bullshit, briefly describe the misinformation you came across and outline the strategies you used to distinguish fact from fiction (mis from information?).</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Here is a non-exhaustive list of strategies that you should tuck away your tool belt for frequent use.</p>
+<p><strong>Use Common Sense</strong></p>
+<p><label for="tufte-mn-16" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-16" class="margin-toggle"><span class="marginnote">definitely my Dad. so. many. times.</span></p>
+<blockquote>
+<p><em>Remember to use your own brain.</em></p>
+</blockquote>
+<p>The used cars salesman principle is simple but powerful, when evaluating a source of information sk yourself four simple questions:</p>
+<ol style="list-style-type: decimal">
+<li>Who is telling me this?</li>
+<li>How do they know it?</li>
+<li>What are they trying to sell me?</li>
+<li>What do they have to gain?</li>
+</ol>
+<p><br></p>
+<p><label for="tufte-mn-17" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-17" class="margin-toggle"><span class="marginnote">Unless it’s 2020…</span></p>
+<p><strong>If it’s to good or to bad to be true - it probably is</strong></p>
+<p>This principle is a close relative of <em>Occam’s Razor</em>, also known as the <em>Law of Parsimony</em>.</p>
+<div id="ques:misinf-8" class="question">
+<p class="question-begin">
+► Question 15.8
+</p>
+<div class="question-body">
+<p>
+Give a brief definition of Occam’s Razor/Law of parsimony. Assess how the Law of Parsimony and the principle that claims that sound to good/bad to be true probably are can be used to identify misinformation. You may use an example if you’d like.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p><br></p>
+<p><strong>Entertain multiple hypothesis</strong></p>
+<p><label for="tufte-mn-18" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-18" class="margin-toggle"><span class="marginnote">Sherlock Holmes</span></p>
+<blockquote>
+<p><em>It is a capital mistake to theorize before one has data. Insensibly one begins to twist facts to suit theories,Instead of theories to suit facts..</em></p>
+</blockquote>
+<p>This principle encompasses both <strong>confirmation bias</strong> and the dreaded <strong>echo chamber</strong> - another way of stating it is to not fall in love with your hypothesis and continue to entertain independent evidence.</p>
+<div id="ques:misinf-9" class="question">
+<p class="question-begin">
+► Question 15.9
+</p>
+<div class="question-body">
+<p>
+Briefly define the concepts of confirmation bias and the echo chamber. List some techniques you can use to counteract them.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p><br></p>
+<p><strong>Garbage in/garbage out</strong></p>
+<p>With ever larger and more available data sets and increasingly complex analysis it is important to not only consider the output and interpretation of an analysis and the methods used (which are becoming increasingly difficult to understand as a layperson) is only ever as good as the data set used in the first place. Consider the source of the data, sample size, how it was generated, and whether it is a legitimate comparison<label for="tufte-sn-81" class="margin-toggle sidenote-number">81</label><input type="checkbox" id="tufte-sn-81" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">81</span> Assessing large-scale data sets and how we analyze them is as you may have noticed a central theme of this course. Consider our discussion of responsible conduct in science and the practices driving the reproducibility crisis.</span>.</p>
+<p><br></p>
+<p><strong>Causation &amp; Correlation</strong></p>
+<p>There are two common logical fallacies that can be used to take a relationship of two variables to infer causation - <em>cum hoc ergo propter hoc</em> (“with this, therefore because of this,” i.e. correlation implies causation) and <em>post hoc ergo proper hoc</em> (“after this, therefore because of this,” i.e. because something occurred first it must be causing the later).</p>
+<p><label for="tufte-mn-19" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-19" class="margin-toggle"><span class="marginnote">How many more fancy latin phrases do I have up my sleeve? We shall probably never truly know… Is this an <em>exempli gratia</em> of using fancy language to obfuscate information? Possibly? Is using pretentious language and jargon also a strategy for spreading misinformation? Also difficult to tell.</span></p>
+<p>Taking this to <em>ad absurdum</em> we have fun examples involving <a href="https://www.nejm.org/doi/full/10.1056/nejmon1211064">chocolate and Nobel laureates</a> along with <a href="https://web.stanford.edu/class/hrp259/2007/regression/storke.pdf">storks and babies</a>. Both illustrate the fact that it is important to be careful when inferring causation, consider whether proxies are meaningful, whether there could be a common cause rather than correlation, and if there is a way to design manipulative experiments to determine causation. With increasingly large data sets it is easy to find a “signal” in a noisy data set and spin it into a story<label for="tufte-sn-82" class="margin-toggle sidenote-number">82</label><input type="checkbox" id="tufte-sn-82" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">82</span> We have discussed this in connection of determining whether your analysis is descriptive, inferential, or causal/mechanistic.</span>.</p>
+<p>Want to engage in some ambiguous visualization? Go to <a href="https://www.tylervigen.com/spurious-correlations">Spurious Correlations</a>, create your own misleading but highly correlated relationship, download it, and post it in the <code>#graphicdetail</code> channel on slack … as this week’s chart of the week<label for="tufte-sn-83" class="margin-toggle sidenote-number">83</label><input type="checkbox" id="tufte-sn-83" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">83</span> you get one Spurious Correlation for the semester … use it wisely!</span></p>
+<p><br></p>
+<p><strong>When in doubt, go to the source</strong></p>
+<p>In one of their exhibits, the Pacific Science Center emphasizes four principles for a lay audience to consider when engaging with “science”:</p>
+<ul>
+<li>Science is meant to move slowly</li>
+<li>Change is a natural part of science</li>
+<li>Experts have different specialties</li>
+<li>Not all sources are trustworthy</li>
+</ul>
+<p>This is important to keep in mind when watching science unfold in real time and out in the open via social media, pre-prints (before peer-review) and in media outlets. It is important to <a href="http://slow-science.org/">slow down</a> and give science an chance to breath and mature through discussion and testing.</p>
+<p><label for="tufte-mn-20" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-20" class="margin-toggle"><span class="marginnote">See list of Media Outlet’s ranked by quality of their <a href="https://www.acsh.org/news/2017/03/05/infographic-best-and-worst-science-news-sites-10948">science reporting</a>; there are several similar assessments you can use as a point of orientiation as well.</span></p>
+<p>“New study finds …” makes for a great headline, though unfortunately occasionally both deliberately and unintentionally by the time the “new study” is translated into a press release and that press release is written up in the media misinformation or disinformation may have sneaked in. This may include</p>
+<ul>
+<li>cherry-picking</li>
+<li>over-generalizing (see <code># In Mice</code> <a href="https://twitter.com/hashtag/inmice?lang=en">examples</a> and an <a href="https://www.statnews.com/2019/04/15/in-mice-twitter-account-hype-science-reporting/">article</a> describing the intent behind the hashtag).</li>
+<li>false interpretation</li>
+</ul>
+<p><strong>Beware of misleading visualizations</strong></p>
+<p>We’ll go into detail on this one.</p>
+</div>
+<div id="general-stratgies-for-unmasking-manipulative-visualizations" class="section level2" number="15.3">
+<h2>
+<span class="header-section-number">15.3</span> General stratgies for unmasking manipulative visualizations<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('general-stratgies-for-unmasking-manipulative-visualizations')" onmouseout="reset_tooltip('general-stratgies-for-unmasking-manipulative-visualizations-tooltip')"><span class="tooltiptext" id="general-stratgies-for-unmasking-manipulative-visualizations-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Manipulative visualization either present false data or misrepresent data to tell a specific story, i.e. they are either lying with false data or lying with truthful data.</p>
+<p>A good way to assess any visualization is to break it down into content, structure, and presentation<label for="tufte-sn-84" class="margin-toggle sidenote-number">84</label><input type="checkbox" id="tufte-sn-84" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">84</span> There is some overlap between these categories.</span>.</p>
+<p><strong>Content</strong></p>
+<p>The focus here is on the content itself, i.e. the data set, including how the data was generated, and what parts of the data is being presented.</p>
+<div id="ques:misinf-10" class="question">
+<p class="question-begin">
+► Question 15.10
+</p>
+<div class="question-body">
+<p>Create a list of questions you can ask to identify manipulative visualizations based on content.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p><strong>Structure</strong></p>
+<p>Structure refers to <em>how</em> data points are encoded, i.e. what data points represent, what bin sizes are used, how axes are presented etc.<label for="tufte-sn-85" class="margin-toggle sidenote-number">85</label><input type="checkbox" id="tufte-sn-85" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">85</span> Think about all the components of the grammar of graphics we have discussed learning how to use <code>ggplot</code>.</span></p>
+<div id="ques:misinf-11" class="question">
+<p class="question-begin">
+► Question 15.11
+</p>
+<div class="question-body">
+<p>Create a list of questions you can ask to identify manipulative visualizations based on structure.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p><strong>Presentation</strong></p>
+<p>There is some overlap between Structure and Presentation, but the focus here is more on the visualization as a whole, i.e. this includes not only “scientific-style” figures but other forms of visualization as well.</p>
+<p><label for="tufte-mn-21" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-21" class="margin-toggle"><span class="marginnote">Augustus Welby Northmore Pugin</span></p>
+<blockquote>
+<p><em>It is alright to decorate construction but never construct decoration.</em></p>
+</blockquote>
+<p>The presentation for a graph can easily be used for intentional manipulation and misrepresentation of the data.</p>
+<p>As we have seen from examples of how visualizations are used in climate change misinformation campaigns, the choice of a scientific(ish) figure is frequently intentional - it lends gravitas to claims. This does not always mean that the visualization meets the standards for a scientific analysis.</p>
+<p>Similarly, we have seen that photographs are powerful and can easily be used to be manipulative. Keep in mind, that just because you agree with the statement being supported by a picture that doesn’t mean that picture is being used intentionally to sway you to a point.</p>
+<p>Infographics have experience a rapid growth in popularity in the last ten years<label for="tufte-sn-86" class="margin-toggle sidenote-number">86</label><input type="checkbox" id="tufte-sn-86" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">86</span> Here’s an <a href="https://visual.ly/community/Infographics/social-media/rise-infographic">infographic</a> the rise of infographics for you to refer to.</span>. They are a peculiar mix of data visualization, entertainment, art, and communication. They also vary in the quality of the underlying data set, frequently lack context but feature catchy fun facts and large print key “results.” When done well, they effectively communicate information - unfortunately they are also frequently used for misinformation.</p>
+<div id="ques:misinf-12" class="question">
+<p class="question-begin">
+► Question 15.12
+</p>
+<div class="question-body">
+<p>Here is an example of an infographic shared by the Heartland Institute<label for="tufte-sn-87" class="margin-toggle sidenote-number">87</label><input type="checkbox" id="tufte-sn-87" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">87</span> The Heartland Institute is a conservative/libertarian public policy think tank that rejects scientific consensus on climate change and publishes a range of materials supporting climate change denial.</span> with the description</p>
+<blockquote>
+<p>This image contains 10,000 dots, each representing atmospheric gases.
+Nitrogen: 7,800 dots
+Oxygen: 2,100 dots
+Argon: 93 dots
+Natural Carbon Dioxide: 3 dots
+Human Carbon Dioxide Emissions: 1 dot
+Leftists claim 1 dot is going to destroy the Earth. Don’t let them take away your freedoms with cries of doom and gloom!</p>
+</blockquote>
+<div class="figure">
+<img src="figures/atm_comp.jpg" alt=""><p class="caption">Infographic posted by the Heartland Institute.</p>
+</div>
+<p>Describe what the central message is you think they are trying to convey with this infographic and argue whether this falls in the category of misinformation or disinformation. Discuss whether you think this figure is compelling in it’s design and what could make it effective in persuading viewers of their point of view.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p><em>Find an infographic and discuss the quality of the visualization and underlying data as one of your weekly Graphic Detail posts.</em></p>
+<p>Two types of potentially misleading figures are Ducks and Glass slippers. Frequently, they fall more into the category of Frankfurtian BS as typically the focus is on how the data is presented using specific gimmicks at the cost of carelessness towards accurately representing the data at</p>
+<p><label for="tufte-mn-22" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-22" class="margin-toggle"><span class="marginnote">Ducks are named after <a href="https://en.wikipedia.org/wiki/Big_Duck">Big_Duck</a> a building shaped like a duck built to sell duck and duck eggs.</span></p>
+<p><strong>Ducks</strong> are figures where the topic of the figure is reflected in the design itself, e.g. the global carbon footprint being shaped like a footprint, whereas a <strong>Glass slipper</strong> (mis)uses a very specific format meant to visualize a very specific thing (e.g. a periodic table) in an incorrect context that detracts more from the content than adds to it (and sometimes is quite confusing!)<label for="tufte-sn-88" class="margin-toggle sidenote-number">88</label><input type="checkbox" id="tufte-sn-88" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">88</span> If you are familiar with the original version of Cinderella, the Prince and his footman take the glass slipper to all the houses in the kingdom to find his princess. The evil stepsisters chop off their toes and heel in desperation to make it fit. Why this is not in the Disney version remains a mystery. Nevertheless, Glass slipper describes desperately trying to shoehorn data into a visualization type that doesn’t quite fit.</span>.</p>
+<div id="ques:misinf-13" class="question">
+<p class="question-begin">
+► Question 15.13
+</p>
+<div class="question-body">
+<p>For each of the following images, briefly describe what the visualization depicts and argue whether you think it is a Duck or a glass slipper, briefly argue whether you think it is an effective visualization or if the presentation obscures the information being conveyed or could easily mislead the viewer.</p>
+<p>From the cover of Time Magazine.</p>
+<p><img src="figures/glass-slipper_time-cover.jpg" alt="Cover of Time Magazine from July 2020.">
+From The Economist</p>
+<p><img src="figures/duck_fish.png" alt="Economist figure that may have gotten out of hand.">
+Oldie, but goldie - sponsored by the FAU Center for Alcohol &amp; Ohter Drug Prevention</p>
+<div class="figure">
+<img src="figures/duck_beer.jpg" alt=""><p class="caption">Your grades &amp; Beer.</p>
+</div>
+<p>Nexthink’s Periodic Table of IT Ops Tools<label for="tufte-sn-89" class="margin-toggle sidenote-number">89</label><input type="checkbox" id="tufte-sn-89" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">89</span> For this one “no clue what they are trying to convey” is an option as an answer, but if you are able to figure it out, please do share. Definitely, answer the other parts of the question.</span></p>
+<div class="figure">
+<img src="figures/glass-slipper_periodic-table.jpg" alt=""><p class="caption">Nexthink Twitter post.</p>
+</div>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p><em>Find a visualization that is a “Duck” or a “Glass slipper” and discuss the quality of the visualization and underlying data as one of your weekly Graphic Detail posts.</em></p>
+<div id="ques:misinf-14" class="question">
+<p class="question-begin">
+► Question 15.14
+</p>
+<div class="question-body">
+<p>Write a list of what you think are good practice for visualizing your data sets. Include at least three Do’s and three Don’ts. Be ready to share in class!</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p></p>
+<p></p>
+<p></p>
+</div>
+<div id="acknowledgements" class="section level2" number="15.4">
+<h2>
+<span class="header-section-number">15.4</span> Acknowledgements<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('acknowledgements')" onmouseout="reset_tooltip('acknowledgements-tooltip')"><span class="tooltiptext" id="acknowledgements-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>A large component of the general content of this set of activities draws directly ond and is inspired by Carl Bergstrom and Jevin West’s course and book on <a href="https://www.callingbullshit.org/index.html">Calling Bullshit: The Art of Skepticism in a Data-Driven World</a>. Their course is online, including videos, it’s entertaining and informative. Put the book on your Christmas wish list.</p>
+
+</div>
+</div></body></html>
+
+<p style="text-align: center;">
+<a href="visualization.html"><button class="btn btn-default">Previous</button></a>
+<a href="exploratory-analysis.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-11-04
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

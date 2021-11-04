@@ -5,7 +5,7 @@
 <meta charset="utf-8" />
 <meta name="generator" content="pandoc" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="References | Data Science for the Natural Environment (FA21)" />
+<meta property="og:title" content="22 Simulated Data for hypothesis testing II | Data Science for the Natural Environment (FA21)" />
 <meta property="og:type" content="book" />
 
 
@@ -17,9 +17,9 @@
 <meta name="date" content="2021-11-04" />
 
 
-<meta name="description" content="References | Data Science for the Natural Environment (FA21)">
+<meta name="description" content="22 Simulated Data for hypothesis testing II | Data Science for the Natural Environment (FA21)">
 
-<title>References | Data Science for the Natural Environment (FA21)</title>
+<title>22 Simulated Data for hypothesis testing II | Data Science for the Natural Environment (FA21)</title>
 
 <script src="libs/header-attrs/header-attrs.js"></script>
 <link href="libs/tufte-css/tufte.css" rel="stylesheet" />
@@ -199,8 +199,11 @@ function reset_tooltip(id) {
 <a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
 <a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
 <a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
-<a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
-<a id="active-page" href="references.html">References</a>
+<a id="active-page" href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a><ul class="toc-sections">
+<li class="toc"><a href="#teleconnections"> Teleconnections</a></li>
+<li class="toc"><a href="#acknowledgments-5"> Acknowledgments</a></li>
+</ul>
+<a href="references.html">References</a>
 </div>
 </li>
 </ul>
@@ -210,30 +213,58 @@ function reset_tooltip(id) {
 <div class="row">
 <div class="col-sm-12">
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><body><div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<html><body><div id="simulated-data-for-hypothesis-testing-ii" class="section level1" number="22">
+<h1>
+<span class="header-section-number">22</span> Simulated Data for hypothesis testing II</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this tutorial you should be able to</p>
+<ul>
+<li>describe the concepts of macrosystems and teleconnections and how different ecological processes can interact at local, regional, and global scales.</li>
+<li>set up and run lake models to simulate lake temperatures and ice cover in multiple lakes.</li>
+<li>formulate hypotheses about the effects of teleconnected climate scenarios on different lake modules and test them using simulations.</li>
+<li>describe how local characteristics modify global-scale climate forcing effects on lake temperatures and ice cover</li>
+</ul>
+<p>Create new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Lake Modeling project directory. Use the setup chunk to set your global settings for the document using the options you’ve learned about in the last few projects, including turning off messages, warnings, and errors being printed out when you knit your file.</p>
+<p>Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. This includes checking whether your figures look as you expect them to, or if you need to adjust the size e.g. using <code>fig.width</code> and <code>fig.height</code>.</p>
+<p>Let’s load our packages so we can get started.</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb429-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb429-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb429-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb429-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb429-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GLMr)</span>
+<span id="cb429-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmtools)</span>
+<span id="cb429-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb429-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-9" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb429-10"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
+<div id="teleconnections" class="section level2" number="22.1">
+<h2>
+<span class="header-section-number">22.1</span> Teleconnections<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('teleconnections')" onmouseout="reset_tooltip('teleconnections-tooltip')"><span class="tooltiptext" id="teleconnections-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>We have already seen how local and regional drivers can impact the thermal structure of lakes. Local impacts could include something like land cover change which alters the stream inflow/outflow of a lake impacting temperature. At a regional scale climate change can alter weather patterns, including both extreme events which disrupt regular seasonal patterns or also gradual change which raises lake temperatures overall.</p>
+<p>Next, we are going to explore how ecosystems can be influenced on a global scale by teleconnections, i.e. meteorological, societal, and/or ecological phenomenon that link remote regions via cause and effect relationships. Simulations are especially powerful in this context, because it allows researchers to manipulate drivers independently from each other to disentangle how they impact ecosystems. By running different teleconnection scenarios, scientists are then able to better predict how ecosystems will respond to remote drivers.</p>
+<p>In our module, we will specifically look at lake thermal structure and ice cover and determine how it is impacted by climate teleconnections to decadal events like the El Niño/Southern Oscillation (ENSO). This is an example of a global driver. ENSO period with warmer ocean surface temperatures in the Pacific Ocean affect regular trade wind patterns. This altered atmospheric circulating impacts air temperature and precipitation patterns globally. How ENSO ends up impacting a particular lake will be further mediated by local and regional dynamics.</p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+</div>
+<div id="acknowledgments-5" class="section level2" number="22.2">
+<h2>
+<span class="header-section-number">22.2</span> Acknowledgments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('acknowledgments-5')" onmouseout="reset_tooltip('acknowledgments-5-tooltip')"><span class="tooltiptext" id="acknowledgments-5-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>These activities are based on the EDDIE Teleconnections module.<label for="tufte-sn-126" class="margin-toggle sidenote-number">126</label><input type="checkbox" id="tufte-sn-126" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">126</span> Farrell, K.J. and C.C. Carey. 18 May 2018. Macrosystems EDDIE: Teleconnections. Macrosystems EDDIE Module 3, Version 1.</span></p>
 
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div class="csl-entry">
-Carlson, John K., and Ivy E. Baremore. 2005. <span>“<span class="nocase">Growth dynamics of the spinner shark (Carcharhinus brevipinna) off the United States southeast and Gulf of Mexico coasts: A comparison of methods</span>.”</span> <em>Fishery Bulletin</em> 103 (2): 280–91. <a href="http://aquaticcommons.org/9614/">http://aquaticcommons.org/9614/</a>.
-</div>
-<div class="csl-entry">
-Goodman, SN, D Fanelli, and JPA Ioannidis. 2016. <span>“<span class="nocase">What does research reproducibility mean?</span>”</span> <em>Science Translational Medicine</em> 8 (341): 12. <a href="https://stm.sciencemag.org/content/8/341/341ps12.short">https://stm.sciencemag.org/content/8/341/341ps12.short</a>.
-</div>
-<div class="csl-entry">
-Heupel, Michelle R., John K. Carlson, and Colin A. Simpfendorfer. 2007. <span>“<span class="nocase">Shark nursery areas: Concepts, definition, characterization and assumptions</span>.”</span> <a href="https://doi.org/10.3354/meps337287">https://doi.org/10.3354/meps337287</a>.
-</div>
-<div class="csl-entry">
-Plumlee, Jeffrey D., Kaylan M. Dance, Philip Matich, John A. Mohan, Travis M. Richards, Thomas C. TinHan, Mark R. Fisher, and R. J.David Wells. 2018. <span>“<span class="nocase">Community structure of elasmobranchs in estuaries along the northwest Gulf of Mexico</span>.”</span> <em>Estuarine, Coastal and Shelf Science</em> 204 (May): 103–13. <a href="https://doi.org/10.1016/j.ecss.2018.02.023">https://doi.org/10.1016/j.ecss.2018.02.023</a>.
-</div>
-<div class="csl-entry">
-Swift, Dominic G., and David S. Portnoy. 2020. <span>“<span class="nocase">Identification and Delineation of Essential Habitat for Elasmobranchs in Estuaries on the Texas Coast</span>.”</span> <em>Estuaries and Coasts</em>, July, 1–13. <a href="https://doi.org/10.1007/s12237-020-00797-y">https://doi.org/10.1007/s12237-020-00797-y</a>.
-</div>
 </div>
 </div></body></html>
 
 <p style="text-align: center;">
-<a href="simulated-data-for-hypothesis-testing-ii.html"><button class="btn btn-default">Previous</button></a>
+<a href="simulated-data-for-hypothesis-testing-i.html"><button class="btn btn-default">Previous</button></a>
+<a href="references.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
 2021-11-04

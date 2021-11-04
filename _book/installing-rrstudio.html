@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="2 Installing R/Rstudio | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-11-04" />
+
+
+<meta name="description" content="2 Installing R/Rstudio | Data Science for the Natural Environment (FA21)">
+
+<title>2 Installing R/Rstudio | Data Science for the Natural Environment (FA21)</title>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a id="active-page" href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a><ul class="toc-sections">
+<li class="toc"><a href="#install-set-up-r-and-rstudio-on-your-computer"> Install &amp; Set up R and Rstudio on your computer</a></li>
+<li class="toc"><a href="#get-to-know-rstudio"> Get to know Rstudio</a></li>
+<li class="toc"><a href="#installing-and-using-packages-in-r"> Installing and using packages in R</a></li>
+</ul>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
+<a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
+<a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
+<a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
+<a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
+<a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
+<a href="references.html">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div id="installing-rrstudio" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Installing R/Rstudio</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this activity you should</p>
+<ul>
+<li>be able to download and install <code>R</code> and <code>Rstudio</code> on your laptop</li>
+<li>be able to install <code>Rtools</code> &amp; <code>devtools</code> to be able to compile <code>R packages</code> from source (Windows).</li>
+<li>understand the main use for each of the four main panes in the <code>Rstudio</code> GUI.</li>
+<li>understand what a package is in <code>R</code> and how to install them.</li>
+</ul>
+<div id="install-set-up-r-and-rstudio-on-your-computer" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Install &amp; Set up R and Rstudio on your computer<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('install-set-up-r-and-rstudio-on-your-computer')" onmouseout="reset_tooltip('install-set-up-r-and-rstudio-on-your-computer-tooltip')"><span class="tooltiptext" id="install-set-up-r-and-rstudio-on-your-computer-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>If you have already installed <code>R</code> and <code>Rstudio</code> make sure your R version is up to date. Whenever you open <code>Rstudio</code> the version will be printed in the console (bottom left pane). In addition, you can always check what version is installed by typing <code>sessionInfo()</code> into your console. You should be using version 4.0.0 or later. You do not need to uninstall old version of <code>R</code>. If you do have to update, you will need to re-install packages (see below) for R4.0.0</p>
+<div id="windows" class="section level3" number="2.1.1">
+<h3>
+<span class="header-section-number">2.1.1</span> Windows<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('windows')" onmouseout="reset_tooltip('windows-tooltip')"><span class="tooltiptext" id="windows-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p><strong>Install R</strong></p>
+<ul>
+<li>Download most recent version of R for Windows <a href="https://cran.r-project.org/bin/windows/base/release.htm">here</a>.</li>
+<li>Run the <code>.exe</code> file that was downloaded and follow instructions in the set-up wizard.</li>
+</ul>
+<p><strong>Install Rtools</strong></p>
+<ul>
+<li>Download Rtools <a href="https://cran.r-project.org/bin/windows/Rtools/rtools40-x86_64.exe">here</a>.</li>
+<li>Run the downloaded <code>.exe</code> file that was download and follow the instructions in the set-up wizard.</li>
+</ul>
+<p><strong>Install Rstudio</strong></p>
+<ul>
+<li>Go to Rstudio download (page)[<a href="http://www.rstudio.com/ide/download/desktop" class="uri">http://www.rstudio.com/ide/download/desktop</a>].</li>
+<li>Scroll down to select the <code>Rstudio</code> current version for Windows XP/Vista/7/8/10.</li>
+<li>Run the <code>.exe</code> file that was downloaded and follow instructions in the set-up wizard.</li>
+</ul>
+<p><strong>Finish setting up Rtools</strong></p>
+<ul>
+<li>Open <code>Rstudio</code> to make sure you aren’t getting any error messages.</li>
+<li>Put <code>Rtools</code> in your path by typing <code>writeLines('PATH="${RTOOLS40_HOME}\\usr\\bin;${PATH}"', con = "~/.Renviron")</code> in the console window.</li>
+<li>Install the <code>devtools</code> package by typing <code>install.packages("devtools")</code> in the console.</li>
+</ul>
+</div>
+<div id="mac-os-x" class="section level3" number="2.1.2">
+<h3>
+<span class="header-section-number">2.1.2</span> Mac OS X<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('mac-os-x')" onmouseout="reset_tooltip('mac-os-x-tooltip')"><span class="tooltiptext" id="mac-os-x-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p><strong>Download &amp; install R</strong></p>
+<ul>
+<li>Go to (CRAN)[<a href="http://cran.r-project.org/" class="uri">http://cran.r-project.org/</a>], select <code>Download R for (Mac) OS X</code>.</li>
+<li>Download the <code>.pkg</code> file for your OS X version.</li>
+<li>Run the downloaded file to install <code>R</code>.</li>
+</ul>
+<p><strong>Download &amp; install XQuartz</strong> (needed to run some R packages)</p>
+<ul>
+<li>Download <a href="https://www.xquartz.org/">XQuartz</a>
+</li>
+<li>Run the downloaded file to install</li>
+</ul>
+<p><strong>Download &amp; install Rstudio</strong></p>
+<ul>
+<li>Go to Rstudio download <a href="http://www.rstudio.com/ide/download/desktop">page</a>.</li>
+<li>Scroll down to select the <code>Rstudio</code> current version for Mac OS X.</li>
+<li>Run the <code>.exe</code> file that was downloaded and follow instructions in the set-up wizard.</li>
+</ul>
+</div>
+</div>
+<div id="get-to-know-rstudio" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Get to know Rstudio<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('get-to-know-rstudio')" onmouseout="reset_tooltip('get-to-know-rstudio-tooltip')"><span class="tooltiptext" id="get-to-know-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p><code>Rstudio</code> is an Integrated Development Environment (IDE) that you can use to write code, navigate files, inspect objects, etc. The advantage of using an IDE is that you have access to shortcuts, visual cues, troubleshooting, navigation, and autocomplete help.</p>
+<div id="gui-layout" class="section level3" number="2.2.1">
+<h3>
+<span class="header-section-number">2.2.1</span> GUI Layout<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('gui-layout')" onmouseout="reset_tooltip('gui-layout-tooltip')"><span class="tooltiptext" id="gui-layout-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Open <code>Rstudio</code> and identify the four panes in the interface (default layout).</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Editor</strong> (top left): edit scripts/other documents, code can be sent directly to the console.</li>
+<li>
+<strong>R console</strong> (bottom left): Run code either by directly typing the code or sending it from the editor pane.</li>
+<li>
+<strong>Environment/history</strong> (top right): Contains variables/objects as you create them &amp; full history of functions/commands that have been run.</li>
+<li>
+<strong>files/plots/packages/help/viewer</strong> (bottom right): Different tabs in this pane wil let you explore files on your computer, view plots, loaded packages, and read manual pages for various functions.</li>
+</ol>
+<p>The panes can be customized (<code>Rstudio -&gt; Preferences -&gt; Pane Layout</code>) and you can move/re-size them using your mouse.</p>
+</div>
+<div id="interacting-with-r-in-rstudio" class="section level3" number="2.2.2">
+<h3>
+<span class="header-section-number">2.2.2</span> Interacting with R in Rstudio<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('interacting-with-r-in-rstudio')" onmouseout="reset_tooltip('interacting-with-r-in-rstudio-tooltip')"><span class="tooltiptext" id="interacting-with-r-in-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Think of <code>R</code> as a language that allows you to give your computer precise instructions (code) to follow.</p>
+<ul>
+<li>
+<strong>Commands</strong> are the instructions we are giving the computer, usually as a series of functions.</li>
+<li>
+<strong>Executing</strong> code or a program means you are telling the computer to run it.</li>
+</ul>
+<p>There are three main ways to interact with <code>R</code> - directly using console, script files (<code>*.R</code>), or code chunks embedded in R markdown files (<code>*.Rmd</code>).</p>
+<p>The console is where you execute code and see the results of those commands. You can type your code directly into the console and hit <code>Enter</code> to execute it. You can review those commands in the history pane (or by saving the history) but if you close the session and don’t save the history to file those commands will be forgotten.</p>
+<p>By contrast, writing your code in the script editor either as a standard script or as a code chunk in an Rmarkdown file allows you to have a reproducible workflow (future you and other collaborators will thank you).</p>
+<p>Executing an entire script, a code chunk, or individual functions from a script will run them in the console.</p>
+<ul>
+<li>
+<code>Ctrl</code> + <code>Enter</code> will execute commands directly from the script editor. You can use this to run the line of code your cursor is currently in in the script editor or you can highlight a series of lines to execute.</li>
+<li>If you are using an Rmarkdown file you can execute an entire code chunk by pressing the green arrow in the top right corner.</li>
+</ul>
+<p>If the console is ready for you to execute commands you should see a <code>&gt;</code> prompt. If you e.g. forget a <code>)</code> you will see a <code>+</code> prompt - <code>R</code> is telling you that it is expecting further code. When this happens and you don’t know what you are missing (usually it is an unmatched quotation or parenthesis), make sure your cursor is in the console and hit the <code>Esc</code> key.</p>
+<p><em>We will run through these options, but you can always check back here while you are getting used to R</em>.</p>
+</div>
+<div id="customize-rstudio" class="section level3" number="2.2.3">
+<h3>
+<span class="header-section-number">2.2.3</span> Customize Rstudio<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('customize-rstudio')" onmouseout="reset_tooltip('customize-rstudio-tooltip')"><span class="tooltiptext" id="customize-rstudio-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>There are several options to customize Rstudio including setting a theme, and other formatting preferences. You can access this using <code>Tools &gt; Global Options</code>. I recommend using a dark theme (it’s a lot easier on the eyes) and keeping the panes in the same positions as described because it will make troubleshooting a lot easier<label for="tufte-sn-7" class="margin-toggle sidenote-number">7</label><input type="checkbox" id="tufte-sn-7" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">7</span> “You should see xx in the top left” is a lot more helpful if your top left looks like my top left!</span>.</p>
+</div>
+</div>
+<div id="installing-and-using-packages-in-r" class="section level2" number="2.3">
+<h2>
+<span class="header-section-number">2.3</span> Installing and using packages in R<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('installing-and-using-packages-in-r')" onmouseout="reset_tooltip('installing-and-using-packages-in-r-tooltip')"><span class="tooltiptext" id="installing-and-using-packages-in-r-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div id="install-a-package" class="section level3" number="2.3.1">
+<h3>
+<span class="header-section-number">2.3.1</span> Install a package<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('install-a-package')" onmouseout="reset_tooltip('install-a-package-tooltip')"><span class="tooltiptext" id="install-a-package-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Think of R packages as tool kit comprising a set of functions (tools) to perform specific tasks. <code>R</code> comes with a set of packages already installed that gives you base <code>R</code> functions; you can view these and determine which have been loaded in the <code>Packages</code> tab in the bottom right pane. For other tasks we will need additional packages.<label for="tufte-sn-8" class="margin-toggle sidenote-number">8</label><input type="checkbox" id="tufte-sn-8" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">8</span> Most <code>R</code> packages are found in the <a href="https://cran.r-project.org/">CRAN repository</a> and on <a href="https://www.bioconductor.org/">Bioconducter</a>, developmental packages are available on <a href="https://github.com/">github</a>.</span></p>
+<p>A central group of packages for data wrangling and processing form the <a href="https://www.tidyverse.org/">tidyverse</a>, described as “… an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures.” - We are going to heavily rely on core functions from the tidyverse to wrangle, summarize, and analyze data.</p>
+<p>When you install packages they will be downloaded and installed onto your computer. Determine what your default path is using <code>.libPaths()</code> and change if necessary.</p>
+<p>The easiest way to install packages is to use the <code>install.packages()</code> function. Use the <code>R</code> console to install some libraries to get us started (we will install other libraries as needed for other labs).</p>
+<p><label for="tufte-mn-1" class="margin-toggle">⊕</label><input type="checkbox" id="tufte-mn-1" class="margin-toggle"><span class="marginnote"><span style="display: block;">Using <code>#</code> in an R script allows you to insert comments that are ignored by R when executing your code. Use comments to document your code, future you will thank you!</span></span></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="installing-rrstudio.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install the rmarkdown package</span></span>
+<span id="cb17-2"><a href="installing-rrstudio.html#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
+<span id="cb17-3"><a href="installing-rrstudio.html#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="installing-rrstudio.html#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># install central packages in the tidyverse</span></span>
+<span id="cb17-5"><a href="installing-rrstudio.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb17-6"><a href="installing-rrstudio.html#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="installing-rrstudio.html#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># install additional packages</span></span>
+<span id="cb17-8"><a href="installing-rrstudio.html#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"plyr"</span>, <span class="st">"ggthemes"</span>, <span class="st">"patchwork"</span>, <span class="st">"glue"</span>)</span></code></pre></div>
+<p>Let’s check if you were able to successfully install those packages.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="installing-rrstudio.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load library</span></span>
+<span id="cb18-2"><a href="installing-rrstudio.html#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<p>If you don’t see any error messages in the console along the lines of <code>there is no package called ...</code> you are all set. If you look in the <code>packages</code> tab in the lower right panel you should also see that packages such as <code>dplyr</code> and <code>tidyr</code> (two of the central <code>tidyverse</code> packages) now have a little check box next to them.</p>
+</div>
+<div id="updating-r-packages" class="section level3" number="2.3.2">
+<h3>
+<span class="header-section-number">2.3.2</span> Updating R packages<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('updating-r-packages')" onmouseout="reset_tooltip('updating-r-packages-tooltip')"><span class="tooltiptext" id="updating-r-packages-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>You should generally make sure to keep your <code>R</code> packages up to date as new versions include important bugfixes and additional improvements. The easiest way to update packages is to use the <code>Update</code> button in the <code>Packages</code> tab in the bottom right panel.</p>
+<p><strong>However</strong> be aware that updating packages might break some code you have previously written. For most of what we will be doing this should not be the case. If you used <code>R</code> for a previous course, make sure to update you packages at the beginning of this course and we should be set for the semester.</p>
+
+</div>
+</div>
+</div></body></html>
+
+<p style="text-align: center;">
+<a href="what-even-is-data-science.html"><button class="btn btn-default">Previous</button></a>
+<a href="project-management-and-rmarkdown-basics.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-11-04
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

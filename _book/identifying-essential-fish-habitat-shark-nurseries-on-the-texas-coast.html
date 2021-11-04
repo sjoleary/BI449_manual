@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="5 Identifying essential fish habitat: Shark Nurseries on the Texas coast | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-11-04" />
+
+
+<meta name="description" content="5 Identifying essential fish habitat: Shark Nurseries on the Texas coast | Data Science for the Natural Environment (FA21)">
+
+<title>5 Identifying essential fish habitat: Shark Nurseries on the Texas coast | Data Science for the Natural Environment (FA21)</title>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a id="active-page" href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a><ul class="toc-sections">
+<li class="toc"><a href="#essential-fish-habitat-shark-nurseries"> Essential fish habitat: Shark Nurseries</a></li>
+<li class="toc"><a href="#identifying-shark-nurseries-on-the-texas-coast"> Identifying shark nurseries on the Texas Coast</a></li>
+<li class="toc"><a href="#explore-the-data-set"> Explore the data set</a></li>
+<li class="toc"><a href="#export-as-text-file"> Export as text file</a></li>
+</ul>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
+<a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
+<a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
+<a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
+<a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
+<a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
+<a href="references.html">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body>
+<div id="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast" class="section level1" number="5">
+<h1>
+<span class="header-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this activity you should be able to</p>
+<ul>
+<li>define essential fish habitats and shark nurseries.</li>
+<li>understand how differences in methodology can affect a data set.</li>
+</ul>
+<p>For each of our modules we will have a project-folder with an <code>Rproject</code>, <code>*.Rmd</code>-files, and sub-directories for data, scripts, and results as described in our <code>Rproject</code> Tutorial. You should create a directory on your Desktop or Documents folder on your laptop (name it something like <code>BI449</code>) as a home directory for all of our project folders this semester.</p>
+<p>Download the <a href="https://drive.google.com/drive/folders/1FexsfMkoBfPEeAkOCd2ZQrQqVBOF4WOR?usp=sharing">SharkNurseries</a> project folder. Once you have downloaded it, unzip the project directory into your <code>BI449</code> directory. You can open the <code>Rproj</code> for this module either by double clicking on it which will launch <code>Rstudio</code> or by opening <code>Rstudio</code> and then using <code>File &gt; Open Project</code> or by clicking on the <code>Rproject</code> icon in the top right of your program window and selecting <code>Open Project</code>.</p>
+<p>Once you have opened a project you should see the project name in the top right corner<label for="tufte-sn-23" class="margin-toggle sidenote-number">23</label><input type="checkbox" id="tufte-sn-23" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">23</span> Pro tip: If you run into issues where an Rmarkdown won’t render or file paths aren’t working (especially if things were working previously) one of your first steps should be to double check that the correct <code>Rproj</code> is loaded.</span>.</p>
+<p>You should have a <code>SharkNurseriesIntro.Rmd</code> in your project directory. Use that file to work through this tutorial - you will hand in your rendered (“knitted”) rmarkdown file as your homework assignment. So, first thing in the <code>YAML</code> header, change the author to your name. You will use this <code>Rmarkdown</code> file to record your answers. Remember to use comments to describe your code; at minimum you should have one comment per code set<label for="tufte-sn-24" class="margin-toggle sidenote-number">24</label><input type="checkbox" id="tufte-sn-24" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">24</span> You should do this whether you are adding code yourself or using code from our manual, even if it isn’t commented in the manual … you may of course add as many comments as you need to be able to recall what you did</span>.</p>
+<div id="essential-fish-habitat-shark-nurseries" class="section level2" number="5.1">
+<h2>
+<span class="header-section-number">5.1</span> Essential fish habitat: Shark Nurseries<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('essential-fish-habitat-shark-nurseries')" onmouseout="reset_tooltip('essential-fish-habitat-shark-nurseries-tooltip')"><span class="tooltiptext" id="essential-fish-habitat-shark-nurseries-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The <a href="https://www.federalregister.gov/documents/2002/01/17/02-885/magnuson-stevens-act-provisions-essential-fish-habitat-efh">Magnuson-Stevens Act</a> (1996) defined essential fish habitat as “those waters and substrate necessary to fish for spawning, breeding, feeding or growth to maturity,” i.e. they are habitats necessary for an organism to complete their life cycle. Identifying essential fish habitats is critical for management and conservation plans because it enables policy makers to prioritize certain ecosystems.</p>
+<p>While some elasmobranchs (sharks, rays, skates) inhabit estuaries year round, many use the estuaries for specific purposes such as feeding, mating, gestation, parturition or as nurseries and only inhabit them during specific life history stages. Estuaries are heavily impacted by humans - overfishing, pollution, habitat destruction and altered flow regimes all affect the biological communities they support.</p>
+<p>Broadly, shark nurseries are areas where young are born and/or reside in during maturation. Typically, these would areas that provide additional protection (e.g. mangroves for hiding) and plenty of food. Heupel et al. <span class="citation">(<a href="#ref-Heupel2007" role="doc-biblioref">Heupel, Carlson, and Simpfendorfer 2007, Heupel2019</a>)</span> developed three criteria to defining shark nurseries as</p>
+<ol style="list-style-type: decimal">
+<li>an area where sharks are commonly encountered within compared to outside of.</li>
+<li>an area in which Young-of-the-year (YOY)/juveniles remain or return to for extended periods of time.</li>
+<li>an area that is repeatedly used across years.</li>
+</ol>
+<div id="ques:sh-1" class="question">
+<p class="question-begin">
+► Question 5.1
+</p>
+<div class="question-body">
+<p>
+Consider how you could design a study to identify estuaries that are shark nurseries.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="identifying-shark-nurseries-on-the-texas-coast" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Identifying shark nurseries on the Texas Coast<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('identifying-shark-nurseries-on-the-texas-coast')" onmouseout="reset_tooltip('identifying-shark-nurseries-on-the-texas-coast-tooltip')"><span class="tooltiptext" id="identifying-shark-nurseries-on-the-texas-coast-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Texas Parks and Wildlife (TPWD) defines eight major estuaries along the Texas coastline and performs regular shore-based gill net surveys for 10 week periods in April - June and September to November. Analysis of this survey has identify eight elasmobranch species <span class="citation">(<a href="#ref-Plumlee2018" role="doc-biblioref">Plumlee et al. 2018</a>)</span>.</p>
+<ul>
+<li>Bull shark</li>
+<li>Bonnethead</li>
+<li>Cownose ray</li>
+<li>Blacktip shark</li>
+<li>Atlantic stingray</li>
+<li>Atlantic sharpnose shark</li>
+<li>Spinner shark</li>
+<li>Scalloped hammerhead</li>
+<li>Finetooth shark</li>
+<li>Lemon shark</li>
+</ul>
+<p>Gill nets generally exclude individuals &gt; 2m.</p>
+<p>More recently, a multi-year open water long-lining study targeting elasmobranchs was performed in three estuarine locations near Corpus Christi, TX that are considered putative shark nurseries. Here, the sampling period lasted from May to November <span class="citation">(<a href="#ref-Swift2020" role="doc-biblioref">Swift and Portnoy 2020</a>)</span>.</p>
+<div id="ques:sh-2" class="question">
+<p class="question-begin">
+► Question 5.2
+</p>
+<div class="question-body">
+<p>
+Discuss whether or not you would expect to get similar results from both studies and what factors could result in differences.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-2" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-2', 'sol-start-2')"></span>
+</p>
+<div id="sol-body-2" class="solution-body" style="display: none;">
+<p>Here are some things to consider:</p>
+<ul>
+<li>gear-bias (hook size, net-size)</li>
+<li>seasonality (peak use for many coastal elasmobranchs is May - Oct)</li>
+<li>spatial (land-based vs open ocean)</li>
+</ul>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>This study wanted to answer four questions to further understand whether these locations should be considered shark nurseries and therefore as essential fish habitat for specific elasmobranch species.</p>
+<ol style="list-style-type: decimal">
+<li>How does the composition of elasmobranch communities compare across sites?</li>
+<li>How does the catch-per-unit-effort (CPUE) per species and life history compare across sites?</li>
+<li>What do the sex ratios look like?</li>
+<li>What environmental predictors can we use to predict presence of elasmobranchs?</li>
+</ol>
+</div>
+<div id="explore-the-data-set" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> Explore the data set<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('explore-the-data-set')" onmouseout="reset_tooltip('explore-the-data-set-tooltip')"><span class="tooltiptext" id="explore-the-data-set-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>There should be a an excel file in the <code>data</code> folder of your project directory named <code>longline_catchdata.xlsx</code>. Go ahead and open the file in excel.</p>
+<div id="ques:sh-3" class="question">
+<p class="question-begin">
+► Question 5.3
+</p>
+<div class="question-body">
+<p>
+Take a look at the excel file and describe how you would figure out what the dimensions are (how many rows? columns?) and see if you identifying what information is contained in each column.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-3" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-3', 'sol-start-3')"></span>
+</p>
+<div id="sol-body-3" class="solution-body" style="display: none;">
+<p>
+The data set contains information on the sampling site, Species name, Sex, life history stage, Pre-caudal length (PCL), fork length (FL), stretch total length (STL), Hook Size, and the set number and sampling date.
+</p>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>While some column headers were probably more easy to identify than others a good data set comes with meta data - this is data about the data. At minimum it should contain detailed information on what is contained in each column, frequently it may also contain information on how certain data was calculated/generated.</p>
+<p>Now that we’re looking at the data set we might as well take a stab at the first question.</p>
+<blockquote>
+<p>How does the composition of elasmobranch communities compare across sites?</p>
+</blockquote>
+<div id="ques:sh-4" class="question">
+<p class="question-begin">
+► Question 5.4
+</p>
+<div class="question-body">
+<p>Use your excel skills to create sets of summary tables</p>
+<ul>
+<li>Total catch by site:
+<ul>
+<li>total number of individuals per elasmobranch species caught at each site (across all years).</li>
+<li>relative abundance of each elasmobranch species caught per site.</li>
+</ul>
+</li>
+<li>Differences in catch across sites and years:
+<ul>
+<li>total number of individuals per elasmobranch species per site and year.</li>
+<li>relative abundance per of each elasmobranch species per site and year.</li>
+</ul>
+</li>
+<li>Summary stats size:
+<ul>
+<li>mean size of sharks (exclude rays) by site.</li>
+<li>minimum size per shark species by site.</li>
+<li>maximum size per shark species by site.</li>
+</ul>
+</li>
+</ul>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:sh-5" class="question">
+<p class="question-begin">
+► Question 5.5
+</p>
+<div class="question-body">
+<p>
+Imagine that just as you finished creating these summary stats tables your lab mate comes in tells you that they just discovered three data sheets in a drawer that wasn’t entered in with the other data. How easy would it be to update your results tables? Consider disadvantages of using Excel to analyze your data in this way.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="export-as-text-file" class="section level2" number="5.4">
+<h2>
+<span class="header-section-number">5.4</span> Export as text file<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('export-as-text-file')" onmouseout="reset_tooltip('export-as-text-file-tooltip')"><span class="tooltiptext" id="export-as-text-file-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Our next step is to learn how to use <code>R</code> to wrangle data, this can include both cleaning up your data to put it into a standard format or analysis as well as using a raw data set to generate a data sets based of off them for further analysis or summarize results.</p>
+<p>Two of the most common file formats you are going to encounter when you access or download data sets are <code>*.csv</code> (comma-delimited files) and tab-delimited files (<code>*txt</code>); both of these are straightforward to read into <code>R</code>. You can convert your excel file into these formats by using <code>File &gt; Save As</code> and then selecting the appropriate file formats.</p>
+<div id="ques:sh-6" class="question">
+<p class="question-begin">
+► Question 5.6
+</p>
+<div class="question-body">
+<p>
+Go ahead and save a csv and tab-delimited formatted version of our data set in your data folder. Then open those files in a text editor and describe the difference between the two formats and briefly discuss the advantages of storing large data sets in these formats over a typical excel file.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+
+</div>
+</div>
+<h3>References<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('NA')" onmouseout="reset_tooltip('NA-tooltip')"><span class="tooltiptext" id="NA-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Heupel2007" class="csl-entry">
+Heupel, Michelle R., John K. Carlson, and Colin A. Simpfendorfer. 2007. <span>“<span class="nocase">Shark nursery areas: Concepts, definition, characterization and assumptions</span>.”</span> <a href="https://doi.org/10.3354/meps337287">https://doi.org/10.3354/meps337287</a>.
+</div>
+<div id="ref-Plumlee2018" class="csl-entry">
+Plumlee, Jeffrey D., Kaylan M. Dance, Philip Matich, John A. Mohan, Travis M. Richards, Thomas C. TinHan, Mark R. Fisher, and R. J.David Wells. 2018. <span>“<span class="nocase">Community structure of elasmobranchs in estuaries along the northwest Gulf of Mexico</span>.”</span> <em>Estuarine, Coastal and Shelf Science</em> 204 (May): 103–13. <a href="https://doi.org/10.1016/j.ecss.2018.02.023">https://doi.org/10.1016/j.ecss.2018.02.023</a>.
+</div>
+<div id="ref-Swift2020" class="csl-entry">
+Swift, Dominic G., and David S. Portnoy. 2020. <span>“<span class="nocase">Identification and Delineation of Essential Habitat for Elasmobranchs in Estuaries on the Texas Coast</span>.”</span> <em>Estuaries and Coasts</em>, July, 1–13. <a href="https://doi.org/10.1007/s12237-020-00797-y">https://doi.org/10.1007/s12237-020-00797-y</a>.
+</div>
+</div>
+</body></html>
+
+<p style="text-align: center;">
+<a href="r-functions-objects-vectors---oh-my.html"><button class="btn btn-default">Previous</button></a>
+<a href="intro-to-data-frames.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-11-04
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

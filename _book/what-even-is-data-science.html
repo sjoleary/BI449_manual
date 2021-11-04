@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="1 What even is data science? | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-11-04" />
+
+
+<meta name="description" content="1 What even is data science? | Data Science for the Natural Environment (FA21)">
+
+<title>1 What even is data science? | Data Science for the Natural Environment (FA21)</title>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a id="active-page" href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a><ul class="toc-sections">
+<li class="toc"><a href="#defining-data-and-science"> Defining “data” and “science”</a></li>
+<li class="toc"><a href="#what-even-is-data-science-1"> What even is data science?</a></li>
+<li class="toc"><a href="#the-data-science-process"> The data science process</a></li>
+<li class="toc"><a href="#visualize-and-communicate-your-results"> Visualize and Communicate your results</a></li>
+<li class="toc"><a href="#acknowledgments"> Acknowledgments</a></li>
+</ul>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
+<a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
+<a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
+<a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
+<a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
+<a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
+<a href="references.html">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div id="what-even-is-data-science" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> What even is data science?</h1>
+<p><strong>Learning Objectives</strong></p>
+<p>After completing this lab you should be able to</p>
+<ul>
+<li>define what data is and what the structural/functional relationships to information, knowledge, insight and wisdom are.</li>
+<li>describe what data science is and the major field/skill sets that comprise it.</li>
+<li>describe the individual components that comprise the data science life cycle.</li>
+</ul>
+<p><br></p>
+<div id="defining-data-and-science" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Defining “data” and “science”<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('defining-data-and-science')" onmouseout="reset_tooltip('defining-data-and-science-tooltip')"><span class="tooltiptext" id="defining-data-and-science-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Data are qualitative and quantitative observations that are measured and collected.</p>
+<div id="ques:ds-1" class="question">
+<p class="question-begin">
+► Question 1.1
+</p>
+<div class="question-body">
+<p>
+Data fall in two distinct categories, categorical and numerical data. Briefly compare and contrast these two categories by describing the data types you would expect to find in each.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>The ‘<strong>data - information - knowledge - wisdom pyramid</strong>’ gives us a framework to consider how data can be used to inform decision making and impact the world around us. Not until <strong>data</strong> is organized and processed thus adding context can we glean <strong>information</strong> from the signal. Additional meaning is transferred as we synthesize and further contextualize information resulting in <strong>knowledge</strong>.</p>
+<p>These three categories look backwards - we describe the “what” and ask about the “why” to reveal patterns and relationships. At this point we start looking forward to determine what action(s) should be taken, we know seek to reveal principles and directions that can be applied.</p>
+<p>We integrate knowledge across disciplines to gain <strong>insight</strong> and <strong>wisdom</strong> to further understanding of problems and derive actionable solutions. This culminates in the decision-making process resulting in change.</p>
+<div id="ques:ds-2" class="question">
+<p class="question-begin">
+► Question 1.2
+</p>
+<div class="question-body">
+<p>
+The science council defines science as the pursuit and application of knowledge and understanding of the natural and social world following a systematic methodology based on evidence. Compare and contrast this definition to the DIKW framework and make an argument that all science is data science.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="what-even-is-data-science-1" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> What even is data science?<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('what-even-is-data-science-1')" onmouseout="reset_tooltip('what-even-is-data-science-1-tooltip')"><span class="tooltiptext" id="what-even-is-data-science-1-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Data science is a fuzzy term and no single definition exists. Most definitions emphasize that it is a interdisciplinary field and that it has arisen in response to the increasingly large data sets that are produced.</p>
+<p>A common way of defining data science is to describe it as being the intersection of <strong>domain knowledge</strong>, <strong>statistics/mathematics</strong>, and <strong>computer science</strong> - though different definitions will ascribe more importance to certain different components.</p>
+<p>One distinction to the typical scientific process as you may have learned it to be is that a large component of data science is <strong>hypothesis generation</strong> through exploratory analysis rather than <strong>hypothesis confirmation</strong>.</p>
+<p>The data science process generally starts by posing an interesting question and ends with visualizing and communicating the results. The key steps to the end results are <strong>obtaining</strong> the data, <strong>processing</strong> and <strong>exploring</strong> the data, and <strong>modeling</strong> the data to understand the data set and derive conclusions.</p>
+</div>
+<div id="the-data-science-process" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> The data science process<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('the-data-science-process')" onmouseout="reset_tooltip('the-data-science-process-tooltip')"><span class="tooltiptext" id="the-data-science-process-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div id="ask-an-interesting-question" class="section level3" number="1.3.1">
+<h3>
+<span class="header-section-number">1.3.1</span> Ask an interesting question<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('ask-an-interesting-question')" onmouseout="reset_tooltip('ask-an-interesting-question-tooltip')"><span class="tooltiptext" id="ask-an-interesting-question-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Let’s start by asking an interesting question:</p>
+<blockquote>
+<p>Will Sasquatch by impacted by climate change?</p>
+</blockquote>
+<p>Specifically, climate change could result in a shift in habitat availability, i.e. should we expect a species extinction because of habitat loss or a range expansion or range shift?</p>
+<p>To do this we need to generate a species distribution model (SDM) for the Sasquatch, a large, hairy, bipedal ape-like creature found (or is it?) throughout North America<label for="tufte-sn-2" class="margin-toggle sidenote-number">2</label><input type="checkbox" id="tufte-sn-2" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">2</span> I suppose, technically, since we were venturing into cryptozoology here it is not a species, but rather a cryptid distribution model</span>, i.e. first we need to understand where Sasquatch are currently distributed to then assess how that might change in the future.</p>
+</div>
+<div id="get-occurrence-data" class="section level3" number="1.3.2">
+<h3>
+<span class="header-section-number">1.3.2</span> Get occurrence data<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('get-occurrence-data')" onmouseout="reset_tooltip('get-occurrence-data-tooltip')"><span class="tooltiptext" id="get-occurrence-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>The first thing we need for any SDM is a data set documenting species occurrence, i.e. geo-coded observations of a given species in the wild.</p>
+<p>Four our purposes, we turn to the Bigfoot Field Researchers Organization (<a href="https://www.bfro.net/">BFRO</a>), founded in 1995 as the “<em>only scientific research organization exploring the Bigfoot/Sasquatch mystery</em>.” You can turn to their website for answers on important <a href="https://www.bfro.net/gdb/show_FAQ.asp?id=405">FAQs</a>, including ‘Do Bigfoot Sasquatch bury their dead?’ ‘Where is the physical evidence?’ ‘Wasn’t this all shown to be a fake?, and ’Why do you want scientists to recognize the Sasquatch as a species? Isn’t it better to just leave them alone?’ Their main focus though is on compiling reports of sightings and investigating them. In other words, they have a database full of geo-coded reported sightings<label for="tufte-sn-3" class="margin-toggle sidenote-number">3</label><input type="checkbox" id="tufte-sn-3" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">3</span> And even better, it has already been downloaded and wrangled and is accessible (with sightings through 2018) right <a href="https://data.world/timothyrenner/bfro-sightings-data">here</a>.</span>.</p>
+<p>Let’s read in the data and then we can take a look at the information we can glean from this data set by looking at the column names.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="what-even-is-data-science.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read data</span></span>
+<span id="cb1-2"><a href="what-even-is-data-science.html#cb1-2" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/bfro_reports_geocoded.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>)</span></code></pre></div>
+</div>
+<div id="tidy-transform-explore-the-data" class="section level3" number="1.3.3">
+<h3>
+<span class="header-section-number">1.3.3</span> Tidy, Transform &amp; Explore the data<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('tidy-transform-explore-the-data')" onmouseout="reset_tooltip('tidy-transform-explore-the-data-tooltip')"><span class="tooltiptext" id="tidy-transform-explore-the-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Let’s start by taking a look at our data set to determine how we need to wrangle to get the information we need process it so we can generate our species distribution model.</p>
+<p>Because we need to be able to identify the exact locations Sasquatch occur, we are going to remove any observations that do not have latitude and longitude information.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="what-even-is-data-science.html#cb2-1" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> occurrence <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="what-even-is-data-science.html#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(longitude),</span>
+<span id="cb2-3"><a href="what-even-is-data-science.html#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(latitude))</span></code></pre></div>
+<p>Next, let’s consider is what geographic extent of the observations is by looking at the distributions on a map.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="what-even-is-data-science.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get minimum and maximum lat/longs</span></span>
+<span id="cb3-2"><a href="what-even-is-data-science.html#cb3-2" aria-hidden="true" tabindex="-1"></a>max.lat <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(occurrence<span class="sc">$</span>latitude))</span>
+<span id="cb3-3"><a href="what-even-is-data-science.html#cb3-3" aria-hidden="true" tabindex="-1"></a>min.lat <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">min</span>(occurrence<span class="sc">$</span>latitude))</span>
+<span id="cb3-4"><a href="what-even-is-data-science.html#cb3-4" aria-hidden="true" tabindex="-1"></a>max.lon <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(occurrence<span class="sc">$</span>longitude))</span>
+<span id="cb3-5"><a href="what-even-is-data-science.html#cb3-5" aria-hidden="true" tabindex="-1"></a>min.lon <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">min</span>(occurrence<span class="sc">$</span>longitude))</span>
+<span id="cb3-6"><a href="what-even-is-data-science.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="what-even-is-data-science.html#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create an extent object of the range of observations</span></span>
+<span id="cb3-8"><a href="what-even-is-data-science.html#cb3-8" aria-hidden="true" tabindex="-1"></a>geo_range <span class="ot">&lt;-</span> <span class="fu">extent</span>(<span class="at">x =</span> <span class="fu">c</span>(min.lon, max.lon, min.lat, max.lat))</span>
+<span id="cb3-9"><a href="what-even-is-data-science.html#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="what-even-is-data-science.html#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># get base map</span></span>
+<span id="cb3-11"><a href="what-even-is-data-science.html#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(wrld_simpl)</span>
+<span id="cb3-12"><a href="what-even-is-data-science.html#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="what-even-is-data-science.html#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the base map</span></span>
+<span id="cb3-14"><a href="what-even-is-data-science.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(wrld_simpl, </span>
+<span id="cb3-15"><a href="what-even-is-data-science.html#cb3-15" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(min.lon, max.lon),</span>
+<span id="cb3-16"><a href="what-even-is-data-science.html#cb3-16" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(min.lat, max.lat),</span>
+<span id="cb3-17"><a href="what-even-is-data-science.html#cb3-17" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb3-18"><a href="what-even-is-data-science.html#cb3-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"grey75"</span>)</span>
+<span id="cb3-19"><a href="what-even-is-data-science.html#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="what-even-is-data-science.html#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># add individual occurrences</span></span>
+<span id="cb3-21"><a href="what-even-is-data-science.html#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">x =</span> occurrence<span class="sc">$</span>longitude, </span>
+<span id="cb3-22"><a href="what-even-is-data-science.html#cb3-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> occurrence<span class="sc">$</span>latitude, </span>
+<span id="cb3-23"><a href="what-even-is-data-science.html#cb3-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"darkorange"</span>, </span>
+<span id="cb3-24"><a href="what-even-is-data-science.html#cb3-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">20</span>, </span>
+<span id="cb3-25"><a href="what-even-is-data-science.html#cb3-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.75</span>)</span>
+<span id="cb3-26"><a href="what-even-is-data-science.html#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="what-even-is-data-science.html#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># draw box around figure</span></span>
+<span id="cb3-28"><a href="what-even-is-data-science.html#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<p class="caption marginnote shownote">
+Figure 1.1: Map of Sasquatch sighting in the United States based on the BFRO database (1950 - 2021).
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-5-1.png" alt="Map of Sasquatch sighting in the United States based on the BFRO database (1950 - 2021)." width="768">
+</div>
+<p>Here is an example of where domain knowledge comes in - while we are tidying and exploring the data set we need to assess whether there are artifacts our outlier data points that should be removed.</p>
+<div id="ques:ds-3" class="question">
+<p class="question-begin">
+► Question 1.3
+</p>
+<div class="question-body">
+<p>
+Give a brief descriptions of the spatial distribution of the occurrence of Sasquatch in the United States. Note areas where sightings appear to be random, clustered or more dispersed, determine if you think any points should be removed.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:ds-4" class="question">
+<p class="question-begin">
+► Question 1.4
+</p>
+<div class="question-body">
+<p>
+Discuss some possible explanations for the patterns you have observed to determine whether you think this data set is a reasonable representation of the ecological niche of the Sasquatch and can be used to create a species distribution model.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-1" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-1', 'sol-start-1')"></span>
+</p>
+<div id="sol-body-1" class="solution-body" style="display: none;">
+<p>Good catch - those sightings in the middle of the ocean are probably errors in the geo-coding. Further, we don’t know how reliable the data for Alaska is as this data set is based on opportunistic sightings<label for="tufte-sn-4" class="margin-toggle sidenote-number">4</label><input type="checkbox" id="tufte-sn-4" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">4</span> Well, admittedly if you poke around the BFRO website you will find that people do plan expeditions.</span>.</p>
+<p>The data for for observations in the lower 48 seems much more reliable, so let’s restrict our data to those observations.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="what-even-is-data-science.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load and filter data</span></span>
+<span id="cb4-2"><a href="what-even-is-data-science.html#cb4-2" aria-hidden="true" tabindex="-1"></a>occurrence <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/bfro_reports_geocoded.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="what-even-is-data-science.html#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(longitude),</span>
+<span id="cb4-4"><a href="what-even-is-data-science.html#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="sc">!</span><span class="fu">is.na</span>(latitude),</span>
+<span id="cb4-5"><a href="what-even-is-data-science.html#cb4-5" aria-hidden="true" tabindex="-1"></a>         longitude <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">130</span>,</span>
+<span id="cb4-6"><a href="what-even-is-data-science.html#cb4-6" aria-hidden="true" tabindex="-1"></a>         latitude <span class="sc">&lt;</span> <span class="dv">55</span>)</span>
+<span id="cb4-7"><a href="what-even-is-data-science.html#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="what-even-is-data-science.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># get minimum and maximum lat/longs</span></span>
+<span id="cb4-9"><a href="what-even-is-data-science.html#cb4-9" aria-hidden="true" tabindex="-1"></a>max.lat <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(occurrence<span class="sc">$</span>latitude))</span>
+<span id="cb4-10"><a href="what-even-is-data-science.html#cb4-10" aria-hidden="true" tabindex="-1"></a>min.lat <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">min</span>(occurrence<span class="sc">$</span>latitude))</span>
+<span id="cb4-11"><a href="what-even-is-data-science.html#cb4-11" aria-hidden="true" tabindex="-1"></a>max.lon <span class="ot">&lt;-</span> <span class="fu">ceiling</span>(<span class="fu">max</span>(occurrence<span class="sc">$</span>longitude))</span>
+<span id="cb4-12"><a href="what-even-is-data-science.html#cb4-12" aria-hidden="true" tabindex="-1"></a>min.lon <span class="ot">&lt;-</span> <span class="fu">floor</span>(<span class="fu">min</span>(occurrence<span class="sc">$</span>longitude))</span>
+<span id="cb4-13"><a href="what-even-is-data-science.html#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="what-even-is-data-science.html#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># create an extent object</span></span>
+<span id="cb4-15"><a href="what-even-is-data-science.html#cb4-15" aria-hidden="true" tabindex="-1"></a>geo_range <span class="ot">&lt;-</span> <span class="fu">extent</span>(<span class="at">x =</span> <span class="fu">c</span>(min.lon, max.lon, min.lat, max.lat))</span>
+<span id="cb4-16"><a href="what-even-is-data-science.html#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="what-even-is-data-science.html#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co"># get base map</span></span>
+<span id="cb4-18"><a href="what-even-is-data-science.html#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(wrld_simpl)</span>
+<span id="cb4-19"><a href="what-even-is-data-science.html#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="what-even-is-data-science.html#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the base map</span></span>
+<span id="cb4-21"><a href="what-even-is-data-science.html#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(wrld_simpl, </span>
+<span id="cb4-22"><a href="what-even-is-data-science.html#cb4-22" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(min.lon, max.lon),</span>
+<span id="cb4-23"><a href="what-even-is-data-science.html#cb4-23" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(min.lat, max.lat),</span>
+<span id="cb4-24"><a href="what-even-is-data-science.html#cb4-24" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb4-25"><a href="what-even-is-data-science.html#cb4-25" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"grey75"</span>)</span>
+<span id="cb4-26"><a href="what-even-is-data-science.html#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="what-even-is-data-science.html#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># add individual occurrences</span></span>
+<span id="cb4-28"><a href="what-even-is-data-science.html#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(<span class="at">x =</span> occurrence<span class="sc">$</span>longitude, </span>
+<span id="cb4-29"><a href="what-even-is-data-science.html#cb4-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> occurrence<span class="sc">$</span>latitude, </span>
+<span id="cb4-30"><a href="what-even-is-data-science.html#cb4-30" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlim =</span> <span class="fu">c</span>(min.lon, max.lon),</span>
+<span id="cb4-31"><a href="what-even-is-data-science.html#cb4-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylim =</span> <span class="fu">c</span>(min.lat, max.lat),</span>
+<span id="cb4-32"><a href="what-even-is-data-science.html#cb4-32" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="st">"darkorange"</span>, </span>
+<span id="cb4-33"><a href="what-even-is-data-science.html#cb4-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">pch =</span> <span class="dv">20</span>, </span>
+<span id="cb4-34"><a href="what-even-is-data-science.html#cb4-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">cex =</span> <span class="fl">0.75</span>)</span>
+<span id="cb4-35"><a href="what-even-is-data-science.html#cb4-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-36"><a href="what-even-is-data-science.html#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co"># draw box around figure</span></span>
+<span id="cb4-37"><a href="what-even-is-data-science.html#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-6"></span>
+<p class="caption marginnote shownote">
+Figure 1.2: Map of Sasquatch sighting in the lower 48 states based on the BFRO database as (1950 - 2021).
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-6-1.png" alt="Map of Sasquatch sighting in the lower 48 states based on the BFRO database as (1950 - 2021)." width="768">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>This should work - on to the next step!</p>
+</div>
+<div id="get-more-data" class="section level3" number="1.3.4">
+<h3>
+<span class="header-section-number">1.3.4</span> Get more data<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('get-more-data')" onmouseout="reset_tooltip('get-more-data-tooltip')"><span class="tooltiptext" id="get-more-data-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Occurrence data along will not allow us to build a species distribution model; what we need is environmental data to go with the locations, i.e. we need a set of predictor variables.</p>
+<p>Combining multiple data sets is typical for data science projects, frequently the quality of a project hinges on the availability of hight quality data sets that can provide information to describe or preodict behavior if the data set you are exploring.</p>
+<p>Climate is complex and multidimensional, though at its core climate is determined by <a href="https://openoregon.pressbooks.pub/envirobiology/chapter/3-3-terrestrial-biomes/">long-term patterns in mean and variability of temperature and precipitation</a>.</p>
+<p>We are going to use the bioclim data set from <a href="https://www.climond.org/BioclimRegistry.aspx#Table1">CliMond</a>. Bioclim variables are commonly used for species distribution modeling as they are based on long-term trends (as opposed to e.g. the exact conditions when the species was observed).</p>
+<div id="ques:ds-5" class="question">
+<p class="question-begin">
+► Question 1.5
+</p>
+<div class="question-body">
+<p>
+Look up the descriptions of the <a href="https://www.climond.org/BioclimRegistry.aspx#Table1">bioclim variables</a> and give a brief description of the four abiotic parameters that are included and how they are being parameterized. Argue which you think are most important to describe a species distribution/ecological niche and whether you think overall this data set will help us understand Sasquatch species distribution.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>The data set we are using includes a core set of 19 variables that describe temperature and precipitation, along with an additional 16 variables that describe solar radiation and soil moisture. This information is encoded in the raster files of the historical (contemporary) bioclim data sets at a resolution of 10’ (minutes) into the data folder. The “historical” data set consists of data from 1961 - 1990 centered on 1975.</p>
+<p>A raster file is an image file consisting of pixels with data associated with it. In this case, our “pixels” are 10’ x 10’ and depending on the layer the value associated with each pixel is the value for that bioclim value at that geographic location.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="what-even-is-data-science.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get list of files</span></span>
+<span id="cb5-2"><a href="what-even-is-data-science.html#cb5-2" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"data/"</span>, <span class="at">pattern=</span><span class="st">'^CM10_1975H'</span>, <span class="at">full.names=</span><span class="cn">TRUE</span> )</span>
+<span id="cb5-3"><a href="what-even-is-data-science.html#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="what-even-is-data-science.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># import and convert to raster stack</span></span>
+<span id="cb5-5"><a href="what-even-is-data-science.html#cb5-5" aria-hidden="true" tabindex="-1"></a>predictors <span class="ot">&lt;-</span> <span class="fu">stack</span>(files)</span></code></pre></div>
+<p>We have now created an object that at its core consists of a list where each element is a layer (bioclim variable raster).</p>
+</div>
+<div id="tidy-transform-explore-the-data-again" class="section level3" number="1.3.5">
+<h3>
+<span class="header-section-number">1.3.5</span> Tidy, transform &amp; explore the data (again)<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('tidy-transform-explore-the-data-again')" onmouseout="reset_tooltip('tidy-transform-explore-the-data-again-tooltip')"><span class="tooltiptext" id="tidy-transform-explore-the-data-again-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Let’s plot the first bioclim variable (Bio01, annual mean temperature).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="what-even-is-data-science.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(predictors<span class="sc">@</span>layers[[<span class="dv">1</span>]])</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-8"></span>
+<p class="caption marginnote shownote">
+Figure 1.3: Global distribution of annual mean temperature (1961 - 1990, centered on 1975).
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-8-1.png" alt="Global distribution of annual mean temperature (1961 - 1990, centered on 1975)." width="768">
+</div>
+<p>We see the pattern we would intuitively expect, with temperatures decreasing as you move poleward and being warmest around the poles.</p>
+<p>Let’s extract the values for each bioclim variable at our occurrence points (observations).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="what-even-is-data-science.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create df with just xy coordinates</span></span>
+<span id="cb7-2"><a href="what-even-is-data-science.html#cb7-2" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> occurrence <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="what-even-is-data-science.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(longitude, latitude)</span>
+<span id="cb7-4"><a href="what-even-is-data-science.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="what-even-is-data-science.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># crop bioclim data to geographic range</span></span>
+<span id="cb7-6"><a href="what-even-is-data-science.html#cb7-6" aria-hidden="true" tabindex="-1"></a>cropped_predictors <span class="ot">&lt;-</span> <span class="fu">crop</span>(<span class="at">x =</span> predictors, <span class="at">y =</span> geo_range)</span>
+<span id="cb7-7"><a href="what-even-is-data-science.html#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="what-even-is-data-science.html#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># extract values</span></span>
+<span id="cb7-9"><a href="what-even-is-data-science.html#cb7-9" aria-hidden="true" tabindex="-1"></a>presence <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(cropped_predictors, xy)</span></code></pre></div>
+<p>Let’s take a quick look at the first few rows and columns of the matrix we just created.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="what-even-is-data-science.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(presence[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span></code></pre></div>
+<pre><code>##      CM10_1975H_Bio01_V1.2 CM10_1975H_Bio02_V1.2 CM10_1975H_Bio03_V1.2
+## [1,]              8.387707              15.84337             0.3534581
+## [2,]             10.156170               9.49416             0.2941423
+## [3,]             15.522450              13.50635             0.3474373
+## [4,]             11.259700              12.40612             0.3456673
+## [5,]             10.189860              11.02385             0.3073747
+## [6,]              8.724987              10.20157             0.2807353</code></pre>
+<div id="ques:ds-6" class="question">
+<p class="question-begin">
+► Question 1.6
+</p>
+<div class="question-body">
+<p>
+Briefly state what these values represent.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="create-species-distribution-model" class="section level3" number="1.3.6">
+<h3>
+<span class="header-section-number">1.3.6</span> Create species distribution model<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('create-species-distribution-model')" onmouseout="reset_tooltip('create-species-distribution-model-tooltip')"><span class="tooltiptext" id="create-species-distribution-model-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Our next step is to fit a bioclim model to the data set we just generated.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="what-even-is-data-science.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fit bioclim model</span></span>
+<span id="cb10-2"><a href="what-even-is-data-science.html#cb10-2" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">bioclim</span>(presence)</span></code></pre></div>
+<p>The bioclim model is a classic climate-envelope-model<label for="tufte-sn-5" class="margin-toggle sidenote-number">5</label><input type="checkbox" id="tufte-sn-5" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">5</span> You may remember reading about this in your reading assignments.</span>.</p>
+<p>Briefly, the algorithm computes the similarity of locations by comparing the value of each environmental variables being used (our bioclim data set) to a distribution of that values at all locations with known presence<label for="tufte-sn-6" class="margin-toggle sidenote-number">6</label><input type="checkbox" id="tufte-sn-6" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">6</span> Also called the training sites; these are our occurrence points.</span>. The closer that value is to the median (50th percentile), the more suitable that location is assumed to be. Suitability scores are between 0 and 1, with 1 indicating a “perfect suitability.”)</p>
+<p>In general, there is no distinction between the tails of the distribution (i.e. the 90th and 10th percentile are equivalent), though in some implementations you can specify those to be treated as distinct. As a result e.g. low levels of precipitation could be limiting but high levels would not be.</p>
+<p>Finally, we will use our suitability scores and the bioclim raster data set to generate a predictive map of the Sasquatch species distribution. This means that the algorithm will assign a suitability score to each pixel based on the model and create a new raster layer.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="what-even-is-data-science.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># generate raster with predicted distribution</span></span>
+<span id="cb11-2"><a href="what-even-is-data-science.html#cb11-2" aria-hidden="true" tabindex="-1"></a>prediction <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">predict</span>(<span class="at">x =</span> cropped_predictors, </span>
+<span id="cb11-3"><a href="what-even-is-data-science.html#cb11-3" aria-hidden="true" tabindex="-1"></a>                             <span class="at">object =</span> model.fit,</span>
+<span id="cb11-4"><a href="what-even-is-data-science.html#cb11-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ext =</span> geo_range)</span></code></pre></div>
+<p>Let’s plot our species distribution map.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="what-even-is-data-science.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot model probabilities</span></span>
+<span id="cb12-2"><a href="what-even-is-data-science.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prediction,</span>
+<span id="cb12-3"><a href="what-even-is-data-science.html#cb12-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(min.lon, max.lon),</span>
+<span id="cb12-4"><a href="what-even-is-data-science.html#cb12-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(min.lat, max.lat),</span>
+<span id="cb12-5"><a href="what-even-is-data-science.html#cb12-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-6"><a href="what-even-is-data-science.html#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="what-even-is-data-science.html#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co"># add map</span></span>
+<span id="cb12-8"><a href="what-even-is-data-science.html#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(wrld_simpl, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">border =</span> <span class="st">"black"</span>)</span>
+<span id="cb12-9"><a href="what-even-is-data-science.html#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="what-even-is-data-science.html#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># draw box around it</span></span>
+<span id="cb12-11"><a href="what-even-is-data-science.html#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-13"></span>
+<p class="caption marginnote shownote">
+Figure 1.4: Species distribution model for Sasquatch. Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-13-1.png" alt="Species distribution model for Sasquatch. Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability." width="768">
+</div>
+<div id="ques:ds-7" class="question">
+<p class="question-begin">
+► Question 1.7
+</p>
+<div class="question-body">
+<p>
+Give a brief description of the habitat suitability map, including the maximum probabilities. Describe wether this result fits your expectations based on the distribution map of reports we looked at earlier. According to our map, if you were planning a Sasquatch research trip, where would you be headed?
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Our highest habitat suitability values (probability of occurring) seem pretty low. One reason for this is that we used presence-only data.</p>
+<div id="ques:ds-8" class="question">
+<p class="question-begin">
+► Question 1.8
+</p>
+<div class="question-body">
+<p>
+The alternative to presence-only models is to have presence-absence data. Discuss how this would improve the models. Argue why you think presence-only data sets are easier to generate.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:ds-9" class="question">
+<p class="question-begin">
+► Question 1.9
+</p>
+<div class="question-body">
+<p>
+A work-around of not having absence data is to generate pseudo-absence data. This is done by generating random points within the geographic range and using those as proxies for absence data. Briefly argue the merits and limitations of such an approach.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="model-future-climate-change" class="section level3" number="1.3.7">
+<h3>
+<span class="header-section-number">1.3.7</span> Model future climate change<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('model-future-climate-change')" onmouseout="reset_tooltip('model-future-climate-change-tooltip')"><span class="tooltiptext" id="model-future-climate-change-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Projections of future climate change are heavily dependent on human activity and the resulting greenhouse gas emissions. Therefore the IPCC’s Assessment Reports contain scenario families that represent projected climate conditions based on emission scenarios resulting from future technological and economic development as defined by each scenario.</p>
+<p>Let’s look at how the species distribution map might change in response to a shift in environmental parameters.</p>
+<p>To do this we will use bioclim raster files for 2100 generated using the A1B and A2 scenarios.</p>
+<p>The A1 climate scenarios assume a more integrated world characterized by rapid economic growth, a global population that peaks at 9 billion (2050) and the gradually declines, rapid spread of new/efficient technologies, and a convergent world characterized by extensive worldwide social and cultural interactions. Scenario A1B further assumes a balanced emphasis on fossil and non-fossil fuels.</p>
+<p>By contrast, A2 scenarios assume a more divided world consisting of independently operating and self-reliant nations and regionally-oriented economic development. The population is assumed to continuously grow. Finally, this scenario is characterized by high emissions.</p>
+<p>Let’s start with the <strong>A1 climate scenario</strong> to create our species distribution model.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="what-even-is-data-science.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get list of files</span></span>
+<span id="cb13-2"><a href="what-even-is-data-science.html#cb13-2" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"data/"</span>, <span class="at">pattern=</span><span class="st">'^CM10_2100_A1B'</span>, <span class="at">full.names=</span><span class="cn">TRUE</span> )</span>
+<span id="cb13-3"><a href="what-even-is-data-science.html#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="what-even-is-data-science.html#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># import and convert to raster stack</span></span>
+<span id="cb13-5"><a href="what-even-is-data-science.html#cb13-5" aria-hidden="true" tabindex="-1"></a>predictors_A1 <span class="ot">&lt;-</span> <span class="fu">stack</span>(files)</span></code></pre></div>
+<p>Now let’s fit our model and create predictive map.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="what-even-is-data-science.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create df with just xy coordinates</span></span>
+<span id="cb14-2"><a href="what-even-is-data-science.html#cb14-2" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> occurrence <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="what-even-is-data-science.html#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(longitude, latitude)</span>
+<span id="cb14-4"><a href="what-even-is-data-science.html#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="what-even-is-data-science.html#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># crop bioclim data to geographic range</span></span>
+<span id="cb14-6"><a href="what-even-is-data-science.html#cb14-6" aria-hidden="true" tabindex="-1"></a>cropped_predictors <span class="ot">&lt;-</span> <span class="fu">crop</span>(<span class="at">x =</span> predictors_A1, <span class="at">y =</span> geo_range)</span>
+<span id="cb14-7"><a href="what-even-is-data-science.html#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="what-even-is-data-science.html#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># extract values</span></span>
+<span id="cb14-9"><a href="what-even-is-data-science.html#cb14-9" aria-hidden="true" tabindex="-1"></a>presence <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(cropped_predictors, xy)</span>
+<span id="cb14-10"><a href="what-even-is-data-science.html#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="what-even-is-data-science.html#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the bioclim model</span></span>
+<span id="cb14-12"><a href="what-even-is-data-science.html#cb14-12" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">bioclim</span>(presence)</span>
+<span id="cb14-13"><a href="what-even-is-data-science.html#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="what-even-is-data-science.html#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co"># create raster layer of predicted distribution</span></span>
+<span id="cb14-15"><a href="what-even-is-data-science.html#cb14-15" aria-hidden="true" tabindex="-1"></a>prediction <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">predict</span>(<span class="at">x =</span> cropped_predictors, </span>
+<span id="cb14-16"><a href="what-even-is-data-science.html#cb14-16" aria-hidden="true" tabindex="-1"></a>                             <span class="at">object =</span> model.fit,</span>
+<span id="cb14-17"><a href="what-even-is-data-science.html#cb14-17" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ext =</span> geo_range)</span></code></pre></div>
+<p>Finally, let’s plot our species distribution map.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="what-even-is-data-science.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot model probabilities</span></span>
+<span id="cb15-2"><a href="what-even-is-data-science.html#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prediction,</span>
+<span id="cb15-3"><a href="what-even-is-data-science.html#cb15-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(min.lon, max.lon),</span>
+<span id="cb15-4"><a href="what-even-is-data-science.html#cb15-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(min.lat, max.lat),</span>
+<span id="cb15-5"><a href="what-even-is-data-science.html#cb15-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-6"><a href="what-even-is-data-science.html#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="what-even-is-data-science.html#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># add map</span></span>
+<span id="cb15-8"><a href="what-even-is-data-science.html#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(wrld_simpl, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">border =</span> <span class="st">"black"</span>)</span>
+<span id="cb15-9"><a href="what-even-is-data-science.html#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="what-even-is-data-science.html#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># draw box around it</span></span>
+<span id="cb15-11"><a href="what-even-is-data-science.html#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-16"></span>
+<p class="caption marginnote shownote">
+Figure 1.5: Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A1B). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-16-1.png" alt="Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A1B). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability." width="768">
+</div>
+<div id="ques:ds-10" class="question">
+<p class="question-begin">
+► Question 1.10
+</p>
+<div class="question-body">
+<p>
+Give a brief description of the habitat suitability map, including the maximum probabilities. Describe whether this fit your expectations based on the change in bioclim variables. Describe the shift in habitat suitability relative to our current model.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>How about our A2 climate scenario?</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="what-even-is-data-science.html#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get list of files</span></span>
+<span id="cb16-2"><a href="what-even-is-data-science.html#cb16-2" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"data/"</span>, <span class="at">pattern=</span><span class="st">'^CM10_2100_A2'</span>, <span class="at">full.names=</span><span class="cn">TRUE</span> )</span>
+<span id="cb16-3"><a href="what-even-is-data-science.html#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="what-even-is-data-science.html#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># import and convert to raster stack</span></span>
+<span id="cb16-5"><a href="what-even-is-data-science.html#cb16-5" aria-hidden="true" tabindex="-1"></a>predictors_A2 <span class="ot">&lt;-</span> <span class="fu">stack</span>(files)</span>
+<span id="cb16-6"><a href="what-even-is-data-science.html#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="what-even-is-data-science.html#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create df with just xy coordinates</span></span>
+<span id="cb16-8"><a href="what-even-is-data-science.html#cb16-8" aria-hidden="true" tabindex="-1"></a>xy <span class="ot">&lt;-</span> occurrence <span class="sc">%&gt;%</span></span>
+<span id="cb16-9"><a href="what-even-is-data-science.html#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(longitude, latitude)</span>
+<span id="cb16-10"><a href="what-even-is-data-science.html#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="what-even-is-data-science.html#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># crop bioclim data to geographic range</span></span>
+<span id="cb16-12"><a href="what-even-is-data-science.html#cb16-12" aria-hidden="true" tabindex="-1"></a>cropped_predictors <span class="ot">&lt;-</span> <span class="fu">crop</span>(<span class="at">x =</span> predictors_A2, <span class="at">y =</span> geo_range)</span>
+<span id="cb16-13"><a href="what-even-is-data-science.html#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="what-even-is-data-science.html#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># extract values</span></span>
+<span id="cb16-15"><a href="what-even-is-data-science.html#cb16-15" aria-hidden="true" tabindex="-1"></a>presence <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">extract</span>(cropped_predictors, xy)</span>
+<span id="cb16-16"><a href="what-even-is-data-science.html#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="what-even-is-data-science.html#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co"># fit the bioclim model</span></span>
+<span id="cb16-18"><a href="what-even-is-data-science.html#cb16-18" aria-hidden="true" tabindex="-1"></a>model.fit <span class="ot">&lt;-</span> <span class="fu">bioclim</span>(presence)</span>
+<span id="cb16-19"><a href="what-even-is-data-science.html#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="what-even-is-data-science.html#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co"># create raster layer of predicted distribution</span></span>
+<span id="cb16-21"><a href="what-even-is-data-science.html#cb16-21" aria-hidden="true" tabindex="-1"></a>prediction <span class="ot">&lt;-</span> dismo<span class="sc">::</span><span class="fu">predict</span>(<span class="at">x =</span> cropped_predictors, </span>
+<span id="cb16-22"><a href="what-even-is-data-science.html#cb16-22" aria-hidden="true" tabindex="-1"></a>                             <span class="at">object =</span> model.fit,</span>
+<span id="cb16-23"><a href="what-even-is-data-science.html#cb16-23" aria-hidden="true" tabindex="-1"></a>                             <span class="at">ext =</span> geo_range)</span>
+<span id="cb16-24"><a href="what-even-is-data-science.html#cb16-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-25"><a href="what-even-is-data-science.html#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co"># plot model probabilities</span></span>
+<span id="cb16-26"><a href="what-even-is-data-science.html#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prediction,</span>
+<span id="cb16-27"><a href="what-even-is-data-science.html#cb16-27" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(min.lon, max.lon),</span>
+<span id="cb16-28"><a href="what-even-is-data-science.html#cb16-28" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(min.lat, max.lat),</span>
+<span id="cb16-29"><a href="what-even-is-data-science.html#cb16-29" aria-hidden="true" tabindex="-1"></a>     <span class="at">axes =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-30"><a href="what-even-is-data-science.html#cb16-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-31"><a href="what-even-is-data-science.html#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="co"># add map</span></span>
+<span id="cb16-32"><a href="what-even-is-data-science.html#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(wrld_simpl, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">border =</span> <span class="st">"black"</span>)</span>
+<span id="cb16-33"><a href="what-even-is-data-science.html#cb16-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="what-even-is-data-science.html#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="co"># draw box around it</span></span>
+<span id="cb16-35"><a href="what-even-is-data-science.html#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-17"></span>
+<p class="caption marginnote shownote">
+Figure 1.6: Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A2). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-17-1.png" alt="Predicted species distribution for Sasquatch in the lower 48 in 2100 (climate scenario A2). Color indicates the probability of encountering Sasquatch in the lower 48 states based on habitat suitability." width="768">
+</div>
+<div id="ques:ds-11" class="question">
+<p class="question-begin">
+► Question 1.11
+</p>
+<div class="question-body">
+<p>
+Briefly compare this model to the previous two. Comment on whether you expected to see greater or smaller difference to the other future climate prediction based on the scenarios that they are based on.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:ds-12" class="question">
+<p class="question-begin">
+► Question 1.12
+</p>
+<div class="question-body">
+<p>
+Discuss whether you think bioclim variables are good models to predict a species’ respone to climate change. In your discussion consider how future bioclim data sets are generated, as well as, whether abiotic conditions along will determine range changes.
+</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="visualize-and-communicate-your-results" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Visualize and Communicate your results<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('visualize-and-communicate-your-results')" onmouseout="reset_tooltip('visualize-and-communicate-your-results-tooltip')"><span class="tooltiptext" id="visualize-and-communicate-your-results-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Printing our maps side by side for better comparison would be a good way to visualize and communicate our results. We would probably include a discussion of our our approach (we should probably validate our model too which we haven’t done here) and make recommendations based on our findings.</p>
+<p><br><br><br><br><br><br><br><br><br></p>
+</div>
+<div id="acknowledgments" class="section level2" number="1.5">
+<h2>
+<span class="header-section-number">1.5</span> Acknowledgments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('acknowledgments')" onmouseout="reset_tooltip('acknowledgments-tooltip')"><span class="tooltiptext" id="acknowledgments-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Since I’m not the first person to create a lab/tutorial on species distribution modeling, I drew inspiration from various educators, R and data enthusiasts to shape this tutorial, most notably:</p>
+<p>Anna L. Carter. November 2017, posting date. Painting turtles: an introduction to species distribution modeling in R. Teaching Issues and Experiments in Ecology, Vol. 13: Practice #1 [online]. <a href="http://tiee.esa.org/vol/v13/issues/data_sets/carter/abstract.html" class="uri">http://tiee.esa.org/vol/v13/issues/data_sets/carter/abstract.html</a></p>
+<p>Wendy L. Clement, Kathleen L. Prudic, and Jeffrey C. Oliver. 16 August 2018, posting date. Exploring how climate will impact plant-insect distributions and interactions using open data and informatics. Teaching Issues and Experiments in Ecology, Vol. 14: Experiment #1 [online]. <a href="http://tiee.esa.org/vol/v14/experiments/clement/abstract.html" class="uri">http://tiee.esa.org/vol/v14/experiments/clement/abstract.html</a></p>
+<p><a href="https://jcoliver.github.io/learn-r/011-species-distribution-models.html" class="uri">https://jcoliver.github.io/learn-r/011-species-distribution-models.html</a></p>
+
+</div>
+</div></body></html>
+
+<p style="text-align: center;">
+<a href="index.html"><button class="btn btn-default">Previous</button></a>
+<a href="installing-rrstudio.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-11-04
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>
