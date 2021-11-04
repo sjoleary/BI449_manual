@@ -1,0 +1,104 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      cache.extra = packageVersion('msmbstyle'),
+                      warning = FALSE,
+                      message = FALSE,
+                      error = FALSE)
+
+
+options(htmltools.dir.version = FALSE)
+
+source("scr/ggplot.R")
+
+theme_set(theme_standard)
+
+```
+
+# Simulated Data for hypothesis testing II
+
+**Learning Objectives**
+
+After completing this tutorial you should be able to
+
+* describe the concepts of macrosystems and teleconnections and how different ecological processes can interact at local, regional, and global scales.
+* set up and run lake models to simulate lake temperatures and ice cover in multiple lakes.
+* formulate hypotheses about the effects of teleconnected climate scenarios on different lake modules and test them using simulations.
+* describe how local characteristics modify global-scale climate forcing effects on lake temperatures and ice cover
+
+
+Create new `Rmd` file using `File > New File > R Markdown` or the drop down menu of the green plus button below `File` and save it in your Lake Modeling project directory. Use the setup chunk to set your global settings for the document using the options you've learned about in the last few projects, including turning off messages, warnings, and errors being printed out when you knit your file. 
+
+Remember, you should always check your `html` document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. This includes checking whether your figures look as you expect them to, or if you need to adjust the size e.g. using `fig.width` and `fig.height`.
+
+Let's load our packages so we can get started.
+
+```{r}
+
+# load libraries
+library(tidyverse)
+library(patchwork)
+
+library(sp)
+library(GLMr)
+library(glmtools)
+
+# turn of sci notation
+options(scipen=999)
+
+```
+
+
+## Teleconnections
+
+We have already seen how local and regional drivers can impact the thermal structure of lakes. Local impacts could include something like land cover change which alters the stream inflow/outflow of a lake impacting temperature. At a regional scale climate change can alter weather patterns, including both extreme events which disrupt regular seasonal patterns or also gradual change which raises lake temperatures overall.
+
+Next, we are going to explore how ecosystems can be influenced on a global scale by teleconnections, i.e. meteorological, societal, and/or ecological phenomenon that link remote regions via cause and effect relationships. Simulations are especially powerful in this context, because it allows researchers to manipulate drivers independently from each other to disentangle how they impact ecosystems. By running different teleconnection scenarios, scientists are then able to better predict how ecosystems will respond to remote drivers.
+
+In our module, we will specifically look at lake thermal structure and ice cover and determine how it is impacted by climate teleconnections to decadal events like the El Niño/Southern Oscillation (ENSO). This is an example of a global driver. ENSO period with warmer ocean surface temperatures in the Pacific Ocean affect regular trade wind patterns. This altered atmospheric circulating impacts air temperature and precipitation patterns globally. How ENSO ends up impacting a particular lake will be further mediated by local and regional dynamics.
+
+
+
+
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+## Acknowledgments
+
+These activities are based on the EDDIE Teleconnections module.^[Farrell, K.J. and C.C. Carey. 18 May 2018. Macrosystems EDDIE: Teleconnections. Macrosystems EDDIE Module 3, Version 1.]
