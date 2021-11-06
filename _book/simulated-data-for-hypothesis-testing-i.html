@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-04" />
+<meta name="date" content="2021-11-06" />
 
 
 <meta name="description" content="21 Simulated Data for hypothesis testing I | Data Science for the Natural Environment (FA21)">
@@ -234,27 +234,27 @@ function reset_tooltip(id) {
 <p>Your first step is creating a new R project in your project folder. To do this open <code>Rstudio</code> then use the drop down menu in the top right corner to select <code>New Project</code> and from there <code>New Project in an existing directory</code>. From there, navigate to and select the project folder create an R project. Remember, your <code>Rproj</code> sets the working directory so you need to make sure that it is in your project folder.</p>
 <p>Next, open a new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Lake Modeling project directory. Use the setup chunk to set your global settings for the document using the options you’ve learned about in the last few projects. Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc.</p>
 <p>Before we start we need to install a few packages if you have not already done so. Remember, if you have a code chunk with code to install packages it will run every time you knit your document or use the <code>run all chunks</code> options. It is best to either comment out those lines of code, inactivate the code chunk using <code>eval=FALSE</code> or just run them directly in the console.</p>
-<div class="sourceCode" id="cb402"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb402-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"sp"</span>)</span>
-<span id="cb402-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb402-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb402-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-4" aria-hidden="true" tabindex="-1"></a><span class="co"># this will likely take a few minutes</span></span>
-<span id="cb402-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-5" aria-hidden="true" tabindex="-1"></a><span class="co"># if successful will say "DONE (GLMr)" at end of output</span></span>
-<span id="cb402-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-6" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"CareyLabVT/GLMr"</span>, <span class="at">force =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb402-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb402-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-8" aria-hidden="true" tabindex="-1"></a><span class="co"># this will also take a few minutes</span></span>
-<span id="cb402-9"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-9" aria-hidden="true" tabindex="-1"></a><span class="co"># you might get a pop up asking if you want to compile from source</span></span>
-<span id="cb402-10"><a href="simulated-data-for-hypothesis-testing-i.html#cb402-10" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"CareyLabVT/glmtools"</span>, <span class="at">force =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"sp"</span>)</span>
+<span id="cb403-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb403-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb403-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-4" aria-hidden="true" tabindex="-1"></a><span class="co"># this will likely take a few minutes</span></span>
+<span id="cb403-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-5" aria-hidden="true" tabindex="-1"></a><span class="co"># if successful will say "DONE (GLMr)" at end of output</span></span>
+<span id="cb403-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-6" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"CareyLabVT/GLMr"</span>, <span class="at">force =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb403-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb403-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-8" aria-hidden="true" tabindex="-1"></a><span class="co"># this will also take a few minutes</span></span>
+<span id="cb403-9"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-9" aria-hidden="true" tabindex="-1"></a><span class="co"># you might get a pop up asking if you want to compile from source</span></span>
+<span id="cb403-10"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-10" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"CareyLabVT/glmtools"</span>, <span class="at">force =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Let’s load our packages so we can get started.</p>
-<div class="sourceCode" id="cb403"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb403-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
-<span id="cb403-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb403-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb403-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb403-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
-<span id="cb403-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GLMr)</span>
-<span id="cb403-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmtools)</span>
-<span id="cb403-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb403-9"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-9" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
-<span id="cb403-10"><a href="simulated-data-for-hypothesis-testing-i.html#cb403-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb404-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb404-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb404-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb404-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb404-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GLMr)</span>
+<span id="cb404-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmtools)</span>
+<span id="cb404-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb404-9"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-9" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb404-10"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
 <div id="macrosystems-ecology" class="section level2" number="21.1">
 <h2>
 <span class="header-section-number">21.1</span> Macrosystems ecology<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('macrosystems-ecology')" onmouseout="reset_tooltip('macrosystems-ecology-tooltip')"><span class="tooltiptext" id="macrosystems-ecology-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -296,14 +296,14 @@ function reset_tooltip(id) {
 <p>We are going to use additional scripts/files that will allow you to tell the General Lake Model (GLM) how you want the model to be run. The GLM is not written in R, rather we have wrapper functions written in R that allow us to interface with the model. The advantage of doing this is that we can run the model and then interpret the output in the same environment.</p>
 <p>We will use <code>*.nml</code> scripts to run the GLM simulations. This script sets all the initial conditions of the lake we want to simulate, i.e. id defines the parameters. It includes various sections including <code>glm_setup</code>, <code>morphometry</code>, and <code>metereology</code>.</p>
 <p>We are going to run all of our simulations in separate directories that will contain input files/scripts defining parameters, all output will also be written to that directory. If you check the file structure for our project directory you will notice that we have a folder called <code>sim</code>. This already contains a file called <code>glm2.nml</code> for a default lake We will create a vector with our path, that way we won’t constantly have to type in the path, instead we can use the object name.</p>
-<div class="sourceCode" id="cb404"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb404-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set path for nml file</span></span>
-<span id="cb404-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-2" aria-hidden="true" tabindex="-1"></a>nml_file <span class="ot">&lt;-</span> <span class="st">"sim/glm2.nml"</span></span>
-<span id="cb404-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb404-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in nml file</span></span>
-<span id="cb404-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-5" aria-hidden="true" tabindex="-1"></a>nml <span class="ot">&lt;-</span> <span class="fu">read_nml</span>(nml_file)</span>
-<span id="cb404-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb404-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-7" aria-hidden="true" tabindex="-1"></a><span class="co"># see contents</span></span>
-<span id="cb404-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb404-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(nml)</span></code></pre></div>
+<div class="sourceCode" id="cb405"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb405-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb405-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set path for nml file</span></span>
+<span id="cb405-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb405-2" aria-hidden="true" tabindex="-1"></a>nml_file <span class="ot">&lt;-</span> <span class="st">"sim/glm2.nml"</span></span>
+<span id="cb405-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb405-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb405-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb405-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in nml file</span></span>
+<span id="cb405-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb405-5" aria-hidden="true" tabindex="-1"></a>nml <span class="ot">&lt;-</span> <span class="fu">read_nml</span>(nml_file)</span>
+<span id="cb405-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb405-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb405-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb405-7" aria-hidden="true" tabindex="-1"></a><span class="co"># see contents</span></span>
+<span id="cb405-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb405-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(nml)</span></code></pre></div>
 <pre><code>## &amp;glm_setup
 ##    sim_name = 'GLMSimulation'
 ##    max_layers = 500
@@ -402,8 +402,8 @@ function reset_tooltip(id) {
 ## /</code></pre>
 <p>Let’s take a look at the various values that have been set for different parameters that determine how we will be running our simulation.</p>
 <p>First, let’s find out what our lake is called.</p>
-<div class="sourceCode" id="cb406"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb406-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb406-1" aria-hidden="true" tabindex="-1"></a><span class="co"># query lake name</span></span>
-<span id="cb406-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb406-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_nml_value</span>(nml, <span class="st">"lake_name"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb407"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb407-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb407-1" aria-hidden="true" tabindex="-1"></a><span class="co"># query lake name</span></span>
+<span id="cb407-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb407-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_nml_value</span>(nml, <span class="st">"lake_name"</span>)</span></code></pre></div>
 <pre><code>## [1] "AwesomeLake"</code></pre>
 <div id="ques:sim-3" class="question">
 <p class="question-begin">
@@ -417,13 +417,13 @@ function reset_tooltip(id) {
 </div>
 </div>
 <p>Now, let’s take a closer look at the meteorological input data for the duration of our simulation.</p>
-<div class="sourceCode" id="cb408"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb408-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb408-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_meteo</span>(nml_file)</span></code></pre></div>
+<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_meteo</span>(nml_file)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-343"></span>
+<span style="display:block;" id="fig:unnamed-chunk-344"></span>
 <p class="caption marginnote shownote">
 Figure 21.1: Metereological data describing drivers of thermal structure of Lake Awesome.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-343-1.png" alt="Metereological data describing drivers of thermal structure of Lake Awesome." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-344-1.png" alt="Metereological data describing drivers of thermal structure of Lake Awesome." width="768">
 </div>
 <div id="ques:sim-4" class="question">
 <p class="question-begin">
@@ -466,24 +466,24 @@ Figure 21.1: Metereological data describing drivers of thermal structure of Lake
 </div>
 </div>
 <p>Now, let’s get to the good stuff and actually run the simulation; to run this simulation it will pull data from the <code>nml</code> file describing the lake along with information on drivers from the <code>met_hourly.csv</code> file in your <code>sim</code> folder.</p>
-<div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run model</span></span>
-<span id="cb409-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb409-2" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(<span class="st">"sim/"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb410"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb410-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb410-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run model</span></span>
+<span id="cb410-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb410-2" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(<span class="st">"sim/"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>If you check your <code>sim</code> directory, you should now see output files that have been added (check the modified dates).</p>
 <p>The important files is <code>output.nc</code> which contains all the output data from our simulation. Again, we’ll create a vector with the path to the output file. This is our baseline simulated data based on observed conditions recorded in the <code>met_hourly.csv</code> file.</p>
-<div class="sourceCode" id="cb411"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb411-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb411-1" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim"</span>, <span class="st">'output.nc'</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb412-1" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim"</span>, <span class="st">'output.nc'</span>)</span></code></pre></div>
 <p>Now, let’s pull the data describing daily surface water temperatures in the lake during our baseline simulation and store it in a <code>data.frame</code> so we can compare it to our climate scenario down the road.</p>
-<div class="sourceCode" id="cb412"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb412-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb412-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create data frame with surface temperature</span></span>
-<span id="cb412-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb412-2" aria-hidden="true" tabindex="-1"></a>surf_temp <span class="ot">&lt;-</span> <span class="fu">get_var</span>(<span class="at">file =</span> baseline, <span class="st">"temp"</span>, <span class="at">reference =</span> <span class="st">"surface"</span>, <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb412-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb412-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Baseline_Temp =</span> temp_1)</span></code></pre></div>
+<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create data frame with surface temperature</span></span>
+<span id="cb413-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb413-2" aria-hidden="true" tabindex="-1"></a>surf_temp <span class="ot">&lt;-</span> <span class="fu">get_var</span>(<span class="at">file =</span> baseline, <span class="st">"temp"</span>, <span class="at">reference =</span> <span class="st">"surface"</span>, <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb413-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb413-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Baseline_Temp =</span> temp_1)</span></code></pre></div>
 <p>For now, let’s visualize our simulated water temperatures using a heat map.</p>
-<div class="sourceCode" id="cb413"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb413-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb413-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp</span>(<span class="at">file =</span> baseline, <span class="at">fig_path =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp</span>(<span class="at">file =</span> baseline, <span class="at">fig_path =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-347"></span>
+<span style="display:block;" id="fig:unnamed-chunk-348"></span>
 <p class="caption marginnote shownote">
 Figure 21.2: Thermal structure for our simulated lake.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-347-1.png" alt="Thermal structure for our simulated lake." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-348-1.png" alt="Thermal structure for our simulated lake." width="672">
 </div>
 <div id="ques:sim-7" class="question">
 <p class="question-begin">
@@ -508,17 +508,17 @@ Figure 21.2: Thermal structure for our simulated lake.
 </div>
 </div>
 <p>In your <code>sim</code> filder there is an additional filed called <code>field_data.csv</code> contains the observed data for buoys in the lake. Let’s compare how modeled data (<code>baseline</code>) compares to the observed field data for our lake.</p>
-<div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define observed field data</span></span>
-<span id="cb414-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb414-2" aria-hidden="true" tabindex="-1"></a>field_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim"</span>, <span class="st">"field_data.csv"</span>)</span>
-<span id="cb414-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb414-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb414-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb414-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot simulated vs observed data</span></span>
-<span id="cb414-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb414-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp_compare</span>(baseline, field_file)</span></code></pre></div>
+<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define observed field data</span></span>
+<span id="cb415-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb415-2" aria-hidden="true" tabindex="-1"></a>field_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim"</span>, <span class="st">"field_data.csv"</span>)</span>
+<span id="cb415-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb415-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb415-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb415-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot simulated vs observed data</span></span>
+<span id="cb415-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb415-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp_compare</span>(baseline, field_file)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-348"></span>
+<span style="display:block;" id="fig:unnamed-chunk-349"></span>
 <p class="caption marginnote shownote">
 Figure 21.3: Comparison of field data and simulated temperatures.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-348-1.png" alt="Comparison of field data and simulated temperatures." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-349-1.png" alt="Comparison of field data and simulated temperatures." width="768">
 </div>
 <p>The top panel shows the observed data measured at different epths and times using high-frequency sensors on a buoy, each measurement is depicted by black circles. The heatmap represents the extrapolated values between sensors.</p>
 <p>The bottom panel shows the modeled data.</p>
@@ -535,14 +535,14 @@ Figure 21.3: Comparison of field data and simulated temperatures.
 </div>
 <p>We can also compare different physical lake characteristics between the simulated and observed lake.</p>
 <p>First, let’s take a look at what metrics we can compare.</p>
-<div class="sourceCode" id="cb415"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb415-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb415-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sim_metrics</span>(<span class="at">with_nml =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb416"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb416-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb416-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sim_metrics</span>(<span class="at">with_nml =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <pre><code>## [1] "buoyancy.freq"     "center.buoyancy"   "thermo.depth"      "water.density"     "water.temperature"</code></pre>
 <p>We can extract the observed and simulated thermocline depths for these metrics and compare them to assess the quality of our model.</p>
 <p>Let’s start with pulling out information on the thermocline depths and return them as a <code>data.frame</code>.</p>
-<div class="sourceCode" id="cb417"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb417-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb417-1" aria-hidden="true" tabindex="-1"></a>therm_depths <span class="ot">&lt;-</span> <span class="fu">compare_to_field</span>(baseline, field_file, <span class="at">metric =</span> <span class="st">"thermo.depth"</span>, </span>
-<span id="cb417-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb417-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">as_value =</span> <span class="cn">TRUE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb417-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb417-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb417-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb417-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(therm_depths)</span></code></pre></div>
+<div class="sourceCode" id="cb418"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb418-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb418-1" aria-hidden="true" tabindex="-1"></a>therm_depths <span class="ot">&lt;-</span> <span class="fu">compare_to_field</span>(baseline, field_file, <span class="at">metric =</span> <span class="st">"thermo.depth"</span>, </span>
+<span id="cb418-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb418-2" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">as_value =</span> <span class="cn">TRUE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb418-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb418-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb418-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb418-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(therm_depths)</span></code></pre></div>
 <pre><code>##               DateTime      obs       mod
 ## 7  2000-04-06 01:00:00 11.78483  3.409255
 ## 8  2000-04-07 01:00:00 11.79451  8.287353
@@ -563,22 +563,22 @@ Figure 21.3: Comparison of field data and simulated temperatures.
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-42" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-42', 'sol-start-42')"></span>
+► Solution<span id="sol-start-124" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-124', 'sol-start-124')"></span>
 </p>
-<div id="sol-body-42" class="solution-body" style="display: none;">
+<div id="sol-body-124" class="solution-body" style="display: none;">
 <p>This can be done in a straight forward way using a line plot.</p>
-<div class="sourceCode" id="cb419"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb419-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb419-1" aria-hidden="true" tabindex="-1"></a>therm_depths <span class="sc">%&gt;%</span></span>
-<span id="cb419-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb419-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"dataset"</span>, <span class="at">values_to =</span> <span class="st">"thermo_depth"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb419-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb419-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DateTime, <span class="at">y =</span> thermo_depth, <span class="at">color =</span> dataset)) <span class="sc">+</span></span>
-<span id="cb419-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb419-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb419-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb419-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>)) <span class="sc">+</span></span>
-<span id="cb419-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb419-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Thermocline depth [m]"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-1" aria-hidden="true" tabindex="-1"></a>therm_depths <span class="sc">%&gt;%</span></span>
+<span id="cb420-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"dataset"</span>, <span class="at">values_to =</span> <span class="st">"thermo_depth"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb420-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DateTime, <span class="at">y =</span> thermo_depth, <span class="at">color =</span> dataset)) <span class="sc">+</span></span>
+<span id="cb420-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb420-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>)) <span class="sc">+</span></span>
+<span id="cb420-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Thermocline depth [m]"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-351"></span>
+<span style="display:block;" id="fig:unnamed-chunk-352"></span>
 <p class="caption marginnote shownote">
 Figure 21.4: Comparison of modeled and observed thermoclines.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-351-1.png" alt="Comparison of modeled and observed thermoclines." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-352-1.png" alt="Comparison of modeled and observed thermoclines." width="672">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -598,26 +598,26 @@ Figure 21.4: Comparison of modeled and observed thermoclines.
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-43" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-43', 'sol-start-43')"></span>
+► Solution<span id="sol-start-125" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-125', 'sol-start-125')"></span>
 </p>
-<div id="sol-body-43" class="solution-body" style="display: none;">
+<div id="sol-body-125" class="solution-body" style="display: none;">
 <p>Before you plot your data take a look at the data set - you’ll notice that there are multiple observations for the same time point.</p>
 <p>Let’s use a scatter plot instead of a line plot to make sure we can see all the data.</p>
-<div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-1" aria-hidden="true" tabindex="-1"></a>water_temp <span class="ot">&lt;-</span> <span class="fu">compare_to_field</span>(baseline, field_file, <span class="at">metric =</span> <span class="st">"water.temperature"</span>,</span>
-<span id="cb420-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">as_value =</span> <span class="cn">TRUE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb420-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb420-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-4" aria-hidden="true" tabindex="-1"></a>water_temp <span class="sc">%&gt;%</span></span>
-<span id="cb420-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"dataset"</span>, <span class="at">values_to =</span> <span class="st">"water_temp"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb420-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DateTime, <span class="at">y =</span> water_temp, <span class="at">color =</span> dataset)) <span class="sc">+</span></span>
-<span id="cb420-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb420-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>)) <span class="sc">+</span></span>
-<span id="cb420-9"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Water temperature [C]"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-1" aria-hidden="true" tabindex="-1"></a>water_temp <span class="ot">&lt;-</span> <span class="fu">compare_to_field</span>(baseline, field_file, <span class="at">metric =</span> <span class="st">"water.temperature"</span>,</span>
+<span id="cb421-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">as_value =</span> <span class="cn">TRUE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb421-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb421-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-4" aria-hidden="true" tabindex="-1"></a>water_temp <span class="sc">%&gt;%</span></span>
+<span id="cb421-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"dataset"</span>, <span class="at">values_to =</span> <span class="st">"water_temp"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb421-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> DateTime, <span class="at">y =</span> water_temp, <span class="at">color =</span> dataset)) <span class="sc">+</span></span>
+<span id="cb421-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb421-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>)) <span class="sc">+</span></span>
+<span id="cb421-9"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Water temperature [C]"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-352"></span>
+<span style="display:block;" id="fig:unnamed-chunk-353"></span>
 <p class="caption marginnote shownote">
 Figure 21.5: Comparison of modeled and observed water temperatures.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-352-1.png" alt="Comparison of modeled and observed water temperatures." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-353-1.png" alt="Comparison of modeled and observed water temperatures." width="672">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -695,24 +695,24 @@ Figure 21.5: Comparison of modeled and observed water temperatures.
 </li>
 <li>Read in the altered <code>met_hourly</code> file, convert the format of the date/time column and write it back out to file.</li>
 </ol>
-<div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in altered met file &amp; convert time format for GLM</span></span>
-<span id="cb421-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"sim/met_hourly_plus2.csv"</span>, <span class="at">delim =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb421-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(time, <span class="st">"%Y-%m-%d %H:%M:%S"</span>, <span class="at">tz=</span><span class="st">"EST"</span>))</span>
-<span id="cb421-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-4" aria-hidden="true" tabindex="-1"></a>         </span>
-<span id="cb421-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write back to file</span></span>
-<span id="cb421-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-6" aria-hidden="true" tabindex="-1"></a><span class="fu">write_delim</span>(metadata, <span class="st">"sim/sim1_met_hourly.csv"</span>, <span class="at">delim =</span> <span class="st">","</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in altered met file &amp; convert time format for GLM</span></span>
+<span id="cb422-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"sim/met_hourly_plus2.csv"</span>, <span class="at">delim =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb422-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">time =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(time, <span class="st">"%Y-%m-%d %H:%M:%S"</span>, <span class="at">tz=</span><span class="st">"EST"</span>))</span>
+<span id="cb422-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-4" aria-hidden="true" tabindex="-1"></a>         </span>
+<span id="cb422-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write back to file</span></span>
+<span id="cb422-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-6" aria-hidden="true" tabindex="-1"></a><span class="fu">write_delim</span>(metadata, <span class="st">"sim/sim1_met_hourly.csv"</span>, <span class="at">delim =</span> <span class="st">","</span>)</span></code></pre></div>
 <p><strong>Any time you alter the <code>met</code> file you will need to go back through these steps!</strong></p>
 <p>Before we can run the simulations, we will also need to edit the <code>glm2.nml</code> file to change the name of your input meteorological file so that it knows what file it should be looking for to get the meteorological data to run the model with.</p>
 <p>Open the <code>nml</code> file that you have placed in your <code>sim1</code> folder in a text editor and scroll down to the meteorology section. Here, change the <code>meteo_fl</code> entry to your new file name (<code>sim1_met_hourly.csv</code>) for your climate scenario<label for="tufte-sn-120" class="margin-toggle sidenote-number">120</label><input type="checkbox" id="tufte-sn-120" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">120</span> Pro tip: Us the Find options to locate the <code>nml</code> file. Details count: Make sure that your quotes <code>'</code> around the file name are upright and not slanted!</span>.</p>
 <p>Once you’ve edited the <code>met</code> file name in your <code>nml</code> file, double check that you’ve made sure that it’s correct. You can do this by reading in the file.</p>
-<div class="sourceCode" id="cb422"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb422-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change the path to new sim folder</span></span>
-<span id="cb422-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-2" aria-hidden="true" tabindex="-1"></a>nml_file <span class="ot">&lt;-</span>  <span class="st">"sim1/glm2.nml"</span></span>
-<span id="cb422-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb422-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read altered nml file</span></span>
-<span id="cb422-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-5" aria-hidden="true" tabindex="-1"></a>nml <span class="ot">&lt;-</span> <span class="fu">read_nml</span>(nml_file)</span>
-<span id="cb422-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb422-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check met file name</span></span>
-<span id="cb422-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb422-8" aria-hidden="true" tabindex="-1"></a><span class="fu">get_nml_value</span>(nml, <span class="st">"meteo_fl"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="co"># change the path to new sim folder</span></span>
+<span id="cb423-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-2" aria-hidden="true" tabindex="-1"></a>nml_file <span class="ot">&lt;-</span>  <span class="st">"sim1/glm2.nml"</span></span>
+<span id="cb423-3"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb423-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read altered nml file</span></span>
+<span id="cb423-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-5" aria-hidden="true" tabindex="-1"></a>nml <span class="ot">&lt;-</span> <span class="fu">read_nml</span>(nml_file)</span>
+<span id="cb423-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb423-7"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check met file name</span></span>
+<span id="cb423-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-8" aria-hidden="true" tabindex="-1"></a><span class="fu">get_nml_value</span>(nml, <span class="st">"meteo_fl"</span>)</span></code></pre></div>
 <p>If you made the changes correctly the output should list the name of the meterological file you specified that describes your weather/climate scenario (<code>sim1_met_hourly.csv</code>).</p>
 <p>Once you have completed this you are ready to run your climate scenarios. You should be creating the input files to match one of the climate scenarios you will be running (folder <code>sim1</code>) and then you will “swap” folder &amp; files with your partner … you can either rename everything to <code>sim2</code> or agree with your partner ahead of time which of you will prep the <code>sim2</code><label for="tufte-sn-121" class="margin-toggle sidenote-number">121</label><input type="checkbox" id="tufte-sn-121" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">121</span> Note that you will need to make several changes to the code and in the files so that everything for your second climate scenario is <code>sim2</code>.</span>.</p>
 </div>
@@ -732,14 +732,14 @@ Figure 21.5: Comparison of modeled and observed water temperatures.
 </div>
 </div>
 <p>Now, let’s run the scenario.</p>
-<div class="sourceCode" id="cb423"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb423-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run model for climate scenario</span></span>
-<span id="cb423-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb423-2" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(<span class="st">"sim1/"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run model for climate scenario</span></span>
+<span id="cb424-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb424-2" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(<span class="st">"sim1/"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Our next step will be specifying the file path for our output so we can use the functions from <code>glmtools</code> to process the simulation output. Since this is our first climate scenario, we’ll name the variable <code>climate1</code>. Contrast this with our variable <code>baseline</code> that has the simulated output for current, typical meteorological conditions across a year based on the <code>met_hourly.csv</code> input file. Keep in mind that we use the same parameters to describe the link for both simulations - so we are keeping the lake the same and comparing different scenarios for the drivers of thermal structure<label for="tufte-sn-122" class="margin-toggle sidenote-number">122</label><input type="checkbox" id="tufte-sn-122" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">122</span> The other type of comparison you could make is having the same conditions for drivers and two or more different lakes.</span>.</p>
-<div class="sourceCode" id="cb424"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb424-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb424-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define file path for output</span></span>
-<span id="cb424-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb424-2" aria-hidden="true" tabindex="-1"></a>climate1 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim1"</span>, <span class="st">"output.nc"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb425-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define file path for output</span></span>
+<span id="cb425-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb425-2" aria-hidden="true" tabindex="-1"></a>climate1 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim1"</span>, <span class="st">"output.nc"</span>)</span></code></pre></div>
 <p>Next, let’s pull the surface temperature for our first climate scenario<label for="tufte-sn-123" class="margin-toggle sidenote-number">123</label><input type="checkbox" id="tufte-sn-123" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">123</span> Recall, that we did this earlier or our baseline scenario and stored that information in the <code>data.frame</code> <code>surf_temp</code>.</span>.</p>
-<div class="sourceCode" id="cb425"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb425-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb425-1" aria-hidden="true" tabindex="-1"></a>surf_temp_cl1 <span class="ot">&lt;-</span> <span class="fu">get_var</span>(<span class="at">file =</span> climate1, <span class="st">"temp"</span>, <span class="at">reference =</span> <span class="st">"surface"</span>, <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb425-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb425-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Scenario1_Temp =</span> temp_1)</span></code></pre></div>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb426-1" aria-hidden="true" tabindex="-1"></a>surf_temp_cl1 <span class="ot">&lt;-</span> <span class="fu">get_var</span>(<span class="at">file =</span> climate1, <span class="st">"temp"</span>, <span class="at">reference =</span> <span class="st">"surface"</span>, <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb426-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb426-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Scenario1_Temp =</span> temp_1)</span></code></pre></div>
 </div>
 <div id="run-climate-scenario-2" class="section level2" number="21.7">
 <h2>
@@ -757,14 +757,14 @@ Figure 21.5: Comparison of modeled and observed water temperatures.
 </div>
 </div>
 <p>Now, let’s run the scenario. Make sure that your folder <code>sim2</code> has the appropriate <code>met</code> data and that you have changed the filename in the <code>nml</code> file accordingly.</p>
-<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb426-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run model for climate scenario</span></span>
-<span id="cb426-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb426-2" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(<span class="st">"sim2/"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run model for climate scenario</span></span>
+<span id="cb427-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb427-2" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(<span class="st">"sim2/"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <p>Again, we will want to specify the file path for our output - we’ll name this variable <code>climate2</code>. So now we have three file path variables <code>baseline</code>, <code>climate1</code>, and <code>climate2</code>. We will use those in the next section to plot the results of our simulations.</p>
-<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb427-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define file path for output</span></span>
-<span id="cb427-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb427-2" aria-hidden="true" tabindex="-1"></a>climate2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim2"</span>, <span class="st">"output.nc"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb428-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define file path for output</span></span>
+<span id="cb428-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb428-2" aria-hidden="true" tabindex="-1"></a>climate2 <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="st">"sim2"</span>, <span class="st">"output.nc"</span>)</span></code></pre></div>
 <p>Next, let’s pull the surface temperature for our second scenario climate scenario.</p>
-<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb428-1" aria-hidden="true" tabindex="-1"></a>surf_temp_cl2 <span class="ot">&lt;-</span> <span class="fu">get_var</span>(<span class="at">file =</span> climate1, <span class="st">"temp"</span>, <span class="at">reference =</span> <span class="st">"surface"</span>, <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb428-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb428-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Scenario2_Temp =</span> temp_1)</span></code></pre></div>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb429-1" aria-hidden="true" tabindex="-1"></a>surf_temp_cl2 <span class="ot">&lt;-</span> <span class="fu">get_var</span>(<span class="at">file =</span> climate1, <span class="st">"temp"</span>, <span class="at">reference =</span> <span class="st">"surface"</span>, <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">1</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb429-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb429-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Scenario2_Temp =</span> temp_1)</span></code></pre></div>
 </div>
 <div id="compare-your-results" class="section level2" number="21.8">
 <h2>
@@ -806,9 +806,9 @@ Figure 21.5: Comparison of modeled and observed water temperatures.
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-44" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-44', 'sol-start-44')"></span>
+► Solution<span id="sol-start-126" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-126', 'sol-start-126')"></span>
 </p>
-<div id="sol-body-44" class="solution-body" style="display: none;">
+<div id="sol-body-126" class="solution-body" style="display: none;">
 <p>You will want to create heatplots showing temperature by depth across the simulated time periods. You can combine them into a single plot (think about what your layout should look like) using <code>patchwork</code>. Remember, to use <code>fig.height</code> and <code>fig.width</code> to adjust the size of your figure so that you have an easily readable figure once you knit your document.</p>
 <p>You will be needing to use the function <code>plot_temp()</code> as we did above. Change the syntax accordingly. You will need to change the <code>file</code> argument to plot each scenario. Remember, we have stored the information for the output files of the simulations in the vectors <code>baseline</code>, <code>climate1</code>, and <code>climate2</code>.</p>
 <p class="solution-end">
@@ -874,7 +874,7 @@ Figure 21.5: Comparison of modeled and observed water temperatures.
 <a href="simulated-data-for-hypothesis-testing-ii.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-04
+2021-11-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

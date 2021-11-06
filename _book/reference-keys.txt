@@ -58,12 +58,12 @@ fig:unnamed-chunk-326
 fig:unnamed-chunk-328
 fig:unnamed-chunk-335
 fig:unnamed-chunk-336
-fig:unnamed-chunk-337
-fig:unnamed-chunk-343
-fig:unnamed-chunk-347
+fig:unnamed-chunk-338
+fig:unnamed-chunk-344
 fig:unnamed-chunk-348
-fig:unnamed-chunk-351
+fig:unnamed-chunk-349
 fig:unnamed-chunk-352
+fig:unnamed-chunk-353
 what-even-is-data-science
 defining-data-and-science
 what-even-is-data-science-1

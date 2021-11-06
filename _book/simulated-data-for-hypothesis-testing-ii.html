@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-04" />
+<meta name="date" content="2021-11-06" />
 
 
 <meta name="description" content="22 Simulated Data for hypothesis testing II | Data Science for the Natural Environment (FA21)">
@@ -227,16 +227,16 @@ function reset_tooltip(id) {
 <p>Create new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Lake Modeling project directory. Use the setup chunk to set your global settings for the document using the options you’ve learned about in the last few projects, including turning off messages, warnings, and errors being printed out when you knit your file.</p>
 <p>Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. This includes checking whether your figures look as you expect them to, or if you need to adjust the size e.g. using <code>fig.width</code> and <code>fig.height</code>.</p>
 <p>Let’s load our packages so we can get started.</p>
-<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
-<span id="cb429-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb429-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb429-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb429-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
-<span id="cb429-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GLMr)</span>
-<span id="cb429-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmtools)</span>
-<span id="cb429-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb429-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-9" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
-<span id="cb429-10"><a href="simulated-data-for-hypothesis-testing-ii.html#cb429-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
+<span id="cb430-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb430-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb430-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb430-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb430-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GLMr)</span>
+<span id="cb430-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmtools)</span>
+<span id="cb430-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb430-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-9" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb430-10"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
 <div id="teleconnections" class="section level2" number="22.1">
 <h2>
 <span class="header-section-number">22.1</span> Teleconnections<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('teleconnections')" onmouseout="reset_tooltip('teleconnections-tooltip')"><span class="tooltiptext" id="teleconnections-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
@@ -267,7 +267,7 @@ function reset_tooltip(id) {
 <a href="references.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-04
+2021-11-06
  using 
 R version 4.0.2 (2020-06-22)
 </p>

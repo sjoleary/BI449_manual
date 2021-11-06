@@ -80,9 +80,11 @@ Let's load our packages so we can get started.
 ```{r}
 
 # load libraries
+library(plyr)
 library(tidyverse)
 library(janitor)
 library(skimr)
+library(glue)
 
 library(knitr)
 
@@ -337,7 +339,7 @@ ggplot(df_plot, aes(x = topog_meas, y = veget_meas)) +
 
 `r msmbstyle::question_begin(label = "ques:rem-10")`
 
-Use the scatte rplots to make predictions about statistical relationships. Consider whether any of these plots look like they are visualizing strong relationships.
+Use the scatter plots to make predictions about statistical relationships. Consider whether any of these plots look like they are visualizing strong relationships.
 
 Argue whether you think larger data sets make it easier or harder to identify distinct relationships "by eye".
 
@@ -404,7 +406,7 @@ tidy_cor <- as.data.frame(P_corr$r) %>%
 
 Let's write that data frame out as a text file in our results folder.
 
-```{r}
+```{r eval=FALSE}
 
 write_delim(tidy_cor, "results/SOAP_correlation.txt", delim = "\t")
 
@@ -490,7 +492,6 @@ y_max <- max(sites$latitude) + 2
 # set font sizes for text labels
 site_size <- 2
 
-
 # set color for fill
 map_color <- "#a8d481"
 
@@ -519,14 +520,48 @@ ggplot() +
   geom_sf(data = us_states, color = "black", fill = NA) +     # plot outline of states
   coord_sf(xlim = c(x_min, x_max),
            ylim = c(y_min, y_max)) +                          # plot boundaries for map
-  geom_point(data = sites, aes(x = longitude, y = latitude,    # add sites as labels
+  geom_point(data = sites, aes(x = longitude, y = latitude,   # add sites as labels
                               fill = site_cat),
              shape = 21, size = 2, alpha = 0.5) +
   scale_fill_manual(values = c("darkblue", "darkred"))
 
 ```
 
-If we want to compare differences in the relationships of topographic variables across all the sites we plotted, we could use the same method to plot the correlation coefficients, in addition to the site labels; all we need to do is add the correlation coefficients into our `sites` data.frame^[Once we have information for multiple sites, you will need to either read in all the text files with results and use `bind_rows` to create a single dataframe, or we will also allow for some outside R action, where you just cut and paste them all into a single text file and read that in.].
+If we want to compare differences in the relationships of topographic variables across all the sites we plotted, we could use the same method to plot the correlation coefficients, in addition to the site labels; all we need to do is add the correlation coefficients into our `sites` data.frame^[Once we have information for multiple sites, you will need to either read in all the text files with results and use `bind_rows` to create a single `data.frame`, or we will also allow for some outside R action, where you just cut and paste them all into a single text file and read that in.].
+
+Here is how you can read in all your files and combine them into a single `data.frame`. We will create an empty list and then fill it with individual data.frames (one for each site) by looping over a vectory with all the filenames. Because we names our correlations files in a very standardized way, we can specify a pattern, and `R` will create a vector with all those filenames in the `results` folder for us.
+
+```{r}
+
+# path to results
+path <- "results"
+
+# pattern for filenames
+pattern <- "correlation"
+
+# list with all txt files in data directory
+list.filenames <- list.files(path = path,
+                             pattern = pattern)
+
+# empty list to load files into
+list.data <- list()
+
+# loop to read in data files
+for (i in list.filenames){
+  
+  file <- as.character(glue("{path}/{i}"))
+  
+  list.data[[i]] <- read_delim(file, delim = "\t")
+  
+}
+
+correl_all <- ldply(list.data, data.frame) %>%
+  dplyr::select(-`.id`)
+
+# # write to file
+# write_delim(correl_all, "results/Comp_pearson.txt", delim = "\t")
+
+```
 
 For example, we could create a map for slope and NDVI like this:
 
@@ -534,7 +569,7 @@ For example, we could create a map for slope and NDVI like this:
 
 # add correlation coefficients
 sites_pears <- sites %>%
-  left_join(tidy_cor, by = c("site_id" = "Site")) %>%
+  left_join(correl_all, by = c("site_id" = "Site")) %>%
   filter(!is.na(pearson)) %>%                          # retain only sites with pearson coefficient estimated
   filter(Param1 == "ndvi" & Param2 == "slope")         # choose veg & topog relationship to map
 
@@ -550,14 +585,12 @@ ggplot() +
   coord_sf(xlim = c(x_min, x_max),
            ylim = c(y_min, y_max)) +                          # plot boundaries for map
   geom_text(data = sites_pears, aes(x = longitude, y = latitude,    # add sites as labels
-                              label = site_id, color = "darkblue"),
-            size = site_size) +
+                              label = site_id),
+            size = site_size, color = "black") +
   geom_text(data = sites_pears, aes(x = longitude, y = latitude,    # add pearson coefficient as labels
-                              label = round(pearson, digits = 2), color = "darkred"),
-            size = cor_size, nudge_y = -1) +                # shift label below actual coordinates
-  scale_color_manual(values = c("darkblue", "darkred")) +
+                              label = round(pearson, digits = 2)),
+            size = cor_size, color = "darkred", nudge_y = -1.5) +   # shift label below actual coordinates
   theme(legend.position = "none")
-
 
 ```
 

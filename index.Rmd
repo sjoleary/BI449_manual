@@ -30,6 +30,10 @@ library(conflicted)
 conflict_prefer("select", "dplyr")
 conflict_prefer("filter", "dplyr")
 conflict_prefer("summarize", "dplyr")
+conflict_prefer("arrange", "dplyr")
+conflict_prefer("mutate", "dplyr")
+conflict_prefer("count", "dplyr")
+conflict_prefer("rename", "dplyr")
 
 ```
 
