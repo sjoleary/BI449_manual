@@ -2,11 +2,11 @@
 ! general model setup
 !-------------------------------------------------------------------------------
 !
-! sim_name         [string]  title of simulation       
-! max_layers       [integer] maximum number of layers  
-! min_layer_vol    [real]    minimum layer volume (m3 * 1000)      
-! min_layer_thick  [real]    minimum layer thickness (m)  
-! max_layer_thick  [real]    maximum layer thickness (m) 
+! sim_name         [string]  title of simulation
+! max_layers       [integer] maximum number of layers
+! min_layer_vol    [real]    minimum layer volume (m3 * 1000)
+! min_layer_thick  [real]    minimum layer thickness (m)
+! max_layer_thick  [real]    maximum layer thickness (m)
 ! Kw               [real]    background light attenuation (m**-1)
 ! coef_mix_conv    [real]    mixing efficiency - convective overturn
 ! coef_wind_stir   [real]    mixing efficiency - wind stirring
@@ -24,11 +24,11 @@
    !-- Light Parameters
    Kw = 0.6
    !-- Mixing Parameters
-   coef_mix_conv = 0.125 
-   coef_wind_stir = 0.23      
-   coef_mix_shear = 0.20       
-   coef_mix_turb = 0.51       
-   coef_mix_KH = 0.30 
+   coef_mix_conv = 0.125
+   coef_wind_stir = 0.23
+   coef_mix_shear = 0.20
+   coef_mix_turb = 0.51
+   coef_mix_KH = 0.30
    coef_mix_hyp = 0.5
 /
 
@@ -42,15 +42,15 @@
 !                    latitude
 ! longitude        [float, minimum = -360, maximum = 360, unit = deg East]
 !                    longitude
-! bsn_len          [float]   
+! bsn_len          [float]
 !                    basin length at crest (m)
-! bsn_wid          [float]   
+! bsn_wid          [float]
 !                    basin width at crest (m)
-! bsn_vals         [integer] 
+! bsn_vals         [integer]
 !                    number of depth points on height-area relationship
-! H                [float] 
+! H                [float]
 !                    elevations (m)   (comma separated list, len=bsn_vals)
-! A                [float] 
+! A                [float]
 !                    area (m2) (comma separated list, len=bsn_vals)
 !
 !-------------------------------------------------------------------------------
@@ -61,7 +61,7 @@
    bsn_len    = 21000,
    bsn_wid    = 13000,
    bsn_vals   = 45
-   !   H (m)  A (m2 * 1000) 
+   !   H (m)  A (m2 * 1000)
    H = -252.9, -251.9,  -250.9,  -249.9,  -248.9,  -247.9,  -246.9,  -245.9,
        -244.9,  -243.9,  -242.9,  -241.9,  -240.9,  -239.9,  -238.9,
        -237.9,  -236.9,  -235.9,  -234.9,  -233.9,  -232.9,  -231.9,
@@ -173,7 +173,7 @@
 !   rain_sw        [bool]   include rainfall nutrient composition
 !   atm_stab       [bool]   account for non-neutral atmospheric stability
 !   catchrain      [bool]   flag that enables runoff from exposed banks of lake area
-!   rad_mode       [integer] short and long wave radation model configuration 
+!   rad_mode       [integer] short and long wave radation model configuration
 !   albedo_mode    [integer] shortwave albedo calculation method
 !   cloud_mode     [integer] atmospheric emmisivity calculation method
 !
@@ -204,7 +204,7 @@
    cloud_mode  = 4
    !-- BC file details
    subdaily    = .true.
-   meteo_fl    = 'met_hourly.csv'
+   meteo_fl    = 'met_hourly_temp2_hum2.csv'
    wind_factor = 1.0
    rain_factor = 1.0
    sw_factor = 1.0
@@ -241,7 +241,7 @@
 /
 
 !-------------------------------------------------------------------------------
-! inflows 
+! inflows
 !-------------------------------------------------------------------------------
 !
 !  num_inflows       [integer]   number of inflowing streams (0+)
@@ -268,7 +268,7 @@
 !
 !  snow_albedo_factor  [float] multiplier to snow albedo
 !  snow_rho_max        [float] maximum snow density
-!  snow_rho_min        [float] minimum snow density 
+!  snow_rho_min        [float] minimum snow density
 !
 !-------------------------------------------------------------------------------
 &snowice

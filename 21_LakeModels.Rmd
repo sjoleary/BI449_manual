@@ -477,7 +477,6 @@ run_glm("sim2/", verbose = TRUE)
 
 ```
 
-
 Again, we will want to specify the file path for our output - we'll name this variable `climate2`. So now we have three file path variables `baseline`, `climate1`, and `climate2`. We will use those in the next section to plot the results of our simulations.
 
 ```{r eval=FALSE}
@@ -507,6 +506,42 @@ Use your data wrangling skills to create a single data frame that contains the s
 
 `r msmbstyle::question_end()`
 
+`r msmbstyle::solution_begin()`
+
+We currently have our surface temperature data in three separate data sets. We want them to be in a single data set. The first step will be to combine all three data sets. We have a column in common (`DateTime`), so we will want to use `left_join()`.
+
+Dates are notoriously messy to work with, so we will use mutate to make sure that all of them are in the same format first, using `mutate()`.
+
+```{r eval=FALSE}
+
+surf_temp <- surf_temp %>%
+  mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d", tz="EST")))
+
+surf_temp_cl1 <- surf_temp_cl1 %>%
+  mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d", tz="EST")))
+
+surf_temp_cl2 <- surf_temp_cl2 %>%
+  mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d", tz="EST")))
+
+surf_temp_all <- surf_temp %>%
+  left_join(surf_temp_cl1) %>%
+  left_join(surf_temp_cl2)
+
+```
+
+Before you can plot the data, you will need to create a tidy data set. Currently our column names for each of the scenarios are actually values, so it isn't a tidy data set.
+
+```{r eval=FALSE}
+
+tidy_temp <- surf_temp_all %>%
+  pivot_longer(names_to = "scenarios", values_to = "temperature", 2:4)
+
+```
+
+Now it will be easy to create your summary plot!
+
+`r msmbstyle::solution_end()`
+
 
 `r msmbstyle::question_begin(label = "ques:sim-19")`
 
@@ -522,15 +557,15 @@ Create a plot showing the thermal structure of Lake Awesome for your baseline sc
 
 `r msmbstyle::solution_begin()`
 
-You will want to create heatplots showing temperature by depth across the simulated time periods. You can combine them into a single plot (think about what your layout should look like) using `patchwork`. Remember, to use `fig.height` and `fig.width` to adjust the size of your figure so that you have an easily readable figure once you knit your document.
-
 You will be needing to use the function `plot_temp()` as we did above. Change the syntax accordingly. You will need to change the `file` argument to plot each scenario. Remember, we have stored the information for the output files of the simulations in the vectors `baseline`, `climate1`, and `climate2`.
+
+Remember, to use `fig.height` and `fig.width` to adjust the size of your figure so that you have an easily readable figure once you knit your document.
 
 `r msmbstyle::solution_end()`
 
 `r msmbstyle::question_begin(label = "ques:sim-21")`
 
-Compare and contrast the thermal structure of Lake Awesome for the simulations of your baseline amd two climate scenarios based on the figure above. Be specific - key things to think about are min/max temperatures, stratification vs isothermal, depth of the thermocline, how patterns change over time).
+Compare and contrast the thermal structure of Lake Awesome for the simulations of your baseline and two climate scenarios based on the figure above. Be specific - key things to think about are min/max temperatures, stratification vs isothermal, depth of the thermocline, how patterns change over time).
 
 Remember, this should be just a description - hang onto your discussion & interpretation of your results for the next question!
 
@@ -538,7 +573,7 @@ Remember, this should be just a description - hang onto your discussion & interp
 
 `r msmbstyle::question_begin(label = "ques:sim-22")`
 
-Discuss your results. Things to consider: Do your results support or contradict your hypotheses (how you were expecting the surface temperature and thermal structure to change for each sceneario), what drivers did you manipulate and what mechanisms are in play in how they alter thermal structure (which cause heating/cooling/mixing?), consider temporal and spatial patterns (depth), what impacts might this have on organisms living in the lake?
+Discuss your results. Things to consider: Do your results support or contradict your hypotheses (how you were expecting the surface temperature and thermal structure to change for each scenario), what drivers did you manipulate and what mechanisms are in play in how they alter thermal structure (which cause heating/cooling/mixing?), consider temporal and spatial patterns (depth), what impacts might this have on organisms living in the lake?
 
 `r msmbstyle::question_end()`
 

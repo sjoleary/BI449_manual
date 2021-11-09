@@ -239,14 +239,15 @@ function reset_tooltip(id) {
 <span id="cb194-2"><a href="data-wrangling-tidy-data-revisited.html#cb194-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb194-3"><a href="data-wrangling-tidy-data-revisited.html#cb194-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(relig_income)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 11
-##   religion           `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k` `$100-150k` `&gt;150k` `Don't know/refused`
-##   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;                &lt;dbl&gt;
-## 1 Agnostic                27        34        60        81        76       137        122         109      84                   96
-## 2 Atheist                 12        27        37        52        35        70         73          59      74                   76
-## 3 Buddhist                27        21        30        34        33        58         62          39      53                   54
-## 4 Catholic               418       617       732       670       638      1116        949         792     633                 1489
-## 5 Don’t know/refused      15        14        15        11        10        35         21          17      18                  116
-## 6 Evangelical Prot       575       869      1064       982       881      1486        949         723     414                 1529</code></pre>
+##   religion           `&lt;$10k` `$10-20k` `$20-30k` `$30-40k` `$40-50k` `$50-75k` `$75-100k` `$100-150k` `&gt;150k`
+##   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;
+## 1 Agnostic                27        34        60        81        76       137        122         109      84
+## 2 Atheist                 12        27        37        52        35        70         73          59      74
+## 3 Buddhist                27        21        30        34        33        58         62          39      53
+## 4 Catholic               418       617       732       670       638      1116        949         792     633
+## 5 Don’t know/refused      15        14        15        11        10        35         21          17      18
+## 6 Evangelical Prot       575       869      1064       982       881      1486        949         723     414
+## # ... with 1 more variable: Don't know/refused &lt;dbl&gt;</code></pre>
 <p>Remember, a tidy data set has three interrelated rules</p>
 <ol style="list-style-type: decimal">
 <li>Every variable has its own column.</li>
@@ -330,20 +331,21 @@ function reset_tooltip(id) {
 <span id="cb198-2"><a href="data-wrangling-tidy-data-revisited.html#cb198-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb198-3"><a href="data-wrangling-tidy-data-revisited.html#cb198-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 79
-##   artist   track    date.entered   wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12  wk13  wk14  wk15  wk16  wk17  wk18  wk19
-##   &lt;chr&gt;    &lt;chr&gt;    &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-## 1 2 Pac    Baby Do~ 2000-02-26      87    82    72    77    87    94    99    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-## 2 2Ge+her  The Har~ 2000-09-02      91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-## 3 3 Doors~ Krypton~ 2000-04-08      81    70    68    67    66    57    54    53    51    51    51    51    47    44    38    28    22    18    18
-## 4 3 Doors~ Loser    2000-10-21      76    76    72    69    67    65    55    59    62    61    61    59    61    66    72    76    75    67    73
-## 5 504 Boyz Wobble ~ 2000-04-15      57    34    25    17    17    31    36    49    53    57    64    70    75    76    78    85    92    96    NA
-## 6 98^0     Give Me~ 2000-08-19      51    39    34    26    26    19     2     2     3     6     7    22    29    36    47    67    66    84    93
-## # ... with 57 more variables: wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;, wk24 &lt;dbl&gt;, wk25 &lt;dbl&gt;, wk26 &lt;dbl&gt;, wk27 &lt;dbl&gt;, wk28 &lt;dbl&gt;,
-## #   wk29 &lt;dbl&gt;, wk30 &lt;dbl&gt;, wk31 &lt;dbl&gt;, wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;, wk34 &lt;dbl&gt;, wk35 &lt;dbl&gt;, wk36 &lt;dbl&gt;, wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;, wk39 &lt;dbl&gt;,
-## #   wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;, wk42 &lt;dbl&gt;, wk43 &lt;dbl&gt;, wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;, wk48 &lt;dbl&gt;, wk49 &lt;dbl&gt;, wk50 &lt;dbl&gt;,
-## #   wk51 &lt;dbl&gt;, wk52 &lt;dbl&gt;, wk53 &lt;dbl&gt;, wk54 &lt;dbl&gt;, wk55 &lt;dbl&gt;, wk56 &lt;dbl&gt;, wk57 &lt;dbl&gt;, wk58 &lt;dbl&gt;, wk59 &lt;dbl&gt;, wk60 &lt;dbl&gt;, wk61 &lt;dbl&gt;,
-## #   wk62 &lt;dbl&gt;, wk63 &lt;dbl&gt;, wk64 &lt;dbl&gt;, wk65 &lt;dbl&gt;, wk66 &lt;lgl&gt;, wk67 &lt;lgl&gt;, wk68 &lt;lgl&gt;, wk69 &lt;lgl&gt;, wk70 &lt;lgl&gt;, wk71 &lt;lgl&gt;, wk72 &lt;lgl&gt;,
-## #   wk73 &lt;lgl&gt;, wk74 &lt;lgl&gt;, wk75 &lt;lgl&gt;, wk76 &lt;lgl&gt;</code></pre>
+##   artist  track  date.entered   wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12  wk13  wk14
+##   &lt;chr&gt;   &lt;chr&gt;  &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 2 Pac   Baby ~ 2000-02-26      87    82    72    77    87    94    99    NA    NA    NA    NA    NA    NA    NA
+## 2 2Ge+her The H~ 2000-09-02      91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+## 3 3 Door~ Krypt~ 2000-04-08      81    70    68    67    66    57    54    53    51    51    51    51    47    44
+## 4 3 Door~ Loser  2000-10-21      76    76    72    69    67    65    55    59    62    61    61    59    61    66
+## 5 504 Bo~ Wobbl~ 2000-04-15      57    34    25    17    17    31    36    49    53    57    64    70    75    76
+## 6 98^0    Give ~ 2000-08-19      51    39    34    26    26    19     2     2     3     6     7    22    29    36
+## # ... with 62 more variables: wk15 &lt;dbl&gt;, wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;, wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;,
+## #   wk21 &lt;dbl&gt;, wk22 &lt;dbl&gt;, wk23 &lt;dbl&gt;, wk24 &lt;dbl&gt;, wk25 &lt;dbl&gt;, wk26 &lt;dbl&gt;, wk27 &lt;dbl&gt;, wk28 &lt;dbl&gt;, wk29 &lt;dbl&gt;,
+## #   wk30 &lt;dbl&gt;, wk31 &lt;dbl&gt;, wk32 &lt;dbl&gt;, wk33 &lt;dbl&gt;, wk34 &lt;dbl&gt;, wk35 &lt;dbl&gt;, wk36 &lt;dbl&gt;, wk37 &lt;dbl&gt;, wk38 &lt;dbl&gt;,
+## #   wk39 &lt;dbl&gt;, wk40 &lt;dbl&gt;, wk41 &lt;dbl&gt;, wk42 &lt;dbl&gt;, wk43 &lt;dbl&gt;, wk44 &lt;dbl&gt;, wk45 &lt;dbl&gt;, wk46 &lt;dbl&gt;, wk47 &lt;dbl&gt;,
+## #   wk48 &lt;dbl&gt;, wk49 &lt;dbl&gt;, wk50 &lt;dbl&gt;, wk51 &lt;dbl&gt;, wk52 &lt;dbl&gt;, wk53 &lt;dbl&gt;, wk54 &lt;dbl&gt;, wk55 &lt;dbl&gt;, wk56 &lt;dbl&gt;,
+## #   wk57 &lt;dbl&gt;, wk58 &lt;dbl&gt;, wk59 &lt;dbl&gt;, wk60 &lt;dbl&gt;, wk61 &lt;dbl&gt;, wk62 &lt;dbl&gt;, wk63 &lt;dbl&gt;, wk64 &lt;dbl&gt;, wk65 &lt;dbl&gt;,
+## #   wk66 &lt;lgl&gt;, wk67 &lt;lgl&gt;, wk68 &lt;lgl&gt;, wk69 &lt;lgl&gt;, wk70 &lt;lgl&gt;, wk71 &lt;lgl&gt;, wk72 &lt;lgl&gt;, wk73 &lt;lgl&gt;, ...</code></pre>
 <div id="ques:t3" class="question">
 <p class="question-begin">
 ► Question 12.3
@@ -477,21 +479,21 @@ function reset_tooltip(id) {
 <span id="cb206-3"><a href="data-wrangling-tidy-data-revisited.html#cb206-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb206-4"><a href="data-wrangling-tidy-data-revisited.html#cb206-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(who)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 60
-##   country     iso2  iso3   year new_sp_m014 new_sp_m1524 new_sp_m2534 new_sp_m3544 new_sp_m4554 new_sp_m5564 new_sp_m65 new_sp_f014 new_sp_f1524
-##   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;int&gt;       &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;      &lt;int&gt;       &lt;int&gt;        &lt;int&gt;
-## 1 Afghanistan AF    AFG    1980          NA           NA           NA           NA           NA           NA         NA          NA           NA
-## 2 Afghanistan AF    AFG    1981          NA           NA           NA           NA           NA           NA         NA          NA           NA
-## 3 Afghanistan AF    AFG    1982          NA           NA           NA           NA           NA           NA         NA          NA           NA
-## 4 Afghanistan AF    AFG    1983          NA           NA           NA           NA           NA           NA         NA          NA           NA
-## 5 Afghanistan AF    AFG    1984          NA           NA           NA           NA           NA           NA         NA          NA           NA
-## 6 Afghanistan AF    AFG    1985          NA           NA           NA           NA           NA           NA         NA          NA           NA
-## # ... with 47 more variables: new_sp_f2534 &lt;int&gt;, new_sp_f3544 &lt;int&gt;, new_sp_f4554 &lt;int&gt;, new_sp_f5564 &lt;int&gt;, new_sp_f65 &lt;int&gt;,
-## #   new_sn_m014 &lt;int&gt;, new_sn_m1524 &lt;int&gt;, new_sn_m2534 &lt;int&gt;, new_sn_m3544 &lt;int&gt;, new_sn_m4554 &lt;int&gt;, new_sn_m5564 &lt;int&gt;, new_sn_m65 &lt;int&gt;,
-## #   new_sn_f014 &lt;int&gt;, new_sn_f1524 &lt;int&gt;, new_sn_f2534 &lt;int&gt;, new_sn_f3544 &lt;int&gt;, new_sn_f4554 &lt;int&gt;, new_sn_f5564 &lt;int&gt;, new_sn_f65 &lt;int&gt;,
-## #   new_ep_m014 &lt;int&gt;, new_ep_m1524 &lt;int&gt;, new_ep_m2534 &lt;int&gt;, new_ep_m3544 &lt;int&gt;, new_ep_m4554 &lt;int&gt;, new_ep_m5564 &lt;int&gt;, new_ep_m65 &lt;int&gt;,
-## #   new_ep_f014 &lt;int&gt;, new_ep_f1524 &lt;int&gt;, new_ep_f2534 &lt;int&gt;, new_ep_f3544 &lt;int&gt;, new_ep_f4554 &lt;int&gt;, new_ep_f5564 &lt;int&gt;, new_ep_f65 &lt;int&gt;,
-## #   newrel_m014 &lt;int&gt;, newrel_m1524 &lt;int&gt;, newrel_m2534 &lt;int&gt;, newrel_m3544 &lt;int&gt;, newrel_m4554 &lt;int&gt;, newrel_m5564 &lt;int&gt;, newrel_m65 &lt;int&gt;,
-## #   newrel_f014 &lt;int&gt;, newrel_f1524 &lt;int&gt;, newrel_f2534 &lt;int&gt;, newrel_f3544 &lt;int&gt;, newrel_f4554 &lt;int&gt;, newrel_f5564 &lt;int&gt;, newrel_f65 &lt;int&gt;</code></pre>
+##   country     iso2  iso3   year new_sp_m014 new_sp_m1524 new_sp_m2534 new_sp_m3544 new_sp_m4554 new_sp_m5564
+##   &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt; &lt;int&gt;       &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;        &lt;int&gt;
+## 1 Afghanistan AF    AFG    1980          NA           NA           NA           NA           NA           NA
+## 2 Afghanistan AF    AFG    1981          NA           NA           NA           NA           NA           NA
+## 3 Afghanistan AF    AFG    1982          NA           NA           NA           NA           NA           NA
+## 4 Afghanistan AF    AFG    1983          NA           NA           NA           NA           NA           NA
+## 5 Afghanistan AF    AFG    1984          NA           NA           NA           NA           NA           NA
+## 6 Afghanistan AF    AFG    1985          NA           NA           NA           NA           NA           NA
+## # ... with 50 more variables: new_sp_m65 &lt;int&gt;, new_sp_f014 &lt;int&gt;, new_sp_f1524 &lt;int&gt;, new_sp_f2534 &lt;int&gt;,
+## #   new_sp_f3544 &lt;int&gt;, new_sp_f4554 &lt;int&gt;, new_sp_f5564 &lt;int&gt;, new_sp_f65 &lt;int&gt;, new_sn_m014 &lt;int&gt;,
+## #   new_sn_m1524 &lt;int&gt;, new_sn_m2534 &lt;int&gt;, new_sn_m3544 &lt;int&gt;, new_sn_m4554 &lt;int&gt;, new_sn_m5564 &lt;int&gt;,
+## #   new_sn_m65 &lt;int&gt;, new_sn_f014 &lt;int&gt;, new_sn_f1524 &lt;int&gt;, new_sn_f2534 &lt;int&gt;, new_sn_f3544 &lt;int&gt;,
+## #   new_sn_f4554 &lt;int&gt;, new_sn_f5564 &lt;int&gt;, new_sn_f65 &lt;int&gt;, new_ep_m014 &lt;int&gt;, new_ep_m1524 &lt;int&gt;,
+## #   new_ep_m2534 &lt;int&gt;, new_ep_m3544 &lt;int&gt;, new_ep_m4554 &lt;int&gt;, new_ep_m5564 &lt;int&gt;, new_ep_m65 &lt;int&gt;,
+## #   new_ep_f014 &lt;int&gt;, new_ep_f1524 &lt;int&gt;, new_ep_f2534 &lt;int&gt;, new_ep_f3544 &lt;int&gt;, new_ep_f4554 &lt;int&gt;, ...</code></pre>
 <p>Is this a tidy data set?</p>
 <p>Nope - this is a typical, real-life messy data set… so, let’s tidy it up.</p>
 <div id="ques:t6" class="question">
