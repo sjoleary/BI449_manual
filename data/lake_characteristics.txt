@@ -1,0 +1,15 @@
+Lake Name	State	Latitude	Longitude	Elevation (m)	Max. depth (m)	Surface area (km2)	Trophic state	Mixing Regime	Watershed Land Use	NEON domain	Data provider	Links
+Barco Lake	Florida	29.67594	-82.00823	28	7	0.12	Oligotrophic	Warm monomictic	Forest	3	NEON Core Aquatic	http://www.neonscience.org/field-sites/field-sites-map/BARC
+Crampton Lake	Wisconsin	46.21025	-89.47345	591	18	0.26	Oligotrophic	Dimictic	Forest	5	NEON Core Aquatic	http://www.neonscience.org/field-sites/field-sites-map/CRAM
+Falling Creek Reservoir	Virginia	37.30333	-79.83722	507	9	0.12	Eutrophic	Dimictic	Forest	7	GLEON; Carey Lab	https://www.westernvawater.org/drinking-water/water-sources-and-treatment
+Lake Mendota	Wisconsin	43.10970	-89.42060	259	25	39.39	Eutrophic	Dimictic	Agricultural/urban	6	LTER- North Temperate Lakes	https://lter.limnology.wisc.edu/researchsite/lake-mendota
+Lake Sunapee	New Hampshire	43.38020	-72.05270	333	33	16.74	Oligotrophic	Dimictic	Forest	1	GLEON; Lake Sunapee Protective Association	http://www.lakesunapee.org/lake-sunapee-history/
+Prairie Pothole	North Dakota	47.13012	-99.25302	565	3	0.11	Mesotrophic	Dimictic	Grasslands	9	NEON Core Aquatic	http://www.neonscience.org/field-sites/field-sites-map/PRPO
+Suggs Lake	Florida	29.68770	-82.01785	29	6	0.73	Mesotrophic	Warm monomictic	Forest	3	NEON Core Aquatic	http://www.neonscience.org/field-sites/field-sites-map/SUGG
+Toolik Lake	Alaska	68.62956	-149.61051	738	26	1.46	Oligotrophic	Dimictic	Tundra	18	NEON Relocatable Aquatic; LTER- Arctic	http://arc-lter.ecosystems.mbl.edu/toolik-main
+												
+												
+												
+												
+												
+												

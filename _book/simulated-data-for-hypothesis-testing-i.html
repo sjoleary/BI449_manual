@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-06" />
+<meta name="date" content="2021-11-09" />
 
 
 <meta name="description" content="21 Simulated Data for hypothesis testing I | Data Science for the Natural Environment (FA21)">
@@ -563,9 +563,9 @@ Figure 21.3: Comparison of field data and simulated temperatures.
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-124" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-124', 'sol-start-124')"></span>
+► Solution<span id="sol-start-42" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-42', 'sol-start-42')"></span>
 </p>
-<div id="sol-body-124" class="solution-body" style="display: none;">
+<div id="sol-body-42" class="solution-body" style="display: none;">
 <p>This can be done in a straight forward way using a line plot.</p>
 <div class="sourceCode" id="cb420"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb420-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-1" aria-hidden="true" tabindex="-1"></a>therm_depths <span class="sc">%&gt;%</span></span>
 <span id="cb420-2"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"dataset"</span>, <span class="at">values_to =</span> <span class="st">"thermo_depth"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
@@ -598,9 +598,9 @@ Figure 21.4: Comparison of modeled and observed thermoclines.
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-125" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-125', 'sol-start-125')"></span>
+► Solution<span id="sol-start-43" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-43', 'sol-start-43')"></span>
 </p>
-<div id="sol-body-125" class="solution-body" style="display: none;">
+<div id="sol-body-43" class="solution-body" style="display: none;">
 <p>Before you plot your data take a look at the data set - you’ll notice that there are multiple observations for the same time point.</p>
 <p>Let’s use a scatter plot instead of a line plot to make sure we can see all the data.</p>
 <div class="sourceCode" id="cb421"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb421-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-1" aria-hidden="true" tabindex="-1"></a>water_temp <span class="ot">&lt;-</span> <span class="fu">compare_to_field</span>(baseline, field_file, <span class="at">metric =</span> <span class="st">"water.temperature"</span>,</span>
@@ -806,9 +806,9 @@ Figure 21.5: Comparison of modeled and observed water temperatures.
 </div>
 <div class="msmb-solution">
 <p class="solution-begin">
-► Solution<span id="sol-start-126" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-126', 'sol-start-126')"></span>
+► Solution<span id="sol-start-44" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-44', 'sol-start-44')"></span>
 </p>
-<div id="sol-body-126" class="solution-body" style="display: none;">
+<div id="sol-body-44" class="solution-body" style="display: none;">
 <p>You will want to create heatplots showing temperature by depth across the simulated time periods. You can combine them into a single plot (think about what your layout should look like) using <code>patchwork</code>. Remember, to use <code>fig.height</code> and <code>fig.width</code> to adjust the size of your figure so that you have an easily readable figure once you knit your document.</p>
 <p>You will be needing to use the function <code>plot_temp()</code> as we did above. Change the syntax accordingly. You will need to change the <code>file</code> argument to plot each scenario. Remember, we have stored the information for the output files of the simulations in the vectors <code>baseline</code>, <code>climate1</code>, and <code>climate2</code>.</p>
 <p class="solution-end">
@@ -874,7 +874,7 @@ Figure 21.5: Comparison of modeled and observed water temperatures.
 <a href="simulated-data-for-hypothesis-testing-ii.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-06
+2021-11-09
  using 
 R version 4.0.2 (2020-06-22)
 </p>

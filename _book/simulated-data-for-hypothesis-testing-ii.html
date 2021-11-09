@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-06" />
+<meta name="date" content="2021-11-09" />
 
 
 <meta name="description" content="22 Simulated Data for hypothesis testing II | Data Science for the Natural Environment (FA21)">
@@ -201,6 +201,12 @@ function reset_tooltip(id) {
 <a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
 <a id="active-page" href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a><ul class="toc-sections">
 <li class="toc"><a href="#teleconnections"> Teleconnections</a></li>
+<li class="toc"><a href="#set-up-simulation"> Set up simulation</a></li>
+<li class="toc"><a href="#run-analyze-baseline-simulation"> Run &amp; analyze baseline simulation</a></li>
+<li class="toc"><a href="#create-typical-el-nino-year-scenario"> Create typical El Nino year scenario</a></li>
+<li class="toc"><a href="#run-analyze-typical-el-nino-year-scenario"> Run &amp; analyze typical El Nino year scenario</a></li>
+<li class="toc"><a href="#create-an-extreme-el-nino-year-scenario"> Create an extreme El Nino year scenario</a></li>
+<li class="toc"><a href="#run-analyze-extreme-el-nino-scenario"> Run &amp; analyze extreme El Nino scenario</a></li>
 <li class="toc"><a href="#acknowledgments-5"> Acknowledgments</a></li>
 </ul>
 <a href="references.html">References</a>
@@ -220,30 +226,1577 @@ function reset_tooltip(id) {
 <p>After completing this tutorial you should be able to</p>
 <ul>
 <li>describe the concepts of macrosystems and teleconnections and how different ecological processes can interact at local, regional, and global scales.</li>
-<li>set up and run lake models to simulate lake temperatures and ice cover in multiple lakes.</li>
+<li>set up and run lake models to simulate lake temperatures, thermal structure, and ice cover in multiple lakes.</li>
 <li>formulate hypotheses about the effects of teleconnected climate scenarios on different lake modules and test them using simulations.</li>
-<li>describe how local characteristics modify global-scale climate forcing effects on lake temperatures and ice cover</li>
+<li>describe how local characteristics modify global-scale climate forcing effects on lake temperatures and ice cover.</li>
 </ul>
-<p>Create new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code> or the drop down menu of the green plus button below <code>File</code> and save it in your Lake Modeling project directory. Use the setup chunk to set your global settings for the document using the options you’ve learned about in the last few projects, including turning off messages, warnings, and errors being printed out when you knit your file.</p>
+<p>Before we start, download the folder <code>sim_lakes</code> from the <a href="https://drive.google.com/drive/folders/1dEt-_hHPelpNLsVww5WRATAQzXrG0oVE?usp=sharing">07_LakeSimulations</a> project folder and add it to your project folder (<code>07_LakeSimulations/sim_lakes</code>). You should also download the contents of the <code>data</code> folder and add it to your <code>07_LakeSimulations/data</code> folder for your R project.</p>
+<p>Next, create new <code>Rmd</code> file using <code>File &gt; New File &gt; R Markdown</code>. Remember, to use the setup chunk to set your global settings for the document using the options you’ve learned about in the last few projects, including turning off messages, warnings, and errors being printed out when you knit your file.</p>
 <p>Remember, you should always check your <code>html</code> document after it knits to make sure that everything has converted as expected, including your figures, bullet points etc. This includes checking whether your figures look as you expect them to, or if you need to adjust the size e.g. using <code>fig.width</code> and <code>fig.height</code>.</p>
+<p>Before we get started you should install the package <code>ggrepel</code>. Remember, the best way to do this is directly in the console - you can also use the <code>Install</code> radio button in the Pacakges tab.</p>
 <p>Let’s load our packages so we can get started.</p>
 <div class="sourceCode" id="cb430"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb430-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries</span></span>
 <span id="cb430-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb430-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb430-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb430-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
-<span id="cb430-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GLMr)</span>
-<span id="cb430-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmtools)</span>
-<span id="cb430-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb430-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-9" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
-<span id="cb430-10"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-10" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
+<span id="cb430-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb430-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb430-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb430-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb430-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb430-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span>
+<span id="cb430-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb430-10"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb430-11"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GLMr)</span>
+<span id="cb430-12"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmtools)</span>
+<span id="cb430-13"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb430-14"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb430-15"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggspatial)</span>
+<span id="cb430-16"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)</span>
+<span id="cb430-17"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearthhires)</span>
+<span id="cb430-18"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearthdata)</span>
+<span id="cb430-19"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb430-20"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-20" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb430-21"><a href="simulated-data-for-hypothesis-testing-ii.html#cb430-21" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span></code></pre></div>
 <div id="teleconnections" class="section level2" number="22.1">
 <h2>
 <span class="header-section-number">22.1</span> Teleconnections<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('teleconnections')" onmouseout="reset_tooltip('teleconnections-tooltip')"><span class="tooltiptext" id="teleconnections-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
 <p>We have already seen how local and regional drivers can impact the thermal structure of lakes. Local impacts could include something like land cover change which alters the stream inflow/outflow of a lake impacting temperature. At a regional scale climate change can alter weather patterns, including both extreme events which disrupt regular seasonal patterns or also gradual change which raises lake temperatures overall.</p>
 <p>Next, we are going to explore how ecosystems can be influenced on a global scale by teleconnections, i.e. meteorological, societal, and/or ecological phenomenon that link remote regions via cause and effect relationships. Simulations are especially powerful in this context, because it allows researchers to manipulate drivers independently from each other to disentangle how they impact ecosystems. By running different teleconnection scenarios, scientists are then able to better predict how ecosystems will respond to remote drivers.</p>
-<p>In our module, we will specifically look at lake thermal structure and ice cover and determine how it is impacted by climate teleconnections to decadal events like the El Niño/Southern Oscillation (ENSO). This is an example of a global driver. ENSO period with warmer ocean surface temperatures in the Pacific Ocean affect regular trade wind patterns. This altered atmospheric circulating impacts air temperature and precipitation patterns globally. How ENSO ends up impacting a particular lake will be further mediated by local and regional dynamics.</p>
+<p>In our module, we will specifically look at lake thermal structure and ice cover and determine how it is impacted by climate teleconnections to decadal events such as the El Niño/Southern Oscillation (ENSO). This is an example of a global driver. ENSO period with warmer ocean surface temperatures in the Pacific Ocean affect regular trade wind patterns. This altered atmospheric circulating impacts air temperature and precipitation patterns globally. How ENSO ends up impacting a particular lake will be further mediated by local and regional dynamics.</p>
+<p>Our central question is:</p>
+<p><strong>How do global ENSO teleconnections interact with local &amp; regional drivers to affect lake temperatures, thermal structure, and ice cover?</strong></p>
+<p>We can address this question using the General Lake Model we used to understand the effect of local &amp; regional drivers on the thermal structure of lakes. To explore those interactions, we varies the local/regional drivers (weather/climate) and ran different scenarios (described in our <code>met</code> file) but kept the lake we were using constant, i.e. the morphology of the lake and other specific characteristics described in the <code>nml</code> file did not change.</p>
+<p>ENSO has large-scale effects, however, the way an El Nino year plays out will vary by region, additional local effect will further modify the impacts on the thermal structure of each lake.</p>
+<div id="ques:tele-a" class="question">
+<p class="question-begin">
+► Question 22.1
+</p>
+<div class="question-body">
+<div class="figure">
+<img src="figures/ElNino.jpg" alt=""><p class="caption">Regional differences in effect of El Nino</p>
+</div>
+<p>During El Nino years there is a shift in the climate pattern of the Pacific Ocean, resulting in unusually warm surface waters in the the eastern equatorial Pacific Ocean. Use the figure above to describe regional differences in climate patterns in North America are impacted.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>To be able to explore our question we will need <code>nml</code> files describing lakes in different regions across North America. You should have downloaded and added the folder <code>sim_lakes</code> to your project directory. If you take a look in there, you fill find individual folders for a set of lakes, in each folder you have an <code>nml</code> file describing that lake along with a <code>met</code> file containing observed meteorological data. These are all lakes that are part of the GLEON network.</p>
+<p>Let’s take a look at where those lakes are situated.</p>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb431-1" aria-hidden="true" tabindex="-1"></a>lakes <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/lake_characteristics.txt"</span>, <span class="at">delim =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb431-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb431-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span>
+<span id="cb431-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb431-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb431-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb431-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(lakes,</span>
+<span id="cb431-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb431-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Characteristics for eight lakes in the GLEON network."</span>)</span></code></pre></div>
+<table style="width:100%;">
+<caption>
+<span id="tab:unnamed-chunk-364">Table 22.1: </span>Characteristics for eight lakes in the GLEON network.</caption>
+<colgroup>
+<col width="8%">
+<col width="5%">
+<col width="3%">
+<col width="3%">
+<col width="4%">
+<col width="4%">
+<col width="6%">
+<col width="5%">
+<col width="5%">
+<col width="6%">
+<col width="4%">
+<col width="15%">
+<col width="26%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">lake_name</th>
+<th align="left">state</th>
+<th align="right">latitude</th>
+<th align="right">longitude</th>
+<th align="right">elevation_m</th>
+<th align="right">max_depth_m</th>
+<th align="right">surface_area_km2</th>
+<th align="left">trophic_state</th>
+<th align="left">mixing_regime</th>
+<th align="left">watershed_land_use</th>
+<th align="right">neon_domain</th>
+<th align="left">data_provider</th>
+<th align="left">links</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Barco Lake</td>
+<td align="left">Florida</td>
+<td align="right">29.67594</td>
+<td align="right">-82.00823</td>
+<td align="right">28</td>
+<td align="right">7</td>
+<td align="right">0.12</td>
+<td align="left">Oligotrophic</td>
+<td align="left">Warm monomictic</td>
+<td align="left">Forest</td>
+<td align="right">3</td>
+<td align="left">NEON Core Aquatic</td>
+<td align="left"><a href="http://www.neonscience.org/field-sites/field-sites-map/BARC" class="uri">http://www.neonscience.org/field-sites/field-sites-map/BARC</a></td>
+</tr>
+<tr class="even">
+<td align="left">Crampton Lake</td>
+<td align="left">Wisconsin</td>
+<td align="right">46.21025</td>
+<td align="right">-89.47345</td>
+<td align="right">591</td>
+<td align="right">18</td>
+<td align="right">0.26</td>
+<td align="left">Oligotrophic</td>
+<td align="left">Dimictic</td>
+<td align="left">Forest</td>
+<td align="right">5</td>
+<td align="left">NEON Core Aquatic</td>
+<td align="left"><a href="http://www.neonscience.org/field-sites/field-sites-map/CRAM" class="uri">http://www.neonscience.org/field-sites/field-sites-map/CRAM</a></td>
+</tr>
+<tr class="odd">
+<td align="left">Falling Creek Reservoir</td>
+<td align="left">Virginia</td>
+<td align="right">37.30333</td>
+<td align="right">-79.83722</td>
+<td align="right">507</td>
+<td align="right">9</td>
+<td align="right">0.12</td>
+<td align="left">Eutrophic</td>
+<td align="left">Dimictic</td>
+<td align="left">Forest</td>
+<td align="right">7</td>
+<td align="left">GLEON; Carey Lab</td>
+<td align="left"><a href="https://www.westernvawater.org/drinking-water/water-sources-and-treatment" class="uri">https://www.westernvawater.org/drinking-water/water-sources-and-treatment</a></td>
+</tr>
+<tr class="even">
+<td align="left">Lake Mendota</td>
+<td align="left">Wisconsin</td>
+<td align="right">43.10970</td>
+<td align="right">-89.42060</td>
+<td align="right">259</td>
+<td align="right">25</td>
+<td align="right">39.39</td>
+<td align="left">Eutrophic</td>
+<td align="left">Dimictic</td>
+<td align="left">Agricultural/urban</td>
+<td align="right">6</td>
+<td align="left">LTER- North Temperate Lakes</td>
+<td align="left"><a href="https://lter.limnology.wisc.edu/researchsite/lake-mendota" class="uri">https://lter.limnology.wisc.edu/researchsite/lake-mendota</a></td>
+</tr>
+<tr class="odd">
+<td align="left">Lake Sunapee</td>
+<td align="left">New Hampshire</td>
+<td align="right">43.38020</td>
+<td align="right">-72.05270</td>
+<td align="right">333</td>
+<td align="right">33</td>
+<td align="right">16.74</td>
+<td align="left">Oligotrophic</td>
+<td align="left">Dimictic</td>
+<td align="left">Forest</td>
+<td align="right">1</td>
+<td align="left">GLEON; Lake Sunapee Protective Association</td>
+<td align="left"><a href="http://www.lakesunapee.org/lake-sunapee-history/" class="uri">http://www.lakesunapee.org/lake-sunapee-history/</a></td>
+</tr>
+<tr class="even">
+<td align="left">Prairie Pothole</td>
+<td align="left">North Dakota</td>
+<td align="right">47.13012</td>
+<td align="right">-99.25302</td>
+<td align="right">565</td>
+<td align="right">3</td>
+<td align="right">0.11</td>
+<td align="left">Mesotrophic</td>
+<td align="left">Dimictic</td>
+<td align="left">Grasslands</td>
+<td align="right">9</td>
+<td align="left">NEON Core Aquatic</td>
+<td align="left"><a href="http://www.neonscience.org/field-sites/field-sites-map/PRPO" class="uri">http://www.neonscience.org/field-sites/field-sites-map/PRPO</a></td>
+</tr>
+<tr class="odd">
+<td align="left">Suggs Lake</td>
+<td align="left">Florida</td>
+<td align="right">29.68770</td>
+<td align="right">-82.01785</td>
+<td align="right">29</td>
+<td align="right">6</td>
+<td align="right">0.73</td>
+<td align="left">Mesotrophic</td>
+<td align="left">Warm monomictic</td>
+<td align="left">Forest</td>
+<td align="right">3</td>
+<td align="left">NEON Core Aquatic</td>
+<td align="left"><a href="http://www.neonscience.org/field-sites/field-sites-map/SUGG" class="uri">http://www.neonscience.org/field-sites/field-sites-map/SUGG</a></td>
+</tr>
+<tr class="even">
+<td align="left">Toolik Lake</td>
+<td align="left">Alaska</td>
+<td align="right">68.62956</td>
+<td align="right">-149.61051</td>
+<td align="right">738</td>
+<td align="right">26</td>
+<td align="right">1.46</td>
+<td align="left">Oligotrophic</td>
+<td align="left">Dimictic</td>
+<td align="left">Tundra</td>
+<td align="right">18</td>
+<td align="left">NEON Relocatable Aquatic; LTER- Arctic</td>
+<td align="left"><a href="http://arc-lter.ecosystems.mbl.edu/toolik-main" class="uri">http://arc-lter.ecosystems.mbl.edu/toolik-main</a></td>
+</tr>
+</tbody>
+</table>
+<p>Let’s make a map displaying their geographic locations. We’ve previously used <code>geom_text()</code> to add text (labels) to maps. But those weren’t exactly pretty maps. We are going to add a new tool to our toolbox for generating maps, <code>geom_label_repel()</code>. This function works especially well if you want to combine using a shape to plot a point and add a label that is placed in a way that it does not overlap with that point or other labels on the plot.</p>
+<div class="sourceCode" id="cb432"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb432-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-1" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">scale =</span> <span class="st">"medium"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
+<span id="cb432-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb432-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-3" aria-hidden="true" tabindex="-1"></a>us_states <span class="ot">&lt;-</span> <span class="fu">ne_states</span>(<span class="at">country =</span> <span class="st">"United States of America"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
+<span id="cb432-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb432-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lat/long for map extent</span></span>
+<span id="cb432-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-6" aria-hidden="true" tabindex="-1"></a>x_min <span class="ot">&lt;-</span> <span class="fu">min</span>(lakes<span class="sc">$</span>longitude) <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb432-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-7" aria-hidden="true" tabindex="-1"></a>x_max <span class="ot">&lt;-</span> <span class="fu">max</span>(lakes<span class="sc">$</span>longitude) <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb432-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-8" aria-hidden="true" tabindex="-1"></a>y_min <span class="ot">&lt;-</span> <span class="fu">min</span>(lakes<span class="sc">$</span>latitude) <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb432-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-9" aria-hidden="true" tabindex="-1"></a>y_max <span class="ot">&lt;-</span> <span class="fu">max</span>(lakes<span class="sc">$</span>latitude) <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb432-10"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb432-11"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-11" aria-hidden="true" tabindex="-1"></a><span class="co"># set color for fill</span></span>
+<span id="cb432-12"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-12" aria-hidden="true" tabindex="-1"></a>map_color <span class="ot">&lt;-</span> <span class="st">"khaki3"</span></span>
+<span id="cb432-13"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb432-14"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-14" aria-hidden="true" tabindex="-1"></a><span class="co"># create plot</span></span>
+<span id="cb432-15"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb432-16"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> world, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> map_color) <span class="sc">+</span>  <span class="co"># plot outline of countries</span></span>
+<span id="cb432-17"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> us_states, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span>     <span class="co"># plot outline of states</span></span>
+<span id="cb432-18"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">xlim =</span> <span class="fu">c</span>(x_min, x_max),</span>
+<span id="cb432-19"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-19" aria-hidden="true" tabindex="-1"></a>           <span class="at">ylim =</span> <span class="fu">c</span>(y_min, y_max)) <span class="sc">+</span>                          <span class="co"># plot boundaries for map</span></span>
+<span id="cb432-20"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> lakes, <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude),  <span class="co"># add sites</span></span>
+<span id="cb432-21"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb432-22"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> lakes, </span>
+<span id="cb432-23"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-23" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">label =</span> lake_name),</span>
+<span id="cb432-24"><a href="simulated-data-for-hypothesis-testing-ii.html#cb432-24" aria-hidden="true" tabindex="-1"></a>                   <span class="at">size =</span> <span class="dv">3</span>)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-365"></span>
+<p class="caption marginnote shownote">
+Figure 22.1: Lake locations.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-365-1.png" alt="Lake locations." width="864">
+</div>
+<div id="ques:tele-4" class="question">
+<p class="question-begin">
+► Question 22.2
+</p>
+<div class="question-body">
+<p>Use the map describing changes in regional climate patterns due to El Nino and the map of the distribution of Lakes to hypothesize how you think lakes will be affected during El Nino years compared to normal years. Consider both how <strong>lake temperatures</strong> and <strong>ice cover</strong> could be impacted. Be specific - your answer should consider (among other things) which lake you would expect to display the strongest/weakest degree of warming during an El Nino year, which lakes might not be affected. Consider that we have already discovered that patterns of precipitation and wind also impact thermal structure of lakes.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:tele-5" class="question">
+<p class="question-begin">
+► Question 22.3
+</p>
+<div class="question-body">
+<p>Briefly describe how you can design an experiment to determine whether El Nino impacts the thermal structure of lakes and identify the effect of regional/local drivers modifying that global interaction. Be specific - consider what information (data sets) you need and what simulations you would run to compare.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Don’t worry - you won’t have to run simulations for every lake - we will each look at a different lake and the compare results!</p>
+</div>
+<div id="set-up-simulation" class="section level2" number="22.2">
+<h2>
+<span class="header-section-number">22.2</span> Set up simulation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('set-up-simulation')" onmouseout="reset_tooltip('set-up-simulation-tooltip')"><span class="tooltiptext" id="set-up-simulation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>If you take a look at the <code>sim_lakes</code> folder, you should see that it contains individual folder for a series of lakes. In this example, we will use Lake Sunapee - this means that when you run the code for <em>your</em> lake, you will need to be sure to change the lake name accordingly.</p>
+<p>First, let’s create a vector with our lake name<label for="tufte-sn-126" class="margin-toggle sidenote-number">126</label><input type="checkbox" id="tufte-sn-126" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">126</span> The advantage for doing it this way instead of directly in the individual code lines is that we only have to set it once, this makes the code a lot more reusable because we don’t have to dig through the code and find all the arguments that set a file path or specify the lake name.</span>.</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb433-1" aria-hidden="true" tabindex="-1"></a>LakeName <span class="ot">&lt;-</span> <span class="st">"Sunapee"</span></span></code></pre></div>
+<p>Next, we will set the file path for the <code>sim</code> folder. Each lake sim folder contains the input files needed to run <code>GLM</code>: the <code>nml</code> file which describes the lake, the <code>met</code> file describing the drivers of thermal structure, and input files describing inflow and outflow to the lake.</p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb434-1" aria-hidden="true" tabindex="-1"></a>sim_folder <span class="ot">&lt;-</span> <span class="st">"sim_lakes/Sunapee"</span></span></code></pre></div>
+<p>Next, we’ll specify the file path for the <code>nml</code> file, read it in, and take a look at it.</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb435-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define file path</span></span>
+<span id="cb435-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb435-2" aria-hidden="true" tabindex="-1"></a>nml_file <span class="ot">&lt;-</span> <span class="fu">file.path</span>(sim_folder, <span class="st">"glm2.nml"</span>)</span>
+<span id="cb435-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb435-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb435-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read nml file</span></span>
+<span id="cb435-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb435-5" aria-hidden="true" tabindex="-1"></a>nml <span class="ot">&lt;-</span> <span class="fu">read_nml</span>(nml_file)</span>
+<span id="cb435-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb435-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb435-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb435-7" aria-hidden="true" tabindex="-1"></a><span class="co"># view file</span></span>
+<span id="cb435-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb435-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(nml)</span></code></pre></div>
+<pre><code>## &amp;glm_setup
+##    sim_name = 'MacrosystemsEDDIE_Sunapee'
+##    max_layers = 250
+##    min_layer_vol = 0.025
+##    min_layer_thick = 0.05
+##    max_layer_thick = 0.75
+##    Kw = 0.17
+##    coef_mix_conv = 0.08213
+##    coef_wind_stir = 1.27
+##    coef_mix_shear = 0.296
+##    coef_mix_turb = 0.526
+##    coef_mix_KH = 0.415
+##    coef_mix_hyp = 0.453
+## /
+## &amp;morphometry
+##    lake_name = 'Sunapee'
+##    latitude = 43.395
+##    longitude = -72.053
+##    bsn_len = 12870
+##    bsn_wid = 3000
+##    bsn_vals = 82
+##    H = 299.43, 299.943, 300.443, 300.943, 301.443, 301.943, 302.443, 302.943, 303.443, 303.943, 304.443, 304.943, 305.443, 305.943, 306.443, 306.943, 307.443, 307.943, 308.443, 308.943, 309.443, 309.943, 310.443, 310.943, 311.443, 311.943, 312.443, 312.943, 313.443, 313.943, 314.443, 314.943, 315.443, 315.943, 316.443, 316.943, 317.443, 317.943, 318.443, 318.943, 319.443, 319.943, 320.443, 320.943, 321.443, 321.943, 322.443, 322.943, 323.443, 323.943, 324.443, 324.943, 325.443, 325.943, 326.443, 326.943, 327.443, 327.943, 328.443, 328.943, 329.443, 329.943, 330.443, 330.943, 331.443, 331.943, 332.343, 332.443, 332.543, 332.643, 332.743, 332.843, 332.943, 333.043, 333.143, 333.243, 333.343, 333.443, 333.543, 333.643, 333.743, 333.943
+##    A = 1, 16.90309, 38.87712, 64.23176, 158.88908, 7254.80801, 25205.89398, 33207.81875, 41551.18602, 51853.6219, 62734.1436, 79030.41666, 105037.51731, 133941.80829, 168576.24818, 214836.63623, 269137.82616, 327112.05845, 401221.9844, 483528.22071, 575947.57823, 676930.04325, 797467.69789, 925704.7119, 1088626.8751, 1283336.99713, 1505854.39934, 1740820.93038, 1988527.32348, 2234911.89462, 2485285.59597, 2723309.89675, 2978076.71227, 3264022.97524, 3653258.97559, 4050485.06854, 4414109.50064, 4796077.1705, 5158332.45198, 5579849.98152, 6016348.72339, 6468883.43068, 6928267.27171, 7476296.00935, 8028820.97004, 8623779.45825, 9274820.72252, 9852960.63206, 10365149.7392, 10843023.87491, 11253594.96068, 11644117.28649, 12013032.38706, 12356310.56475, 12673823.35603, 12988489.66626, 13285122.06535, 13576406.32546, 13863498.61821, 14148319.13512, 14418854.84716, 14691317.51194, 14951571.07182, 15234317.57908, 15510517.51797, 15780918.00526, 16009460, 16071489, 16135107, 16203453, 16273655, 16349525, 16489737, 16603406, 16760708, 16788809, 16804233, 16826128, 16844170, 16863779, 16885473, 16934251.6
+## /
+## &amp;time
+##    timefmt = 2
+##    start = '2012-11-01 00:00:00'
+##    stop = '2013-12-31 23:00:00'
+##    dt = 3600
+##    timezone = -5
+## /
+## &amp;output
+##    out_dir = '.'
+##    out_fn = 'output'
+##    nsave = 24
+## /
+## &amp;init_profiles
+##    lake_depth = 33.7
+##    num_depths = 6
+##    the_depths = 0, 4, 8, 12, 16, 20
+##    the_temps = 11, 11, 11, 11, 11, 11
+##    the_sals = 0, 0, 0, 0, 0, 0
+## /
+## &amp;meteorology
+##    met_sw = .true.
+##    lw_type = 'LW_IN'
+##    rain_sw = .false.
+##    atm_stab = .false.
+##    catchrain = .false.
+##    rad_mode = 2
+##    albedo_mode = 1
+##    cloud_mode = 4
+##    meteo_fl = 'met_hourly.csv'
+##    subdaily = .true.
+##    wind_factor = 1
+##    sw_factor = 1
+##    lw_factor = 1
+##    cd = 0.0013
+##    ce = 0.0013
+##    ch = 0.0013
+##    rain_threshold = 0.01
+##    runoff_coef = 0.3
+## /
+## &amp;inflow
+##    num_inflows = 1
+##    names_of_strms = 'stream'
+##    strm_hf_angle = 65
+##    strmbd_slope = 3
+##    strmbd_drag = 0.016
+##    inflow_factor = 1
+##    inflow_fl = 'inflow.csv'
+##    inflow_varnum = 3
+##    inflow_vars = 'FLOW','SALT','TEMP'
+## /
+## &amp;outflow
+##    num_outlet = 1
+##    flt_off_sw = .false.
+##    outl_elvs = 331
+##    outflow_fl = 'outflow.csv'
+##    outflow_factor = 1.05
+##    seepage_rate = 0
+## /
+## &amp;snowice
+##    snow_albedo_factor = 1
+##    snow_rho_max = 500
+##    snow_rho_min = 100
+## /
+## &amp;sed_heat
+##    sed_temp_mean = 12
+##    sed_temp_amplitude = 11
+##    sed_temp_peak_doy = 242.5
+## /</code></pre>
+<p>One of the arguments in the <code>nml</code> file specifies the file with the information on drivers (i.e. it directs to the <code>met_hourly.csv</code>) file. Let’s take a look at the meteorological input data for the duration of the simulation.</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb437-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_meteo</span>(nml_file) </span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-369"></span>
+<p class="caption marginnote shownote">
+Figure 22.2: Metereological data set summarizing the behavior of drivres of thermal structure for the baseline simulation.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-369-1.png" alt="Metereological data set summarizing the behavior of drivres of thermal structure for the baseline simulation." width="768">
+</div>
+<div id="ques:tele-6" class="question">
+<p class="question-begin">
+► Question 22.4
+</p>
+<div class="question-body">
+<p>Briefly describe the meteorological drivers over the course of the simulation. Be specific (what are ranges for each value? How do they change over the course of the year?)!</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="run-analyze-baseline-simulation" class="section level2" number="22.3">
+<h2>
+<span class="header-section-number">22.3</span> Run &amp; analyze baseline simulation<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('run-analyze-baseline-simulation')" onmouseout="reset_tooltip('run-analyze-baseline-simulation-tooltip')"><span class="tooltiptext" id="run-analyze-baseline-simulation-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Now that we have everything set up we can run the model.</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb438-1" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(sim_folder, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>To analyze the output, let’s specify the file path for the output file that is now in our lake simulation folder (<code>output.nc</code>). Again, this will be our baseline data set based on observed metereological data for a specific year (in our example 2013).</p>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb440-1" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">file.path</span>(sim_folder, <span class="st">"output.nc"</span>)</span></code></pre></div>
+<p>Let’s take a look at the variables that were output as part of our GLM simulation run.</p>
+<div class="sourceCode" id="cb441"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb441-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb441-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pull variable names from output</span></span>
+<span id="cb441-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb441-2" aria-hidden="true" tabindex="-1"></a>var_names <span class="ot">&lt;-</span> <span class="fu">sim_vars</span>(baseline)</span>
+<span id="cb441-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb441-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb441-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb441-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print variables in output</span></span>
+<span id="cb441-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb441-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(var_names,</span>
+<span id="cb441-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb441-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Variable names and units for lake simulation."</span>) </span></code></pre></div>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-372">Table 22.2: </span>Variable names and units for lake simulation.</span><!--</caption>--></p>
+<table>
+<thead><tr class="header">
+<th align="left">name</th>
+<th align="left">unit</th>
+<th align="left">longname</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">evap</td>
+<td align="left">m/s</td>
+<td align="left">evaporation</td>
+</tr>
+<tr class="even">
+<td align="left">extc_coef</td>
+<td align="left">unknown</td>
+<td align="left">extc_coef</td>
+</tr>
+<tr class="odd">
+<td align="left">hice</td>
+<td align="left">meters</td>
+<td align="left">Height of Ice</td>
+</tr>
+<tr class="even">
+<td align="left">hsnow</td>
+<td align="left">meters</td>
+<td align="left">Height of Snow</td>
+</tr>
+<tr class="odd">
+<td align="left">hwice</td>
+<td align="left">meters</td>
+<td align="left">Height of WhiteIce</td>
+</tr>
+<tr class="even">
+<td align="left">I_0</td>
+<td align="left">10E-6m</td>
+<td align="left">Shortwave</td>
+</tr>
+<tr class="odd">
+<td align="left">NS</td>
+<td align="left"></td>
+<td align="left">Number of Layers</td>
+</tr>
+<tr class="even">
+<td align="left">precip</td>
+<td align="left">m/s</td>
+<td align="left">precipitation</td>
+</tr>
+<tr class="odd">
+<td align="left">rad</td>
+<td align="left">unknown</td>
+<td align="left">solar radiation</td>
+</tr>
+<tr class="even">
+<td align="left">rho</td>
+<td align="left">unknown</td>
+<td align="left">density</td>
+</tr>
+<tr class="odd">
+<td align="left">salt</td>
+<td align="left">g/kg</td>
+<td align="left">salinity</td>
+</tr>
+<tr class="even">
+<td align="left">temp</td>
+<td align="left">celsius</td>
+<td align="left">temperature</td>
+</tr>
+<tr class="odd">
+<td align="left">Tot_V</td>
+<td align="left">m3</td>
+<td align="left">lake volume</td>
+</tr>
+<tr class="even">
+<td align="left">u_mean</td>
+<td align="left">m/s</td>
+<td align="left">mean velocity</td>
+</tr>
+<tr class="odd">
+<td align="left">u_orb</td>
+<td align="left">m/s</td>
+<td align="left">orbital velocity</td>
+</tr>
+<tr class="even">
+<td align="left">V</td>
+<td align="left">m3</td>
+<td align="left">layer volume</td>
+</tr>
+<tr class="odd">
+<td align="left">wind</td>
+<td align="left">m/s</td>
+<td align="left">wind</td>
+</tr>
+</tbody>
+</table>
+<p>One of the variables we are especially interested in is <code>hice</code> which describes the lake thickness on the surface of the lake.</p>
+<p>Part of our central question is understanding how water temperatures at the lake surface and bottom (below the thermocline) be affected by El Nino teleconnections.</p>
+<p>To estimate the bottom depth we can extract the lake depth in meters from the output.</p>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb442-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract lake depth</span></span>
+<span id="cb442-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb442-2" aria-hidden="true" tabindex="-1"></a>LakeDepth <span class="ot">&lt;-</span> <span class="fu">get_surface_height</span>(baseline)</span>
+<span id="cb442-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb442-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb442-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb442-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(LakeDepth)</span></code></pre></div>
+<pre><code>##     DateTime surface_height
+## 1 2012-11-02       33.70000
+## 2 2012-11-03       33.69793
+## 3 2012-11-04       33.69418
+## 4 2012-11-05       33.69017
+## 5 2012-11-06       33.68645
+## 6 2012-11-07       33.68364</code></pre>
+<div id="ques:tele-7" class="question">
+<p class="question-begin">
+► Question 22.5
+</p>
+<div class="question-body">
+<p>Create a table with summary descriptive stats for the lake depth (min, max, mean, std) and describe the level of observed fluctuation over the course of the simulation.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-45" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-45', 'sol-start-45')"></span>
+</p>
+<div id="sol-body-45" class="solution-body" style="display: none;">
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-374">Table 22.3: </span>Descriptive statistics of lake depth for Lake Sunapee, NH</span><!--</caption>--></p>
+<table>
+<thead><tr class="header">
+<th align="right">mean_depth</th>
+<th align="right">std_depth</th>
+<th align="right">min_depth</th>
+<th align="right">max_depth</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td align="right">33.7</td>
+<td align="right">0.2</td>
+<td align="right">33.4</td>
+<td align="right">33.9</td>
+</tr></tbody>
+</table>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>We are going to want to extract the lake temperature data from our baseline simulation into a <code>data.frame</code> so we can compare it to our teleconnection scenarios down the line. We will extract it at the surface and for the bottom by setting the argument <code>z_out</code> to <code>0</code> (surface) and the minimum observed depth over the simulation (<code>min(LakeDepth$surface_height)</code>).</p>
+<p>The function automatically names the temperatures after the depth - so you will want to rename them something sensible. You will need to pull up the original column names for your lake, and then you will need to change the column names in the <code>rename()</code> function accordingly!</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb444-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pull temperature data</span></span>
+<span id="cb444-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb444-2" aria-hidden="true" tabindex="-1"></a>LakeTemp <span class="ot">&lt;-</span> <span class="fu">get_temp</span>(<span class="at">file =</span> baseline, <span class="at">reference =</span> <span class="st">"surface"</span>,</span>
+<span id="cb444-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb444-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">min</span>(LakeDepth<span class="sc">$</span>surface_height)))</span>
+<span id="cb444-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb444-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb444-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb444-5" aria-hidden="true" tabindex="-1"></a><span class="co"># get column names</span></span>
+<span id="cb444-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb444-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(LakeTemp)</span></code></pre></div>
+<pre><code>## [1] "DateTime"              "temp_0"                "temp_33.3833669399235"</code></pre>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb446-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename columns </span></span>
+<span id="cb446-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb446-2" aria-hidden="true" tabindex="-1"></a>LakeTemp <span class="ot">&lt;-</span> LakeTemp <span class="sc">%&gt;%</span></span>
+<span id="cb446-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb446-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Baseline_SurfaceTemp =</span> temp_0,</span>
+<span id="cb446-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb446-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">Baseline_BottomTemp =</span> temp_33<span class="fl">.3833669399235</span>)</span></code></pre></div>
+<div id="ques:tele-8" class="question">
+<p class="question-begin">
+► Question 22.6
+</p>
+<div class="question-body">
+<p>Visualize the change of surface and bottom temperature for the baseline simulation and breifly describe your results. Remember to be specific and to start with general patterns and then highlight important/notable details. Remember to include a title and axes labels.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-46" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-46', 'sol-start-46')"></span>
+</p>
+<div id="sol-body-46" class="solution-body" style="display: none;">
+<p>Hint - to plot both temperatures in the same plot, you will need to first create a tidy data set! Once you do that, it should be straightforward to create a plot that look something like this:</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-376"></span>
+<p class="caption marginnote shownote">
+Figure 22.3: Change in surface (blue) and bottom (green) temperature [C] for baseline scenario.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-376-1.png" alt="Change in surface (blue) and bottom (green) temperature [C] for baseline scenario." width="672">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Let’s plot a heatmap of our lake thermal structure for the baseline scenario.</p>
+<div class="sourceCode" id="cb447"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb447-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb447-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp</span>(<span class="at">file=</span>baseline, <span class="at">fig_path=</span><span class="cn">FALSE</span>) </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-377-1.png" width="672"></p>
+<div id="ques:tele-9" class="question">
+<p class="question-begin">
+► Question 22.7
+</p>
+<div class="question-body">
+<p>First, briefly explain how to interpret this heatmap (what data is code here how for the visualization?).</p>
+<p>Then, describe your results - include how the thermal structure changes over the course of the year. Be specific, use key terms such as thermocline, stratified, isotherm, epilomnion (above the thermocline), and hypolimnion (below the thermocline).</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Next, we will extract the ice cover on the lake for our baseline simulation.</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb448-1" aria-hidden="true" tabindex="-1"></a>LakeIce <span class="ot">&lt;-</span> <span class="fu">get_var</span>(baseline, <span class="st">"hice"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb448-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb448-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ice_baseline =</span> hice)</span></code></pre></div>
+<div id="ques:tele-10" class="question">
+<p class="question-begin">
+► Question 22.8
+</p>
+<div class="question-body">
+<p>Visualize the change of surface ice for your lake over the course of the year and then describe your results. Remember to be specific - when is there ice? How thick is it? Include a title &amp; label your axes!</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-47" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-47', 'sol-start-47')"></span>
+</p>
+<div id="sol-body-47" class="solution-body" style="display: none;">
+<p>Your plot should look something like this:</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-379"></span>
+<p class="caption marginnote shownote">
+Figure 22.4: Change in ice cover [m] for baseline simulation.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-379-1.png" alt="Change in ice cover [m] for baseline simulation." width="672">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+</div>
+<div id="create-typical-el-nino-year-scenario" class="section level2" number="22.4">
+<h2>
+<span class="header-section-number">22.4</span> Create typical El Nino year scenario<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('create-typical-el-nino-year-scenario')" onmouseout="reset_tooltip('create-typical-el-nino-year-scenario-tooltip')"><span class="tooltiptext" id="create-typical-el-nino-year-scenario-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Now that we know what ice cover, surface/bottom temperature, and thermal lake structure looks like for the baseline scenario, we are going to explore whether there are teleconnections between El Nino and lake temperatures for two scenarios simlating differing El Nino conditions.</p>
+<p>We will use observed historical climate data to determine how much warmer or cooler the local air temperature is likely to be during an El Nino year for our data set.</p>
+<p>The data folder contains text files with historical climate data - make sure that you change the code to read in the data for your specific lake. We are going to use data starting in the year 1970<label for="tufte-sn-127" class="margin-toggle sidenote-number">127</label><input type="checkbox" id="tufte-sn-127" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">127</span> Since the 1970s there has been a change in some of the drivers and processes of how El Nino is formed. So even though overall the effect is still due to a change in the surface temperatures in the Pacific Ocean some of the regional effects have changed.</span>.</p>
+<div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb449-1" aria-hidden="true" tabindex="-1"></a>annual_temp <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"data/sunapee_clim.txt"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb449-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb449-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb449-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb449-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1970</span>)</span></code></pre></div>
+<p>Let’s use <code>skim()</code> to get a quick look at the data set:</p>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb450-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(annual_temp)</span></code></pre></div>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-381">Table 22.4: </span>Data summary</span><!--</caption>--></p>
+<table><tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">annual_temp</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">48</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">11</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">6</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody></table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">lake_id</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">state</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">13</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">station</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">source</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">type</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">year</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1993.50</td>
+<td align="right">14.00</td>
+<td align="right">1970.0</td>
+<td align="right">1981.75</td>
+<td align="right">1993.5</td>
+<td align="right">2005.25</td>
+<td align="right">2017.0</td>
+<td align="left">▇▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">air_temp_mean_c</td>
+<td align="right">1</td>
+<td align="right">0.98</td>
+<td align="right">6.68</td>
+<td align="right">0.73</td>
+<td align="right">5.3</td>
+<td align="right">6.10</td>
+<td align="right">6.5</td>
+<td align="right">7.30</td>
+<td align="right">8.4</td>
+<td align="left">▃▇▃▅▂</td>
+</tr>
+<tr class="odd">
+<td align="left">air_temp_max_c</td>
+<td align="right">1</td>
+<td align="right">0.98</td>
+<td align="right">13.30</td>
+<td align="right">0.76</td>
+<td align="right">12.0</td>
+<td align="right">12.80</td>
+<td align="right">13.2</td>
+<td align="right">13.75</td>
+<td align="right">15.1</td>
+<td align="left">▃▇▆▃▂</td>
+</tr>
+<tr class="even">
+<td align="left">air_temp_min_c</td>
+<td align="right">1</td>
+<td align="right">0.98</td>
+<td align="right">0.06</td>
+<td align="right">0.82</td>
+<td align="right">-1.8</td>
+<td align="right">-0.45</td>
+<td align="right">-0.1</td>
+<td align="right">0.60</td>
+<td align="right">1.9</td>
+<td align="left">▁▅▇▃▂</td>
+</tr>
+<tr class="odd">
+<td align="left">rain_mm</td>
+<td align="right">1</td>
+<td align="right">0.98</td>
+<td align="right">1166.50</td>
+<td align="right">172.10</td>
+<td align="right">814.3</td>
+<td align="right">1010.20</td>
+<td align="right">1181.0</td>
+<td align="right">1255.55</td>
+<td align="right">1583.8</td>
+<td align="left">▂▇▇▃▂</td>
+</tr>
+<tr class="even">
+<td align="left">snow_mm</td>
+<td align="right">3</td>
+<td align="right">0.94</td>
+<td align="right">2216.07</td>
+<td align="right">718.70</td>
+<td align="right">964.0</td>
+<td align="right">1774.00</td>
+<td align="right">2138.0</td>
+<td align="right">2566.00</td>
+<td align="right">4602.0</td>
+<td align="left">▅▇▆▂▁</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s take a look at differences in Air temperature between El Nino and La Nina years.</p>
+<div id="ques:tele-11" class="question">
+<p class="question-begin">
+► Question 22.9
+</p>
+<div class="question-body">
+<p>Create a plot visualizing the Air temperature for each year and color code it according to whether it is an El Nino, La Nina, or neutral year. Briefly describe your results.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-48" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-48', 'sol-start-48')"></span>
+</p>
+<div id="sol-body-48" class="solution-body" style="display: none;">
+<p>Your plot should look something like this:</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-382"></span>
+<p class="caption marginnote shownote">
+Figure 22.5: Mean annual air temperature for Lake Sunapee, NH. Individual data points are color coded according to whether years were classified as Eln Nino (green), La Nina (blue) or neutral (orange).
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-382-1.png" alt="Mean annual air temperature for Lake Sunapee, NH. Individual data points are color coded according to whether years were classified as Eln Nino (green), La Nina (blue) or neutral (orange)." width="672">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Next, we want to determine how much warmer or colder a typical El Nino year is compared to a typical neutral year.</p>
+<div id="ques:tele-12" class="question">
+<p class="question-begin">
+► Question 22.10
+</p>
+<div class="question-body">
+<p>Outline a straightforward way you could calculate this.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-49" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-49', 'sol-start-49')"></span>
+</p>
+<div id="sol-body-49" class="solution-body" style="display: none;">
+<p>The most straightforward way would be to calculate the mean annual temperature for all annual years and then calculate the mean temperature across all El Nino years. However, we do have to account for the effect of climate change and so we will need to use linear regressions to fit an equation that describe the change in annual temperature over time for neutral years, and a second linear regression to fit an equation to determine the change in El Nino years.</p>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Let’s work through how we can determine what an El Nino year should look like for Lake Sunnapee.</p>
+<p>First, let’s check what type of year 2013 is, which is the year we simulated the thermal structure as a baseline. We are going to acquire a new function for our arsenal which is <code>pull()</code>. This allows up to extract a column from a data set as a vector. In this case it is a single value before we will first filter the data set to only contain entries for the year 2013.</p>
+<div class="sourceCode" id="cb451"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb451-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb451-1" aria-hidden="true" tabindex="-1"></a>annual_temp <span class="sc">%&gt;%</span></span>
+<span id="cb451-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb451-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2013</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb451-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb451-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(type)</span></code></pre></div>
+<pre><code>## [1] "Neutral"</code></pre>
+<p>We want to know what the offset is between a linear regression describing neutral and El Nino years. Let’s visualize this by subsetting our data set to contain only neutral and El Nino years and adding a linear trend line.</p>
+<div class="sourceCode" id="cb453"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb453-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb453-1" aria-hidden="true" tabindex="-1"></a>annual_temp <span class="sc">%&gt;%</span></span>
+<span id="cb453-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb453-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Neutral"</span>, <span class="st">"ElNino"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb453-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb453-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> air_temp_mean_c, <span class="at">color =</span> type)) <span class="sc">+</span></span>
+<span id="cb453-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb453-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb453-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb453-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb453-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb453-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"year"</span>, <span class="at">y =</span> <span class="st">"mean annual air temperature [C]"</span>)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-384"></span>
+<p class="caption marginnote shownote">
+Figure 22.6: Linear regressions comparing the observed in air temperature [C] over time for neutral and El Nino years.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-384-1.png" alt="Linear regressions comparing the observed in air temperature [C] over time for neutral and El Nino years." width="672">
+</div>
+<p>To determine the typical offset, we will use linear regressions to calculate estimated (expected) values for 2013 if it were a typical neutral year and if it were a typical El Nino year. Then we will calculate the difference between those two estimated values as the typical offset to create our <code>met_hourly</code> input data set for a typical El Nino year - i.e we will add the expected offset to the values used in the baseline scenario to create an simulation of the Lake thermal structure if 2013 had been a typical El Nino year.</p>
+<p>Let’s start by fitting a linear regression model to the neutral years. For this we need to start by creating a subset of the data containing only neutral years.</p>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb454-1" aria-hidden="true" tabindex="-1"></a>neutral_temp <span class="ot">&lt;-</span> annual_temp <span class="sc">%&gt;%</span></span>
+<span id="cb454-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb454-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"Neutral"</span>)</span></code></pre></div>
+<p>Now, let’s create a linear regression modeling the relationship of the mean annual temperature and the year for the Lake Sunapee using the <code>tidymodels</code> framework.</p>
+<div class="sourceCode" id="cb455"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb455-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb455-1" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span>                          <span class="co"># specify model</span></span>
+<span id="cb455-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb455-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span>                              <span class="co"># define computational engine</span></span>
+<span id="cb455-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb455-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(air_temp_mean_c <span class="sc">~</span> year, <span class="at">data =</span> neutral_temp)  <span class="co"># define variables</span></span></code></pre></div>
+<p>Let’s identify the slope and intercept for our linear regression (i.e. the equation describing the relationship of temperature and year).</p>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb456-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm_fit<span class="sc">$</span>fit) <span class="sc">%&gt;%</span> </span>
+<span id="cb456-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb456-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>()</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept) -51.9     18.2         -2.86 0.00862
+## 2 year          0.0293   0.00910      3.22 0.00363</code></pre>
+<p>We are going to use the function <code>pull()</code> to create variables with our neutral slope and intercept (we are going to need these later).</p>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb458-1" aria-hidden="true" tabindex="-1"></a>neutral_slope <span class="ot">&lt;-</span> <span class="fu">summary</span>(lm_fit<span class="sc">$</span>fit) <span class="sc">%&gt;%</span> </span>
+<span id="cb458-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb458-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb458-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb458-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"year"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb458-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb458-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(estimate)</span>
+<span id="cb458-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb458-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb458-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb458-6" aria-hidden="true" tabindex="-1"></a>neutral_intercept <span class="ot">&lt;-</span> <span class="fu">summary</span>(lm_fit<span class="sc">$</span>fit) <span class="sc">%&gt;%</span> </span>
+<span id="cb458-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb458-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb458-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb458-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"(Intercept)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb458-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb458-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(estimate)</span></code></pre></div>
+<div id="ques:tele-13" class="question">
+<p class="question-begin">
+► Question 22.11
+</p>
+<div class="question-body">
+<p>Briefly describe your results. Be specific.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-50" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-50', 'sol-start-50')"></span>
+</p>
+<div id="sol-body-50" class="solution-body" style="display: none;">
+<p>Remember, a good way to describe this type of relationship is “on average for every [unit of independent variable] we expect the [dependent variable] to [increase/decrease] by [slope &amp; unit of dependent variable].)</p>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>We can use the function <code>augment()</code> to create a <code>data.frame</code> that contains the observed data (<code>air_temp_mean_c</code>) for a given year along with the value calculated using the equation for our linear regression (<code>.fitted</code>).</p>
+<div class="sourceCode" id="cb459"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb459-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb459-1" aria-hidden="true" tabindex="-1"></a>lm_aug <span class="ot">&lt;-</span> <span class="fu">augment</span>(lm_fit<span class="sc">$</span>fit)</span>
+<span id="cb459-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb459-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb459-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb459-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lm_aug) <span class="sc">%&gt;%</span></span>
+<span id="cb459-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb459-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div>
+<table>
+<thead><tr class="header">
+<th align="left">.rownames</th>
+<th align="right">air_temp_mean_c</th>
+<th align="right">year</th>
+<th align="right">.fitted</th>
+<th align="right">.resid</th>
+<th align="right">.hat</th>
+<th align="right">.sigma</th>
+<th align="right">.cooksd</th>
+<th align="right">.std.resid</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="right">6.3</td>
+<td align="right">1976</td>
+<td align="right">6.000079</td>
+<td align="right">0.2999213</td>
+<td align="right">0.1271902</td>
+<td align="right">0.6060471</td>
+<td align="right">0.0210767</td>
+<td align="right">0.5378358</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="right">6.4</td>
+<td align="right">1977</td>
+<td align="right">6.029405</td>
+<td align="right">0.3705947</td>
+<td align="right">0.1183401</td>
+<td align="right">0.6041533</td>
+<td align="right">0.0293429</td>
+<td align="right">0.6612273</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="right">5.3</td>
+<td align="right">1978</td>
+<td align="right">6.058732</td>
+<td align="right">-0.7587320</td>
+<td align="right">0.1099549</td>
+<td align="right">0.5862189</td>
+<td align="right">0.1121352</td>
+<td align="right">-1.3473629</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="right">6.6</td>
+<td align="right">1979</td>
+<td align="right">6.088059</td>
+<td align="right">0.5119413</td>
+<td align="right">0.1020346</td>
+<td align="right">0.5992364</td>
+<td align="right">0.0465418</td>
+<td align="right">0.9050916</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="right">5.8</td>
+<td align="right">1980</td>
+<td align="right">6.117385</td>
+<td align="right">-0.3173854</td>
+<td align="right">0.0945791</td>
+<td align="right">0.6057531</td>
+<td align="right">0.0163096</td>
+<td align="right">-0.5588096</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="right">6.4</td>
+<td align="right">1981</td>
+<td align="right">6.146712</td>
+<td align="right">0.2532879</td>
+<td align="right">0.0875885</td>
+<td align="right">0.6072207</td>
+<td align="right">0.0094726</td>
+<td align="right">0.4442437</td>
+</tr>
+</tbody>
+</table>
+<p>We are really only interested in the expected value for the year 2013. Again, we can use the function <code>pull()</code> to extract a single column from a <code>data.frame</code>, which makes it easy to create a variable with our expected mean annual temperature for a “neutral 2013.”</p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb460-1" aria-hidden="true" tabindex="-1"></a>neutral_2013 <span class="ot">&lt;-</span> lm_aug <span class="sc">%&gt;%</span></span>
+<span id="cb460-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb460-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2013</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb460-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb460-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(.fitted)</span></code></pre></div>
+<div id="ques:tele-14" class="question">
+<p class="question-begin">
+► Question 22.12
+</p>
+<div class="question-body">
+<p>Compare your observed and expected annual mean temperature for a neutral 2013.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Now, let’s fit a linear regression for an El Nino year.</p>
+<div class="sourceCode" id="cb461"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb461-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb461-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create subset with El Nino years</span></span>
+<span id="cb461-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb461-2" aria-hidden="true" tabindex="-1"></a>elnino_temp <span class="ot">&lt;-</span> annual_temp <span class="sc">%&gt;%</span></span>
+<span id="cb461-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb461-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">"ElNino"</span>)</span>
+<span id="cb461-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb461-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb461-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb461-5" aria-hidden="true" tabindex="-1"></a><span class="co"># fit linear regression</span></span>
+<span id="cb461-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb461-6" aria-hidden="true" tabindex="-1"></a>lm_fit <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">%&gt;%</span>                          <span class="co"># specify model</span></span>
+<span id="cb461-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb461-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set_engine</span>(<span class="st">"lm"</span>) <span class="sc">%&gt;%</span>                              <span class="co"># define computational engine</span></span>
+<span id="cb461-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb461-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(air_temp_mean_c <span class="sc">~</span> year, <span class="at">data =</span> elnino_temp)   <span class="co"># define variables</span></span></code></pre></div>
+<div id="ques:tele-15" class="question">
+<p class="question-begin">
+► Question 22.13
+</p>
+<div class="question-body">
+<p>Print a summary of your linear regression and briefly describe your results; compare these results to your linear regression of a neutral year.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-51" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-51', 'sol-start-51')"></span>
+</p>
+<div id="sol-body-51" class="solution-body" style="display: none;">
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-392">Table 22.5: </span>linear regression of mean annual temperature for El Nino years over time in Lake Sunapee.</span><!--</caption>--></p>
+<table>
+<thead><tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">-54.7373129</td>
+<td align="right">34.4081436</td>
+<td align="right">-1.590824</td>
+<td align="right">0.1427333</td>
+</tr>
+<tr class="even">
+<td align="left">year</td>
+<td align="right">0.0307777</td>
+<td align="right">0.0172555</td>
+<td align="right">1.783642</td>
+<td align="right">0.1048049</td>
+</tr>
+</tbody>
+</table>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>For our neutral data, we were able to use the function <code>augment()</code> because it calculates the expected (<code>.fitted</code>) value for the dependent variable (here, temperature) for every observed value of the independent variable (here, year) in the data set. So since 2013 is a neutral year, it will calculate the neutral expectation for 2013.</p>
+<p>Our El Nino data set does not include the year 2013. There for we need to first specify the set of years that we want to plug into the equation describing the relationship of temperature and year for El Nino years.</p>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb462-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create data frame year(s) to predict</span></span>
+<span id="cb462-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb462-2" aria-hidden="true" tabindex="-1"></a>predict_year <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">year =</span> <span class="dv">2013</span>)</span>
+<span id="cb462-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb462-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb462-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb462-4" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate expected values</span></span>
+<span id="cb462-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb462-5" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_fit, <span class="at">new_data =</span> predict_year)</span>
+<span id="cb462-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb462-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb462-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb462-7" aria-hidden="true" tabindex="-1"></a><span class="co"># extract predicted value</span></span>
+<span id="cb462-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb462-8" aria-hidden="true" tabindex="-1"></a>elnino_2013 <span class="ot">&lt;-</span> pred <span class="sc">%&gt;%</span></span>
+<span id="cb462-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb462-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(.pred)</span></code></pre></div>
+<p>Now, we can calculate the estimated El Nino offset as the difference between the predicted neutral and typical El Nino temperatures calculated for 2013 using the linear regression equations.</p>
+<div class="sourceCode" id="cb463"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb463-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb463-1" aria-hidden="true" tabindex="-1"></a>typical_offset <span class="ot">&lt;-</span> elnino_2013 <span class="sc">-</span> neutral_2013</span></code></pre></div>
+<div id="ques:tele-16" class="question">
+<p class="question-begin">
+► Question 22.14
+</p>
+<div class="question-body">
+<p>Describe your result (what is the expected offset for a typical El Nino year?).</p>
+<p>Now that you have calculated to your typical expected offset for an El Nino year compared to a neutral year, hypothesis how your typical El Nino scenario may affect lake temperatures and ice cover for your lake model. Be specific! What changes do you expect? why?</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>We’re almost there - now all we have to do is create the <code>met_hourly</code> input file for the scenario we want to simulate. In your <code>sim_lakes</code> folder create a new folder called <code>Sunapee_typical</code><label for="tufte-sn-128" class="margin-toggle sidenote-number">128</label><input type="checkbox" id="tufte-sn-128" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">128</span> remember to change this according to the lake you are simulating</span>, make a copy of the the <code>outflow.csv</code>, <code>inflow.csv</code>, and <code>glm2.nml</code> files from the <code>Sunapee</code> folder<label for="tufte-sn-129" class="margin-toggle sidenote-number">129</label><input type="checkbox" id="tufte-sn-129" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">129</span> Again, change this so you are adding a copy of the corresponding lake <code>nml</code> file to the lake you are working on.</span>.</p>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb464-1" aria-hidden="true" tabindex="-1"></a><span class="co"># specify new sim folder</span></span>
+<span id="cb464-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb464-2" aria-hidden="true" tabindex="-1"></a>sim_folder_typical <span class="ot">&lt;-</span> <span class="st">"sim_lakes/Sunapee_typical"</span></span></code></pre></div>
+<p>Now, let’s create a new <code>met_hourly</code> file for our “typical El Nino year” scenario. We are going to change the air temperature by increasing it according to the offset between neutral and El Nino years we just calculated. This means we can do this completely in <code>R</code>, by reading in the baseline met data and the using <code>mutate</code> to add the offset to the Air temperature and writing it back out to file.</p>
+<div class="sourceCode" id="cb465"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb465-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-1" aria-hidden="true" tabindex="-1"></a><span class="co"># file path for original met file</span></span>
+<span id="cb465-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-2" aria-hidden="true" tabindex="-1"></a>baseline_met <span class="ot">&lt;-</span> <span class="fu">file.path</span>(sim_folder, <span class="st">"met_hourly.csv"</span>)</span>
+<span id="cb465-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb465-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in baseline met data</span></span>
+<span id="cb465-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-5" aria-hidden="true" tabindex="-1"></a>met_data <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(baseline_met, <span class="at">delim =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb465-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AirTemp =</span> AirTemp <span class="sc">+</span> typical_offset,                                <span class="co"># add El Nino offset</span></span>
+<span id="cb465-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">time =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(time, <span class="st">"%Y-%m-%d %H:%M:%S"</span>, <span class="at">tz=</span><span class="st">"EST"</span>)))  <span class="co"># make sure correct date/time format</span></span>
+<span id="cb465-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb465-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write new met data to new sim folder</span></span>
+<span id="cb465-10"><a href="simulated-data-for-hypothesis-testing-ii.html#cb465-10" aria-hidden="true" tabindex="-1"></a><span class="fu">write_delim</span>(met_data, <span class="fu">file.path</span>(sim_folder_typical, <span class="st">"met_hourly_typical.csv"</span>), <span class="at">delim =</span> <span class="st">","</span>)</span></code></pre></div>
+<p>Next, we need to edit the <code>nml</code> file to make sure that it points to the correct <code>met</code> file. You can do this by either opening the <code>nml</code> file in an external text editor or, depending on your <code>Rstudio</code> version you can also clicking on the <code>glm2.nml</code> file in your <code>Sunapee_typical</code> in the <code>Rstudio</code> File tab and select <code>View File</code> which will open it in the Viewer panel.</p>
+<p>You will need to scroll to the meteorology section<label for="tufte-sn-130" class="margin-toggle sidenote-number">130</label><input type="checkbox" id="tufte-sn-130" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">130</span> You can also use the find function!</span> and change the <code>meteo_fl</code> entry to match the new file name (<code>met_hourly_typical.csv</code>)<label for="tufte-sn-131" class="margin-toggle sidenote-number">131</label><input type="checkbox" id="tufte-sn-131" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">131</span> Make sure to save the file before closing it!</span>.</p>
+<p>Let’s double check that we did this correctly:</p>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb466-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define file path</span></span>
+<span id="cb466-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb466-2" aria-hidden="true" tabindex="-1"></a>nml_file_typical <span class="ot">&lt;-</span> <span class="fu">file.path</span>(sim_folder_typical, <span class="st">"glm2.nml"</span>)</span>
+<span id="cb466-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb466-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb466-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb466-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read nml file</span></span>
+<span id="cb466-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb466-5" aria-hidden="true" tabindex="-1"></a>nml <span class="ot">&lt;-</span> <span class="fu">read_nml</span>(nml_file_typical)</span>
+<span id="cb466-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb466-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb466-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb466-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check met file name</span></span>
+<span id="cb466-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb466-8" aria-hidden="true" tabindex="-1"></a><span class="fu">get_nml_value</span>(nml, <span class="st">"meteo_fl"</span>)</span></code></pre></div>
+<pre><code>## [1] "met_hourly_typical.csv"</code></pre>
+<p>If the print out in the console is not your met file for the typical El Nino scenario you just created, make the edit to the <code>nml</code> file and make sure to save the change!</p>
+</div>
+<div id="run-analyze-typical-el-nino-year-scenario" class="section level2" number="22.5">
+<h2>
+<span class="header-section-number">22.5</span> Run &amp; analyze typical El Nino year scenario<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('run-analyze-typical-el-nino-year-scenario')" onmouseout="reset_tooltip('run-analyze-typical-el-nino-year-scenario-tooltip')"><span class="tooltiptext" id="run-analyze-typical-el-nino-year-scenario-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>Okay, we’re all set to run our typical El Nino scenario:</p>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb468-1" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(sim_folder_typical, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<p>Before we can look at all the output, we will need to create a file path for our main output file (<code>output.nc</code>) per usual to make it easy to pull all the information we need and create visualizations.</p>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb470-1" aria-hidden="true" tabindex="-1"></a>typical_elnino <span class="ot">&lt;-</span> <span class="fu">file.path</span>(sim_folder_typical, <span class="st">"output.nc"</span>)</span></code></pre></div>
+<p>Let’s pull out our temperature for the lake surface and lake bottom and add that to our existing <code>LakeTemp</code> <code>data.frame</code>. We will want to repeat the same process as above, where we pull up the automatically generated column names<label for="tufte-sn-132" class="margin-toggle sidenote-number">132</label><input type="checkbox" id="tufte-sn-132" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">132</span> you will need to check the column names specific to your lake and change the code accordingly!</span> and then rename them after we join the two data sets<label for="tufte-sn-133" class="margin-toggle sidenote-number">133</label><input type="checkbox" id="tufte-sn-133" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">133</span> Dates are notoriously difficult to deal with, frequently they might look the same to you, but under the hood there are differences at some level. The code line <code>mutate(DateTime = as.POSIXct(strptime(DateTime, "%Y-%m-%d %H:%M:%S", tz="EST")))</code> is there to make sure that both <code>DateTime</code> columns are the same class/data type and we can join the data tables</span>.</p>
+<div class="sourceCode" id="cb471"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb471-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb471-1" aria-hidden="true" tabindex="-1"></a>LakeTemp_scenario <span class="ot">&lt;-</span> <span class="fu">get_temp</span>(<span class="at">file =</span> typical_elnino, <span class="at">reference =</span> <span class="st">"surface"</span>,</span>
+<span id="cb471-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb471-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">min</span>(LakeDepth<span class="sc">$</span>surface_height))) <span class="sc">%&gt;%</span></span>
+<span id="cb471-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb471-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>, <span class="at">tz=</span><span class="st">"EST"</span>)))</span>
+<span id="cb471-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb471-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb471-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb471-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(LakeTemp_scenario)</span></code></pre></div>
+<pre><code>## [1] "DateTime"              "temp_0"                "temp_33.3833669399235"</code></pre>
+<div class="sourceCode" id="cb473"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb473-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb473-1" aria-hidden="true" tabindex="-1"></a>LakeTemp <span class="ot">&lt;-</span> LakeTemp <span class="sc">%&gt;%</span></span>
+<span id="cb473-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb473-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>, <span class="at">tz=</span><span class="st">"EST"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb473-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb473-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(LakeTemp_scenario, <span class="at">by =</span> <span class="st">"DateTime"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb473-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb473-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">TypicalElNino_SurfaceTemp =</span> temp_0,</span>
+<span id="cb473-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb473-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">TypicalElNino_BottomTemp =</span> temp_33<span class="fl">.3833669399235</span>)</span></code></pre></div>
+<div id="ques:tele-17" class="question">
+<p class="question-begin">
+► Question 22.15
+</p>
+<div class="question-body">
+<p>Create a plot comparing the Bottom and Surface temperatures for your Baseline and Typical El Nino simulations. Color code the lines according to whether they are the baseline scenario or a typical El Nino year and create subplots for bottom and surface temperature.</p>
+<p>Briefly describe your results - remember to be specific (have your surface and bottom temperatures changed? By how much?)!</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-52" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-52', 'sol-start-52')"></span>
+</p>
+<div id="sol-body-52" class="solution-body" style="display: none;">
+<p>You might remember from our previous plot of just the baseline temperatures that we first had to create a tidy data set. You will also need separate columns for the <code>scenaro</code> and the <code>temperature_measurement</code>. What function will be helpful for that?</p>
+<p>You plot should look similar to this - remember to add a title and label your axes!</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-401"></span>
+<p class="caption marginnote shownote">
+Figure 22.7: Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue) and typical El Nino year (orange).
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-401-1.png" alt="Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue) and typical El Nino year (orange)." width="864">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Next, let’s pull the ice thickness data for our typical El Nino scenario and add it to the existing <code>LakeIce</code> <code>data.frame</code>.</p>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb474-1" aria-hidden="true" tabindex="-1"></a>LakeIce_scenario <span class="ot">&lt;-</span> <span class="fu">get_var</span>(typical_elnino, <span class="st">"hice"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb474-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb474-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ice_TypicalElNino =</span> hice) <span class="sc">%&gt;%</span></span>
+<span id="cb474-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb474-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>)))</span>
+<span id="cb474-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb474-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb474-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb474-5" aria-hidden="true" tabindex="-1"></a>LakeIce <span class="ot">&lt;-</span> LakeIce <span class="sc">%&gt;%</span></span>
+<span id="cb474-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb474-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb474-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb474-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(LakeIce_scenario)</span></code></pre></div>
+<div id="ques:tele-18" class="question">
+<p class="question-begin">
+► Question 22.16
+</p>
+<div class="question-body">
+<p>Create a plot comparing the ice thickness for your baseline and typical El Nino year simulation.</p>
+<p>Briefly describe your results - remember to be specific!</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-53" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-53', 'sol-start-53')"></span>
+</p>
+<div id="sol-body-53" class="solution-body" style="display: none;">
+<p>You plot should look similar to this - remember to add a title and label your axes!</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-403"></span>
+<p class="caption marginnote shownote">
+Figure 22.8: Comparison of ice thickness [m] for simulated baseline scenario (blue) and typical El Nino year (orange).
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-403-1.png" alt="Comparison of ice thickness [m] for simulated baseline scenario (blue) and typical El Nino year (orange)." width="864">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Finally, let’s take a look at our lake thermal structure.</p>
+<div class="sourceCode" id="cb475"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb475-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb475-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp</span>(<span class="at">file =</span> typical_elnino, <span class="at">fig_path =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-404-1.png" width="672"></p>
+</div>
+<div id="create-an-extreme-el-nino-year-scenario" class="section level2" number="22.6">
+<h2>
+<span class="header-section-number">22.6</span> Create an extreme El Nino year scenario<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('create-an-extreme-el-nino-year-scenario')" onmouseout="reset_tooltip('create-an-extreme-el-nino-year-scenario-tooltip')"><span class="tooltiptext" id="create-an-extreme-el-nino-year-scenario-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>We created a typical El Nino year scenario. From comparing the annual mean temperatures in our historical climate data set, you know that there is strong variation in how much El Nino years differ from a neutral year.</p>
+<p>Let’s identify the largest observed offset that our lake has experienced since 1970. Let’s take another look at our observed annual temperature data for neutral and El Nino years.</p>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb476-1" aria-hidden="true" tabindex="-1"></a>annual_temp <span class="sc">%&gt;%</span></span>
+<span id="cb476-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb476-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>type <span class="sc">==</span> <span class="st">"LaNina"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb476-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb476-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> air_temp_mean_c, <span class="at">color =</span> type)) <span class="sc">+</span></span>
+<span id="cb476-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb476-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb476-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb476-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb476-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb476-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>, <span class="st">"darkblue"</span>)) <span class="sc">+</span></span>
+<span id="cb476-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb476-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"year"</span>, <span class="at">y =</span> <span class="st">"mean annual air temp [C]"</span>)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-405"></span>
+<p class="caption marginnote shownote">
+Figure 22.9: Comparison of mean annual temperature [C] for neutral and El Nino years
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-405-1.png" alt="Comparison of mean annual temperature [C] for neutral and El Nino years" width="672">
+</div>
+<p>We can eyeball which of the El Nino years appears to have the largest offset from a neutral year, or since we calculated the slope and intercept of the regression line describing the relationship of temperature and time for neutral years we can calculate the offsets for all El Nino years and then identify the largest offset.</p>
+<p>We can do this by calculating the estimated temperature for each year if it was a neutral year, and then calculating the offset.</p>
+<div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb477-1" aria-hidden="true" tabindex="-1"></a><span class="co"># identify maximum offset</span></span>
+<span id="cb477-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb477-2" aria-hidden="true" tabindex="-1"></a>max_offset <span class="ot">&lt;-</span> elnino_temp <span class="sc">%&gt;%</span></span>
+<span id="cb477-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb477-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">neutral_est =</span> (neutral_slope <span class="sc">*</span> year) <span class="sc">+</span> neutral_intercept,</span>
+<span id="cb477-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb477-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">offset =</span> air_temp_mean_c <span class="sc">-</span> neutral_est) <span class="sc">%&gt;%</span></span>
+<span id="cb477-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb477-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">max_offset =</span> <span class="fu">max</span>(offset)) <span class="sc">%&gt;%</span></span>
+<span id="cb477-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb477-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(max_offset)</span></code></pre></div>
+<div id="ques:tele-19" class="question">
+<p class="question-begin">
+► Question 22.17
+</p>
+<div class="question-body">
+<p>Describe your result (what is the offset?).</p>
+<p>Now that you have calculated to your extreme expected offset for a strong El Nino year compared to a neutral year, hypothesize how your extreme El Nino scenario may affect lake temperatures and ice cover for your lake model compared to your baseline simulation of a neutral year. Be specific! What changes do you expect? why?</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Now, we can use this value to generate a strong El Nino scenario repeating the steps from above.</p>
+<p>First, create a new subfolder <code>sim_lakes/Sunapee_extreme</code><label for="tufte-sn-134" class="margin-toggle sidenote-number">134</label><input type="checkbox" id="tufte-sn-134" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">134</span> Remember, that you should be naming this folder according to the lake you are exploring.</span>. Then place a copy of the <code>met_hourly.csv</code>, <code>inflow.csv</code>, <code>outflow.csv</code>, and <code>glm2.nml</code> file in that folder.</p>
+<p>Next, let’s create our new <code>met</code> file by adding the maximum offset we identified in the observed data to the air temperature.</p>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create file pat for extreme el nino simulation</span></span>
+<span id="cb478-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-2" aria-hidden="true" tabindex="-1"></a>sim_folder_extreme <span class="ot">&lt;-</span> <span class="st">"sim_lakes/Sunapee_extreme"</span></span>
+<span id="cb478-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb478-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in baseline met data &amp; add offset</span></span>
+<span id="cb478-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-5" aria-hidden="true" tabindex="-1"></a>met_data <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(baseline_met, <span class="at">delim =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb478-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AirTemp =</span> AirTemp <span class="sc">+</span> max_offset,                                   <span class="co"># add max El Nino offset</span></span>
+<span id="cb478-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">time =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(time, <span class="st">"%Y-%m-%d %H:%M:%S"</span>, <span class="at">tz=</span><span class="st">"EST"</span>)))  <span class="co"># make sure correct date/time format</span></span>
+<span id="cb478-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb478-9"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write new met data to new sim folder</span></span>
+<span id="cb478-10"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-10" aria-hidden="true" tabindex="-1"></a><span class="fu">write_delim</span>(met_data, <span class="fu">file.path</span>(sim_folder_extreme, <span class="st">"met_hourly_extreme.csv"</span>), <span class="at">delim =</span> <span class="st">","</span>)</span></code></pre></div>
+<p>Finally, we need to edit the <code>nml</code> file for our scenario, so it points to the correct <code>met</code> file. Open the <code>glm2.nml</code> file in the <code>Sunapee_extreme</code> folder<label for="tufte-sn-135" class="margin-toggle sidenote-number">135</label><input type="checkbox" id="tufte-sn-135" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">135</span> Remember, this will be specific to the lake you’ve chosen.</span> and edit the <code>meteo_fl</code> option to point toward your <code>met</code> file.</p>
+<p>Let’s double check that we edited the file correctly.</p>
+<div class="sourceCode" id="cb479"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb479-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb479-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define file path</span></span>
+<span id="cb479-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb479-2" aria-hidden="true" tabindex="-1"></a>nml_file_extreme <span class="ot">&lt;-</span> <span class="fu">file.path</span>(sim_folder_extreme, <span class="st">"glm2.nml"</span>)</span>
+<span id="cb479-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb479-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb479-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb479-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read nml file</span></span>
+<span id="cb479-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb479-5" aria-hidden="true" tabindex="-1"></a>nml <span class="ot">&lt;-</span> <span class="fu">read_nml</span>(nml_file_extreme)</span>
+<span id="cb479-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb479-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb479-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb479-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check met file name</span></span>
+<span id="cb479-8"><a href="simulated-data-for-hypothesis-testing-ii.html#cb479-8" aria-hidden="true" tabindex="-1"></a><span class="fu">get_nml_value</span>(nml, <span class="st">"meteo_fl"</span>)</span></code></pre></div>
+<pre><code>## [1] "met_hourly_extreme.csv"</code></pre>
+</div>
+<div id="run-analyze-extreme-el-nino-scenario" class="section level2" number="22.7">
+<h2>
+<span class="header-section-number">22.7</span> Run &amp; analyze extreme El Nino scenario<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('run-analyze-extreme-el-nino-scenario')" onmouseout="reset_tooltip('run-analyze-extreme-el-nino-scenario-tooltip')"><span class="tooltiptext" id="run-analyze-extreme-el-nino-scenario-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>We are ready to run our simulation and create a vector pointing to the output file.</p>
+<div class="sourceCode" id="cb481"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb481-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb481-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run simulation</span></span>
+<span id="cb481-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb481-2" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(sim_folder_extreme)</span></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode" id="cb483"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb483-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb483-1" aria-hidden="true" tabindex="-1"></a><span class="co"># specify output file</span></span>
+<span id="cb483-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb483-2" aria-hidden="true" tabindex="-1"></a>extreme_elnino <span class="ot">&lt;-</span> <span class="fu">file.path</span>(sim_folder_extreme, <span class="st">"output.nc"</span>)</span></code></pre></div>
+<p>Our next step will be to pull out our temperature for the lake surface and lake bottom and add that to our existing <code>LakeTemp</code> <code>data.frame</code> repeating the same process we used above.</p>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb484-1" aria-hidden="true" tabindex="-1"></a>LakeTemp_scenario <span class="ot">&lt;-</span> <span class="fu">get_temp</span>(<span class="at">file =</span> extreme_elnino, <span class="at">reference =</span> <span class="st">"surface"</span>,</span>
+<span id="cb484-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb484-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">z_out =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">min</span>(LakeDepth<span class="sc">$</span>surface_height))) <span class="sc">%&gt;%</span></span>
+<span id="cb484-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb484-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>, <span class="at">tz=</span><span class="st">"EST"</span>)))</span>
+<span id="cb484-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb484-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb484-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb484-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(LakeTemp_scenario)</span></code></pre></div>
+<pre><code>## [1] "DateTime"              "temp_0"                "temp_33.3833669399235"</code></pre>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb486-1" aria-hidden="true" tabindex="-1"></a>LakeTemp <span class="ot">&lt;-</span> LakeTemp <span class="sc">%&gt;%</span></span>
+<span id="cb486-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb486-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>, <span class="at">tz=</span><span class="st">"EST"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb486-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb486-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(LakeTemp_scenario, <span class="at">by =</span> <span class="st">"DateTime"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb486-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb486-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">ExtremeElNino_SurfaceTemp =</span> temp_0,</span>
+<span id="cb486-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb486-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ExtremeElNino_BottomTemp =</span> temp_33<span class="fl">.3833669399235</span>)</span></code></pre></div>
+<div id="ques:tele-20" class="question">
+<p class="question-begin">
+► Question 22.18
+</p>
+<div class="question-body">
+<p>Create a plot comparing the Bottom and Surface temperatures for your Baseline and Typical El Nino simulations. Color code the lines according to the simulated scenario and create subplots for bottom and surface temperature for easier comparison.</p>
+<p>Post a copy of your final figure in the <code>#hwassignments</code> channel. Make sure your plot title include the lake name! You will be adding all your final figures; you should wait until you’ve completed all of them before doing so.</p>
+<p>Describe your results - remember to be specific!</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-54" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-54', 'sol-start-54')"></span>
+</p>
+<div id="sol-body-54" class="solution-body" style="display: none;">
+<p>Your plot should look similar to this one.</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-411"></span>
+<p class="caption marginnote shownote">
+Figure 22.10: Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue), typical El Nino year (orange), and extreme El Nino year (red).
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-411-1.png" alt="Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue), typical El Nino year (orange), and extreme El Nino year (red)." width="864">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Next, let’s pull the ice thickness data for our typical El Nino scenario and add it to the existing <code>LakeIce</code> <code>data.frame</code>.</p>
+<div class="sourceCode" id="cb487"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb487-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb487-1" aria-hidden="true" tabindex="-1"></a>LakeIce_scenario <span class="ot">&lt;-</span> <span class="fu">get_var</span>(extreme_elnino, <span class="st">"hice"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb487-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb487-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ice_ExtremeElNino =</span> hice) <span class="sc">%&gt;%</span></span>
+<span id="cb487-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb487-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>)))</span>
+<span id="cb487-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb487-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb487-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb487-5" aria-hidden="true" tabindex="-1"></a>LakeIce <span class="ot">&lt;-</span> LakeIce <span class="sc">%&gt;%</span></span>
+<span id="cb487-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb487-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb487-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb487-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(LakeIce_scenario)</span></code></pre></div>
+<div id="ques:tele-21" class="question">
+<p class="question-begin">
+► Question 22.19
+</p>
+<div class="question-body">
+<p>Create a plot comparing the ice thickness for your baseline, typical, and extreme El Nino year simulations.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-55" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-55', 'sol-start-55')"></span>
+</p>
+<div class="solution-body" id="sol-body-55" style="display: none;">
+
+
+
+<p>You plot should look similar to this - remember to add a title and label your axes!</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-413"></span>
+<p class="caption marginnote shownote">
+Figure 22.11: Comparison of ice thickness [m] for simulated baseline scenario (blue), typical (orange) and extreme (red) El Nino years.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-413-1.png" alt="Comparison of ice thickness [m] for simulated baseline scenario (blue), typical (orange) and extreme (red) El Nino years." width="864">
+</div>
+<p>Here is an example of where transforming our data can be helpful to better identify patterns. The model gives us the output of ice thickness. In many biological and ecological contexts the more helpful metric would be to now what the ice cover is, i.e. how many days of the year is the lake covered in ice.</p>
+<p>We can create a new data frame (<code>IceCover</code>) that contains the number of years with ice for each of your scenarios.</p>
+<p>A good way to visualize this, would be to plot the relationship of the temperature offset and ice cover duration. This means we need to add the offset to our <code>data.frame</code>. We can do this using a conditional mutate and the helpful function <code>case_when()</code>.</p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb488-1" aria-hidden="true" tabindex="-1"></a>IceCover <span class="ot">&lt;-</span> IceCover <span class="sc">%&gt;%</span></span>
+<span id="cb488-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb488-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TempOffset =</span> <span class="fu">case_when</span>(scenario <span class="sc">==</span> <span class="st">"ice_baseline"</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb488-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb488-3" aria-hidden="true" tabindex="-1"></a>                                scenario <span class="sc">==</span> <span class="st">"ice_TypicalElNino"</span> <span class="sc">~</span> typical_offset,</span>
+<span id="cb488-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb488-4" aria-hidden="true" tabindex="-1"></a>                                scenario <span class="sc">==</span> <span class="st">"ice_ExtremeElNino"</span> <span class="sc">~</span> max_offset))</span></code></pre></div>
+<p>Now it’s straightforward to create plot summarizing the change in ice cover based on the expected temperature offset for a typical and strong El Nino year.</p>
+<div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb489-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(IceCover, <span class="fu">aes</span>(<span class="at">x =</span> TempOffset, <span class="at">y =</span> ice_cover)) <span class="sc">+</span></span>
+<span id="cb489-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb489-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb489-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb489-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> scenario), <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb489-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb489-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"red"</span>, <span class="st">"darkorange"</span>)) <span class="sc">+</span></span>
+<span id="cb489-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb489-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperature offset [C]"</span>, <span class="at">y =</span> <span class="st">"ice cover duration [days]"</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-416-1.png" width="672"></p>
+<div id="ques:tele-22" class="question">
+<p class="question-begin">
+► Question 22.20
+</p>
+<div class="question-body">
+<p>Describe your results. Be specific!</p>
+<p>Post a copy of your final figure in the <code>#hwassignments</code> channel. Make sure your plot title include the lake name! You will be adding all your final figures; you should wait until you’ve completed all of them before doing so.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<p>Finally, let’s take a look at our lake thermal structure across our three scenarios.</p>
+<p>We’ve previously relied on the <code>glmtools::plot_temp()</code> function but since you might want to plot a heatplot for another data set down the line. Let’s learn how to use <code>ggplot</code> to plot a heatmap.</p>
+<p>First, we need to pull the temperature data for all depths. If we don’t specify <code>z_out</code> as we have done previously to get just the surface and/or bottom temperatures the <code>get_temp()</code> function will return data for all depths.</p>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-1" aria-hidden="true" tabindex="-1"></a>therm_struct <span class="ot">&lt;-</span> <span class="fu">get_temp</span>(<span class="at">file =</span> extreme_elnino, <span class="at">reference =</span> <span class="st">"surface"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb490-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>, <span class="at">tz=</span><span class="st">"EST"</span>)))</span></code></pre></div>
+<p>To plot a heatmap we will us the function <code>geom_tile()</code>. We need a data set with a column for date which we will plot on the x-axis (this already exists as <code>DateTime</code>), a column with depth which we will plot on the y-axis, and a column with temperature (this is the one we will color code the tiles by).</p>
+<p>This means we need to create a tidy data set. Currently, the column names for each depth are in the format <code>temp_depth</code>. We can use the function <code>stringr::str_sub()</code><label for="tufte-sn-136" class="margin-toggle sidenote-number">136</label><input type="checkbox" id="tufte-sn-136" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">136</span> <code>stringr</code> is a package in the <code>tidyverse</code> designed to manipulate strings.</span>. Your <code>data.frame</code> might have a different number of columns than our example. We can use <code>ncol(therm_struct)</code> to get the number of columns in the data set and use that to specify which columns to gather.</p>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-1" aria-hidden="true" tabindex="-1"></a>therm_struct <span class="ot">&lt;-</span> therm_struct <span class="sc">%&gt;%</span></span>
+<span id="cb491-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"depth"</span>, <span class="at">values_to =</span> <span class="st">"temperature"</span>, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(therm_struct)) <span class="sc">%&gt;%</span></span>
+<span id="cb491-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">depth =</span> <span class="fu">str_sub</span>(depth, <span class="dv">6</span>),     <span class="co"># remove first five characters</span></span>
+<span id="cb491-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth =</span> <span class="fu">as.numeric</span>(depth)) <span class="sc">%&gt;%</span> <span class="co"># convert to numeric</span></span>
+<span id="cb491-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(temperature))           <span class="co"># remove missing values.</span></span></code></pre></div>
+<p>Now we can plot our heatmap showing the thermal structure for our extreme El Nino year.</p>
+<p>We are going to flip the y-axis using <code>scale_y_reverse()</code> so that our surface temperature is at the top of the plot. We can specify the range of values using the <code>limits</code> and <code>breaks</code> options in the <code>scale_fill_viridis_c()</code> function that we are using to specify the color scale. The temperature cannot drop below 0 but your should check the maximum value for your temperature to determine the highest value for your scale<label for="tufte-sn-137" class="margin-toggle sidenote-number">137</label><input type="checkbox" id="tufte-sn-137" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">137</span> in my case it is around 27C so I chose 30</span>.</p>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(therm_struct, <span class="fu">aes</span>(<span class="at">x =</span> DateTime, <span class="at">y =</span> depth, <span class="at">fill =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb492-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb492-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>), <span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="at">by =</span> <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb492-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
+<span id="cb492-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"date"</span>, <span class="at">y =</span> <span class="st">"depth [m]"</span>)</span></code></pre></div>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-419"></span>
+<p class="caption marginnote shownote">
+Figure 22.12: Thermal structure of Lake Sunapee, NH for extreme El Nino event.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-419-1.png" alt="Thermal structure of Lake Sunapee, NH for extreme El Nino event." width="672">
+</div>
+<div id="ques:tele-23" class="question">
+<p class="question-begin">
+► Question 22.21
+</p>
+<div class="question-body">
+<p>Use your new <code>ggplot</code> skills to create a heat plot for the thermal structure of your baseline, normal, and El Nino years for your Lake. Use <code>patchwork</code> to create a multi panel figure to make it easy to compare all three scenarios.</p>
+<p>The extreme El Nino scenario should have the highest temperatures - use the same values for <code>limits</code> and <code>breaks</code> to make sure all of your scales are identical and it is straightforward to compare your plots.</p>
+<p>Post a copy of your figure in the <code>#hwassignment</code> channel. Make sure your plot title includes the lake name! You will be adding all your final figures; you should wait until you’ve completed all of them before doing so.</p>
+<p>Describe your results - remember to be specific!</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div class="msmb-solution">
+<p class="solution-begin">
+► Solution<span id="sol-start-56" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-56', 'sol-start-56')"></span>
+</p>
+<div id="sol-body-56" class="solution-body" style="display: none;">
+<p>You plot should look similar to this - remember to add a title and label your axes!</p>
+<div class="figure">
+<span style="display:block;" id="fig:unnamed-chunk-420"></span>
+<p class="caption marginnote shownote">
+Figure 22.13: Comparison of thermal structure for baseline (top), typical (middle), and extreme (bottom) El Nino years.
+</p>
+<img src="_main_files/figure-html/unnamed-chunk-420-1.png" alt="Comparison of thermal structure for baseline (top), typical (middle), and extreme (bottom) El Nino years." width="672">
+</div>
+<p class="solution-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:tele-1" class="question">
+<p class="question-begin">
+► Question 22.22
+</p>
+<div class="question-body">
+<p>Your central results are comparisons of surface &amp; bottom depth, lake ice cover duriation, and thermal structure for all three scenarios, which you have already summarized above.</p>
+<p>Discuss your results to interpret the effect of El Nino on the lake thermal structure of your lake and relate that to the broad topic of teleconnections and macrosystems ecology. Some questions to consider include:</p>
+<ul>
+<li>do you see evidence of teleconnections? why/why not?</li>
+<li>what local characteristics of your lake might be contributing to the response you observed to changes in the temperature offsets?</li>
+<li>does your model output support or contradict your initial hypothesis of how El Nino events will interact with local conditions affecting lake thermal structure/ice cover?</li>
+<li>our simulations did not include precipitation - what do you think might happen if we did include this information?</li>
+<li>we determined our offsets are based on historical data, how do you think El Nino effects might change in the future and what does this mean for lake responses?</li>
+<li>most research has focused on the effects of El Nino on air temperature/land surfaces - do you think we can use our lake data as a good proxy for land surface increase? Why? Why not?</li>
+</ul>
+<p>Start your discussion with a summary of your analysis and results in the format of</p>
+<blockquote>
+<p>In this study, I investigated [broad question asked/hypothesis tested]. To achieve this, I [specific study location, data set(s) + analysis used]. We found that [key results: in your case you would make a specific statement about the change of surface/bottom temperature, ice cover, and lake thermal structure for your lake].</p>
+</blockquote>
+<p>Now that you have completed your analysis, post this summary of key results in the <code>#hwassignment</code> channel along with your plots (comparison of surface/bottom temperature, ice cover duration, thermal structure).</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
+<div id="ques:tele-2" class="question">
+<p class="question-begin">
+► Question 22.23
+</p>
+<div class="question-body">
+<p>Collectively, we analyzed a set of lakes across the continental United States.</p>
+<p>Compare and contrast the results for all the lakes based on the results that have been posted in the <code>#hwassignments</code> channel to discuss the overall results in the context of macrosystems ecology and specifically teleconnections. The questions for consideration of the discussion of your specific results will be helpful for your broad discussion.</p>
+<p class="question-end">
+<span class="fa fa-square-o solution-icon"></span>
+</p>
+</div>
+</div>
 <p></p>
 <p></p>
 <p></p>
@@ -253,12 +1806,14 @@ function reset_tooltip(id) {
 <p></p>
 <p></p>
 </div>
-<div id="acknowledgments-5" class="section level2" number="22.2">
+<div id="acknowledgments-5" class="section level2" number="22.8">
 <h2>
-<span class="header-section-number">22.2</span> Acknowledgments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('acknowledgments-5')" onmouseout="reset_tooltip('acknowledgments-5-tooltip')"><span class="tooltiptext" id="acknowledgments-5-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+<span class="header-section-number">22.8</span> Acknowledgments<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('acknowledgments-5')" onmouseout="reset_tooltip('acknowledgments-5-tooltip')"><span class="tooltiptext" id="acknowledgments-5-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
 </h2>
-<p>These activities are based on the EDDIE Teleconnections module.<label for="tufte-sn-126" class="margin-toggle sidenote-number">126</label><input type="checkbox" id="tufte-sn-126" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">126</span> Farrell, K.J. and C.C. Carey. 18 May 2018. Macrosystems EDDIE: Teleconnections. Macrosystems EDDIE Module 3, Version 1.</span></p>
+<p>These activities are based on the EDDIE Teleconnections module.<label for="tufte-sn-138" class="margin-toggle sidenote-number">138</label><input type="checkbox" id="tufte-sn-138" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">138</span> Farrell, K.J. and C.C. Carey. 18 May 2018. Macrosystems EDDIE: Teleconnections. Macrosystems EDDIE Module 3, Version 1.</span></p>
 
+</div>
+</div>
 </div>
 </div></body></html>
 
@@ -267,7 +1822,7 @@ function reset_tooltip(id) {
 <a href="references.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-06
+2021-11-09
  using 
 R version 4.0.2 (2020-06-22)
 </p>

@@ -1,0 +1,69 @@
+Lake ID	State	Station	Year	AirTemp_Mean_C	AirTemp_Max_C	AirTemp_Min_C	Rain_mm	Snow_mm	Source	Type
+Prairie Pothole	North Dakota	USW00014919	1950	1.9	8.1	-4.2	656.8	2609	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1951	2.4	8.5	-3.8	438.8	1383	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1952	5	11.9	-1.9	334.8	1315	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1953	5.9	12.3	-0.4	733	906	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1954	5.3	11.7	-1.1	510.6	775	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1955	4.1	11	-2.7	516.2	584	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1956	4.1	10.5	-2.3	614.6	856	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1957	4.9	11.1	-1.3	519.9	553	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1958	5.2	11.9	-1.6	415.4	238	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1959	4.8	11.4	-1.8	491.1	536	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1960	4.4	11.3	-2.4	403.8	964	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1961	5.2	11.9	-1.5	363.2	402	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1962	4.6	10.8	-1.6	650.5	623	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1963	5.7	12.8	-1.4	291.3	519	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1964	4.6	11.4	-2.3	447.5	781	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1965	3.6	9.8	-2.6	518.7	761	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1966	3.7	10.2	-2.7	471.2	1055	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1967	4.4	11	-2.2	369.8	995	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1968	4.6	10.8	-1.5	428.9	535	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1969	4.1	10.1	-1.8	421.4	1216	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1970	4.2	10.4	-1.9	367.8	787	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1971	4.3	10.4	-1.9	417.2	700	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1972	3.7	9.6	-2.3	478.4	1210	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1973	6.2	12.2	0.2	398.7	373	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1974	4.9	11	-1.2	354.1	327	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1975	4.9	10.6	-0.8	602.6	1803	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1976	5.5	12.6	-1.6	243.2	942	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1977	5.4	11.4	-0.6	635.1	1160	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1978	4.2	10.3	-1.9	529.2	652	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1979	3.1	8.9	-2.7	385.4	1284	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1980	5.6	11.8	-0.6	454.9	479	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1981	6.5	12.9	0.1	401.2	557	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1982	4.1	10.3	-2	435	1376	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1983	5.9	11.6	0.2	406	676	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1984	5.5	11.4	-0.5	339.6	1117	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1985	4.9	11.1	-1.3	387.4	1215	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1986	6.8	12.3	1.4	653.5	931	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1987	9	14.7	3.3	365.6	536	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1988	6.7	13.1	0.3	285.8	775	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	1989	5	11.5	-1.5	428.2	1342	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1990	6.6	13.6	-0.4	365.2	533	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1991	6.3	12.6	0	445.5	809	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1992	5.5	11.7	-0.7	387.8	780	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1993	4.3	9.7	-1.2	767.6	1534	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1994	5.3	10.8	-0.2	594.6	1480	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1995	5.1	10.2	0	678.1	1377	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1996	3.5	8.9	-1.9	457.7	2189	NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	1997	5.8	11.3	0.2	525.6	1877	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1998	6.7	11.9	1.5	551.6	976	NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	1999	6.1	11.8	0.3	569.7	1012	NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	2000	4.9	11	-1.2	557.6		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2001	5.7	11.6	-0.2	504.2		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2002	5.2	11.2	-0.9	339.6		NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	2003	4.8	11.2	-1.6	365.5		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2004	4.7	10.8	-1.3	552.7		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2005	6	12	0.1	540.7		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2006	6.7	12.8	0.7	382.8		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2007	5.3	11.1	-0.6	511.2		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2008	3.9	10.2	-2.5	529.9		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2009	3.7	9.4	-2.1	367.8		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2010	5.3	10.7	-0.2	591.3		NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	2011	5.1	10.6	-0.4	555.2		NOAA NCDC	LaNina
+Prairie Pothole	North Dakota	USW00014919	2012	7.1	13.4	0.8	328.4		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2013	3.8	9.7	-2.1	406.5		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2014	4.2	9.8	-1.4	535.1		NOAA NCDC	Neutral
+Prairie Pothole	North Dakota	USW00014919	2015	6.5	12.6	0.5	569.1		NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	2016	7.1	12.8	1.4	665.4		NOAA NCDC	ElNino
+Prairie Pothole	North Dakota	USW00014919	2017	5.9	11.8	-0.1	322.4		NOAA NCDC	Neutral
