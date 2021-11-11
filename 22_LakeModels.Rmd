@@ -955,6 +955,8 @@ LakeIce %>%
 
 ```
 
+`r msmbstyle::solution_end()`
+
 Here is an example of where transforming our data can be helpful to better identify patterns. The model gives us the output of ice thickness. In many biological and ecological contexts the more helpful metric would be to now what the ice cover is, i.e. how many days of the year is the lake covered in ice.
 
 We can create a new data frame (`IceCover`) that contains the number of years with ice for each of your scenarios.

@@ -239,7 +239,3 @@ run-analyze-typical-el-nino-year-scenario
 create-an-extreme-el-nino-year-scenario
 run-analyze-extreme-el-nino-scenario
 acknowledgments-5
-fig:unnamed-chunk-10
-fig:unnamed-chunk-11
-fig:unnamed-chunk-14
-fig:unnamed-chunk-15
