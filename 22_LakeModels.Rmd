@@ -229,7 +229,7 @@ run_glm(sim_folder, verbose = TRUE)
 
 ```
 
-To analyze the output, let's specify the file path for the output file that is now in our lake simulation folder (`output.nc`). Again, this will be our baseline data set based on observed metereological data for a specific year (in our example 2013).
+To analyze the output, let's specify the file path for the output file that is now in our lake simulation folder (`output.nc`). Again, this will be our baseline data set based on observed meteorological data for a specific year (in our example 2013).
 
 ```{r}
 
@@ -315,7 +315,11 @@ Visualize the change of surface and bottom temperature for the baseline simulati
 
 `r msmbstyle::solution_begin()`
 
-Hint - to plot both temperatures in the same plot, you will need to first create a tidy data set! Once you do that, it should be straightforward to create a plot that look something like this:
+Hint - to plot both temperatures in the same plot, you will need to first create a tidy data set!
+
+If you look at the figure below, you can see that you will need a column for date (x-axis), temperature (y-axis) and and column that contains simulated scenarios (this becomes the color coding for your line graphs).
+
+Once you do that, it should be straightforward to create a plot that look something like this:
 
 ```{r echo=FALSE, fig.cap="Change in surface (blue) and bottom (green) temperature [C] for baseline scenario."}
 
@@ -711,7 +715,11 @@ Briefly describe your results - remember to be specific (have your surface and b
 
 `r msmbstyle::solution_begin()`
 
-You might remember from our previous plot of just the baseline temperatures that we first had to create a tidy data set. You will also need separate columns for the `scenaro` and the `temperature_measurement`. What function will be helpful for that?
+Recall from our previous plot of just the baseline temperatures that we first had to create a tidy data set. 
+
+If you look at the figure, you can see that you will need a column for date (x-axis), temperature (y-axis) and two additional columns for your sub-grouping of type of temperature measurement (this becomes the individual panels of bottom and surface temperature) and your simulated scenarios (this becomes the color coding for your line graphs).
+
+If you pivot your data set as you did earlier, you end up with a column containing your scenario/data sets; if you look closely at those values you can see that they contain both the information on simulation scenario and the type of temperature measurement. What function can you use to create separate columns for the `scenario` and the `temperature_measurement`.
 
 You plot should look similar to this - remember to add a title and label your axes!
 
@@ -893,7 +901,7 @@ LakeTemp <- LakeTemp %>%
 
 `r msmbstyle::question_begin(label = "ques:tele-20")`
 
-Create a plot comparing the Bottom and Surface temperatures for your Baseline and Typical El Nino simulations. Color code the lines according to the simulated scenario and create subplots for bottom and surface temperature for easier comparison.
+Create a plot comparing the Bottom and Surface temperatures for your baseline and corresponding typical and strong El Nino scenario simulations. Color code the lines according to the simulated scenario and create subplots for bottom and surface temperature for easier comparison.
 
 Post a copy of your final figure in the `#hwassignments` channel. Make sure your plot title include the lake name! You will be adding all your final figures; you should wait until you've completed all of them before doing so.
 
@@ -904,6 +912,8 @@ Describe your results - remember to be specific!
 `r msmbstyle::solution_begin()`
 
 Your plot should look similar to this one.
+
+We've already done this for our previous visualizations of the temperature data. Again, you will need to turn your data set into a tidy data set to be able to plot this data set. If you look at the figure, you can see that you will need a column for date (x-axis), temperature (y-axis) and two additional columns for your sub-grouping of type of temperature measurement (this becomes the individual panels of bottom and surface temperature) and your simulated scenarios (this becomes the color coding for your line graphs).
 
 ```{r echo=FALSE, fig.cap="Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue), typical El Nino year (orange), and extreme El Nino year (red).", fig.width=9, fig.height=5}
 
@@ -920,7 +930,7 @@ LakeTemp %>%
 
 `r msmbstyle::solution_end()`
 
-Next, let's pull the ice thickness data for our typical El Nino scenario and add it to the existing `LakeIce` `data.frame`.
+Next, let's pull the ice thickness data for our extreme El Nino scenario and add it to the existing `LakeIce` `data.frame`.
 
 ```{r}
 
@@ -944,6 +954,8 @@ Create a plot comparing the ice thickness for your baseline, typical, and extrem
 
 You plot should look similar to this - remember to add a title and label your axes!
 
+Again, you will need to convert your data set to a tidy data set, this time you should have a column with your date (x-axis), ice thickness (y-axis) and your scenarios/data sets (color coding for lines).
+
 ```{r echo=FALSE, fig.cap="Comparison of ice thickness [m] for simulated baseline scenario (blue), typical (orange) and extreme (red) El Nino years.", fig.width=9, fig.height=5}
 
 LakeIce %>%
@@ -957,11 +969,11 @@ LakeIce %>%
 
 `r msmbstyle::solution_end()`
 
-Here is an example of where transforming our data can be helpful to better identify patterns. The model gives us the output of ice thickness. In many biological and ecological contexts the more helpful metric would be to now what the ice cover is, i.e. how many days of the year is the lake covered in ice.
+Here is an example of where transforming our data can be helpful to better identify patterns. The model gives us the output of ice thickness. However, in many biological and ecological contexts the more helpful metric would be to now what the ice cover is, i.e. how many days of the year is the lake covered in ice.
 
 We can create a new data frame (`IceCover`) that contains the number of years with ice for each of your scenarios.
 
-```{r echo=FALSE}
+```{r}
 
 IceCover <- LakeIce %>%
   pivot_longer(names_to = "scenario", values_to = "ice_thickness", 2:4) %>%
@@ -1003,7 +1015,7 @@ Post a copy of your final figure in the `#hwassignments` channel. Make sure your
 
 Finally, let's take a look at our lake thermal structure across our three scenarios. 
 
-We've previously relied on the `glmtools::plot_temp()` function but since you might want to plot a heatplot for another data set down the line. Let's learn how to use `ggplot` to plot a heatmap.
+We've previously relied on the `glmtools::plot_temp()` function. However, down the line you might want to plot a heat plot for another data set down the line. Let's learn how to use `ggplot` to plot a heatmap.
 
 First, we need to pull the temperature data for all depths. If we don't specify `z_out` as we have done previously to get just the surface and/or bottom temperatures the `get_temp()` function will return data for all depths.
 

@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-11" />
+<meta name="date" content="2021-11-15" />
 
 
 <meta name="description" content="22 Simulated Data for hypothesis testing II | Data Science for the Natural Environment (FA21)">
@@ -638,7 +638,7 @@ Figure 22.2: Metereological data set summarizing the behavior of drivres of ther
 <p>Now that we have everything set up we can run the model.</p>
 <div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb440-1" aria-hidden="true" tabindex="-1"></a><span class="fu">run_glm</span>(sim_folder, <span class="at">verbose =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<p>To analyze the output, let’s specify the file path for the output file that is now in our lake simulation folder (<code>output.nc</code>). Again, this will be our baseline data set based on observed metereological data for a specific year (in our example 2013).</p>
+<p>To analyze the output, let’s specify the file path for the output file that is now in our lake simulation folder (<code>output.nc</code>). Again, this will be our baseline data set based on observed meteorological data for a specific year (in our example 2013).</p>
 <div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb442-1" aria-hidden="true" tabindex="-1"></a>baseline <span class="ot">&lt;-</span> <span class="fu">file.path</span>(sim_folder, <span class="st">"output.nc"</span>)</span></code></pre></div>
 <p>Let’s take a look at the variables that were output as part of our GLM simulation run.</p>
 <div class="sourceCode" id="cb443"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb443-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb443-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pull variable names from output</span></span>
@@ -823,7 +823,9 @@ Figure 22.2: Metereological data set summarizing the behavior of drivres of ther
 ► Solution<span id="sol-start-47" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-47', 'sol-start-47')"></span>
 </p>
 <div id="sol-body-47" class="solution-body" style="display: none;">
-<p>Hint - to plot both temperatures in the same plot, you will need to first create a tidy data set! Once you do that, it should be straightforward to create a plot that look something like this:</p>
+<p>Hint - to plot both temperatures in the same plot, you will need to first create a tidy data set!</p>
+<p>If you look at the figure below, you can see that you will need a column for date (x-axis), temperature (y-axis) and and column that contains simulated scenarios (this becomes the color coding for your line graphs).</p>
+<p>Once you do that, it should be straightforward to create a plot that look something like this:</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-378"></span>
 <p class="caption marginnote shownote">
@@ -1467,7 +1469,9 @@ Figure 22.6: Linear regressions comparing the observed in air temperature [C] ov
 ► Solution<span id="sol-start-53" class="fa fa-plus-square solution-icon clickable" onclick="toggle_visibility('sol-body-53', 'sol-start-53')"></span>
 </p>
 <div id="sol-body-53" class="solution-body" style="display: none;">
-<p>You might remember from our previous plot of just the baseline temperatures that we first had to create a tidy data set. You will also need separate columns for the <code>scenaro</code> and the <code>temperature_measurement</code>. What function will be helpful for that?</p>
+<p>Recall from our previous plot of just the baseline temperatures that we first had to create a tidy data set.</p>
+<p>If you look at the figure, you can see that you will need a column for date (x-axis), temperature (y-axis) and two additional columns for your sub-grouping of type of temperature measurement (this becomes the individual panels of bottom and surface temperature) and your simulated scenarios (this becomes the color coding for your line graphs).</p>
+<p>If you pivot your data set as you did earlier, you end up with a column containing your scenario/data sets; if you look closely at those values you can see that they contain both the information on simulation scenario and the type of temperature measurement. What function can you use to create separate columns for the <code>scenario</code> and the <code>temperature_measurement</code>.</p>
 <p>You plot should look similar to this - remember to add a title and label your axes!</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-403"></span>
@@ -1615,7 +1619,7 @@ Figure 22.9: Comparison of mean annual temperature [C] for neutral and El Nino y
 ► Question 22.18
 </p>
 <div class="question-body">
-<p>Create a plot comparing the Bottom and Surface temperatures for your Baseline and Typical El Nino simulations. Color code the lines according to the simulated scenario and create subplots for bottom and surface temperature for easier comparison.</p>
+<p>Create a plot comparing the Bottom and Surface temperatures for your baseline and corresponding typical and strong El Nino scenario simulations. Color code the lines according to the simulated scenario and create subplots for bottom and surface temperature for easier comparison.</p>
 <p>Post a copy of your final figure in the <code>#hwassignments</code> channel. Make sure your plot title include the lake name! You will be adding all your final figures; you should wait until you’ve completed all of them before doing so.</p>
 <p>Describe your results - remember to be specific!</p>
 <p class="question-end">
@@ -1629,6 +1633,7 @@ Figure 22.9: Comparison of mean annual temperature [C] for neutral and El Nino y
 </p>
 <div id="sol-body-55" class="solution-body" style="display: none;">
 <p>Your plot should look similar to this one.</p>
+<p>We’ve already done this for our previous visualizations of the temperature data. Again, you will need to turn your data set into a tidy data set to be able to plot this data set. If you look at the figure, you can see that you will need a column for date (x-axis), temperature (y-axis) and two additional columns for your sub-grouping of type of temperature measurement (this becomes the individual panels of bottom and surface temperature) and your simulated scenarios (this becomes the color coding for your line graphs).</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-413"></span>
 <p class="caption marginnote shownote">
@@ -1641,7 +1646,7 @@ Figure 22.10: Comparison of surface and bottom temperatures [C] for simulated ba
 </p>
 </div>
 </div>
-<p>Next, let’s pull the ice thickness data for our typical El Nino scenario and add it to the existing <code>LakeIce</code> <code>data.frame</code>.</p>
+<p>Next, let’s pull the ice thickness data for our extreme El Nino scenario and add it to the existing <code>LakeIce</code> <code>data.frame</code>.</p>
 <div class="sourceCode" id="cb489"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb489-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb489-1" aria-hidden="true" tabindex="-1"></a>LakeIce_scenario <span class="ot">&lt;-</span> <span class="fu">get_var</span>(extreme_elnino, <span class="st">"hice"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb489-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb489-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ice_ExtremeElNino =</span> hice) <span class="sc">%&gt;%</span></span>
 <span id="cb489-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb489-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>)))</span>
@@ -1666,6 +1671,7 @@ Figure 22.10: Comparison of surface and bottom temperatures [C] for simulated ba
 </p>
 <div id="sol-body-56" class="solution-body" style="display: none;">
 <p>You plot should look similar to this - remember to add a title and label your axes!</p>
+<p>Again, you will need to convert your data set to a tidy data set, this time you should have a column with your date (x-axis), ice thickness (y-axis) and your scenarios/data sets (color coding for lines).</p>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-415"></span>
 <p class="caption marginnote shownote">
@@ -1678,19 +1684,23 @@ Figure 22.11: Comparison of ice thickness [m] for simulated baseline scenario (b
 </p>
 </div>
 </div>
-<p>Here is an example of where transforming our data can be helpful to better identify patterns. The model gives us the output of ice thickness. In many biological and ecological contexts the more helpful metric would be to now what the ice cover is, i.e. how many days of the year is the lake covered in ice.</p>
+<p>Here is an example of where transforming our data can be helpful to better identify patterns. The model gives us the output of ice thickness. However, in many biological and ecological contexts the more helpful metric would be to now what the ice cover is, i.e. how many days of the year is the lake covered in ice.</p>
 <p>We can create a new data frame (<code>IceCover</code>) that contains the number of years with ice for each of your scenarios.</p>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-1" aria-hidden="true" tabindex="-1"></a>IceCover <span class="ot">&lt;-</span> LakeIce <span class="sc">%&gt;%</span></span>
+<span id="cb490-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"scenario"</span>, <span class="at">values_to =</span> <span class="st">"ice_thickness"</span>, <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb490-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(scenario) <span class="sc">%&gt;%</span></span>
+<span id="cb490-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">ice_cover =</span> <span class="fu">sum</span>(ice_thickness <span class="sc">&gt;</span> <span class="dv">0</span>))</span></code></pre></div>
 <p>A good way to visualize this, would be to plot the relationship of the temperature offset and ice cover duration. This means we need to add the offset to our <code>data.frame</code>. We can do this using a conditional mutate and the helpful function <code>case_when()</code>.</p>
-<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-1" aria-hidden="true" tabindex="-1"></a>IceCover <span class="ot">&lt;-</span> IceCover <span class="sc">%&gt;%</span></span>
-<span id="cb490-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TempOffset =</span> <span class="fu">case_when</span>(scenario <span class="sc">==</span> <span class="st">"ice_baseline"</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
-<span id="cb490-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-3" aria-hidden="true" tabindex="-1"></a>                                scenario <span class="sc">==</span> <span class="st">"ice_TypicalElNino"</span> <span class="sc">~</span> typical_offset,</span>
-<span id="cb490-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb490-4" aria-hidden="true" tabindex="-1"></a>                                scenario <span class="sc">==</span> <span class="st">"ice_ExtremeElNino"</span> <span class="sc">~</span> max_offset))</span></code></pre></div>
+<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-1" aria-hidden="true" tabindex="-1"></a>IceCover <span class="ot">&lt;-</span> IceCover <span class="sc">%&gt;%</span></span>
+<span id="cb491-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TempOffset =</span> <span class="fu">case_when</span>(scenario <span class="sc">==</span> <span class="st">"ice_baseline"</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb491-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-3" aria-hidden="true" tabindex="-1"></a>                                scenario <span class="sc">==</span> <span class="st">"ice_TypicalElNino"</span> <span class="sc">~</span> typical_offset,</span>
+<span id="cb491-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-4" aria-hidden="true" tabindex="-1"></a>                                scenario <span class="sc">==</span> <span class="st">"ice_ExtremeElNino"</span> <span class="sc">~</span> max_offset))</span></code></pre></div>
 <p>Now it’s straightforward to create plot summarizing the change in ice cover based on the expected temperature offset for a typical and strong El Nino year.</p>
-<div class="sourceCode" id="cb491"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb491-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(IceCover, <span class="fu">aes</span>(<span class="at">x =</span> TempOffset, <span class="at">y =</span> ice_cover)) <span class="sc">+</span></span>
-<span id="cb491-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb491-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> scenario), <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb491-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"red"</span>, <span class="st">"darkorange"</span>)) <span class="sc">+</span></span>
-<span id="cb491-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb491-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperature offset [C]"</span>, <span class="at">y =</span> <span class="st">"ice cover duration [days]"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(IceCover, <span class="fu">aes</span>(<span class="at">x =</span> TempOffset, <span class="at">y =</span> ice_cover)) <span class="sc">+</span></span>
+<span id="cb492-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb492-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> scenario), <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb492-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"red"</span>, <span class="st">"darkorange"</span>)) <span class="sc">+</span></span>
+<span id="cb492-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperature offset [C]"</span>, <span class="at">y =</span> <span class="st">"ice cover duration [days]"</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-418-1.png" width="672"></p>
 <div id="ques:tele-22" class="question">
 <p class="question-begin">
@@ -1705,24 +1715,24 @@ Figure 22.11: Comparison of ice thickness [m] for simulated baseline scenario (b
 </div>
 </div>
 <p>Finally, let’s take a look at our lake thermal structure across our three scenarios.</p>
-<p>We’ve previously relied on the <code>glmtools::plot_temp()</code> function but since you might want to plot a heatplot for another data set down the line. Let’s learn how to use <code>ggplot</code> to plot a heatmap.</p>
+<p>We’ve previously relied on the <code>glmtools::plot_temp()</code> function. However, down the line you might want to plot a heat plot for another data set down the line. Let’s learn how to use <code>ggplot</code> to plot a heatmap.</p>
 <p>First, we need to pull the temperature data for all depths. If we don’t specify <code>z_out</code> as we have done previously to get just the surface and/or bottom temperatures the <code>get_temp()</code> function will return data for all depths.</p>
-<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-1" aria-hidden="true" tabindex="-1"></a>therm_struct <span class="ot">&lt;-</span> <span class="fu">get_temp</span>(<span class="at">file =</span> extreme_elnino, <span class="at">reference =</span> <span class="st">"surface"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb492-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>, <span class="at">tz=</span><span class="st">"EST"</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb493-1" aria-hidden="true" tabindex="-1"></a>therm_struct <span class="ot">&lt;-</span> <span class="fu">get_temp</span>(<span class="at">file =</span> extreme_elnino, <span class="at">reference =</span> <span class="st">"surface"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb493-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb493-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DateTime =</span> <span class="fu">as.POSIXct</span>(<span class="fu">strptime</span>(DateTime, <span class="st">"%Y-%m-%d"</span>, <span class="at">tz=</span><span class="st">"EST"</span>)))</span></code></pre></div>
 <p>To plot a heatmap we will us the function <code>geom_tile()</code>. We need a data set with a column for date which we will plot on the x-axis (this already exists as <code>DateTime</code>), a column with depth which we will plot on the y-axis, and a column with temperature (this is the one we will color code the tiles by).</p>
 <p>This means we need to create a tidy data set. Currently, the column names for each depth are in the format <code>temp_depth</code>. We can use the function <code>stringr::str_sub()</code><label for="tufte-sn-136" class="margin-toggle sidenote-number">136</label><input type="checkbox" id="tufte-sn-136" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">136</span> <code>stringr</code> is a package in the <code>tidyverse</code> designed to manipulate strings.</span>. Your <code>data.frame</code> might have a different number of columns than our example. We can use <code>ncol(therm_struct)</code> to get the number of columns in the data set and use that to specify which columns to gather.</p>
-<div class="sourceCode" id="cb493"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb493-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb493-1" aria-hidden="true" tabindex="-1"></a>therm_struct <span class="ot">&lt;-</span> therm_struct <span class="sc">%&gt;%</span></span>
-<span id="cb493-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb493-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"depth"</span>, <span class="at">values_to =</span> <span class="st">"temperature"</span>, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(therm_struct)) <span class="sc">%&gt;%</span></span>
-<span id="cb493-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb493-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">depth =</span> <span class="fu">str_sub</span>(depth, <span class="dv">6</span>),     <span class="co"># remove first five characters</span></span>
-<span id="cb493-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb493-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth =</span> <span class="fu">as.numeric</span>(depth)) <span class="sc">%&gt;%</span> <span class="co"># convert to numeric</span></span>
-<span id="cb493-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb493-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(temperature))           <span class="co"># remove missing values.</span></span></code></pre></div>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-1" aria-hidden="true" tabindex="-1"></a>therm_struct <span class="ot">&lt;-</span> therm_struct <span class="sc">%&gt;%</span></span>
+<span id="cb494-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">names_to =</span> <span class="st">"depth"</span>, <span class="at">values_to =</span> <span class="st">"temperature"</span>, <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(therm_struct)) <span class="sc">%&gt;%</span></span>
+<span id="cb494-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">depth =</span> <span class="fu">str_sub</span>(depth, <span class="dv">6</span>),     <span class="co"># remove first five characters</span></span>
+<span id="cb494-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">depth =</span> <span class="fu">as.numeric</span>(depth)) <span class="sc">%&gt;%</span> <span class="co"># convert to numeric</span></span>
+<span id="cb494-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(temperature))           <span class="co"># remove missing values.</span></span></code></pre></div>
 <p>Now we can plot our heatmap showing the thermal structure for our extreme El Nino year.</p>
 <p>We are going to flip the y-axis using <code>scale_y_reverse()</code> so that our surface temperature is at the top of the plot. We can specify the range of values using the <code>limits</code> and <code>breaks</code> options in the <code>scale_fill_viridis_c()</code> function that we are using to specify the color scale. The temperature cannot drop below 0 but your should check the maximum value for your temperature to determine the highest value for your scale<label for="tufte-sn-137" class="margin-toggle sidenote-number">137</label><input type="checkbox" id="tufte-sn-137" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">137</span> in my case it is around 27C so I chose 30</span>.</p>
-<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(therm_struct, <span class="fu">aes</span>(<span class="at">x =</span> DateTime, <span class="at">y =</span> depth, <span class="at">fill =</span> temperature)) <span class="sc">+</span></span>
-<span id="cb494-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
-<span id="cb494-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>), <span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="at">by =</span> <span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb494-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb494-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb494-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"date"</span>, <span class="at">y =</span> <span class="st">"depth [m]"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb495"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb495-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb495-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(therm_struct, <span class="fu">aes</span>(<span class="at">x =</span> DateTime, <span class="at">y =</span> depth, <span class="at">fill =</span> temperature)) <span class="sc">+</span></span>
+<span id="cb495-2"><a href="simulated-data-for-hypothesis-testing-ii.html#cb495-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb495-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb495-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"plasma"</span>, <span class="at">limits=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">30</span>), <span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">30</span>, <span class="at">by =</span> <span class="dv">5</span>)) <span class="sc">+</span></span>
+<span id="cb495-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb495-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
+<span id="cb495-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb495-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"date"</span>, <span class="at">y =</span> <span class="st">"depth [m]"</span>)</span></code></pre></div>
 <div class="figure">
 <span style="display:block;" id="fig:unnamed-chunk-421"></span>
 <p class="caption marginnote shownote">
@@ -1822,7 +1832,7 @@ Figure 22.13: Comparison of thermal structure for baseline (top), typical (middl
 <a href="references.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-11
+2021-11-15
  using 
 R version 4.0.2 (2020-06-22)
 </p>
