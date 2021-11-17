@@ -1,0 +1,1536 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      cache.extra = packageVersion('msmbstyle'),
+                      warning = FALSE,
+                      message = FALSE,
+                      error = FALSE)
+
+
+options(htmltools.dir.version = FALSE)
+
+source("scr/ggplot.R")
+
+theme_set(theme_standard)
+
+```
+
+# Predictive modeling for air pollution
+
+**Learning Objectives**
+
+After completing this tutorial you should be able to
+
+* evaluate the correlation among predictor variables using `corrplot`.
+* understand the need for training and test data sets and implement `tidymodels` packages to split data set into training and testing sets
+, understand the utility of cross-validation and implment it in the `tidymodels` framework.
+* understand the basic utility of machine learning for prediction and classification and  use the `tidymodels` packages to train and test a linear regression model & random forest model.
+* interpret root mean squared error (rmse) to assess the performance of prediction.
+
+Before we start, download the  [08_AirPollution](https://drive.google.com/drive/folders/1-zSiBKS-H8LVeP50_I-gbz6eERrqrFpb?usp=sharing) project folder. Once you have downloaded it, unzip the project directory into your `BI449` directory.
+
+Your first step is creating a new R project in your project folder. To do this open `Rstudio` then use the drop down menu in the top right corner to select `New Project` and from there `New Project in an existing directory`. From there, navigate to and select the project folder create an R project. Remember, your `Rproj` sets the working directory so you need to make sure that it is in your project folder.
+
+Next, open the `Rmd` file to follow along. Most of the code we will need to day is already in the Rmarkdown file, however, you should make sure that you comment all of the code in this set of activtiies **line by line**. Make sure your comments are informative and concise.
+
+Before we start we need to install a few packages if you have not already done so. Remember, if you have a code chunk with code to install packages it will run every time you knit your document or use the `run all chunks` options. It is best to either comment out those lines of code, inactivate the code chunk using `eval=FALSE` or just run them directly in the console.
+
+Here are the packages you need:
+
+* `summarytools`
+* `vip`
+* `tune`
+* `randomForest`
+* `doParallel`
+* `GGally`
+* `maps`
+
+Let's load our packages so we can get started.
+
+```{r}
+
+# load libraries for data import & wrangling
+library(tidyverse)
+library(janitor)
+library(skimr)
+library(knitr)
+
+
+# load libraries for correlation plots
+library(corrplot)
+library(GGally)
+
+# load libraries for modeling & machine learning
+library(tidymodels)
+library(vip)
+library(randomForest)
+library(doParallel)
+
+# load libraries for data visualization & mapping
+library(ggplot2)
+library(patchwork)
+library(sf)
+library(rnaturalearth)
+library(maps)
+
+library(conflicted)
+conflict_prefer("mutate", "dplyr")
+conflict_prefer("map", "maps")
+
+# turn of sci notation
+options(scipen=999)
+
+```
+
+
+## Data for predictive modeling
+
+We will use air pollution data gathered using air pollution monitoring. In this system of monitors about 90% are located with in city leading to rural areas being severely under-monitored. Let's take a little bit of time to think about the limitations of our approach and what type of data we will need to answer our question.
+
+Our goal is to use this data set to train  model that can accurately predict air pollution levels even when physical monitors are not present. A primary interest in air pollution is due to the adverse health outcomes related to exposure.
+
+Before we start we should consider limitations of the data set we will look at to make sure that we can answer our question and to make sure that we don't overstep in our interpretation.
+
+`r msmbstyle::question_begin(label = "ques:air-poll-1")`
+
+Consider limitations of the data that you should keep in mind when interpreting and discussing your results.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+1. What limitations come with the fact that air pollutants are measured as "Particulate Matter"?
+2. We are measuring (average) outdoor pollution levels; how does this related to making predictions about individual exposures?
+3. We are using mean estimates of pollution levels.
+
+`r msmbstyle::solution_end()`
+
+We will be using supervised machine learning to predict pollution levels. Here, we have two main types of data:
+
+1. A **continuous outcome variable** - this is the variable we want to predict
+2. A **set of features** or predictor variables used to predict the outcome variable.
+
+In order to build and train a model you need corresponding data sets^[Corresponding means they should have the same/very similar spatial and temporal resolution.]. The underlying principle is that if you determine the existing relationship and describe it mathematically using an existing data set, then you would also be able predict the value for that outcome variable for a new observation as long as you have values for the predictor variable.
+
+`r msmbstyle::question_begin(label = "ques:air-poll-2")`
+
+For our example of creating a model with the goal of predicting pollution levels, what would be our **outcome variable** and what are potential **features** (or predictor variables)?
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+Consider what we want to predict (what is the outcome of the model? what quantity do we hope to get as a result?
+Consider which parameters might contribute to air pollution levels (i.e. factors that might be causing it to go up or down/are correlated).
+
+`r msmbstyle::solution_end()`
+
+With the rise of computational power available at our fingertips, Machine Learning and Artificial Intelligence approaches are increasingly being used to solve problems, especially when large data sets are involved. Unfortunately, this means it quickly turns into a black box where we dump in some outcome and predictor variables give it a good shake and take the "answer" we receive at face value.
+
+To avoid this we need to start with a specific question in mind and carefully consider how our outcome and features are related. Good questions have a plausible explanation for why features predict the outcome and critically evaluate potential for variation in both the features and outcome over time.
+
+We will be using a data set that was previously compiled by a [researcher](http://www.biostat.jhsph.edu/~rpeng/) who studies air pollution, climate change and public health. We will import 
+
+The monitoring data comes from gravimetric monitors operated by the EPA that are designed to capture fine particulate matter (PM2.5) using a filtration system. Values are measure either daily or weekly. Our feature data set contains values for each of the 876 monitors (observations) and has been compiled from the EPA, NASA, US Census and National Center for Health Statistics. Most of the features have been taken for a circular area that surround the monitor itself (buffer).
+
+For this module we will ask the central question **Can we predict annual average air pollution concentrations at the resolution of zip code regional levels using predictor variables describing population density, urbanization, road density, satellite pollution data, and chemical modeling data?**
+
+
+## Explore the data set
+
+Let's import the data set.
+
+```{r}
+
+pm <- read_delim("data/air_pollution.csv", delim = ",") %>%
+  clean_names()
+
+```
+
+Let's take a quick look at the data types to make sure everything read in correctly.
+
+```{r}
+
+pm %>%
+  glimpse()
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-3")`
+
+How many monitors do we have in the data set? Which column contains our outcome variable? Which contains our predictor variables?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+* The column `value` contains PM2.5 concentrations in mass concentration (ug/m3) - this is our outcome variable.
+* The column `id` codes for the monitors.
+* The remaining columns give us some additional information on the location where the monitor is located - we will have to assess which of those could be good predictor variables.
+
+Here are the specifics for each column:
+
+Variable   | Details                                                                        
+---------- |-------------
+**id**  | Monitor number  <br> -- the county number is indicated before the decimal <br> -- the monitor number is indicated after the decimal <br>  **Example**: 1073.0023  is Jefferson county (1073) and .0023 one of 8 monitors 
+**fips** | Federal information processing standard number for the county where the monitor is located <br> -- 5 digit id code for counties (zero is often the first value and sometimes is not shown) <br> -- the first 2 numbers indicate the state <br> -- the last three numbers indicate the county <br>  **Example**: Alabama's state code is 01 because it is first alphabetically <br> (note: Alaska and Hawaii are not included because they are not part of the contiguous US)  
+**Lat** | Latitude of the monitor in degrees  
+**Lon** | Longitude of the monitor in degrees  
+**state** | State where the monitor is located
+**county** | County where the monitor is located
+**city** | City where the monitor is located
+**CMAQ**  | Estimated values of air pollution from a computational model called [**Community Multiscale Air Quality (CMAQ)**](https://www.epa.gov/cmaq){target="_blank"} <br> --  A monitoring system that simulates the physics of the atmosphere using chemistry and weather data to predict the air pollution <br> -- ***Does not use any of the PM~2.5~ gravimetric monitoring data.*** (There is a version that does use the gravimetric monitoring data, but not this one!) <br> -- Data from the EPA
+**zcta** | [Zip Code Tabulation Area](https://www2.census.gov/geo/pdfs/education/brochures/ZCTAs.pdf){target="_blank"} where the monitor is located <br> -- Postal Zip codes are converted into "generalized areal representations" that are non-overlapping  <br> -- Data from the 2010 Census  
+**zcta_area** | Land area of the zip code area in meters squared  <br> -- Data from the 2010 Census  
+**zcta_pop** | Population in the zip code area  <br> -- Data from the 2010 Census  
+**imp_a500** | Impervious surface measure <br> -- Within a circle with a radius of 500 meters around the monitor <br> -- Impervious surface are roads, concrete, parking lots, buildings <br> -- This is a measure of development 
+**imp_a1000** | Impervious surface measure <br> --  Within a circle with a radius of 1000 meters around the monitor
+**imp_a5000** | Impervious surface measure <br> --  Within a circle with a radius of 5000 meters around the monitor  
+**imp_a10000** | Impervious surface measure <br> --  Within a circle with a radius of 10000 meters around the monitor   
+**imp_a15000** | Impervious surface measure <br> --  Within a circle with a radius of 15000 meters around the monitor  
+**county_area** | Land area of the county of the monitor in meters squared  
+**county_pop** | Population of the county of the monitor  
+**Log_dist_to_prisec** | Log (Natural log) distance to a primary or secondary road from the monitor <br> -- Highway or major road  
+**log_pri_length_5000** | Count of primary road length in meters in a circle with a radius of 5000 meters around the monitor (Natural log) <br> -- Highways only  
+**log_pri_length_10000** | Count of primary road length in meters in a circle with a radius of 10000 meters around the monitor (Natural log) <br> -- Highways only  
+**log_pri_length_15000** | Count of primary road length in meters in a circle with a radius of 15000 meters around the monitor (Natural log) <br> -- Highways only  
+**log_pri_length_25000** | Count of primary road length in meters in a circle with a radius of 25000 meters around the monitor (Natural log) <br> -- Highways only  
+**log_prisec_length_500** | Count of primary and secondary road length in meters in a circle with a radius of 500 meters around the monitor (Natural log)  <br> -- Highway and secondary roads  
+**log_prisec_length_1000** | Count of primary and secondary road length in meters in a circle with a radius of 1000 meters around the monitor (Natural log)  <br> -- Highway and secondary roads  
+**log_prisec_length_5000** | Count of primary and secondary road length in meters in a circle with a radius of 5000 meters around the monitor (Natural log)  <br> -- Highway and secondary roads  
+**log_prisec_length_10000** | Count of primary and secondary road length in meters in a circle with a radius of 10000 meters around the monitor (Natural log)  <br> -- Highway and secondary roads  
+**log_prisec_length_15000** | Count of primary and secondary road length in meters in a circle with a radius of 15000 meters around the monitor (Natural log)  <br> -- Highway and secondary roads  
+**log_prisec_length_25000** | Count of primary and secondary road length in meters in a circle with a radius of 25000 meters around the monitor (Natural log)  <br> -- Highway and secondary roads      
+**log_nei_2008_pm25_sum_10000** | Tons of emissions from major sources data base (annual data) sum of all sources within a circle with a radius of 10000 meters of distance around the monitor (Natural log)    
+**log_nei_2008_pm25_sum_15000** | Tons of emissions from major sources data base (annual data) sum of all sources within a circle with a radius of 15000 meters of distance around the monitor (Natural log)     
+**log_nei_2008_pm25_sum_25000** | Tons of emissions from major sources data base (annual data) sum of all sources within a circle with a radius of 25000 meters of distance around the monitor (Natural log)     
+**log_nei_2008_pm10_sum_10000** | Tons of emissions from major sources data base (annual data) sum of all sources within a circle with a radius of 10000 meters of distance around the monitor (Natural log)      
+**log_nei_2008_pm10_sum_15000**| Tons of emissions from major sources data base (annual data) sum of all sources within a circle with a radius of 15000 meters of distance around the monitor (Natural log)      
+**log_nei_2008_pm10_sum_25000** | Tons of emissions from major sources data base (annual data) sum of all sources within a circle with a radius of 25000 meters of distance around the monitor (Natural log)      
+**popdens_county** | Population density (number of people per kilometer squared area of the county)
+**popdens_zcta** | Population density (number of people per kilometer squared area of zcta)
+**nohs** | Percentage of people in zcta area where the monitor is that **do not have a high school degree** <br> -- Data from the Census
+**somehs** | Percentage of people in zcta area where the monitor whose highest formal educational attainment was **some high school education** <br> -- Data from the Census
+**hs** | Percentage of people in zcta area where the monitor whose highest formal educational attainment was completing a **high school degree** <br> -- Data from the Census  
+**somecollege** | Percentage of people in zcta area where the monitor whose highest formal educational attainment was completing **some college education** <br> -- Data from the Census 
+**associate** | Percentage of people in zcta area where the monitor whose highest formal educational attainment was completing an **associate degree** <br> -- Data from the Census 
+**bachelor** | Percentage of people in zcta area where the monitor whose highest formal educational attainment was a **bachelor's degree** <br> -- Data from the Census 
+**grad** | Percentage of people in zcta area where the monitor whose highest formal educational attainment was a **graduate degree** <br> -- Data from the Census 
+**pov** | Percentage of people in zcta area where the monitor is that lived in [**poverty**](https://aspe.hhs.gov/2008-hhs-poverty-guidelines) in 2008 - or would it have been 2007 guidelines??https://aspe.hhs.gov/2007-hhs-poverty-guidelines <br> -- Data from the Census  
+**hs_orless** |  Percentage of people in zcta area where the monitor whose highest formal educational attainment was a **high school degree or less** (sum of nohs, somehs, and hs)  
+**urc2013** | [2013 Urban-rural classification](https://www.cdc.gov/nchs/data/series/sr_02/sr02_166.pdf){target="_blank"} of the county where the monitor is located <br> -- 6 category variable - 1 is totally urban 6 is completely rural <br>  -- Data from the [National Center for Health Statistics](https://www.cdc.gov/nchs/index.htm){target="_blank"}     
+**urc2006** | [2006 Urban-rural classification](https://www.cdc.gov/nchs/data/series/sr_02/sr02_154.pdf){target="_blank"} of the county where the monitor is located <br> -- 6 category variable - 1 is totally urban 6 is completely rural <br> -- Data from the [National Center for Health Statistics](https://www.cdc.gov/nchs/index.htm){target="_blank"}     
+**aod** | Aerosol Optical Depth measurement from a NASA satellite <br> -- based on the diffraction of a laser <br> -- used as a proxy of particulate pollution <br> -- unit-less - higher value indicates more pollution <br> -- Data from NASA  
+
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:air-poll-4")`
+
+Take a look at the columns `id`, `fips`, and `zcta` - what data type are they? What information do you think they hold? Does the type of data they hold match their assigned data type?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+These are all currently numerical variables and R thinks they are continuous variables. However `id` is the monitor ID, `fips` is the federal information processing standard number fo the country where it is located, and `zcta` is the zip code tabulation area. These should all be categorical variables. 
+
+We will convert them to characters.
+
+```{r}
+
+pm <- pm %>%
+  mutate(across(c(id, fips, zcta), as.factor))
+
+```
+
+`r msmbstyle::solution_end()` 
+
+Let's dig a little bit deeper using `skim()`.
+
+```{r}
+
+skim(pm)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-5")`
+
+Here are a few starting points to explore (for each question also explain how you figured out the answer):
+
+* how much missing data is there?
+* what data types are represented?
+* how many states are represented?
+* are there variables with large ranges? small ranges?
+* are there variables with normal distributions? very uneven distributions?
+
+`r msmbstyle::question_end()`
+
+Next step is to look a little bit deeper at what information is in each column.
+
+`r msmbstyle::question_begin(label = "ques:air-poll-6")`
+
+Here are a few starting points to explore (for each question include the code you used to get the answer:
+
+* What states are included?
+* what cities have the highest number of air monitors?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+What states are included?
+
+```{r echo=FALSE}
+
+pm %>%
+  distinct(state) %>%
+  kable()
+
+```
+
+Cities with largest number of air monitors?
+
+```{r echo=FALSE}
+
+pm %>%
+  group_by(city) %>%
+  count() %>%
+  arrange(desc(n))
+
+```
+
+`r msmbstyle::solution_end()` 
+
+We should also evaluate to which extent our predictor variables are correlated.
+
+`r msmbstyle::question_begin(label = "ques:air-poll-7")`
+
+Consider why it could be problematic if we had highly correlated predictor variables in our feature set.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+When we use linear regressions and predictor variables are correlated they end up predicting each other rather than the outcome variable. This is generally referred to as multicollinearity.
+
+Additionally, including redundant variables can add unnecessary noise to our model which can end up decreasing the accuracy of our precipitations and slow down our model.
+
+Correlation among predictor variables can also make it difficult to understand which of them are actually predictive.
+
+`r msmbstyle::solution_end()` 
+
+We'll start by making pairwise comparisons among all of our numeric (continuous) variables using `corrplot`.
+
+```{r fig.cap="Pairwise comparison of correlation coefficients for all continuous variables."}
+
+# calculate Pearson's coefficients
+PM_cor <- pm %>%
+  select_if(is.numeric) %>%
+  cor()
+  
+# plot pairwise correlation matrix
+corrplot(PM_cor, tl.cex = 0.5)
+
+```
+
+Let's re-plot that visualization using the absolute values of the Pearson correlation coefficient^[We are not interested in the direction of the correlation only how strong it is] and by organizing our variables using hierarchical clustering, i.e. variables more similar to each other will be closer to each other.
+
+```{r fig.cap="Pairwise comparison of correlation coefficients for all continuous variables. Size and color intensity of circles represent the strength of these realationships."}
+
+corrplot(abs(PM_cor), order = "hclust", tl.cex = 0.5, col.lim = c(0, 1))
+
+```
+
+We can now see that there are quite a few variables correlated with our outcome variable (`value`). Unsurprisingly, we also have sets of variables describing the characteristic of the area corresponding to the locations of the emissions values, primarily the variables that contain `imp_*`, `*pri_*`, `*nei_*`.
+
+`r msmbstyle::question_begin(label = "ques:air-poll-8")`
+
+Look up what these variables are and argue whether or not it makes sense for these sets of values to be correlated to the PM2.5 value. What other variables might be good indicators?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+We can consider the set of `imp` variables as indicative of development/urbanization, the `pri` variables describe road density which can be an indicator of the amount of cars, an the `nei` variables describe emissions.
+
+`r msmbstyle::solution_end()` 
+
+We can take a closer look at sets of variables we are interested in using the `ggcorr()` and `ggpairs()` functions from the `GGally` package.
+
+Let's start with our variables describing measuring how impervious the surface is:
+
+```{r fig.cap="Pairwise comparison of correlation coefficients for all variables related to levels of development, i.e. level of surface imperiouslness."}
+
+# plot pairwise 
+pm %>%
+  select(contains("imp")) %>%
+  ggcorr(label = TRUE)
+
+```
+
+And let's look even a little bit closer look at the relationship of these variables.visualizing the relationships using scatter plots, the distribution of values for each variable using density plots, along with the correlation coefficients. 
+
+```{r fig.cap="Scatterplots describing the relationships between all combinations of values describing level of development for buffers surrounding each air pollution monitor (below the diagonal) and corresponding pearson's correlation coefficients (above the diagonal), the distribution of values for each variable is on the diagonal.", fig.width=9, fig.height=9}
+
+# plot scatter plots, density plots & correlation coefficients
+pm %>%
+  select(contains("imp")) %>%
+  ggpairs() +
+  theme_bw()
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-9")`
+
+Which of these pairwise comparisons have the highest level of correlation? Which have the lowest? Does this make sense?
+
+`r msmbstyle::question_end()`
+
+Next, let's take a peak at our road density data
+
+```{r fig.cap="Scatterplots describing the relationships between all combinations of values describing road density for buffers surrounding each air pollution monitor  (below the diagonal) and corresponding pearson's correlation coefficients (above the diagonal), the distribution of values for each variable is on the diagonal.", fig.width=9, fig.height=9}
+
+pm %>%
+  select(contains("pri")) %>%
+  ggpairs() +
+  theme_bw()
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-10")`
+
+Which of these pairwise comparisons have the highest level of correlation? Which have the lowest? Does this make sense?
+
+`r msmbstyle::question_end()`
+
+Finally, let's look at the emissions variables:
+
+```{r fig.cap="Scatterplots describing the relationships between all combinations of variables measuring air pollution for buffers surrounding each air pollution monitor (below the diagonal) and corresponding pearson's correlation coefficients (above the diagonal), the distribution of values for each variable is on the diagonal.", fig.width=9, fig.height=9}
+
+pm %>%
+  select(contains("nei")) %>%
+  ggpairs() +
+  theme_bw()
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-11")`
+
+Which of these pairwise comparisons have the highest level of correlation? Which have the lowest? Does this make sense?
+
+`r msmbstyle::question_end()`
+
+Since we now know that the variables within these categories are correlated to each other, let's select one of each for the same buffer size and compare how they are correlated to each other along with population density.
+
+And finally, let's see how population density correlates to some of these variables:
+
+```{r fig.cap="Scatterplots describing the relationships between range of variables describing development, road density, emission levels, and population density for buffers surrounding each air pollution monitor (below the diagonal) and corresponding pearson's correlation coefficients (above the diagonal), the distribution of values for each variable is on the diagonal.", fig.width=9, fig.height=9}
+
+pm %>%
+select(log_nei_2008_pm25_sum_10000, popdens_county, 
+       log_pri_length_10000, imp_a10000, county_pop) %>%
+  ggpairs()
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-12")`
+
+Which of these pairwise comparisons have the highest level of correlation? Which have the lowest? Does this make sense?
+
+`r msmbstyle::question_end()`
+
+Some of our variables have extreme variables; one way to do this is to perform a log transformation which might estimate our correlations so we should take a quick look.
+
+```{r fig.cap="Scatterplots describing the relationships between range of variables describing development, road density, emission levels, and population density for buffers surrounding each air pollution monitor (below the diagonal) and corresponding pearson's correlation coefficients (above the diagonal), the distribution of values for each variable is on the diagonal.", fig.width=9, fig.height=9}
+
+pm %>%
+  mutate(log_popdens_county = log(popdens_county)) %>%
+  mutate(log_pop_county = log(county_pop)) %>%
+  select(log_nei_2008_pm25_sum_10000, log_popdens_county, 
+       log_pri_length_10000, imp_a10000, log_pop_county) %>%
+  ggpairs()
+
+```
+
+This does increase our correlation levels a bit but overall these variables do not appear to be highly correlated, so we should make sure keep a variable from each category to use as predictor values for our model.
+
+Let's add an extra variable that tells us whether or not a monitor is in a city - this will be helpful down the line.
+
+```{r}
+
+pm <- pm %>%
+  mutate(city = case_when(city == "Not in a city" ~ "Not in a city",
+                          city != "Not in a city" ~ "In a city"))
+
+```
+
+
+## Machine learning
+
+We are going to use machine learning for to build and train our predictive modeling.
+
+You might recall from your biostats class that typically we draw a sample from a population and then we use what we learn from the sample to make inferences about the population that they represent, i.e. we can infer the average value of an observation in the (unsampled) population based on the sample^[Recall, for linear regressions we use the formula "on average for an increase of one unit of the independent variable we expect the independent variable to increase by the value of the slope" to describe out results.].
+
+For prediction we also start with a sample, however, in this case the goal is to be able to predict a single observation's value of a given characteristic based on the characteristics of the observations in the sample - our goal is not to make a statement about what the average expectation for the value of an observation is, we want to predict the actual value for that observation.
+
+In the case at hand, we have our continuous outcome variable that we want to predict (air pollution levels) which we will denote as $Y$. $X$ would be our set of predictor variables with $X_{1}, ... X_{p}$ denoting individual features (development, population density ...).
+
+Our goal is to describe a rule (machine learning algorithm) that takes values for our features as input and the predicts the air pollution (outcome variable) for situations where air pollution is unknown ($\hat{Y}$) . This process is what we generally describe as training a model and means that we are using a data set where both $X$ and $Y$ are known to estimate a function $\hat{Y} = f(X)$ that uses the predictor variables as input.
+
+The better our model, the more closely our predicted outcome $\hat{Y}$ should match our actual outcome $Y$. In other words we are trying to minimize the distance between $\hat{Y} = f(X)$ and $Y$^[This is what is referred to as an optimization problem.]. The choice of the distance metric ($d(Y - f(X))$) is frequently the absolute or squared difference.
+
+In order to set up (and then solve!) a typical ML problem we need four components:
+
+1. a training data set (i.e. matching data set of outcome and predictor variables)
+2. a (set of) algorithms to try values of $f$.
+3. A distance metric $d$ to measure how closely $Y$ and $\hat{Y}$ mathc.
+4. A definition of a "good" (acceptable) distance.
+
+## Predict air pollution levels using linear regression model.
+
+We already have a data set with features and outcome variables so we are ready to starting training a model.
+
+We are going to use the `tidymodels` ecosystem which consists of a series of packages to assist in various steps of the model building process. These packages were designed using a standard syntax and the goal of having a standardize workflow and syntax across different types of machine learning algorithms. This also means that it is straightforward to modify pre-processing, algorithm choice, and hyper-parameter tuning for optimization.
+
+These are the individual steps that we will go through to train our model^[You are already familiar with some of these steps for some simple linear regressions that we have run (Steps 3, 5, 6, 7). Use this list to keep track of where we are in the process.
+].
+
+1. Split data into testing and training sets.
+2. Create recipe + assign variable roles
+3. Specify model, engine, and mode
+4. Create workflow, add recipe & model
+5. Fit workflow
+6. Get predictions
+7. Use predictions to get performance metrics.
+
+### Split the data
+
+`r msmbstyle::question_begin(label = "ques:air-poll-13")`
+
+We have previously discussed the problem with underfitting and overfitting - briefly describe these two terms and explain why they are a problem when building models.
+
+`r msmbstyle::question_end()`
+
+A good solution to this issue is to split our data set into a training and testing data set. The training data set will be used to build and tune our model. Then we can determine how well our model describe the relationship between outcome and predictor values.
+
+Once we have created our training set we will set that aside until we have completed optimizing our model with the training set to minimize the bias in evaluating the performance of our model.
+
+We will use `rsample::initial_split()` to randomly subset our data into a training (2/3 of observations) and test (1/3 of observations), data set.
+
+```{r}
+
+# set random seed
+set.seed(1234)
+
+# split sample
+pm_split <- rsample::initial_split(data = pm, prop = 2/3)
+
+# check proportions of split
+pm_split
+
+```
+
+Next, we will extract the testing and training data to create to separate `data.frames()`
+
+```{r}
+
+# training data set
+train_pm <- training(pm_split)
+
+# test data set
+test_pm <- testing(pm_split)
+
+```
+
+
+### Prepare for pre-proceesing
+
+Now that we have split the data we need to process the training and testing data so they are compatible and optimized for building the model. This process is called feature engineering and involves assigning variables to specific roles, removing redundant variables if they are present, and scaling data as needed.
+
+**Step 1: Specify variable roles with `recipe()`**
+
+In the `tidymodels` framework we can do this by first creating a "recipe" describing all the individual processing steps we want to take - this is especially helpful if we have multiple data sets we are going to work with and/or if we are going to be re-running the processing multiple time.
+
+First, we will create a recipe that specifies the roles of individual variables, i.e. which are the outcome and which the predictor variables^[Keep in mind that the recipe just describes the steps to take, it does **not** actually execute them].
+
+For our data set we want to specify that `value` (the PM2.5 concentration measure by air pollution monitors) is our outcome variable, and that our features (predictor variables) are all the other variables with the exception of the monitor ID (`id`). We don't want to include this as a predictor variable as it is unique to each monitor so it will only add noise - however, down the line we will still want to have this information so we want to keep it in the data set.
+
+```{r}
+
+# build recipe
+simple_rec <-recipe(train_pm) %>%
+    update_role(everything(), new_role = "predictor")%>%  # specify predictor variables
+    update_role(value, new_role = "outcome")%>%           # specify outcome variable
+    update_role(id, new_role = "id variable")             # specify id as id variable
+
+simple_rec
+
+```
+
+Let's take closer look at our recipe
+
+```{r}
+
+summary(simple_rec)
+
+```
+
+Success! All of our variables now have specific roles as either the outcome variable, features, and the id column.
+
+**Step 2: Specify pre-processing steps**
+
+Our next step is to use the `recipe::step*()` functions to specify any necessary pre-processing steps, this could include a variety of steps needed to transform our data, for example filling in missing values (imputation), converting continuous variables in to discrete variables (binning them), encoding and creating dummy variables, data type conversions, or normalization.
+
+Because we are in the extended `tidyverse` we can use various functions to help select of variables to apply steps to:
+
+1. Use `tidyselect` methods such as `contains()`, `matches()`, `starts_with()`, `ends_with()`, `everything()`, `num_range()`.
+2. Use the data type of a column, e.g. `all_nominal()`, `all_numeric()`, `has_type()`
+3. Use the role assigned to variable (see above) `all_predictors()`, `all_outcomes()`, `has_role()`
+4. We can just use the name of the variable.
+
+Let's look at a couple of specific examples for what we need to pay attention to during preprocessing.
+
+A typical pre-processing step is what is called `one-hot encoding` which describes a way that categorical variables are converted to dummy variables (numbers) so that they can be used with certain algorithms that only take certain data types as input. Because we don't want the algorithm to interpret this variables as continuous numerical variables, we make it explicit that they are binary (0s and 1s, no order).
+
+```{r}
+
+simple_rec %>%
+  step_dummy(state, country, city, zcta, one_hot = TRUE)
+
+```
+
+The `fips` column contains a numeric code for state and county so it is redundant - we should also assign it as an id
+
+```{r}
+
+simple_rec %>%
+  update_role("fips", new_role = "county id")
+
+```
+
+We know from our exploratory analysis that we have a series of variables that are redundant and/or highly correlated with each other; we will want to remove these, this can be done using `step_corr()`. However we want to keep some variables (`CMAQ`, `aod`) so we will explicitly exclude them from being removed.
+
+```{r}
+
+simple_rec %>%
+  step_corr(all_predictors(), - CMAQ, - aod)
+
+```
+
+Variables with near zero variance will not be informative and will likely only include additional noise, so we would also want to remove those.
+
+```{r}
+
+simple_rec %>%
+  step_nzv(all_predictors(), - CMAQ, - aod)
+
+```
+
+The benefit of the recipes package is that we can create one single recipe that summarizes all the steps that we want to take before starting to build are model.
+
+```{r}
+
+# create final recipe
+simple_rec <- recipe(train_pm) %>%
+    update_role(everything(), new_role = "predictor") %>%
+    update_role(value, new_role = "outcome") %>%
+    update_role(id, new_role = "id variable") %>%
+    update_role("fips", new_role = "county id") %>%
+    step_dummy(state, county, city, zcta, one_hot = TRUE) %>%
+    step_corr(all_numeric()) %>%
+    step_nzv(all_numeric())
+  
+simple_rec
+
+```
+
+### Run pre-processing
+
+So far we only have a recipe (plan on how we want to pre-process our data) our next step will be to complete the pre-processing and see how it affects our data set.
+
+**Step 1: Update the recipe with training data using `prep()`**
+
+The function `prep()` will update the recipe object based on the training data by estimating parameters for pre-processing and updating the variable roles. 
+
+```{r}
+
+# update recipe with training data, retain training data set
+prepped_rec <- prep(simple_rec, verbose = TRUE, 
+                    retain = TRUE)
+
+names(prepped_rec)
+
+```
+
+`prepped_rec` is a list; the various elements contain a lot of useful information about our training set.
+
+* `steps`: contains the pre-processing steps that were run
+* `var_info` contains the original variable information
+* `term_info` is the updated variable after pre-processing
+* `levels` are the new levels, the original levels are in `orig_lvls`
+* `tr_info` contains info about the training data set size and completeness
+
+**Step 2: Extract the pre-processing training data set using bake()`**
+
+We retained our pre-processed training data set using `retain = TRUE` so we can take a look at our training data using `recipes::bake()`.
+
+```{r}
+
+# extract training data set
+baked_train <- bake(prepped_rec, new_data = NULL)
+
+# overview
+glimpse(baked_train)
+
+```
+
+Compare this to our original data set
+
+```{r}
+
+glimpse(pm)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-14")`
+
+Compare the two outputs and see what has changes - pay specific attention to the number of variables, data types. How many predictor variables do we have?
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+We have 36 variables instead of 50 - two are now ID variables, one is the outcome variable leaving us with 33 predictor variables.
+We no longer have categorical variables (e.g. state), and state_California is the only state identifier that does not have nonzero variance
+
+`r msmbstyle::solution_end()` 
+
+**Step 3: Extract the pre-processed testing data using `bake()`**
+
+We've extracted the training data set but we can also apply the recipe we designed to our test data set to check for any issues (e.g. introduction of NA values).
+
+```{r}
+
+# extract test data set
+baked_test_pm <- bake(prepped_rec, new_data = test_pm)
+
+# compare effect
+glimpse(baked_test_pm)
+
+```
+
+### Specify the model
+
+Quick reminder of where we are at in the process - here are the steps we've taken so far:
+
+* acquire data set with outcome variable and set of predictor variables
+* split data set into training and testing sets using `rsample` package
+* assign variable types, specify and prep pre-processing and extract our pre-processed data sets using `recipes` packages.
+
+Now it's to time actually specify our model. The `tidymodels` package to do this is called `parsnip`.
+
+There are four things we need to specify about our model
+
+1. The **model type**, e.g. a linear regression as we have done previously, here we will use a random forest approach
+2. The **engine** (underlying function/package) to implement the selected model type, e.g. previously we have used `lm` as our engine to perform a linear regression
+3. The **mode** of learning, so far we've never explicitly specified this, typically this would be a classification or regression.
+4. Additional **arguments** specific to the specified model or package  
+
+**Step 1: Specify the model type**
+
+Let's start by specifying the model type as a linear regression
+
+```{r}
+
+
+lm_PM <- linear_reg() # specify model type
+
+```
+
+
+**Step 2: Specify the engine**
+
+We want to use the ordinary least squares method to fit our linear regression. There are multiple implementations in various packages so we need to tell `parsnip` exactly which function/package to implement.
+
+```{r}
+
+lm_PM <- linear_reg() %>% # specify model type
+  set_engine("lm")        # set engine
+
+```
+
+**Step 3: Specify mode of learning**
+
+Some packages can do both classifications and prediction, so we should explicitly specify the mode, in this case we want to perform a regression.
+
+```{r}
+
+lm_PM <- linear_reg() %>% # specify model type
+  set_engine("lm") %>%    # set engine
+  set_mode("regression")  # set mode
+
+
+```
+
+
+### Fit the model
+
+Now we're ready to actually fit the model. 
+
+We are going to use the package `workflows` to keep track of the pre-processing steps and model specification. You probably realized that it is easy to lose track of all the individual steps additionally, down the line this will help us during the optimization process because we will be able automate steps, and it will be straightforward to add post-processing operations.
+
+Let's create our workflow which will incorporate our recipe for pre-processing and the model we just specified^[We did use `prep()` to take a look at our data set during pre-processing, but it actually is not a necessary step].
+
+```{r}
+
+PM_wflow <-workflows::workflow() %>%
+           workflows::add_recipe(simple_rec) %>%
+           workflows::add_model(lm_PM)
+
+```
+
+We can call up the workflow to get an overview of our model fitting process including our pre-processing steps and model specifications.:
+
+```{r}
+
+PM_wflow
+
+```
+
+After all of that, we are now ready to "prepare the recipe", i.e. we will estimate the parameters to fit the model to our full training data set using `parsnip::fit()`.
+
+```{r}
+
+PM_wflow_fit <- fit(PM_wflow, data = train_pm)
+
+```
+
+
+### Assessing the model
+
+Let's take a look at our fitted model^[Because we used a workflow, we will first have to extract the fitted model from the workflow and then we can use `broom::tidy()` to look at the summary table you are already familiar with].
+
+```{r}
+
+wflowoutput <- PM_wflow_fit %>% 
+  pull_workflow_fit() %>% 
+  broom::tidy()
+
+wflowoutput %>%
+  kable()
+
+```
+
+With models that have this many predictor values it can be helpful to understand which are the most important (i.e. have the strongest predictive value).
+
+The function `vip::vip()` creates a barplot comparing the variable importance scores for each predictor variable ordered from most important.
+
+```{r fig.cap="Top 10 variables with strongest impact on the model."}
+
+# pull top 10 most important variables
+PM_wflow_fit %>% 
+  pull_workflow_fit() %>% 
+  vip(num_features = 10)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-15")`
+
+What are the most important predictor variables for this model?
+
+`r msmbstyle::question_end()`
+
+
+### Evaluate model performance
+
+Now that we have a fitted model we need to determine how well our model actually performs. The way to do this is to compare the similarity of predicted estimates and observed values of the outcome variable^[Recall, that a machine learning optimization problem tires to minimize the distance between the predicted outcome $\hat{Y} = f(X)$ and actual outcome $Y$ using the predictor variables $X$ as input for our function $f$ that we want to estimate.].
+
+We can use the function `broom::augment()` to pull the observed and fitted values from our workflow.
+
+```{r}
+
+fit_PM <- PM_wflow_fit %>%
+  pull_workflow_fit()
+
+fit_PM <- augment(fit_PM$fit, data = baked_train) %>%
+  select(value, .fitted:.std.resid)
+
+fit_PM
+
+```
+
+Let's compare the fitted (predicted) outcome values (fitted values) $\hat{Y}$ to the observed outcome values $Y$.
+
+```{r fig.cap="Comparison of observed and fitted PM2.5 values"}
+
+ggplot(fit_PM, aes(x = value, y = .fitted)) +
+  geom_point() +
+  geom_abline(slope = 1) +
+  coord_fixed(ratio = 1) +
+  scale_y_continuous(limits = c(5, 20)) +
+  labs(x = "observed outcome values", y = "predicted outcome values")
+
+```
+
+Our range of predicted outcomes appears to be smaller compared to the actual observed values.
+
+We can quantify our model performances using the root mean square error (rmse)^[Recall, that this is the root of the sum of all the distances between observed and fitter values over the number of observations $RMSE = \frac{\sqrt{\sum_{i=1}^{n}({\hat{y}_{t}-y_{t}})^{2}}}{n}$].
+
+We can calculate RMSE using `yardsticks:rmse()`
+
+```{r}
+
+# calculate rmse
+fit_PM %>%
+  rmse(truth = value, estimate = .fitted)
+
+
+```
+
+### Cross validation
+
+We previously realized that without context rmse is not that helpful, the smaller the value the better - but small compared to what? One option would be to compare whether the rmse for our training data set is comparable to our test data set, indicating that it works similarly well for both data sets.
+
+Additionally, we can use the process of cross-validation to split our training data set into multiple data sets for a better assessment and optimization of our model before turning to our test data set^[We only get to us our test data set once, so we should not be using it for our optimization process.].
+
+There are several methods for cross validation, we will use **k-fold** (or **v-fold**) cross validation. To do this, we split our data into $k$ equally sized subsets (folds). Then we take all but one of these subset (this is called the **holdout**), fit the model and assess the performance of that model using the holdout set. We keep repeating this process until every subset has been left out once.
+
+We are going to ignore the spatial dependence of our data set and randomly subset our training data set into four cross-validation folds. A more involved version of his would involve leaving out blocks of monitors based on geography to test for differences in geography impacting the performance of the data.
+
+We can use `rsample::vfold()` to create the cross-validation fold^[we will create 4 sets, this is low, typically you would use 10].
+
+```{r}
+
+# create four subsets
+kfold_pm <- rsample::vfold_cv(data = train_pm, v = 4)
+
+kfold_pm
+
+```
+
+We can use `tune::fit_resamples()` to perform the cross-validation assessment. This automates the process where it will first use fold 1-3, fit the model, the assess the performance using fold 4, then it would use fold 1,2,4 to fit the model and fold 3 for assessment etc. There should always be as many iterations as there are folds.
+
+```{r}
+
+xVal <- fit_resamples(PM_wflow, kfold_pm)
+
+```
+
+Our next step is would be to take a look at a set of performance metrics based on the fit of the cross validation assessment. For example, `tune::show_best()` will calculate the mean `RMSE` value across all four folds.
+
+```{r}
+
+show_best(xVal, metric = "rmse")
+
+```
+
+
+## Predict air pollution using Random Forest regression
+
+We just built a predictive model using a linear regression. This is an example what we generally refer to as a **supervised Machine Learning model**^[Supervised models use labeled data to "supervise" the building of the model.]. You have probably primarily used it as a statistical model, i.e. we are interested in making inferences about the population as a whole and understanding relationships between dependent and independent variables. But it can also be used for predictive modeling, where we train the model based on features. However, the more predictor variables are included, the more difficult it becomes to calculate the coefficients. 
+
+**Random Forest** is a decision tree method that can also be used for a regression analysis, it is also a supervised ML model. 
+
+A decision tree partitions data based on a series of sequential decisions. Generally, these decisions are binary (two branches) and are chose to optimally split the data. Each branch is split further based on certain characteristics until all observations in a "branch" are "the same" form in the tree.
+
+Once a tree has been built, you can then follow the tree to predict the outcome for new observations. you have likely used a dichotomous key to identify organisms, this is roughly the same process. 
+
+For a random forest, multiple decision trees are created^[Trees, forests ... get it?]. Each new tree is based using a random subset of the training data. The mean predictions from each tree is then used to generate the final output.
+
+We will use the `randomForest` package. It does not allow for categorical variables with more than 53 levels. We manipulated the `city` column earlier so that it now has 2 levels instead of > 600. However, we will need to remove the `zcta` and `county` variables.
+
+We can update the recipe we designed earlier to pre-process our data set to build a regression using a random forest.
+
+```{r}
+
+RF_rec <- recipe(train_pm) %>%
+    update_role(everything(), new_role = "predictor")%>%
+    update_role(value, new_role = "outcome")%>%
+    update_role(id, new_role = "id variable") %>%
+    update_role("fips", new_role = "county id") %>%
+    step_novel("state") %>%
+    step_string2factor("state", "county", "city") %>%
+    step_rm("county") %>%
+    step_rm("zcta") %>%
+    step_corr(all_numeric())%>%
+    step_nzv(all_numeric())
+
+```
+
+We will now have to specify a new model. We will need to determine the number of predictor variables (`mtry`) to randomly sample at each split when creating the tree models. The default for a regression analysis is the number of predictors divided by 3. We will also specify the minimum number of data points at a node for a node to be split further (`min_n`).
+
+```{r}
+
+RF_PM <- rand_forest(mtry = 10, min_n = 3) %>%  # specify model
+  set_engine("randomForest") %>%                  # set engine
+  set_mode("regression")                          # set mode (continuous - regression)
+
+RF_PM
+
+```
+
+Our next step is to specify our workflow:
+
+```{r}
+
+# specify workflow
+RF_wflow <- workflows::workflow() %>%
+            workflows::add_recipe(RF_rec) %>%
+            workflows::add_model(RF_PM)
+
+RF_wflow
+
+```
+
+Now it's time to fit the model:
+
+```{r}
+
+RF_wflow_fit <- fit(RF_wflow, data = train_pm)
+
+```
+
+Let's pull out our top 10 contributing variables
+
+```{r}
+
+RF_wflow_fit %>% 
+  pull_workflow_fit() %>% 
+  vip(num_features = 10)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-16")`
+
+What are the most important predictor variables for this model? Compare and contrast the important predictor variables for our two models.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+Because `vip()` relies on `ggplot` you can use patchwork to plot them side by side for better comparison.
+
+```{r fig.cap="Comparison of observed and fitted values for linear regression (left) and random forest (right) models.", fig.width = 7, fig.height=14}
+
+p1 <- PM_wflow_fit %>% 
+  pull_workflow_fit() %>% 
+  vip(num_features = 10) +
+  labs(title = "Linear regression")
+
+p2 <- RF_wflow_fit %>% 
+  pull_workflow_fit() %>% 
+  vip(num_features = 10) +
+  labs(title = "Random Forest regression")
+
+p1 / p2
+
+```
+
+`r msmbstyle::solution_end()`
+
+Our next step is to evaluate our model performance using cross validation^[Notice the benefit of writing up our specific steps (in this case how we want to perform a cross-validation) for running multiple types of models, we can just reuse `kfold_pm` as specified earlier!].
+
+```{r}
+
+# perform cross-validation
+xVal_RF <- tune::fit_resamples(RF_wflow, kfold_pm)
+
+# print rmse and rsq
+collect_metrics(xVal_RF)
+
+```
+
+Now we can compare the two models:
+
+```{r}
+
+# print rmse and rsq
+collect_metrics(xVal)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-17")`
+
+Argue which model you think has the better performance (be sure to explain how you are using RMSE and R2 to support your answer.
+
+`r msmbstyle::question_end()`
+
+Increasing the number of trees used to generate the model (`trees`) or the number of predictor variables sampled for each split (`mtry`) would increase the performance of our model (but also requires more computational time and power).
+
+
+## Model Tuning
+
+**Hyperparameters** describe the various arguments (parameters) that we need to specify about a given model. In this case `mtry` is a hyperparameter. We used the default which is a rule of thumb for a "good value", however, we might want to identify the "best" value for our specific model, i.e. identifying the value that gives us the optimum performance for our model.
+
+This process of optimizing parameters is called **tuning**.
+
+Shall we give it a go? Let's see if we can optimize values for `mtry` and `min_n`. Again, the goal for optimization is to not over- or under-fit but rather describe the true signal in the data as simply as possible.
+
+Tuning is where the cross validation shows its true power because we can run cross-validation for a range of (combinations of) values for the parameters we want to optimize. The assessment using the holdout folds allows us to evaluate not only which model best describes our data but is able to predict outcomes for a new set of observations.
+
+To do this, we can use the same syntax as earlier to specify our model, but instead of specifying exact values for `mtry` and `min_n` we will specify that these are the parameters we want to tune using `tune()`.
+
+```{r}
+
+tune_RF <- rand_forest(mtry = tune(), min_n = tune()) %>%
+  set_engine("randomForest") %>%
+  set_mode("regression")
+
+tune_RF
+
+```
+
+Now, all we have to do is add this model specification to our workflow^[Again, this is the convenience that comes with taking the time to specify a workflow!].
+
+```{r}
+
+RF_tune_wflow <- workflows::workflow() %>%
+            workflows::add_recipe(RF_rec) %>%
+            workflows::add_model(tune_RF)
+
+
+RF_tune_wflow
+
+```
+
+We will use `tune::tune_grid()` to specify the range of combinations of values we want to test using our cross validation samples of our training set to determine the optimum combination.
+
+This is a lot more computationally intensive than what we have done earlier. One way to increase efficiency is to run processes in parallel (at the same time) on multiple cores.
+
+Check how many cores your laptop has:
+
+```{r}
+
+detectCores()
+
+```
+
+Let's tune some parameters! By default, the the values for the hyperparameters are randomly drawn from a range of reasonable values, though we will specify how many we want to test using `grid`. This will take a little bit longer to process than you are used to:
+
+```{r}
+
+# specify number of cores to use
+doParallel::registerDoParallel(cores = 2)
+
+# tune parameters using 20 values per parameter
+tune_RF_results <- tune_grid(object = RF_tune_wflow, resamples = kfold_pm, grid = 20)
+
+tune_RF_results
+
+```
+
+Once we have tested the range of values we can asses our results using `RMSE` and `R2`.
+
+```{r}
+
+# compare performance using RMSE and R2
+tune_RF_results %>%
+  collect_metrics()
+
+```
+
+The function `show_best()` can be used to pull out the combination of values for `min_n` and `mtry` with the best performance.
+
+```{r}
+
+# identify optimized model
+show_best(tune_RF_results, metric = "rmse", n =1)
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-18")`
+
+Which combination of `mtry` and `min_n` creates the best model?
+
+`r msmbstyle::question_end()`
+
+
+## Final model performance evaluation
+
+We almost did it! We now have exhaustively used our training data set to build models and test performances - the time has come to evaluate the performance using our testing data.
+
+To do this, we will use the optimized random forest model we built using our training data to predict values for the monitors in our testing data.
+
+```{r}
+
+# pull the optimal model parameters
+tuned_RF_values<- select_best(tune_RF_results, "rmse")
+
+tuned_RF_values
+
+```
+
+Let's set up our finalized workflow using those values.
+
+```{r}
+
+# define workflow using optimized parameters
+RF_tuned_wflow <-RF_tune_wflow %>%
+  tune::finalize_workflow(tuned_RF_values)
+
+```
+
+We can use the `tune::final_fit()` function to fit the final model to the full training set along with the testing data.
+
+```{r}
+
+# build model using training data and predict testing data
+overallfit <-RF_wflow %>%
+  tune::last_fit(pm_split)
+
+```
+
+Let's check the performance of the model on the test data (i.e. how well we were able to predict the outcome value).
+
+```{r}
+
+collect_metrics(overallfit)
+
+```
+
+Our `RMSE` should be similar to the cross validation sets indicating good performance, i.e. this means that we can expect to achieve our goal of predicting air pollution in areas with no or only sparse monitoring based on the predictors with reasonable accuracy.
+
+We can also generate a table comparing predicted and observed outcome variables to get an idea of how well they match up
+
+```{r}
+
+overallfit %>%
+  collect_predictions() %>%
+  head()
+
+```
+
+
+## Data Visualization
+
+Recall, that for this module we will ask the central question **Can we predict annual average air pollution concentrations at the resolution of zip code regional levels using predictor variables describing population density, urbanization, road density, satellite pollution data, and chemical modeling data?**
+
+We have successfully built and tested a model that fulfills our requirements (yay us!). If we put this in the context of science as "story-telling" our narrative is the we are able to use a set of predictor values that are generally gathered at much higher resolution compared to air pollution levels to predict annual average air pollution concentrations in areas with no or only sparse monitors with reasonable accuracy.
+
+`r msmbstyle::question_begin(label = "ques:air-poll-19")`
+
+We have established that a good figure has a specific point and serves the narrative. Describe three visualization that you might generate to illustrate the key result of our project.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+A map! Let's make a map to compare our predicted outcome values $\hat{Y}$ to our actual observed outcome values $Y$.
+
+`r msmbstyle::solution_end()`
+
+Let's start by accessing a simple feature (`sf`) object that contains information on how to plot polygons for all countries using `rnaturalearth::ne_countries()`.
+
+```{r}
+
+world <- ne_countries(scale = "medium", returnclass = "sf")
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-20")`
+
+Use your plotting skills to plot the world map using `ggplot`.
+
+`r msmbstyle::question_end()`
+
+
+`r msmbstyle::solution_begin()`
+
+```{r echo=FALSE, fig.cap="World map"}
+
+# fill
+map_color <- "darkkhaki"
+
+ggplot() +
+    geom_sf(data = world, color = "black", fill = map_color) 
+
+```
+
+`r msmbstyle::solution_end()`
+
+We are only interested in plotting the continental US which has the following latitude/longitude bounds:
+
+* Northern bound: 49.3457868 
+* Western bound: -124.7844079
+* Eastern bound: -66.9513812
+* Southern bound: 24.7433195
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:air-poll-21")`
+
+Create a plot containing only the United States
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r echo=FALSE, fig.cap="Continental United States."}
+
+# lat/long for map extent
+x_min <- -124.7844079
+x_max <- -66.9513812
+y_min <- 24.7433195
+y_max <- 49.3457868
+
+# set color for fill
+map_color <- "khaki3"
+
+# create plot
+ggplot() +
+  geom_sf(data = world, color = "black", fill = map_color) +  # plot outline of countries
+  coord_sf(xlim = c(x_min, x_max),
+           ylim = c(y_min, y_max))                            # set boundaries for map
+
+```
+
+`r msmbstyle::solution_end()`
+
+`r msmbstyle::question_begin(label = "ques:air-poll-22")`
+
+Add the monitor stations to your map.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r echo=FALSE, fig.cap="Map of continential United States indicating county lines."}
+
+# create plot
+ggplot() +
+  geom_sf(data = world, color = "black", fill = map_color) +  # plot outline of countries                          
+  geom_point(data = pm, aes(x = lon, y = lat),                # add sites
+             size = 2, shape = 23, fill = "darkred") +
+  coord_sf(xlim = c(x_min, x_max),
+           ylim = c(y_min, y_max))
+
+```
+
+`r msmbstyle::solution_end()`
+
+Previously, we accessed data sets containing state lines, for this data set we predicted air pollution at the county level, so let's go ahead and use `maps::map()` to access a data set with country polygons. We need to make sure that the object is a simple feature (`sf`). In this case, we will need to use `sf::st_as_sf() to convert the downloaded object to the correct format.
+
+```{r}
+
+# download counties
+counties <- map("county", plot = FALSE, fill = TRUE) %>%
+  st_as_sf()
+
+# object information
+counties
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-23")`
+
+Add the county information to your map. Describe how you can use this visualization to serve the narrative for this project.
+
+`r msmbstyle::question_end()`
+
+`r msmbstyle::solution_begin()`
+
+```{r echo=FALSE, fig.cap="Air pollution monitoring system in continental US. Individual monitors are indicated by a red diamond.."}
+
+# create plot
+ggplot() +
+  geom_sf(data = world, color = "black", fill = map_color) +  # plot outline of countries
+  geom_sf(data = counties, fill = NA, color = "black") +
+  geom_point(data = pm, aes(x = lon, y = lat),                # add sites
+             size = 2, shape = 23, fill = "darkred") +
+  coord_sf(xlim = c(x_min, x_max),
+           ylim = c(y_min, y_max)) +
+  labs(title = "Air pollution monitor locations")
+
+```
+
+This map illustrates really effectively that there are distinct differences in the density of monitors and illustrates that especially in rural areas the distribution can be quite sparse. You would not necessarily include this figure to underscore your results instead you would use it during your introduction when you describe the need to create the model in the first case.
+
+`r msmbstyle::solution_end()`
+
+Now, let's make the set of maps comparing the observed and predicted levels of air pollution, i.e. the figure that we want to use to make the point that indeed, we are able to build and train a model that can be used to predict air pollution levels based on a set of predictor variables.
+
+First we are going to need to make sure that our `county` data set with the information to plot county polygons and the `data.frames` containing the observed and predicted air pollution values can be joined, i.e. they need to have a column in common.
+
+`r msmbstyle::question_begin(label = "ques:air-poll-24")`
+
+Let's take a look at the two objects, both contain a column with county information but you will see that the county information is formatted differently. Use bullet points to describe the steps that you will need to take so that the values will match, suggest which functions you can use to achieve this. 
+
+First, the polygons:
+
+```{r}
+
+head(counties)
+
+```
+
+Now our air pollution data:
+
+```{r}
+
+pm %>%
+  pull(county) %>%
+  head()
+
+```
+
+`r msmbstyle::question_end()` 
+
+`r msmbstyle::solution_begin()`
+
+First we need to separate the county and state information in the counties data set, then, we need to make the values in the `county` column uppercase to match the `pm` data set.
+
+```{r}
+
+counties <- counties %>%
+  separate(ID, into = c("state", "county"), sep = ",", remove = FALSE) %>%
+  mutate(county = str_to_title(county))
+
+head(counties)
+
+```
+
+`r msmbstyle::solution_end()`
+
+Now we can use `inner_join()` to combine the two data sets.
+
+```{r}
+
+map_data <- counties %>%
+  inner_join(pm, by = "county")
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-25")`
+
+Conceptually explain the difference between using `left_join()`, `inner_join()` and `full_join()`.
+
+`r msmbstyle::question_end()`
+
+We're read to create a map displaying the observed mean annual air pollution data for each country.
+
+```{r fig.cap="Observed mean annual PM2.5 concentration for counties with air pollution monitor."}
+
+p1 <- ggplot() +
+  geom_sf(data = world, color = "black", fill = NA) +
+  geom_sf(data = map_data, aes(fill = value), color = "black") +
+  scale_fill_viridis_c() +
+  coord_sf(xlim = c(x_min, x_max),
+           ylim = c(y_min, y_max)) +
+  labs(title = "Observed mean annual PM2.5 concentration")
+
+p1
+
+```
+
+Now, let's create the same plot but displaying the predicted values. To do this we will first need to get all the predicted values for both our training and test data sets and then join that data set with our `counties` data set as above to be able to plot it.
+
+```{r}
+
+# fit model for monitors in training set
+train_fit <- RF_tuned_wflow %>%
+  fit(data = train_pm)
+
+# fit model for monitors in training set
+test_fit <- RF_tuned_wflow %>%
+  fit(data = test_pm)
+
+# predict values for monitors in training set
+pred_train <- train_fit %>%
+  predict(train_pm) %>%
+  bind_cols(train_pm) %>%
+  select(.pred, value, fips, county, id)
+
+# predict values for monitors in test set
+pred_test <- test_fit %>%
+  predict(test_pm) %>%
+  bind_cols(test_pm) %>%
+  select(.pred, value, fips, county, id)
+
+# combine data sets
+pred_PM25 <- pred_test %>%
+  bind_rows(pred_train)
+
+# add counties data for plotting
+map_data <- counties %>%
+  inner_join(pred_PM25, by = "county")
+
+```
+
+`r msmbstyle::question_begin(label = "ques:air-poll-26")`
+
+Describe how this visualization displays our results (i.e. how is data encoded).
+
+`r msmbstyle::question_end()`
+
+Now we should be able to create a plot with our predicted PM2.5 levels.
+
+```{r fig.cap="Predicted mean annual PM2.5 concentration for counties with air pollution monitor."}
+
+p2 <- ggplot() +
+  geom_sf(data = world, color = "black", fill = NA) +
+  geom_sf(data = map_data, aes(fill = value), color = "black") +
+  scale_fill_viridis_c() +
+  coord_sf(xlim = c(x_min, x_max),
+           ylim = c(y_min, y_max)) +
+  labs(title = "Predicted mean annual PM2.5 concentration")
+
+p2
+
+```
+
+Finally, we'll use `patchwork` to create our final figure. We'll use `patchwork::plot_annotation()` to add a title and legend^[Note that adding `\n`forces a line break. Put that in your back pocket for creating good visualizations!]
+
+```{r fig.width=9, fig.height=15, fig.cap="Comparison of observed and predicted mean annual PM2.5 concentration for counties with air pollution monitor."}
+
+p1 / p2 +
+  plot_annotation(title = "Comparison of observed (top) and predicted (bottom) PM2.5 levels.",
+                  subtitle = "A random forest model was trained to predict air PM2.5 levels based on predictor \nvariables including population levels, road density, development")
+  
+
+```
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+</br>
+
+## Acknowledgments
+
+These activities are based on the Air pollution open case study.^[Wright, Carrie and Meng, Qier and Jager, Leah and Taub, Margaret and Hicks, Stephanie. (2020). https://github.com//opencasestudies/ocs-bp-air-pollution. Predicting Annual Air Pollution (Version v1.0.0)..]

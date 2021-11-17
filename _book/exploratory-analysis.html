@@ -14,8 +14,14 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-15" />
+<meta name="date" content="2021-11-17" />
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <meta name="description" content="16 Exploratory Analysis | Data Science for the Natural Environment (FA21)">
 
@@ -209,6 +215,7 @@ function reset_tooltip(id) {
 <a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
 <a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
 <a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
+<a href="predictive-modeling-for-air-pollution.html"><span class="toc-section-number">23</span> Predictive modeling for air pollution</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -314,22 +321,18 @@ function reset_tooltip(id) {
 <p>Even though data has read in correctly does not necessarily mean that it is in the most use-able format … remember plotting and filtering data sets requires typing variable names in over and over again. Therefore, we want to make sure that everything is set up in a way where we will be able to avoid mistakes that are mostly due to typos.</p>
 <p>For example, let’s take a look at the column names:</p>
 <div class="sourceCode" id="cb279"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb279-1"><a href="exploratory-analysis.html#cb279-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(disaster)</span></code></pre></div>
-<pre><code>##  [1] "Dis No"                          "Year"                            "Seq"                            
-##  [4] "Glide"                           "Disaster Group"                  "Disaster Subgroup"              
-##  [7] "Disaster Type"                   "Disaster Subtype"                "Disaster Subsubtype"            
-## [10] "Event Name"                      "Country"                         "ISO"                            
-## [13] "Region"                          "Continent"                       "Location"                       
-## [16] "Origin"                          "Associated Dis"                  "Associated Dis2"                
-## [19] "OFDA Response"                   "Appeal"                          "Declaration"                    
-## [22] "Aid Contribution"                "Dis Mag Value"                   "Dis Mag Scale"                  
-## [25] "Latitude"                        "Longitude"                       "Local Time"                     
-## [28] "River Basin"                     "Start Year"                      "Start Month"                    
-## [31] "Start Day"                       "End Year"                        "End Month"                      
-## [34] "End Day"                         "Total Deaths"                    "No Injured"                     
-## [37] "No Affected"                     "No Homeless"                     "Total Affected"                 
-## [40] "Reconstruction Costs ('000 US$)" "Insured Damages ('000 US$)"      "Total Damages ('000 US$)"       
-## [43] "CPI"                             "Adm Level"                       "Admin1 Code"                    
-## [46] "Admin2 Code"                     "Geo Locations"</code></pre>
+<pre><code>##  [1] "Dis No"                          "Year"                            "Seq"                             "Glide"                          
+##  [5] "Disaster Group"                  "Disaster Subgroup"               "Disaster Type"                   "Disaster Subtype"               
+##  [9] "Disaster Subsubtype"             "Event Name"                      "Country"                         "ISO"                            
+## [13] "Region"                          "Continent"                       "Location"                        "Origin"                         
+## [17] "Associated Dis"                  "Associated Dis2"                 "OFDA Response"                   "Appeal"                         
+## [21] "Declaration"                     "Aid Contribution"                "Dis Mag Value"                   "Dis Mag Scale"                  
+## [25] "Latitude"                        "Longitude"                       "Local Time"                      "River Basin"                    
+## [29] "Start Year"                      "Start Month"                     "Start Day"                       "End Year"                       
+## [33] "End Month"                       "End Day"                         "Total Deaths"                    "No Injured"                     
+## [37] "No Affected"                     "No Homeless"                     "Total Affected"                  "Reconstruction Costs ('000 US$)"
+## [41] "Insured Damages ('000 US$)"      "Total Damages ('000 US$)"        "CPI"                             "Adm Level"                      
+## [45] "Admin1 Code"                     "Admin2 Code"                     "Geo Locations"</code></pre>
 <p>Apparently, they have not read our guidelines for naming things. Column headers with special characters and spaces are super annoying, you might recall from our previous adventures in data wrangling that every time we want to call a column with spaces we are going to have to use back ticks to tell R that it isn’t separate words but a single name.</p>
 <p>Now is probably a good time to learn how to rename columns. The most straightforward way is using <code>rename()</code>.</p>
 <p>Let’s say we wanted to rename <code>Dis No</code> to <code>DisNo</code> the syntax is simple <code>NewName = OldName</code>.</p>
@@ -337,21 +340,20 @@ function reset_tooltip(id) {
 <span id="cb281-2"><a href="exploratory-analysis.html#cb281-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">DisNo =</span> <span class="st">`</span><span class="at">Dis No</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb281-3"><a href="exploratory-analysis.html#cb281-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 47
-##   DisNo          Year Seq   Glide `Disaster Group` `Disaster Subgr~ `Disaster Type` `Disaster Subty~ `Disaster Subsu~
-##   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;           &lt;chr&gt;            &lt;chr&gt;           
-## 1 1900-9002-CPV  1900 9002  &lt;NA&gt;  Natural          Climatological   Drought         Drought          &lt;NA&gt;            
-## 2 1900-9001-IND  1900 9001  &lt;NA&gt;  Natural          Climatological   Drought         Drought          &lt;NA&gt;            
-## 3 1902-0012-GTM  1902 0012  &lt;NA&gt;  Natural          Geophysical      Earthquake      Ground movement  &lt;NA&gt;            
-## 4 1902-0003-GTM  1902 0003  &lt;NA&gt;  Natural          Geophysical      Volcanic activ~ Ash fall         &lt;NA&gt;            
-## 5 1902-0010-GTM  1902 0010  &lt;NA&gt;  Natural          Geophysical      Volcanic activ~ Ash fall         &lt;NA&gt;            
-## 6 1903-0006-CAN  1903 0006  &lt;NA&gt;  Natural          Geophysical      Mass movement ~ Rockfall         &lt;NA&gt;            
-## # ... with 38 more variables: Event Name &lt;chr&gt;, Country &lt;chr&gt;, ISO &lt;chr&gt;, Region &lt;chr&gt;, Continent &lt;chr&gt;,
-## #   Location &lt;chr&gt;, Origin &lt;chr&gt;, Associated Dis &lt;chr&gt;, Associated Dis2 &lt;chr&gt;, OFDA Response &lt;chr&gt;,
-## #   Appeal &lt;chr&gt;, Declaration &lt;chr&gt;, Aid Contribution &lt;dbl&gt;, Dis Mag Value &lt;dbl&gt;, Dis Mag Scale &lt;chr&gt;,
-## #   Latitude &lt;chr&gt;, Longitude &lt;chr&gt;, Local Time &lt;chr&gt;, River Basin &lt;chr&gt;, Start Year &lt;dbl&gt;, Start Month &lt;dbl&gt;,
-## #   Start Day &lt;dbl&gt;, End Year &lt;dbl&gt;, End Month &lt;dbl&gt;, End Day &lt;dbl&gt;, Total Deaths &lt;dbl&gt;, No Injured &lt;dbl&gt;,
-## #   No Affected &lt;dbl&gt;, No Homeless &lt;dbl&gt;, Total Affected &lt;dbl&gt;, Reconstruction Costs ('000 US$) &lt;lgl&gt;,
-## #   Insured Damages ('000 US$) &lt;dbl&gt;, Total Damages ('000 US$) &lt;dbl&gt;, CPI &lt;dbl&gt;, Adm Level &lt;chr&gt;, ...</code></pre>
+##   DisNo   Year Seq   Glide `Disaster Group` `Disaster Subgro~ `Disaster Type`  `Disaster Subty~ `Disaster Subsu~ `Event Name` Country ISO   Region 
+##   &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;chr&gt;             &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;        &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;  
+## 1 1900-~  1900 9002  &lt;NA&gt;  Natural          Climatological    Drought          Drought          &lt;NA&gt;             &lt;NA&gt;         Cabo V~ CPV   Wester~
+## 2 1900-~  1900 9001  &lt;NA&gt;  Natural          Climatological    Drought          Drought          &lt;NA&gt;             &lt;NA&gt;         India   IND   Southe~
+## 3 1902-~  1902 0012  &lt;NA&gt;  Natural          Geophysical       Earthquake       Ground movement  &lt;NA&gt;             &lt;NA&gt;         Guatem~ GTM   Centra~
+## 4 1902-~  1902 0003  &lt;NA&gt;  Natural          Geophysical       Volcanic activi~ Ash fall         &lt;NA&gt;             Santa Maria  Guatem~ GTM   Centra~
+## 5 1902-~  1902 0010  &lt;NA&gt;  Natural          Geophysical       Volcanic activi~ Ash fall         &lt;NA&gt;             Santa Maria  Guatem~ GTM   Centra~
+## 6 1903-~  1903 0006  &lt;NA&gt;  Natural          Geophysical       Mass movement (~ Rockfall         &lt;NA&gt;             &lt;NA&gt;         Canada  CAN   Northe~
+## # ... with 34 more variables: Continent &lt;chr&gt;, Location &lt;chr&gt;, Origin &lt;chr&gt;, Associated Dis &lt;chr&gt;, Associated Dis2 &lt;chr&gt;, OFDA Response &lt;chr&gt;,
+## #   Appeal &lt;chr&gt;, Declaration &lt;chr&gt;, Aid Contribution &lt;dbl&gt;, Dis Mag Value &lt;dbl&gt;, Dis Mag Scale &lt;chr&gt;, Latitude &lt;chr&gt;, Longitude &lt;chr&gt;,
+## #   Local Time &lt;chr&gt;, River Basin &lt;chr&gt;, Start Year &lt;dbl&gt;, Start Month &lt;dbl&gt;, Start Day &lt;dbl&gt;, End Year &lt;dbl&gt;, End Month &lt;dbl&gt;, End Day &lt;dbl&gt;,
+## #   Total Deaths &lt;dbl&gt;, No Injured &lt;dbl&gt;, No Affected &lt;dbl&gt;, No Homeless &lt;dbl&gt;, Total Affected &lt;dbl&gt;, Reconstruction Costs ('000 US$) &lt;lgl&gt;,
+## #   Insured Damages ('000 US$) &lt;dbl&gt;, Total Damages ('000 US$) &lt;dbl&gt;, CPI &lt;dbl&gt;, Adm Level &lt;chr&gt;, Admin1 Code &lt;chr&gt;, Admin2 Code &lt;chr&gt;,
+## #   Geo Locations &lt;chr&gt;</code></pre>
 <p>This would be pretty annoying if we wanted to rename all of our columns by hand.</p>
 <p>Fortunately, we can leverage the function <code>janitor::clean_names()</code> function<label for="tufte-sn-94" class="margin-toggle sidenote-number">94</label><input type="checkbox" id="tufte-sn-94" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">94</span> the notation format you see here specifies the <code>Rpackage</code> and then the function within it, as <code>package::function()</code>.</span> which is designed to parse letter cases and separators - the default is to convert it to <code>snake_case</code>, i.e. all names are lowercase and words are separated by an underscore, it also deals with duplicate names and special characters.</p>
 <p>Let’s see what this does for us:</p>
@@ -360,21 +362,20 @@ function reset_tooltip(id) {
 <span id="cb283-3"><a href="exploratory-analysis.html#cb283-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb283-4"><a href="exploratory-analysis.html#cb283-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(disaster)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 47
-##   dis_no         year seq   glide disaster_group disaster_subgro~ disaster_type disaster_subtype disaster_subsub~
-##   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;            &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;           
-## 1 1900-9002-CPV  1900 9002  &lt;NA&gt;  Natural        Climatological   Drought       Drought          &lt;NA&gt;            
-## 2 1900-9001-IND  1900 9001  &lt;NA&gt;  Natural        Climatological   Drought       Drought          &lt;NA&gt;            
-## 3 1902-0012-GTM  1902 0012  &lt;NA&gt;  Natural        Geophysical      Earthquake    Ground movement  &lt;NA&gt;            
-## 4 1902-0003-GTM  1902 0003  &lt;NA&gt;  Natural        Geophysical      Volcanic act~ Ash fall         &lt;NA&gt;            
-## 5 1902-0010-GTM  1902 0010  &lt;NA&gt;  Natural        Geophysical      Volcanic act~ Ash fall         &lt;NA&gt;            
-## 6 1903-0006-CAN  1903 0006  &lt;NA&gt;  Natural        Geophysical      Mass movemen~ Rockfall         &lt;NA&gt;            
-## # ... with 38 more variables: event_name &lt;chr&gt;, country &lt;chr&gt;, iso &lt;chr&gt;, region &lt;chr&gt;, continent &lt;chr&gt;,
-## #   location &lt;chr&gt;, origin &lt;chr&gt;, associated_dis &lt;chr&gt;, associated_dis2 &lt;chr&gt;, ofda_response &lt;chr&gt;,
-## #   appeal &lt;chr&gt;, declaration &lt;chr&gt;, aid_contribution &lt;dbl&gt;, dis_mag_value &lt;dbl&gt;, dis_mag_scale &lt;chr&gt;,
-## #   latitude &lt;chr&gt;, longitude &lt;chr&gt;, local_time &lt;chr&gt;, river_basin &lt;chr&gt;, start_year &lt;dbl&gt;, start_month &lt;dbl&gt;,
-## #   start_day &lt;dbl&gt;, end_year &lt;dbl&gt;, end_month &lt;dbl&gt;, end_day &lt;dbl&gt;, total_deaths &lt;dbl&gt;, no_injured &lt;dbl&gt;,
-## #   no_affected &lt;dbl&gt;, no_homeless &lt;dbl&gt;, total_affected &lt;dbl&gt;, reconstruction_costs_000_us &lt;lgl&gt;,
-## #   insured_damages_000_us &lt;dbl&gt;, total_damages_000_us &lt;dbl&gt;, cpi &lt;dbl&gt;, adm_level &lt;chr&gt;, admin1_code &lt;chr&gt;, ...</code></pre>
+##   dis_no         year seq   glide disaster_group disaster_subgroup disaster_type  disaster_subtype disaster_subsub~ event_name country iso   region
+##   &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;          &lt;chr&gt;             &lt;chr&gt;          &lt;chr&gt;            &lt;chr&gt;            &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; 
+## 1 1900-9002-CPV  1900 9002  &lt;NA&gt;  Natural        Climatological    Drought        Drought          &lt;NA&gt;             &lt;NA&gt;       Cabo V~ CPV   Weste~
+## 2 1900-9001-IND  1900 9001  &lt;NA&gt;  Natural        Climatological    Drought        Drought          &lt;NA&gt;             &lt;NA&gt;       India   IND   South~
+## 3 1902-0012-GTM  1902 0012  &lt;NA&gt;  Natural        Geophysical       Earthquake     Ground movement  &lt;NA&gt;             &lt;NA&gt;       Guatem~ GTM   Centr~
+## 4 1902-0003-GTM  1902 0003  &lt;NA&gt;  Natural        Geophysical       Volcanic acti~ Ash fall         &lt;NA&gt;             Santa Mar~ Guatem~ GTM   Centr~
+## 5 1902-0010-GTM  1902 0010  &lt;NA&gt;  Natural        Geophysical       Volcanic acti~ Ash fall         &lt;NA&gt;             Santa Mar~ Guatem~ GTM   Centr~
+## 6 1903-0006-CAN  1903 0006  &lt;NA&gt;  Natural        Geophysical       Mass movement~ Rockfall         &lt;NA&gt;             &lt;NA&gt;       Canada  CAN   North~
+## # ... with 34 more variables: continent &lt;chr&gt;, location &lt;chr&gt;, origin &lt;chr&gt;, associated_dis &lt;chr&gt;, associated_dis2 &lt;chr&gt;, ofda_response &lt;chr&gt;,
+## #   appeal &lt;chr&gt;, declaration &lt;chr&gt;, aid_contribution &lt;dbl&gt;, dis_mag_value &lt;dbl&gt;, dis_mag_scale &lt;chr&gt;, latitude &lt;chr&gt;, longitude &lt;chr&gt;,
+## #   local_time &lt;chr&gt;, river_basin &lt;chr&gt;, start_year &lt;dbl&gt;, start_month &lt;dbl&gt;, start_day &lt;dbl&gt;, end_year &lt;dbl&gt;, end_month &lt;dbl&gt;, end_day &lt;dbl&gt;,
+## #   total_deaths &lt;dbl&gt;, no_injured &lt;dbl&gt;, no_affected &lt;dbl&gt;, no_homeless &lt;dbl&gt;, total_affected &lt;dbl&gt;, reconstruction_costs_000_us &lt;lgl&gt;,
+## #   insured_damages_000_us &lt;dbl&gt;, total_damages_000_us &lt;dbl&gt;, cpi &lt;dbl&gt;, adm_level &lt;chr&gt;, admin1_code &lt;chr&gt;, admin2_code &lt;chr&gt;,
+## #   geo_locations &lt;chr&gt;</code></pre>
 <p>That looks much better. Similar to running <code>head()</code> to make sure the first set of lines has read in properly, running <code>tail()</code> gives you a quickly look at whether the end of the file read in correctly as well.</p>
 </div>
 <div id="get-an-overview-of-the-data-set" class="section level2" number="16.4">
@@ -1052,8 +1053,7 @@ function reset_tooltip(id) {
 <p>For numerical columns mean values and percentiles can give you an overview of how the data is distributed. However for columns that contain strings or characters we cannot produce those types of summary statistics. Rather, we are probably more interested on how many unique values those columns contain and what those unique entries are.</p>
 <p><code>skim()</code> already gave us the number of unique entries for each column, we have two options we can use to determine what those values are. The first is <code>unique()</code>. This function makes use of the fact that each column is a vector<label for="tufte-sn-95" class="margin-toggle sidenote-number">95</label><input type="checkbox" id="tufte-sn-95" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">95</span> Remember, we can access each column of a dataframe as `df$columnname</span>.</p>
 <div class="sourceCode" id="cb286"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb286-1"><a href="exploratory-analysis.html#cb286-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(disaster<span class="sc">$</span>disaster_subgroup)</span></code></pre></div>
-<pre><code>## [1] "Climatological"    "Geophysical"       "Meteorological"    "Hydrological"      "Biological"       
-## [6] "Extra-terrestrial"</code></pre>
+<pre><code>## [1] "Climatological"    "Geophysical"       "Meteorological"    "Hydrological"      "Biological"        "Extra-terrestrial"</code></pre>
 <p>When you run this function it returns a vector; while this might be helpful in some contexts, it would be helpful if we could also view it in a tabular format. Do not fret - <code>tidyverse</code> got you.</p>
 <div class="sourceCode" id="cb288"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb288-1"><a href="exploratory-analysis.html#cb288-1" aria-hidden="true" tabindex="-1"></a>disaster <span class="sc">%&gt;%</span></span>
 <span id="cb288-2"><a href="exploratory-analysis.html#cb288-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(disaster_subgroup)</span></code></pre></div>
@@ -1475,7 +1475,7 @@ Let’s see if we can fix our legend to something more visible, we might want di
 <a href="making-good-figures.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-15
+2021-11-17
  using 
 R version 4.0.2 (2020-06-22)
 </p>

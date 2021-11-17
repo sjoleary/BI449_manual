@@ -14,8 +14,14 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-15" />
+<meta name="date" content="2021-11-17" />
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <meta name="description" content="20 Remote Sensing | Data Science for the Natural Environment (FA21)">
 
@@ -206,6 +212,7 @@ function reset_tooltip(id) {
 </ul>
 <a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
 <a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
+<a href="predictive-modeling-for-air-pollution.html"><span class="toc-section-number">23</span> Predictive modeling for air pollution</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -623,14 +630,14 @@ Figure 20.2: Pairwise relationships of all topographical and vegetation variable
 <span id="cb396-6"><a href="remote-sensing.html#cb396-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb396-7"><a href="remote-sensing.html#cb396-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sites)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 9
-##   site_name                site_id domain_number state latitude longitude site_type       site_cat  site_subtype 
-##   &lt;chr&gt;                    &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;     &lt;chr&gt;        
-## 1 Abby Road                ABBY    D16           WA        45.8    -122.  Relocatable Te~ Terrestr~ &lt;NA&gt;         
-## 2 Arikaree River           ARIK    D10           CO        39.8    -102.  Core Aquatic    Aquatic   Wadeable Str~
-## 3 Ordway-Swisher Biologic~ BARC    D03           FL        29.7     -82.0 Core Aquatic    Aquatic   Lake         
-## 4 Bartlett Experimental F~ BART    D01           NH        44.1     -71.3 Relocatable Te~ Terrestr~ &lt;NA&gt;         
-## 5 Upper Big Creek          BIGC    D17           CA        37.1    -119.  Relocatable Aq~ Aquatic   Wadeable Str~
-## 6 Blandy Experimental Farm BLAN    D02           VA        39.1     -78.1 Relocatable Te~ Terrestr~ &lt;NA&gt;</code></pre>
+##   site_name                                      site_id domain_number state latitude longitude site_type               site_cat    site_subtype   
+##   &lt;chr&gt;                                          &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;       &lt;chr&gt;          
+## 1 Abby Road                                      ABBY    D16           WA        45.8    -122.  Relocatable Terrestrial Terrestrial &lt;NA&gt;           
+## 2 Arikaree River                                 ARIK    D10           CO        39.8    -102.  Core Aquatic            Aquatic     Wadeable Stream
+## 3 Ordway-Swisher Biological Station - Barco Lake BARC    D03           FL        29.7     -82.0 Core Aquatic            Aquatic     Lake           
+## 4 Bartlett Experimental Forest                   BART    D01           NH        44.1     -71.3 Relocatable Terrestrial Terrestrial &lt;NA&gt;           
+## 5 Upper Big Creek                                BIGC    D17           CA        37.1    -119.  Relocatable Aquatic     Aquatic     Wadeable Stream
+## 6 Blandy Experimental Farm                       BLAN    D02           VA        39.1     -78.1 Relocatable Terrestrial Terrestrial &lt;NA&gt;</code></pre>
 <p>Let’s start simple by creating a map that has all of our NEON sites on it.</p>
 <p>First, we need to get a shapefile that we will use as our basemap - because we are going to want to orient ourselves within the US, we will also pull information we can use to plot state lines.</p>
 <div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="remote-sensing.html#cb398-1" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">scale =</span> <span class="st">"medium"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
@@ -778,7 +785,7 @@ Figure 20.5: Pearson correlation coefficient for slope and NDVI for all assessed
 <a href="simulated-data-for-hypothesis-testing-i.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-15
+2021-11-17
  using 
 R version 4.0.2 (2020-06-22)
 </p>
