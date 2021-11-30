@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-17" />
+<meta name="date" content="2021-11-30" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -213,6 +213,7 @@ function reset_tooltip(id) {
 <a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
 <a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
 <a href="predictive-modeling-for-air-pollution.html"><span class="toc-section-number">23</span> Predictive modeling for air pollution</a>
+<a href="final-projects.html"><span class="toc-section-number">24</span> Final Projects</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -378,7 +379,7 @@ function reset_tooltip(id) {
 <p>Now we can create maps for each of our raster files<label for="tufte-sn-115" class="margin-toggle sidenote-number">115</label><input type="checkbox" id="tufte-sn-115" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">115</span> this may take a second to plot … you are processing a bunch of data!</span>. We will use the function <code>plot()</code> instead of our usual <code>ggplot</code> options to keep it simple.</p>
 <div class="sourceCode" id="cb381"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb381-1"><a href="remote-sensing.html#cb381-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(all_data, </span>
 <span id="cb381-2"><a href="remote-sensing.html#cb381-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="fu">viridis</span>(<span class="dv">255</span>))</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-322-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-352-1.png" width="672"></p>
 <p>Let’s consider what correlations we would expect to find based on these six maps.</p>
 <div id="ques:rem-6" class="question">
 <p class="question-begin">
@@ -491,11 +492,11 @@ function reset_tooltip(id) {
 <span id="cb387-8"><a href="remote-sensing.html#cb387-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Topography"</span>, <span class="at">y =</span> <span class="st">"Vegetation"</span>) <span class="sc">+</span></span>
 <span id="cb387-9"><a href="remote-sensing.html#cb387-9" aria-hidden="true" tabindex="-1"></a>  theme_facet</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-326"></span>
+<span style="display:block;" id="fig:unnamed-chunk-356"></span>
 <p class="caption marginnote shownote">
 Figure 20.1: Relationship of topography and vegetation. Topography is described as elevation (dtm, in meters), northness (radians), and slope (degrees); vegetation is assessed using NDVI and vegetation height.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-326-1.png" alt="Relationship of topography and vegetation. Topography is described as elevation (dtm, in meters), northness (radians), and slope (degrees); vegetation is assessed using NDVI and vegetation height." width="864">
+<img src="_main_files/figure-html/unnamed-chunk-356-1.png" alt="Relationship of topography and vegetation. Topography is described as elevation (dtm, in meters), northness (radians), and slope (degrees); vegetation is assessed using NDVI and vegetation height." width="864">
 </div>
 <div id="ques:rem-10" class="question">
 <p class="question-begin">
@@ -515,11 +516,11 @@ Figure 20.1: Relationship of topography and vegetation. Topography is described 
 <p>Visualizing correlations in a correlation plot can be helpful for a quick overview when you are working with a lot of different values, we can do this using the function <code>corrplot()</code>.</p>
 <div class="sourceCode" id="cb389"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb389-1"><a href="remote-sensing.html#cb389-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(P_corr<span class="sc">$</span>r)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-328"></span>
+<span style="display:block;" id="fig:unnamed-chunk-358"></span>
 <p class="caption marginnote shownote">
 Figure 20.2: Pairwise relationships of all topographical and vegetation variables measured using Pearson’s correlation coefficient.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-328-1.png" alt="Pairwise relationships of all topographical and vegetation variables measured using Pearson's correlation coefficient." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-358-1.png" alt="Pairwise relationships of all topographical and vegetation variables measured using Pearson's correlation coefficient." width="672">
 </div>
 <p>Alternatively, you can print the correlation coefficients as a matrix.</p>
 <div class="sourceCode" id="cb390"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb390-1"><a href="remote-sensing.html#cb390-1" aria-hidden="true" tabindex="-1"></a>P_corr<span class="sc">$</span>r</span></code></pre></div>
@@ -630,14 +631,14 @@ Figure 20.2: Pairwise relationships of all topographical and vegetation variable
 <span id="cb396-6"><a href="remote-sensing.html#cb396-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb396-7"><a href="remote-sensing.html#cb396-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sites)</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 9
-##   site_name                                      site_id domain_number state latitude longitude site_type               site_cat    site_subtype   
-##   &lt;chr&gt;                                          &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                   &lt;chr&gt;       &lt;chr&gt;          
-## 1 Abby Road                                      ABBY    D16           WA        45.8    -122.  Relocatable Terrestrial Terrestrial &lt;NA&gt;           
-## 2 Arikaree River                                 ARIK    D10           CO        39.8    -102.  Core Aquatic            Aquatic     Wadeable Stream
-## 3 Ordway-Swisher Biological Station - Barco Lake BARC    D03           FL        29.7     -82.0 Core Aquatic            Aquatic     Lake           
-## 4 Bartlett Experimental Forest                   BART    D01           NH        44.1     -71.3 Relocatable Terrestrial Terrestrial &lt;NA&gt;           
-## 5 Upper Big Creek                                BIGC    D17           CA        37.1    -119.  Relocatable Aquatic     Aquatic     Wadeable Stream
-## 6 Blandy Experimental Farm                       BLAN    D02           VA        39.1     -78.1 Relocatable Terrestrial Terrestrial &lt;NA&gt;</code></pre>
+##   site_name                                      site_id domain_number state latitude longitude site_type        site_cat  site_subtype 
+##   &lt;chr&gt;                                          &lt;chr&gt;   &lt;chr&gt;         &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;     &lt;chr&gt;        
+## 1 Abby Road                                      ABBY    D16           WA        45.8    -122.  Relocatable Ter~ Terrestr~ &lt;NA&gt;         
+## 2 Arikaree River                                 ARIK    D10           CO        39.8    -102.  Core Aquatic     Aquatic   Wadeable Str~
+## 3 Ordway-Swisher Biological Station - Barco Lake BARC    D03           FL        29.7     -82.0 Core Aquatic     Aquatic   Lake         
+## 4 Bartlett Experimental Forest                   BART    D01           NH        44.1     -71.3 Relocatable Ter~ Terrestr~ &lt;NA&gt;         
+## 5 Upper Big Creek                                BIGC    D17           CA        37.1    -119.  Relocatable Aqu~ Aquatic   Wadeable Str~
+## 6 Blandy Experimental Farm                       BLAN    D02           VA        39.1     -78.1 Relocatable Ter~ Terrestr~ &lt;NA&gt;</code></pre>
 <p>Let’s start simple by creating a map that has all of our NEON sites on it.</p>
 <p>First, we need to get a shapefile that we will use as our basemap - because we are going to want to orient ourselves within the US, we will also pull information we can use to plot state lines.</p>
 <div class="sourceCode" id="cb398"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb398-1"><a href="remote-sensing.html#cb398-1" aria-hidden="true" tabindex="-1"></a>world <span class="ot">&lt;-</span> <span class="fu">ne_countries</span>(<span class="at">scale =</span> <span class="st">"medium"</span>, <span class="at">returnclass =</span> <span class="st">"sf"</span>)</span>
@@ -668,11 +669,11 @@ Figure 20.2: Pairwise relationships of all topographical and vegetation variable
 <span id="cb399-21"><a href="remote-sensing.html#cb399-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> site_size) <span class="sc">+</span></span>
 <span id="cb399-22"><a href="remote-sensing.html#cb399-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>))</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-335"></span>
+<span style="display:block;" id="fig:unnamed-chunk-365"></span>
 <p class="caption marginnote shownote">
 Figure 20.3: NEON sites in contiguous US
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-335-1.png" alt="NEON sites in contiguous US" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-365-1.png" alt="NEON sites in contiguous US" width="672">
 </div>
 <p>NEON sites are intentionally designed so aquatic and terrestrial sites are ideally right next to each other, so those are plotting right on top of each other.</p>
 <p>Instead of the site id’s we could also make the same map with points for locations.</p>
@@ -687,11 +688,11 @@ Figure 20.3: NEON sites in contiguous US
 <span id="cb400-9"><a href="remote-sensing.html#cb400-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb400-10"><a href="remote-sensing.html#cb400-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>))</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-336"></span>
+<span style="display:block;" id="fig:unnamed-chunk-366"></span>
 <p class="caption marginnote shownote">
 Figure 20.4: NEON site locations
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-336-1.png" alt="NEON site locations" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-366-1.png" alt="NEON site locations" width="672">
 </div>
 <p>If we want to compare differences in the relationships of topographic variables across all the sites we plotted, we could use the same method to plot the correlation coefficients, in addition to the site labels; all we need to do is add the correlation coefficients into our <code>sites</code> data.frame<label for="tufte-sn-117" class="margin-toggle sidenote-number">117</label><input type="checkbox" id="tufte-sn-117" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">117</span> Once we have information for multiple sites, you will need to either read in all the text files with results and use <code>bind_rows</code> to create a single <code>data.frame</code>, or we will also allow for some outside R action, where you just cut and paste them all into a single text file and read that in.</span>.</p>
 <p>Here is how you can read in all your files and combine them into a single <code>data.frame</code>. We will create an empty list and then fill it with individual data.frames (one for each site) by looping over a vectory with all the filenames. Because we names our correlations files in a very standardized way, we can specify a pattern, and <code>R</code> will create a vector with all those filenames in the <code>results</code> folder for us.</p>
@@ -748,11 +749,11 @@ Figure 20.4: NEON site locations
 <span id="cb402-23"><a href="remote-sensing.html#cb402-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> cor_size, <span class="at">color =</span> <span class="st">"darkred"</span>, <span class="at">nudge_y =</span> <span class="sc">-</span><span class="fl">1.5</span>) <span class="sc">+</span>   <span class="co"># shift label below actual coordinates</span></span>
 <span id="cb402-24"><a href="remote-sensing.html#cb402-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-338"></span>
+<span style="display:block;" id="fig:unnamed-chunk-368"></span>
 <p class="caption marginnote shownote">
 Figure 20.5: Pearson correlation coefficient for slope and NDVI for all assessed sites
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-338-1.png" alt="Pearson correlation coefficient for slope and NDVI for all assessed sites" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-368-1.png" alt="Pearson correlation coefficient for slope and NDVI for all assessed sites" width="672">
 </div>
 <div id="ques:rem-16" class="question">
 <p class="question-begin">
@@ -785,7 +786,7 @@ Figure 20.5: Pearson correlation coefficient for slope and NDVI for all assessed
 <a href="simulated-data-for-hypothesis-testing-i.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-17
+2021-11-30
  using 
 R version 4.0.2 (2020-06-22)
 </p>

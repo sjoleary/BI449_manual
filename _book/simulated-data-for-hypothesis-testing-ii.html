@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-17" />
+<meta name="date" content="2021-11-30" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -216,6 +216,7 @@ function reset_tooltip(id) {
 <li class="toc"><a href="#acknowledgments-5"> Acknowledgments</a></li>
 </ul>
 <a href="predictive-modeling-for-air-pollution.html"><span class="toc-section-number">23</span> Predictive modeling for air pollution</a>
+<a href="final-projects.html"><span class="toc-section-number">24</span> Final Projects</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -297,7 +298,7 @@ function reset_tooltip(id) {
 <span id="cb433-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb433-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Characteristics for eight lakes in the GLEON network."</span>)</span></code></pre></div>
 <table style="width:100%;">
 <caption>
-<span id="tab:unnamed-chunk-366">Table 22.1: </span>Characteristics for eight lakes in the GLEON network.</caption>
+<span id="tab:unnamed-chunk-396">Table 22.1: </span>Characteristics for eight lakes in the GLEON network.</caption>
 <colgroup>
 <col width="8%">
 <col width="5%">
@@ -477,11 +478,11 @@ function reset_tooltip(id) {
 <span id="cb434-23"><a href="simulated-data-for-hypothesis-testing-ii.html#cb434-23" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">x =</span> longitude, <span class="at">y =</span> latitude, <span class="at">label =</span> lake_name),</span>
 <span id="cb434-24"><a href="simulated-data-for-hypothesis-testing-ii.html#cb434-24" aria-hidden="true" tabindex="-1"></a>                   <span class="at">size =</span> <span class="dv">3</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-367"></span>
+<span style="display:block;" id="fig:unnamed-chunk-397"></span>
 <p class="caption marginnote shownote">
 Figure 22.1: Lake locations.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-367-1.png" alt="Lake locations." width="864">
+<img src="_main_files/figure-html/unnamed-chunk-397-1.png" alt="Lake locations." width="864">
 </div>
 <div id="ques:tele-4" class="question">
 <p class="question-begin">
@@ -620,11 +621,11 @@ Figure 22.1: Lake locations.
 <p>One of the arguments in the <code>nml</code> file specifies the file with the information on drivers (i.e. it directs to the <code>met_hourly.csv</code>) file. Let’s take a look at the meteorological input data for the duration of the simulation.</p>
 <div class="sourceCode" id="cb439"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb439-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb439-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_meteo</span>(nml_file) </span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-371"></span>
+<span style="display:block;" id="fig:unnamed-chunk-401"></span>
 <p class="caption marginnote shownote">
 Figure 22.2: Metereological data set summarizing the behavior of drivres of thermal structure for the baseline simulation.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-371-1.png" alt="Metereological data set summarizing the behavior of drivres of thermal structure for the baseline simulation." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-401-1.png" alt="Metereological data set summarizing the behavior of drivres of thermal structure for the baseline simulation." width="768">
 </div>
 <div id="ques:tele-6" class="question">
 <p class="question-begin">
@@ -655,7 +656,7 @@ Figure 22.2: Metereological data set summarizing the behavior of drivres of ther
 <span id="cb443-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb443-5" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(var_names,</span>
 <span id="cb443-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb443-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Variable names and units for lake simulation."</span>) </span></code></pre></div>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-374">Table 22.2: </span>Variable names and units for lake simulation.</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-404">Table 22.2: </span>Variable names and units for lake simulation.</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="left">name</th>
@@ -781,7 +782,7 @@ Figure 22.2: Metereological data set summarizing the behavior of drivres of ther
 </p>
 <div id="sol-body-46" class="solution-body" style="display: none;">
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-376">Table 22.3: </span>Descriptive statistics of lake depth for Lake Sunapee, NH</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-406">Table 22.3: </span>Descriptive statistics of lake depth for Lake Sunapee, NH</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="right">mean_depth</th>
@@ -834,11 +835,11 @@ Figure 22.2: Metereological data set summarizing the behavior of drivres of ther
 <p>If you look at the figure below, you can see that you will need a column for date (x-axis), temperature (y-axis) and and column that contains simulated scenarios (this becomes the color coding for your line graphs).</p>
 <p>Once you do that, it should be straightforward to create a plot that look something like this:</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-378"></span>
+<span style="display:block;" id="fig:unnamed-chunk-408"></span>
 <p class="caption marginnote shownote">
 Figure 22.3: Change in surface (blue) and bottom (green) temperature [C] for baseline scenario.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-378-1.png" alt="Change in surface (blue) and bottom (green) temperature [C] for baseline scenario." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-408-1.png" alt="Change in surface (blue) and bottom (green) temperature [C] for baseline scenario." width="672">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -847,7 +848,7 @@ Figure 22.3: Change in surface (blue) and bottom (green) temperature [C] for bas
 </div>
 <p>Let’s plot a heatmap of our lake thermal structure for the baseline scenario.</p>
 <div class="sourceCode" id="cb449"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb449-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb449-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp</span>(<span class="at">file=</span>baseline, <span class="at">fig_path=</span><span class="cn">FALSE</span>) </span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-379-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-409-1.png" width="672"></p>
 <div id="ques:tele-9" class="question">
 <p class="question-begin">
 ► Question 22.7
@@ -881,11 +882,11 @@ Figure 22.3: Change in surface (blue) and bottom (green) temperature [C] for bas
 <div id="sol-body-48" class="solution-body" style="display: none;">
 <p>Your plot should look something like this:</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-381"></span>
+<span style="display:block;" id="fig:unnamed-chunk-411"></span>
 <p class="caption marginnote shownote">
 Figure 22.4: Change in ice cover [m] for baseline simulation.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-381-1.png" alt="Change in ice cover [m] for baseline simulation." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-411-1.png" alt="Change in ice cover [m] for baseline simulation." width="672">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -906,7 +907,7 @@ Figure 22.4: Change in ice cover [m] for baseline simulation.
 <p>Let’s use <code>skim()</code> to get a quick look at the data set:</p>
 <div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb452-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(annual_temp)</span></code></pre></div>
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-383">Table 22.4: </span>Data summary</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-413">Table 22.4: </span>Data summary</span><!--</caption>--></p>
 <table><tbody>
 <tr class="odd">
 <td align="left">Name</td>
@@ -1125,11 +1126,11 @@ Figure 22.4: Change in ice cover [m] for baseline simulation.
 <div id="sol-body-49" class="solution-body" style="display: none;">
 <p>Your plot should look something like this:</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-384"></span>
+<span style="display:block;" id="fig:unnamed-chunk-414"></span>
 <p class="caption marginnote shownote">
 Figure 22.5: Mean annual air temperature for Lake Sunapee, NH. Individual data points are color coded according to whether years were classified as Eln Nino (green), La Nina (blue) or neutral (orange).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-384-1.png" alt="Mean annual air temperature for Lake Sunapee, NH. Individual data points are color coded according to whether years were classified as Eln Nino (green), La Nina (blue) or neutral (orange)." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-414-1.png" alt="Mean annual air temperature for Lake Sunapee, NH. Individual data points are color coded according to whether years were classified as Eln Nino (green), La Nina (blue) or neutral (orange)." width="672">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1173,11 +1174,11 @@ Figure 22.5: Mean annual air temperature for Lake Sunapee, NH. Individual data p
 <span id="cb455-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb455-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb455-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb455-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"year"</span>, <span class="at">y =</span> <span class="st">"mean annual air temperature [C]"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-386"></span>
+<span style="display:block;" id="fig:unnamed-chunk-416"></span>
 <p class="caption marginnote shownote">
 Figure 22.6: Linear regressions comparing the observed in air temperature [C] over time for neutral and El Nino years.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-386-1.png" alt="Linear regressions comparing the observed in air temperature [C] over time for neutral and El Nino years." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-416-1.png" alt="Linear regressions comparing the observed in air temperature [C] over time for neutral and El Nino years." width="672">
 </div>
 <p>To determine the typical offset, we will use linear regressions to calculate estimated (expected) values for 2013 if it were a typical neutral year and if it were a typical El Nino year. Then we will calculate the difference between those two estimated values as the typical offset to create our <code>met_hourly</code> input data set for a typical El Nino year - i.e we will add the expected offset to the values used in the baseline scenario to create an simulation of the Lake thermal structure if 2013 had been a typical El Nino year.</p>
 <p>Let’s start by fitting a linear regression model to the neutral years. For this we need to start by creating a subset of the data containing only neutral years.</p>
@@ -1354,7 +1355,7 @@ Figure 22.6: Linear regressions comparing the observed in air temperature [C] ov
 </p>
 <div id="sol-body-52" class="solution-body" style="display: none;">
 <p><!--
-<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-394">Table 22.5: </span>linear regression of mean annual temperature for El Nino years over time in Lake Sunapee.</span><!--</caption>--></p>
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-424">Table 22.5: </span>linear regression of mean annual temperature for El Nino years over time in Lake Sunapee.</span><!--</caption>--></p>
 <table>
 <thead><tr class="header">
 <th align="left">term</th>
@@ -1481,11 +1482,11 @@ Figure 22.6: Linear regressions comparing the observed in air temperature [C] ov
 <p>If you pivot your data set as you did earlier, you end up with a column containing your scenario/data sets; if you look closely at those values you can see that they contain both the information on simulation scenario and the type of temperature measurement. What function can you use to create separate columns for the <code>scenario</code> and the <code>temperature_measurement</code>.</p>
 <p>You plot should look similar to this - remember to add a title and label your axes!</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-403"></span>
+<span style="display:block;" id="fig:unnamed-chunk-433"></span>
 <p class="caption marginnote shownote">
 Figure 22.7: Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue) and typical El Nino year (orange).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-403-1.png" alt="Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue) and typical El Nino year (orange)." width="864">
+<img src="_main_files/figure-html/unnamed-chunk-433-1.png" alt="Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue) and typical El Nino year (orange)." width="864">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1519,11 +1520,11 @@ Figure 22.7: Comparison of surface and bottom temperatures [C] for simulated bas
 <div id="sol-body-54" class="solution-body" style="display: none;">
 <p>You plot should look similar to this - remember to add a title and label your axes!</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-405"></span>
+<span style="display:block;" id="fig:unnamed-chunk-435"></span>
 <p class="caption marginnote shownote">
 Figure 22.8: Comparison of ice thickness [m] for simulated baseline scenario (blue) and typical El Nino year (orange).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-405-1.png" alt="Comparison of ice thickness [m] for simulated baseline scenario (blue) and typical El Nino year (orange)." width="864">
+<img src="_main_files/figure-html/unnamed-chunk-435-1.png" alt="Comparison of ice thickness [m] for simulated baseline scenario (blue) and typical El Nino year (orange)." width="864">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1532,7 +1533,7 @@ Figure 22.8: Comparison of ice thickness [m] for simulated baseline scenario (bl
 </div>
 <p>Finally, let’s take a look at our lake thermal structure.</p>
 <div class="sourceCode" id="cb477"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb477-1"><a href="simulated-data-for-hypothesis-testing-ii.html#cb477-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp</span>(<span class="at">file =</span> typical_elnino, <span class="at">fig_path =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-406-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-436-1.png" width="672"></p>
 </div>
 <div id="create-an-extreme-el-nino-year-scenario" class="section level2" number="22.6">
 <h2>
@@ -1548,11 +1549,11 @@ Figure 22.8: Comparison of ice thickness [m] for simulated baseline scenario (bl
 <span id="cb478-6"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>, <span class="st">"darkblue"</span>)) <span class="sc">+</span></span>
 <span id="cb478-7"><a href="simulated-data-for-hypothesis-testing-ii.html#cb478-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"year"</span>, <span class="at">y =</span> <span class="st">"mean annual air temp [C]"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-407"></span>
+<span style="display:block;" id="fig:unnamed-chunk-437"></span>
 <p class="caption marginnote shownote">
 Figure 22.9: Comparison of mean annual temperature [C] for neutral and El Nino years
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-407-1.png" alt="Comparison of mean annual temperature [C] for neutral and El Nino years" width="672">
+<img src="_main_files/figure-html/unnamed-chunk-437-1.png" alt="Comparison of mean annual temperature [C] for neutral and El Nino years" width="672">
 </div>
 <p>We can eyeball which of the El Nino years appears to have the largest offset from a neutral year, or since we calculated the slope and intercept of the regression line describing the relationship of temperature and time for neutral years we can calculate the offsets for all El Nino years and then identify the largest offset.</p>
 <p>We can do this by calculating the estimated temperature for each year if it was a neutral year, and then calculating the offset.</p>
@@ -1642,11 +1643,11 @@ Figure 22.9: Comparison of mean annual temperature [C] for neutral and El Nino y
 <p>Your plot should look similar to this one.</p>
 <p>We’ve already done this for our previous visualizations of the temperature data. Again, you will need to turn your data set into a tidy data set to be able to plot this data set. If you look at the figure, you can see that you will need a column for date (x-axis), temperature (y-axis) and two additional columns for your sub-grouping of type of temperature measurement (this becomes the individual panels of bottom and surface temperature) and your simulated scenarios (this becomes the color coding for your line graphs).</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-413"></span>
+<span style="display:block;" id="fig:unnamed-chunk-443"></span>
 <p class="caption marginnote shownote">
 Figure 22.10: Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue), typical El Nino year (orange), and extreme El Nino year (red).
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-413-1.png" alt="Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue), typical El Nino year (orange), and extreme El Nino year (red)." width="864">
+<img src="_main_files/figure-html/unnamed-chunk-443-1.png" alt="Comparison of surface and bottom temperatures [C] for simulated baseline scenario (blue), typical El Nino year (orange), and extreme El Nino year (red)." width="864">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1680,11 +1681,11 @@ Figure 22.10: Comparison of surface and bottom temperatures [C] for simulated ba
 <p>You plot should look similar to this - remember to add a title and label your axes!</p>
 <p>Again, you will need to convert your data set to a tidy data set, this time you should have a column with your date (x-axis), ice thickness (y-axis) and your scenarios/data sets (color coding for lines).</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-415"></span>
+<span style="display:block;" id="fig:unnamed-chunk-445"></span>
 <p class="caption marginnote shownote">
 Figure 22.11: Comparison of ice thickness [m] for simulated baseline scenario (blue), typical (orange) and extreme (red) El Nino years.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-415-1.png" alt="Comparison of ice thickness [m] for simulated baseline scenario (blue), typical (orange) and extreme (red) El Nino years." width="864">
+<img src="_main_files/figure-html/unnamed-chunk-445-1.png" alt="Comparison of ice thickness [m] for simulated baseline scenario (blue), typical (orange) and extreme (red) El Nino years." width="864">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1708,7 +1709,7 @@ Figure 22.11: Comparison of ice thickness [m] for simulated baseline scenario (b
 <span id="cb492-3"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> scenario), <span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb492-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"red"</span>, <span class="st">"darkorange"</span>)) <span class="sc">+</span></span>
 <span id="cb492-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb492-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Temperature offset [C]"</span>, <span class="at">y =</span> <span class="st">"ice cover duration [days]"</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-418-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-448-1.png" width="672"></p>
 <div id="ques:tele-22" class="question">
 <p class="question-begin">
 ► Question 22.20
@@ -1741,11 +1742,11 @@ Figure 22.11: Comparison of ice thickness [m] for simulated baseline scenario (b
 <span id="cb495-4"><a href="simulated-data-for-hypothesis-testing-ii.html#cb495-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
 <span id="cb495-5"><a href="simulated-data-for-hypothesis-testing-ii.html#cb495-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"date"</span>, <span class="at">y =</span> <span class="st">"depth [m]"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-421"></span>
+<span style="display:block;" id="fig:unnamed-chunk-451"></span>
 <p class="caption marginnote shownote">
 Figure 22.12: Thermal structure of Lake Sunapee, NH for extreme El Nino event.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-421-1.png" alt="Thermal structure of Lake Sunapee, NH for extreme El Nino event." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-451-1.png" alt="Thermal structure of Lake Sunapee, NH for extreme El Nino event." width="672">
 </div>
 <div id="ques:tele-23" class="question">
 <p class="question-begin">
@@ -1768,11 +1769,11 @@ Figure 22.12: Thermal structure of Lake Sunapee, NH for extreme El Nino event.
 <div id="sol-body-57" class="solution-body" style="display: none;">
 <p>You plot should look similar to this - remember to add a title and label your axes!</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-422"></span>
+<span style="display:block;" id="fig:unnamed-chunk-452"></span>
 <p class="caption marginnote shownote">
 Figure 22.13: Comparison of thermal structure for baseline (top), typical (middle), and extreme (bottom) El Nino years.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-422-1.png" alt="Comparison of thermal structure for baseline (top), typical (middle), and extreme (bottom) El Nino years." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-452-1.png" alt="Comparison of thermal structure for baseline (top), typical (middle), and extreme (bottom) El Nino years." width="672">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -1839,7 +1840,7 @@ Figure 22.13: Comparison of thermal structure for baseline (top), typical (middl
 <a href="predictive-modeling-for-air-pollution.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-17
+2021-11-30
  using 
 R version 4.0.2 (2020-06-22)
 </p>

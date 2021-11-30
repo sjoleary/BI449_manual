@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="24 Final Projects | Data Science for the Natural Environment (FA21)" />
+<meta property="og:type" content="book" />
+
+
+
+
+
+<meta name="author" content="Shannon J. O’Leary" />
+
+<meta name="date" content="2021-11-30" />
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="24 Final Projects | Data Science for the Natural Environment (FA21)">
+
+<title>24 Final Projects | Data Science for the Natural Environment (FA21)</title>
+
+<script src="libs/header-attrs/header-attrs.js"></script>
+<link href="libs/tufte-css/tufte.css" rel="stylesheet" />
+<link href="libs/tufte-css/envisioned.css" rel="stylesheet" />
+<link href="libs/msmb-css/msmb.css" rel="stylesheet" />
+<script src="libs/htmlwidgets/htmlwidgets.js"></script>
+<script src="libs/plotly-binding/plotly.js"></script>
+<script src="libs/typedarray/typedarray.min.js"></script>
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main/plotly-latest.min.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  background-color: #f8f8f8; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="msmb.css" type="text/css" />
+<script>
+function toggle_visibility(id1, id2) {
+var e = document.getElementById(id1);
+var f = document.getElementById(id2);
+
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+
+if(f.classList.contains('fa-plus-square')) {
+    f.classList.add('fa-minus-square')
+    f.classList.remove('fa-plus-square')
+} else {
+    f.classList.add('fa-plus-square')
+    f.classList.remove('fa-minus-square')
+}
+
+}
+</script>
+<script>
+function copy_link(id) {
+  var dummy = document.createElement('input'),
+  text = window.location.href.split(/[?#]/)[0] + '#' + id;
+  document.body.appendChild(dummy);
+  dummy.value = text;
+  dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(dummy);
+  
+  var tooltip = document.getElementById(id + '-tooltip');
+  tooltip.innerHTML = 'Copied!';
+}
+
+function reset_tooltip(id) {
+  var tooltip = document.getElementById(id);
+  tooltip.innerHTML = 'Copy link';
+}
+</script>
+
+</head>
+
+<body>
+
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul class="navbar">
+<li class="msmb"><p class="title">Data Science for the Natural Environment (FA21)<p><p class="author">Shannon J. O'Leary</p>
+<li class="dropdown" style="float:right">
+<a href="javascript:void(0)" class="dropbtn">&#x25BE; Chapters</a>
+<div class="dropdown-content">
+<a href="index.html">Overview</a>
+<a href="what-even-is-data-science.html"><span class="toc-section-number">1</span> What even is data science?</a>
+<a href="installing-rrstudio.html"><span class="toc-section-number">2</span> Installing R/Rstudio</a>
+<a href="project-management-and-rmarkdown-basics.html"><span class="toc-section-number">3</span> Project management and Rmarkdown Basics</a>
+<a href="r-functions-objects-vectors---oh-my.html"><span class="toc-section-number">4</span> R: Functions, Objects, Vectors - oh my!</a>
+<a href="identifying-essential-fish-habitat-shark-nurseries-on-the-texas-coast.html"><span class="toc-section-number">5</span> Identifying essential fish habitat: Shark Nurseries on the Texas coast</a>
+<a href="intro-to-data-frames.html"><span class="toc-section-number">6</span> Intro to data frames</a>
+<a href="welcome-to-the-tidyverse.html"><span class="toc-section-number">7</span> Welcome to the tidyverse</a>
+<a href="catch-data-analysis.html"><span class="toc-section-number">8</span> Catch data analysis</a>
+<a href="scientific-misconduct-and-the-reproducible-crisis.html"><span class="toc-section-number">9</span> Scientific misconduct and the reproducible crisis</a>
+<a href="responsible-research-is-reproducible-research.html"><span class="toc-section-number">10</span> Responsible Research is Reproducible Research</a>
+<a href="project-management-revisited.html"><span class="toc-section-number">11</span> Project Management Revisited</a>
+<a href="data-wrangling-tidy-data-revisited.html"><span class="toc-section-number">12</span> Data Wrangling &amp; Tidy data Revisited</a>
+<a href="climate-change.html"><span class="toc-section-number">13</span> Climate Change</a>
+<a href="visualization.html"><span class="toc-section-number">14</span> Visualization</a>
+<a href="visualizations-as-a-tool-for-misinformation.html"><span class="toc-section-number">15</span> Visualizations as a tool for misinformation</a>
+<a href="exploratory-analysis.html"><span class="toc-section-number">16</span> Exploratory Analysis</a>
+<a href="making-good-figures.html"><span class="toc-section-number">17</span> Making good figures</a>
+<a href="phenology.html"><span class="toc-section-number">18</span> Phenology</a>
+<a href="predictive-modeling.html"><span class="toc-section-number">19</span> Predictive Modeling</a>
+<a href="remote-sensing.html"><span class="toc-section-number">20</span> Remote Sensing</a>
+<a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
+<a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
+<a href="predictive-modeling-for-air-pollution.html"><span class="toc-section-number">23</span> Predictive modeling for air pollution</a>
+<a id="active-page" href="final-projects.html"><span class="toc-section-number">24</span> Final Projects</a><ul class="toc-sections">
+<li class="toc"><a href="#guidelines"> Guidelines</a></li>
+<li class="toc"><a href="#things-to-keep-in-mind"> Things to keep in mind</a></li>
+</ul>
+<a href="references.html">References</a>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html><body><div id="final-projects" class="section level1" number="24">
+<h1>
+<span class="header-section-number">24</span> Final Projects</h1>
+<div id="guidelines" class="section level2" number="24.1">
+<h2>
+<span class="header-section-number">24.1</span> Guidelines<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('guidelines')" onmouseout="reset_tooltip('guidelines-tooltip')"><span class="tooltiptext" id="guidelines-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<p>The goal of this project is for you to demonstrate proficiency in the skills you have acquired over the course of this semester (and if you’re adventurous a little bit beyond that), primarily that you can ask meaningful questions, answer them with the results of an appropriate data analysis, present your results in a compelling way, and discuss your conclusions.
+Additionally, you should be able to discuss the reliability and validity of your data, critic your own methods, and make suggestions on how to improve your approach.</p>
+<p><strong>Your final project must demonstrate the following skills:</strong></p>
+<ul>
+<li>create a well organized research compendium some form of accessing data and reading it into R data tidying/wrangling, use of at least 5 dplyr verbs (<code>filter()</code>, <code>select()</code>, joins, <code>mutate()</code>, <code>group_by()</code>, <code>summarize()</code> …)</li>
+<li>visualizations using ggplot</li>
+<li>clear, well-organized write-up of final report including code &amp; results, and discussion; this should be written in <code>Rmarkdown</code> and then knitted as an <code>html</code> file.</li>
+</ul>
+<p><em>Refer to earlier chapters in this lab manual on standards for good visualizations, formatting figures using ggplot, formatting using Rmarkdown, components of a research compendium etc.</em></p>
+<p><strong>Criteria for evaluation of your final project include</strong></p>
+<ul>
+<li>
+<p>Organization of research compendium, reproducibility</p>
+<ul>
+<li><p>You have submitted your project folder with an R project.</p></li>
+<li><p>All raw data is included.</p></li>
+<li><p>You have used an Rmarkdown file to reproducibly document your analysis &amp; results.</p></li>
+<li><p>You have submitted your final report as a knitted html file your code is well organized and commented</p></li>
+</ul>
+</li>
+<li>
+<p>Content:</p>
+<ul>
+<li><p>Your broad research question is explicitly stated.</p></li>
+<li><p>You have selected a relevant data set(s) to answer it and can justify this choice and formulate associated caveats.</p></li>
+<li><p>You are able to precisely formulate which data analysis steps you are taking and why.</p></li>
+<li><p>You describe your results and discuss them in context of your question.</p></li>
+<li><p>You concisely state your central findings and conclusions.</p></li>
+</ul>
+</li>
+<li>
+<p>Correctness</p>
+<ul>
+<li><p>You apply an appropriate analysis.</p></li>
+<li><p>All visualizations are appropriate for the data type and relevant to the question.</p></li>
+<li><p>Your results are clearly and correctly presented.</p></li>
+</ul>
+</li>
+<li>
+<p>Presentation:</p>
+<ul>
+<li><p>Quality of writing: appropriate style, clear, concise and well-structured sentences, correct terminology, syntax, grammar and spelling.</p></li>
+<li><p>Your presentation is well-structured and easy to follow.</p></li>
+<li><p>It is clear which steps for analysis were taken and why.</p></li>
+<li><p>Visualizations have specific point that serves the overall narrative; all figures have titles, labeled axis, colors/shapes &amp; other aesthetics to encode data are used in a meaningful way.</p></li>
+<li><p>You distinguish between analysis, results, and discussion.</p></li>
+<li><p>Make sure to suppress warnings, errors, and other messages (you can do this in your setup code chunk for all code chunks in the document) to make your document more readable.</p></li>
+</ul>
+</li>
+<li>
+<p>Critical thought/creativity:</p>
+<ul>
+<li><p>Your project is well thought out and it is clear that time &amp; effort went into planning &amp; implementing the project.</p></li>
+<li><p>You have considered the limitations of your data set and approach.</p></li>
+<li><p>Your discussion critically assesses your results, puts them into context, and evaluates them in the larger context.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>You will submit your entire research compendium including the write-up of your final project.</strong></p>
+<p>You will need to create a research compendium and complete your analysis as a <code>Rproj</code> using <code>R</code> and <code>Rmarkdown</code>.
+Your research compendium should be organized and your various documents should be well structured, coherent, easy to follow, and clear according to the standards we have established over the semester.</p>
+<p><strong>Your final report should have the following structure:</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>Title</p></li>
+<li>
+<p>Introduction (2-3 paragraphs):</p>
+<ul>
+<li><p>Introduce relevant key words &amp; concepts and other important background information (remember to include your references!)</p></li>
+<li><p>Introduce your broad topic/general research question you are asking, including motivation and context.</p></li>
+<li><p>Describe why your question is relevant/how it would further the understanding of this broad topic you should include an clear, concise &amp; explicit statement of you research question/hypotheses and how you will address it (we have used a standardized way to formulate this for several of our modules, that is a good starting point).</p></li>
+<li><p>Include references as appropriate.</p></li>
+</ul>
+</li>
+<li>
+<p>Study Design</p>
+<ul>
+<li><p>Describe the data sets you intend to use, including what information it contains, how it was collected, and what the source is.</p></li>
+<li><p>Read in your data set and use <code>skim()</code> to provide an overview of your data</p></li>
+<li><p>Assess the quality of your data set, consider whether there are specific caveats, the spatial/temporal resolution, subgroups within, how data is encoded.
+etc.</p></li>
+</ul>
+</li>
+<li>
+<p>Analysis and Results</p>
+<ul>
+<li><p>Document your individual steps of analysis; make explicit which steps you are taking and why (how does it contribute to answering your question); orient yourself on the style of our lab manual for interweaving descriptions of steps you are taking and code.</p></li>
+<li><p>Your code does not need to be commented line-by-line but should include a short comment above each “code set” (combined using the pip %&gt;%).</p></li>
+<li><p>Use headers to help structure your analysis!
+Having to formulate a concise subtitle for each step will help you make explicit what your data analysis steps consist of.</p></li>
+<li><p>You should describe your results after each major data analysis step (again orient yourself on the style of the lab manual/your homework assignment); describe general trends and patterns and highlight notable details (especially if you are going to refer to them later in the discussion)</p></li>
+</ul>
+</li>
+<li>
+<p>Discussion (3-4 paragraphs)</p>
+<ul>
+<li><p>Start your discussion by re-stating your central question and concisely summarizing your central findings (again, we have used a formulaic way of writing this up throughout the semester use that format)</p></li>
+<li><p>Discuss you findings in the context of your research question - interpret them to answer the question, point out caveats &amp; short-comings, consider whether they meet your expectations or whether there are contradictions, explain the patterns that you see; include references as appropriate!</p></li>
+</ul>
+</li>
+<li>
+<p>Conclusion (1 paragraph):</p>
+<ul>
+<li>Concisely state your research question and your major conclusions.</li>
+</ul>
+</li>
+</ol>
+</div>
+<div id="things-to-keep-in-mind" class="section level2" number="24.2">
+<h2>
+<span class="header-section-number">24.2</span> Things to keep in mind<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('things-to-keep-in-mind')" onmouseout="reset_tooltip('things-to-keep-in-mind-tooltip')"><span class="tooltiptext" id="things-to-keep-in-mind-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h2>
+<div id="make-good-use-of-your-set-up-code-chunk." class="section level3" number="24.2.1">
+<h3>
+<span class="header-section-number">24.2.1</span> Make good use of your set up code chunk.<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('make-good-use-of-your-set-up-code-chunk.')" onmouseout="reset_tooltip('make-good-use-of-your-set-up-code-chunk.-tooltip')"><span class="tooltiptext" id="make-good-use-of-your-set-up-code-chunk.-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>Generally, you first code chunk is used to load libraries necessary for running your analysis.
+Loading unnecessary libraries can lead to conflicts<label for="tufte-sn-157" class="margin-toggle sidenote-number">157</label><input type="checkbox" id="tufte-sn-157" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">157</span> When you have two different libraries with a function with the same name, R does not know which function you are referring to.
+There are ways around this when it is unavoidable (we have used two methods over the course, either explicitly calling a function with package and function name (e.g. <code>dply::select()</code> or using the function <code>conflicted::conflict_prefer()</code> .</span>.
+Think about what type of analysis you are doing and what packages you will need to load.</p>
+<p>The set up code is also a good place to set global settings for your document, e.g. suppressing warnings, errors, and messages using<code>knitr::opts_chunk$set()</code> .</p>
+<p>Further, you can set your preferred ggplot theme using <code>theme_set()</code> so you do not have to type it in every time you make a figure.
+If you are creating a vector with a custom color palette (see below) or similar you can also do this in your set up chunk.
+Having it all in one spot is really helpful if you want to make changes because you don’t have to search your document and all the code chunks to figure out where you created a setting.</p>
+</div>
+<div id="adding-references" class="section level3" number="24.2.2">
+<h3>
+<span class="header-section-number">24.2.2</span> Adding references<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('adding-references')" onmouseout="reset_tooltip('adding-references-tooltip')"><span class="tooltiptext" id="adding-references-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>In your introduction and discussion you should add references as appropriate.
+<code>Rmarkdown</code> does allow you to add citations.
+This involves creating a separate text file with your bibliography (<code>*.bib</code>) in BibTeX.
+If you use google scholar, when you pull up the Cite section, clicking on BibTeX at the bottom will open a plain text formatted citation that you can compile into a single file with all your references.
+You can then insert citations in <code>Rmarkdown</code> format and a reference section with alphabetically organized and standard formatted references will automatically be generated for you.
+You can find details in the <a href="https://bookdown.org/yihui/rmarkdown-cookbook/bibliography.html">Rmarkdown Cookbook</a>.</p>
+<p>The second option (this is what I would advise you to do) is to use footnotes.
+To create a footnote in Rmarkdown you use the carrot (<code>^</code>) followed immediately by square brackets (<code>[]</code>).
+The content in the brackets will be printed as a footnote at the bottom of a page, e.g. <code>^[This would become the footnote]</code> .
+Choose a format (APA, MLA, Chicago …) and stick with it.</p>
+</div>
+<div id="effective-figures" class="section level3" number="24.2.3">
+<h3>
+<span class="header-section-number">24.2.3</span> Effective figures<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('effective-figures')" onmouseout="reset_tooltip('effective-figures-tooltip')"><span class="tooltiptext" id="effective-figures-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>A data visualization refers to any type of visual display of data with the goal of helping us better understand the underlying data.</p>
+<p><strong>An effective figure should be constructed to highlight and facilitate the understanding of a specific (set of) point(s) in a clear, accessible, transparent, honest, and verifiable way.</strong></p>
+<ul>
+<li>
+<p>Data visualizations are used to tell a story: they should have a specific point that serves the overall narrative and support the description, interpretation &amp; discussion of key results.</p>
+<ul>
+<li><p>an effective figure legend contains a concise, descriptive title, a summary of what data (variables) have been visualized and how (encodings, mapping aesthetics, scales).</p></li>
+<li><p>an effective description of results points out general, broad-scale trends and highlights important details</p></li>
+<li><p>an effective discussion reiterates the key results and interprets them, states clear conclusions &amp; take-home messages of an anlysis &amp; points to the figure as evidence thereof.</p></li>
+</ul>
+</li>
+<li><p>Data visualizations should be formatted/customized to their anticipated audience and mode of presentation</p></li>
+<li><p>Data visualizations should be clear, accessible, transparent, and honest.</p></li>
+</ul>
+<p><strong>Checklist:</strong></p>
+<ul>
+<li><p>Did I chose the right type of plot?</p></li>
+<li><p>Did I label my axes?</p></li>
+<li><p>Is the font size is sufficiently large &amp; the font readable?</p></li>
+<li><p>Do colors support the point being made with the figure or distract?</p></li>
+<li><p>Is the main point clear?</p></li>
+<li><p>Is it easy for the viewer to make comparisons?</p></li>
+<li><p>Do my numbers add up?</p></li>
+<li><p>Do the numbers/figure as a whole represent the data?</p></li>
+<li><p>Does the y-axis start at 0 for barplots?</p></li>
+<li><p>Am I misleading the viewer?</p></li>
+</ul>
+<p>Part of making effective figures is checking that they are readable in the knitted document.
+If the proportions are off and you need to make the figure wider or taller remember that you can use specify <code>fig.height</code> and <code>fig.width</code> in the curly brackets in the curly brackets at the top of each code chunk, e.g. as</p>
+<p><code>```{r fig.height=10, fig.width=8}</code></p>
+</div>
+<div id="set-preferred-colors" class="section level3" number="24.2.4">
+<h3>
+<span class="header-section-number">24.2.4</span> Set preferred colors<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('set-preferred-colors')" onmouseout="reset_tooltip('set-preferred-colors-tooltip')"><span class="tooltiptext" id="set-preferred-colors-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>You can use the default colors for <code>ggplot</code> , we have also played with customizing colors a little bit but let’s look at a specific example on how we can easily manipulate colors in figures to make them consistent across visualizations for example if we are consistently comparing the same set of categories.</p>
+<p>Let’s load a few packages to get started, including <code>palmerpenguins</code> which contains a handy data set of observations for three species of penguins in the Antarctica.</p>
+<div class="sourceCode" id="cb604"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb604-1"><a href="final-projects.html#cb604-1" aria-hidden="true" tabindex="-1"></a><span class="co"># turn of sci notation</span></span>
+<span id="cb604-2"><a href="final-projects.html#cb604-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen=</span><span class="dv">999</span>)</span>
+<span id="cb604-3"><a href="final-projects.html#cb604-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb604-4"><a href="final-projects.html#cb604-4" aria-hidden="true" tabindex="-1"></a><span class="co"># load libraries for data import &amp; wrangling</span></span>
+<span id="cb604-5"><a href="final-projects.html#cb604-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb604-6"><a href="final-projects.html#cb604-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
+<span id="cb604-7"><a href="final-projects.html#cb604-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span>
+<span id="cb604-8"><a href="final-projects.html#cb604-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb604-9"><a href="final-projects.html#cb604-9" aria-hidden="true" tabindex="-1"></a><span class="co"># to format tables</span></span>
+<span id="cb604-10"><a href="final-projects.html#cb604-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb604-11"><a href="final-projects.html#cb604-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb604-12"><a href="final-projects.html#cb604-12" aria-hidden="true" tabindex="-1"></a><span class="co"># for data set</span></span>
+<span id="cb604-13"><a href="final-projects.html#cb604-13" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb604-14"><a href="final-projects.html#cb604-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb604-15"><a href="final-projects.html#cb604-15" aria-hidden="true" tabindex="-1"></a><span class="co"># pull in penguin data set</span></span>
+<span id="cb604-16"><a href="final-projects.html#cb604-16" aria-hidden="true" tabindex="-1"></a>peng <span class="ot">&lt;-</span> penguins</span></code></pre></div>
+<p>Let’s take a quick look using <code>skim()</code>.</p>
+<div class="sourceCode" id="cb605"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb605-1"><a href="final-projects.html#cb605-1" aria-hidden="true" tabindex="-1"></a><span class="fu">skim</span>(peng)</span></code></pre></div>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-532">Table 24.1: </span>Data summary</span><!--</caption>--></p>
+<table><tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">peng</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">344</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">8</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">factor</td>
+<td align="left">3</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody></table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">species</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">Ade: 152, Gen: 124, Chi: 68</td>
+</tr>
+<tr class="even">
+<td align="left">island</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="left">FALSE</td>
+<td align="right">3</td>
+<td align="left">Bis: 168, Dre: 124, Tor: 52</td>
+</tr>
+<tr class="odd">
+<td align="left">sex</td>
+<td align="right">11</td>
+<td align="right">0.97</td>
+<td align="left">FALSE</td>
+<td align="right">2</td>
+<td align="left">mal: 168, fem: 165</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead><tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">bill_length_mm</td>
+<td align="right">2</td>
+<td align="right">0.99</td>
+<td align="right">43.92</td>
+<td align="right">5.46</td>
+<td align="right">32.1</td>
+<td align="right">39.23</td>
+<td align="right">44.45</td>
+<td align="right">48.5</td>
+<td align="right">59.6</td>
+<td align="left">▃▇▇▆▁</td>
+</tr>
+<tr class="even">
+<td align="left">bill_depth_mm</td>
+<td align="right">2</td>
+<td align="right">0.99</td>
+<td align="right">17.15</td>
+<td align="right">1.97</td>
+<td align="right">13.1</td>
+<td align="right">15.60</td>
+<td align="right">17.30</td>
+<td align="right">18.7</td>
+<td align="right">21.5</td>
+<td align="left">▅▅▇▇▂</td>
+</tr>
+<tr class="odd">
+<td align="left">flipper_length_mm</td>
+<td align="right">2</td>
+<td align="right">0.99</td>
+<td align="right">200.92</td>
+<td align="right">14.06</td>
+<td align="right">172.0</td>
+<td align="right">190.00</td>
+<td align="right">197.00</td>
+<td align="right">213.0</td>
+<td align="right">231.0</td>
+<td align="left">▂▇▃▅▂</td>
+</tr>
+<tr class="even">
+<td align="left">body_mass_g</td>
+<td align="right">2</td>
+<td align="right">0.99</td>
+<td align="right">4201.75</td>
+<td align="right">801.95</td>
+<td align="right">2700.0</td>
+<td align="right">3550.00</td>
+<td align="right">4050.00</td>
+<td align="right">4750.0</td>
+<td align="right">6300.0</td>
+<td align="left">▃▇▆▃▂</td>
+</tr>
+<tr class="odd">
+<td align="left">year</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2008.03</td>
+<td align="right">0.82</td>
+<td align="right">2007.0</td>
+<td align="right">2007.00</td>
+<td align="right">2008.00</td>
+<td align="right">2009.0</td>
+<td align="right">2009.0</td>
+<td align="left">▇▁▇▁▇</td>
+</tr>
+</tbody>
+</table>
+<p>We can see that there are three species of penguins, observation where made on three islands from 2007 - 2009 and measurements include bill length and depth, total body mass, flipper length and body mass.</p>
+<p>Let’s make a quick plot to explore the relationship of bill length and bill depth</p>
+<div class="sourceCode" id="cb606"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb606-1"><a href="final-projects.html#cb606-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peng, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm)) <span class="sc">+</span></span>
+<span id="cb606-2"><a href="final-projects.html#cb606-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-533-1.png" width="672"></p>
+<p>It looks like we have a few groups present so we might want to color code this plot by species.</p>
+<div class="sourceCode" id="cb607"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb607-1"><a href="final-projects.html#cb607-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peng, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb607-2"><a href="final-projects.html#cb607-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-534-1.png" width="672"></p>
+<p>That gives use the standard <code>ggplot</code> colors.
+We can change those using <code>scale_color_manual()</code> and a vector that contains the color values we want to use.
+You can either type the values in each time you plot a figure, or if we anticipate making several plots color coded by species, we can create the vector once and then calling the vector using the object name.</p>
+<div class="sourceCode" id="cb608"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb608-1"><a href="final-projects.html#cb608-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peng, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb608-2"><a href="final-projects.html#cb608-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb608-3"><a href="final-projects.html#cb608-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>, <span class="st">"purple"</span>, <span class="st">"cyan4"</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-535-1.png" width="672"></p>
+<p>This is how you would do it by specifying a vector:</p>
+<div class="sourceCode" id="cb609"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb609-1"><a href="final-projects.html#cb609-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set color for species</span></span>
+<span id="cb609-2"><a href="final-projects.html#cb609-2" aria-hidden="true" tabindex="-1"></a>color_species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"darkorange"</span>, <span class="st">"purple"</span>, <span class="st">"cyan4"</span>)</span>
+<span id="cb609-3"><a href="final-projects.html#cb609-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb609-4"><a href="final-projects.html#cb609-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb609-5"><a href="final-projects.html#cb609-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peng, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb609-6"><a href="final-projects.html#cb609-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb609-7"><a href="final-projects.html#cb609-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> color_species)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-536-1.png" width="672"></p>
+<p>You can use built in names for colors or you can use the hexidecimal codes instead which means that you can use a color picker to find exactly the color set you want<label for="tufte-sn-158" class="margin-toggle sidenote-number">158</label><input type="checkbox" id="tufte-sn-158" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">158</span> If you check the Rstudio Addins drop down menu you will find that there is a built in color picker you can use, too; <a href="https://raw.githubusercontent.com/daattali/colourpicker/master/inst/img/colourPickerGadget.gif">check out a short demo of using the addin</a>.</span>.</p>
+<div class="sourceCode" id="cb610"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb610-1"><a href="final-projects.html#cb610-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set color for species</span></span>
+<span id="cb610-2"><a href="final-projects.html#cb610-2" aria-hidden="true" tabindex="-1"></a>color_species <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#FF8C00"</span>, <span class="st">"#9A32CD"</span>, <span class="st">"#00C5CD"</span>)</span>
+<span id="cb610-3"><a href="final-projects.html#cb610-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb610-4"><a href="final-projects.html#cb610-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb610-5"><a href="final-projects.html#cb610-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peng, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> bill_depth_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb610-6"><a href="final-projects.html#cb610-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb610-7"><a href="final-projects.html#cb610-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> color_species)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-537-1.png" width="672"></p>
+<p>If we were to make a plot comparing the relationship of body mass and flipper length it would be straightforward to pull up the same set of colors.</p>
+<div class="sourceCode" id="cb611"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb611-1"><a href="final-projects.html#cb611-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb611-2"><a href="final-projects.html#cb611-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peng, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g, <span class="at">y =</span> flipper_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb611-3"><a href="final-projects.html#cb611-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb611-4"><a href="final-projects.html#cb611-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> color_species)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-538-1.png" width="672"></p>
+<p>Let’s say we wanted to count the number of each species observed and visualize that using a barplot; for consistency we could easily use the same color codes using the specified vector but now we would use <code>scale_fill_manual()</code> .</p>
+<div class="sourceCode" id="cb612"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb612-1"><a href="final-projects.html#cb612-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peng, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb612-2"><a href="final-projects.html#cb612-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb612-3"><a href="final-projects.html#cb612-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> color_species)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-539-1.png" width="672"></p>
+<p>Let’s create a similar plot counting the number of each species counted on each island.</p>
+<div class="sourceCode" id="cb613"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb613-1"><a href="final-projects.html#cb613-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(peng, <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb613-2"><a href="final-projects.html#cb613-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb613-3"><a href="final-projects.html#cb613-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> color_species)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-540-1.png" width="672"></p>
+</div>
+<div id="order-vector" class="section level3" number="24.2.5">
+<h3>
+<span class="header-section-number">24.2.5</span> Order vector<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('order-vector')" onmouseout="reset_tooltip('order-vector-tooltip')"><span class="tooltiptext" id="order-vector-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>By default ggplot with order categorical variable alphabetically.
+But let’s say that we wanted our bar plot above to have our islands ordered as Torgensen, Biscoe and Dream - how can we achieve that?</p>
+<p>Well, we need to convert our character vector into a factor, which has explicit levels.
+We’ll start by creating a vector that has our values in the order we want them, then we will use <code>mutate()</code> to change the class to an ordered vector (or factor).</p>
+<div class="sourceCode" id="cb614"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb614-1"><a href="final-projects.html#cb614-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set levels</span></span>
+<span id="cb614-2"><a href="final-projects.html#cb614-2" aria-hidden="true" tabindex="-1"></a>islands <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Torgersen"</span>, <span class="st">"Biscoe"</span>, <span class="st">"Dream"</span>)</span>
+<span id="cb614-3"><a href="final-projects.html#cb614-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb614-4"><a href="final-projects.html#cb614-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert data type</span></span>
+<span id="cb614-5"><a href="final-projects.html#cb614-5" aria-hidden="true" tabindex="-1"></a>peng <span class="ot">&lt;-</span> peng <span class="sc">%&gt;%</span></span>
+<span id="cb614-6"><a href="final-projects.html#cb614-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">island =</span> <span class="fu">ordered</span>(island, <span class="at">levels =</span> islands))</span></code></pre></div>
+<p>If we re-plot our island counts it will change the sequence.</p>
+<div class="sourceCode" id="cb615"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb615-1"><a href="final-projects.html#cb615-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(peng, <span class="fu">aes</span>(<span class="at">x =</span> island, <span class="at">fill =</span> species)) <span class="sc">+</span></span>
+<span id="cb615-2"><a href="final-projects.html#cb615-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"count"</span>, <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb615-3"><a href="final-projects.html#cb615-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> color_species)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-542-1.png" width="672"></p>
+</div>
+<div id="make-pretty-tables-using-kable" class="section level3" number="24.2.6">
+<h3>
+<span class="header-section-number">24.2.6</span> Make pretty tables using <code>kable()</code>
+<div class="tooltip"><button class="internal-link-btn" onclick="copy_link('make-pretty-tables-using-kable')" onmouseout="reset_tooltip('make-pretty-tables-using-kable-tooltip')"><span class="tooltiptext" id="make-pretty-tables-using-kable-tooltip">Copy link</span><i class="fa fa-link"></i></button></div>
+</h3>
+<p>You might want or need to include some tables.
+The best way to get nicely formatted tables is using <code>knitr::kable()</code> .</p>
+<p>For example, instead of a bar graph we might want to include counts per island as a table.
+Our first option is to first create a new object with the table we want to include and then call <code>kable()</code> with that object as the argument.</p>
+<div class="sourceCode" id="cb616"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb616-1"><a href="final-projects.html#cb616-1" aria-hidden="true" tabindex="-1"></a>table1 <span class="ot">&lt;-</span> peng <span class="sc">%&gt;%</span></span>
+<span id="cb616-2"><a href="final-projects.html#cb616-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(island) <span class="sc">%&gt;%</span></span>
+<span id="cb616-3"><a href="final-projects.html#cb616-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb616-4"><a href="final-projects.html#cb616-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> island, <span class="at">values_from =</span> n)</span>
+<span id="cb616-5"><a href="final-projects.html#cb616-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb616-6"><a href="final-projects.html#cb616-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(table1)</span></code></pre></div>
+<table>
+<thead><tr class="header">
+<th align="left">species</th>
+<th align="right">Torgersen</th>
+<th align="right">Biscoe</th>
+<th align="right">Dream</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Adelie</td>
+<td align="right">52</td>
+<td align="right">44</td>
+<td align="right">56</td>
+</tr>
+<tr class="even">
+<td align="left">Gentoo</td>
+<td align="right">NA</td>
+<td align="right">124</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Chinstrap</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">68</td>
+</tr>
+</tbody>
+</table>
+<p>Alternatively, you can also just directly manipulate the data.frame in kable using your dplyr verbs like this:</p>
+<div class="sourceCode" id="cb617"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb617-1"><a href="final-projects.html#cb617-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb617-2"><a href="final-projects.html#cb617-2" aria-hidden="true" tabindex="-1"></a>  peng <span class="sc">%&gt;%</span></span>
+<span id="cb617-3"><a href="final-projects.html#cb617-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(island) <span class="sc">%&gt;%</span></span>
+<span id="cb617-4"><a href="final-projects.html#cb617-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb617-5"><a href="final-projects.html#cb617-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> island, <span class="at">values_from =</span> n)</span>
+<span id="cb617-6"><a href="final-projects.html#cb617-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<table>
+<thead><tr class="header">
+<th align="left">species</th>
+<th align="right">Torgersen</th>
+<th align="right">Biscoe</th>
+<th align="right">Dream</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Adelie</td>
+<td align="right">52</td>
+<td align="right">44</td>
+<td align="right">56</td>
+</tr>
+<tr class="even">
+<td align="left">Gentoo</td>
+<td align="right">NA</td>
+<td align="right">124</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Chinstrap</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">68</td>
+</tr>
+</tbody>
+</table>
+<p>You can also use the <code>caption</code> argument to give your table a caption.</p>
+<div class="sourceCode" id="cb618"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb618-1"><a href="final-projects.html#cb618-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb618-2"><a href="final-projects.html#cb618-2" aria-hidden="true" tabindex="-1"></a>  peng <span class="sc">%&gt;%</span></span>
+<span id="cb618-3"><a href="final-projects.html#cb618-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(island) <span class="sc">%&gt;%</span></span>
+<span id="cb618-4"><a href="final-projects.html#cb618-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(species) <span class="sc">%&gt;%</span></span>
+<span id="cb618-5"><a href="final-projects.html#cb618-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> island, <span class="at">values_from =</span> n),</span>
+<span id="cb618-6"><a href="final-projects.html#cb618-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Number of individuals per species observed on each island."</span></span>
+<span id="cb618-7"><a href="final-projects.html#cb618-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><!--
+<caption>--><span class="marginnote shownote"><span id="tab:unnamed-chunk-545">Table 24.2: </span>Number of individuals per species observed on each island.</span><!--</caption>--></p>
+<table>
+<thead><tr class="header">
+<th align="left">species</th>
+<th align="right">Torgersen</th>
+<th align="right">Biscoe</th>
+<th align="right">Dream</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">Adelie</td>
+<td align="right">52</td>
+<td align="right">44</td>
+<td align="right">56</td>
+</tr>
+<tr class="even">
+<td align="left">Gentoo</td>
+<td align="right">NA</td>
+<td align="right">124</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="left">Chinstrap</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">68</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></body></html>
+
+<p style="text-align: center;">
+<a href="predictive-modeling-for-air-pollution.html"><button class="btn btn-default">Previous</button></a>
+<a href="references.html"><button class="btn btn-default">Next</button></a>
+</p>
+<p class="build-date">Page built: 
+2021-11-30
+ using 
+R version 4.0.2 (2020-06-22)
+</p>
+</div>
+</div>
+
+
+
+</body>
+</html>

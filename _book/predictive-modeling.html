@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-17" />
+<meta name="date" content="2021-11-30" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -213,6 +213,7 @@ function reset_tooltip(id) {
 <a href="simulated-data-for-hypothesis-testing-i.html"><span class="toc-section-number">21</span> Simulated Data for hypothesis testing I</a>
 <a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
 <a href="predictive-modeling-for-air-pollution.html"><span class="toc-section-number">23</span> Predictive modeling for air pollution</a>
+<a href="final-projects.html"><span class="toc-section-number">24</span> Final Projects</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -270,11 +271,11 @@ function reset_tooltip(id) {
 <span id="cb348-3"><a href="predictive-modeling.html#cb348-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>(day_of_year <span class="sc">~</span> temperature, <span class="at">data =</span> pheno)    <span class="co"># define variables</span></span></code></pre></div>
 <p>Choosing <code>lm</code> as our computational engine, means that we are performing an ordinary least square regression. Let’s quickly review what that means for how we are fitting our model.</p>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-296"></span>
+<span style="display:block;" id="fig:unnamed-chunk-326"></span>
 <p class="caption marginnote shownote">
 Figure 19.1: Observed (orange) and corresponding predicted (blue) flowering dates using linear regression model (black line) for American Elm in Ramsey Country.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-296-1.png" alt="Observed (orange) and corresponding predicted (blue) flowering dates using linear regression model (black line) for American Elm in Ramsey Country." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-326-1.png" alt="Observed (orange) and corresponding predicted (blue) flowering dates using linear regression model (black line) for American Elm in Ramsey Country." width="672">
 </div>
 <p>In this figure you see the observed flowering dates and the corresponding predicted value for each temperature in the data set using the linear regression model. The vertical segments connecting those two points are the <strong>residuals</strong>, i.e. the distance between the observed and predicted value. When we fit the model, we (and by we I mean R) took the residuals, squared them, summed them all up and then tried to minimize that number - i.e. we tried out all possible configurations of the linear trendline until we found the one that minimizes the sum of the squared regressions.</p>
 <p>How do we know how “good” or model is? Well, we can look at the R2 and p-value which tells us how much of the variance in the dependent variable is explained by the independent variable and whether or not that relationship is significant but we should also check our model to determine if a linear regression is an appropriate way to describe the relationship.</p>
@@ -364,7 +365,7 @@ Figure 19.1: Observed (orange) and corresponding predicted (blue) flowering date
 <span id="cb350-2"><a href="predictive-modeling.html#cb350-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb350-3"><a href="predictive-modeling.html#cb350-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"gray"</span>) <span class="sc">+</span></span>
 <span id="cb350-4"><a href="predictive-modeling.html#cb350-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"predicted value"</span>, <span class="at">y =</span> <span class="st">"residual"</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-298-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-328-1.png" width="672"></p>
 <p>When we plot the residuals vs the predicted values we should find a completely random scatter around 0, and no visible patterns among x or y-axis indicating that there is no relationship between the predicted values and the residuals (no clusters, no correlation)<label for="tufte-sn-110" class="margin-toggle sidenote-number">110</label><input type="checkbox" id="tufte-sn-110" class="margin-toggle"><span class="sidenote"><span class="sidenote-number">110</span> The fact that the residuals have no pattern to them tells us that all the important variation has already been captured by our model, indicating we chose a good model!</span>.</p>
 </div>
 <div id="use-the-model-to-predict" class="section level2" number="19.2">
@@ -431,7 +432,7 @@ Figure 19.1: Observed (orange) and corresponding predicted (blue) flowering date
 <span id="cb359-4"><a href="predictive-modeling.html#cb359-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> .<span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb359-5"><a href="predictive-modeling.html#cb359-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb359-6"><a href="predictive-modeling.html#cb359-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"temperature"</span>, <span class="at">y =</span> <span class="st">"predicted flowering date"</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-303-1.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-333-1.png" width="672"></p>
 <p>Not unsurprisingly, our predicted points fall exactly on the calculated trendline, though it is notable that the farther we extrapolate out to temperatures lower or higher than those recorded in our data set our uncertainty increases.</p>
 </div>
 <div id="do-we-trust-our-model" class="section level2" number="19.3">
@@ -614,11 +615,11 @@ Figure 19.1: Observed (orange) and corresponding predicted (blue) flowering date
 <span id="cb368-4"><a href="predictive-modeling.html#cb368-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">shape =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"darkorange"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
 <span id="cb368-5"><a href="predictive-modeling.html#cb368-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"observed flowering date"</span>, <span class="at">y =</span> <span class="st">"predicted flowering date"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-309"></span>
+<span style="display:block;" id="fig:unnamed-chunk-339"></span>
 <p class="caption marginnote shownote">
 Figure 19.2: Comparison of predicted vs. observed flowering date for training data set. The dashed black line indicates perfect predictions, the red line is the linear trendline showing relationship of observed vs predicted values.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-309-1.png" alt="Comparison of predicted vs. observed flowering date for training data set. The dashed black line indicates perfect predictions, the red line is the linear trendline showing relationship of observed vs predicted values." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-339-1.png" alt="Comparison of predicted vs. observed flowering date for training data set. The dashed black line indicates perfect predictions, the red line is the linear trendline showing relationship of observed vs predicted values." width="672">
 </div>
 <p>If we had “perfect” predictions, our linear trendline should fall on top of the dashed line indicating perfect predictions.</p>
 <p>One way we can quantify this is calculating the <strong>root-mean-square deviation</strong> (RMSE) which is the standard deviation of the residuals, i.e. the prediction errors. We can calculate this using the package <code>yardstick</code> which contains functions to assess model performance.</p>
@@ -671,7 +672,7 @@ Figure 19.2: Comparison of predicted vs. observed flowering date for training d
 <a href="remote-sensing.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-17
+2021-11-30
  using 
 R version 4.0.2 (2020-06-22)
 </p>

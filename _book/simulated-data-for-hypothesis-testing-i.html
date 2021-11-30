@@ -14,7 +14,7 @@
 
 <meta name="author" content="Shannon J. O’Leary" />
 
-<meta name="date" content="2021-11-17" />
+<meta name="date" content="2021-11-30" />
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -217,6 +217,7 @@ function reset_tooltip(id) {
 </ul>
 <a href="simulated-data-for-hypothesis-testing-ii.html"><span class="toc-section-number">22</span> Simulated Data for hypothesis testing II</a>
 <a href="predictive-modeling-for-air-pollution.html"><span class="toc-section-number">23</span> Predictive modeling for air pollution</a>
+<a href="final-projects.html"><span class="toc-section-number">24</span> Final Projects</a>
 <a href="references.html">References</a>
 </div>
 </li>
@@ -426,11 +427,11 @@ function reset_tooltip(id) {
 <p>Now, let’s take a closer look at the meteorological input data for the duration of our simulation.</p>
 <div class="sourceCode" id="cb409"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb409-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb409-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_meteo</span>(nml_file)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-344"></span>
+<span style="display:block;" id="fig:unnamed-chunk-374"></span>
 <p class="caption marginnote shownote">
 Figure 21.1: Metereological data describing drivers of thermal structure of Lake Awesome.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-344-1.png" alt="Metereological data describing drivers of thermal structure of Lake Awesome." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-374-1.png" alt="Metereological data describing drivers of thermal structure of Lake Awesome." width="768">
 </div>
 <div id="ques:sim-4" class="question">
 <p class="question-begin">
@@ -486,11 +487,11 @@ Figure 21.1: Metereological data describing drivers of thermal structure of Lake
 <p>For now, let’s visualize our simulated water temperatures using a heat map.</p>
 <div class="sourceCode" id="cb414"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb414-1"><a href="simulated-data-for-hypothesis-testing-i.html#cb414-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp</span>(<span class="at">file =</span> baseline, <span class="at">fig_path =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-348"></span>
+<span style="display:block;" id="fig:unnamed-chunk-378"></span>
 <p class="caption marginnote shownote">
 Figure 21.2: Thermal structure for our simulated lake.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-348-1.png" alt="Thermal structure for our simulated lake." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-378-1.png" alt="Thermal structure for our simulated lake." width="672">
 </div>
 <div id="ques:sim-7" class="question">
 <p class="question-begin">
@@ -521,11 +522,11 @@ Figure 21.2: Thermal structure for our simulated lake.
 <span id="cb415-4"><a href="simulated-data-for-hypothesis-testing-i.html#cb415-4" aria-hidden="true" tabindex="-1"></a><span class="co"># plot simulated vs observed data</span></span>
 <span id="cb415-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb415-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_temp_compare</span>(baseline, field_file)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-349"></span>
+<span style="display:block;" id="fig:unnamed-chunk-379"></span>
 <p class="caption marginnote shownote">
 Figure 21.3: Comparison of field data and simulated temperatures.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-349-1.png" alt="Comparison of field data and simulated temperatures." width="768">
+<img src="_main_files/figure-html/unnamed-chunk-379-1.png" alt="Comparison of field data and simulated temperatures." width="768">
 </div>
 <p>The top panel shows the observed data measured at different epths and times using high-frequency sensors on a buoy, each measurement is depicted by black circles. The heatmap represents the extrapolated values between sensors.</p>
 <p>The bottom panel shows the modeled data.</p>
@@ -581,11 +582,11 @@ Figure 21.3: Comparison of field data and simulated temperatures.
 <span id="cb420-5"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>)) <span class="sc">+</span></span>
 <span id="cb420-6"><a href="simulated-data-for-hypothesis-testing-i.html#cb420-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Thermocline depth [m]"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-352"></span>
+<span style="display:block;" id="fig:unnamed-chunk-382"></span>
 <p class="caption marginnote shownote">
 Figure 21.4: Comparison of modeled and observed thermoclines.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-352-1.png" alt="Comparison of modeled and observed thermoclines." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-382-1.png" alt="Comparison of modeled and observed thermoclines." width="672">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -620,11 +621,11 @@ Figure 21.4: Comparison of modeled and observed thermoclines.
 <span id="cb421-8"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"darkblue"</span>, <span class="st">"darkred"</span>)) <span class="sc">+</span></span>
 <span id="cb421-9"><a href="simulated-data-for-hypothesis-testing-i.html#cb421-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Water temperature [C]"</span>)</span></code></pre></div>
 <div class="figure">
-<span style="display:block;" id="fig:unnamed-chunk-353"></span>
+<span style="display:block;" id="fig:unnamed-chunk-383"></span>
 <p class="caption marginnote shownote">
 Figure 21.5: Comparison of modeled and observed water temperatures.
 </p>
-<img src="_main_files/figure-html/unnamed-chunk-353-1.png" alt="Comparison of modeled and observed water temperatures." width="672">
+<img src="_main_files/figure-html/unnamed-chunk-383-1.png" alt="Comparison of modeled and observed water temperatures." width="672">
 </div>
 <p class="solution-end">
 <span class="fa fa-square-o solution-icon"></span>
@@ -909,7 +910,7 @@ Figure 21.5: Comparison of modeled and observed water temperatures.
 <a href="simulated-data-for-hypothesis-testing-ii.html"><button class="btn btn-default">Next</button></a>
 </p>
 <p class="build-date">Page built: 
-2021-11-17
+2021-11-30
  using 
 R version 4.0.2 (2020-06-22)
 </p>

@@ -1,0 +1,413 @@
+---
+title: "Data Science for the Natural Environment (FA21)"
+subtitle: "BI449 Data Science for the Natural Environment"
+author: "Shannon J. O'Leary"
+date: "`r Sys.Date()`"
+knit: "bookdown::preview_chapter"
+output:
+  msmbstyle::msmb_html_book:
+    highlight: tango
+    toc: TRUE
+    toc_depth: 1
+    split_by: chapter
+    margin_references: FALSE
+    css: msmb.css
+bibliography: labmanual.bib
+link-citations: yes
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r include=FALSE}
+
+library(msmbstyle)
+# invalidate cache when the tufte version changes
+knitr::opts_chunk$set(tidy = FALSE, 
+                      cache.extra = packageVersion('msmbstyle'),
+                      warning = FALSE,
+                      message = FALSE,
+                      error = FALSE)
+
+
+options(htmltools.dir.version = FALSE)
+
+source("scr/ggplot.R")
+
+theme_set(theme_standard)
+
+```
+
+# Predictive modeling for air pollution
+
+**Learning Objectives**
+
+After completing this tutorial you should be able to
+
+* 
+
+Let's load our packages so we can get started.
+
+```{r}
+
+# load libraries for data import & wrangling
+library(magrittr)
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(skimr)
+library(knitr)
+
+
+# load libraries for data visualization & mapping
+library(ggplot2)
+library(patchwork)
+library(sf)
+library(osmdata)
+
+
+# turn of sci notation
+options(scipen=999)
+
+```
+
+
+Read in air pollution data
+
+```{r}
+
+
+pollution <- read_delim("data/airpollution_raw.txt", delim = "\t") %>%
+  clean_names() %>%
+  filter(date > 0 & time > 0) %>%
+  separate(time, into = c("hr", "mi", "sc"), sep = c(2,4), remove = FALSE, convert = TRUE) %>%
+  mutate(date = ymd(date),
+         weekday = weekdays(date),
+         year_month = format_ISO8601(date, precision = "ym"),
+         week = week(date),
+         dy = day(date),
+         yr = year(date),
+         mt = month(date),
+         datetime_UTC = make_datetime(year = yr, month = mt, day = dy,
+                                  hour = hr, min = mi, sec = sc),
+         datetime_EST = with_tz(datetime_UTC, tzone = "EST")) %>%
+  filter(yr > 2020)
+
+glimpse(pollution)
+
+```
+
+Check out variables
+
+```{r}
+
+skim(pollution)
+
+```
+
+Find distribution of PM2.5 values
+
+```{r}
+
+pollution %>%
+  select(pm2_5) %>%
+  summary()
+
+quantile(pollution$pm2_5, probs = c(0.05, 0.25, 0.5, 0.75, 0.95, 0.99))
+
+```
+
+Plot distributions
+
+```{r}
+
+ggplot(pollution, aes(x = pm2_5)) +
+  geom_histogram()
+
+```
+
+Check out the high values; all from certain outings or distributed across?
+
+WHO
+
+* PM2.5 > 5ug/m3
+
+AQI: 
+
+* Good: 0-12
+* Moderate: 12-35
+* Unhealthy for sensitive individuals: 35-55
+* Unhealthy: 55-150
+* Very Unhealthy: 150-250
+* Hazardous: > 250
+
+Pull out Unhealthy or higher
+
+```{r}
+
+pollution %>%
+  filter(pm2_5 > 55) %>%
+  group_by(id) %>%
+  count() %>%
+  arrange(desc(n))
+
+```
+
+Pull out very unhealthy or higher
+
+```{r}
+
+pollution %>%
+  filter(pm2_5 > 150) %>%
+  group_by(id) %>%
+  count() %>%
+  arrange(desc(n))
+
+```
+
+
+Pull out hazardous
+
+```{r}
+
+pollution %>%
+  filter(pm2_5 > 250) %>%
+  group_by(id) %>%
+  count() %>%
+  arrange(desc(n))
+
+```
+
+Check out that one recording
+
+```{r}
+
+hazard <- pollution %>%
+  filter(id == "E390051.CSV")
+
+ggplot(hazard, aes(x = datetime_EST, y = pm2_5)) +
+  geom_line() +
+  scale_y_log10()
+
+```
+
+One location far from Manchester
+
+```{r}
+
+mass <- pollution %>%
+  filter(id == "CE30009.CSV")
+
+```
+
+
+
+Remove from data set
+
+```{r}
+
+pollution %<>%
+  filter(!id %in% c("E390051.CSV", "CE30009.CSV"))
+
+```
+
+Compare by week day
+
+```{r}
+
+pollution %<>%
+  mutate(weekday = ordered(weekday, levels = c("Monday",
+                                               "Tuesday",
+                                               "Wednesday",
+                                               "Thursday",
+                                               "Friday",
+                                               "Saturday",
+                                               "Sunday")))
+
+ggplot(pollution, aes(x = weekday, y = pm2_5)) +
+  geom_boxplot() +
+  geom_hline(yintercept = c(12, 35, 55, 150, 250)) +
+  scale_y_log10() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggplot(pollution, aes(x = weekday, y = pm2_5)) +
+  geom_boxplot() +
+  geom_hline(yintercept = c(12, 35, 55, 150, 250)) +
+  scale_y_log10() +
+  coord_flip()
+
+```
+
+Compare by hour
+
+```{r}
+
+pollution %<>%
+  mutate(hr_EST = factor(hour(datetime_EST))) %>%
+  mutate(AQI = case_when(pm2_5 <= 12 ~ "good",
+                                pm2_5 > 12 & pm2_5 <= 35 ~ "moderate",
+                                pm2_5 > 35 & pm2_5 <= 55 ~ "unhealth sens",
+                                pm2_5 > 55 & pm2_5 <= 150 ~ "unhealthy",
+                                pm2_5 > 150 & pm2_5 <= 250 ~ "very unhealth",
+                                pm2_5 > 250 ~ "hazardous"))
+
+ggplot(pollution, aes(x = hr_EST, y = pm2_5)) +
+  geom_boxplot() +
+  facet_grid(AQI ~ ., scales = "free") +
+  scale_y_log10()
+
+```
+
+Compare mean per hour for days with measurement
+
+```{r}
+
+hourly <- pollution %>%
+  group_by(date, hr_EST) %>%
+  summarize(mean_hr = mean(pm2_5),
+            max_hr = max(pm2_5),
+            hr_05 = quantile(pm2_5, probs = .05),
+            hr_95 = quantile(pm2_5, probs = .95)) %>%
+  pivot_longer(names_to = "stat", values_to = "pm2_5", 3:6)
+
+ggplot(hourly, aes(x = date, y = hr_EST, fill = log10(pm2_5))) +
+  geom_tile() +
+  facet_grid(stat ~ .) +
+  scale_fill_viridis_c()
+
+ggplot(hourly, aes(x = date, y = hr_EST, fill = mean_hr)) +
+  geom_tile() +
+  scale_fill_viridis_c()
+
+```
+
+Look at spatial component
+
+```{r}
+
+poll_spat <- pollution %>%
+  filter(latitude > 0 & longitude > 0)
+
+```
+
+Ge map info
+
+```{r}
+
+# available categories for features
+available_tags("highway")
+available_tags("waterway")
+available_tags("railway")
+available_tags("water")
+
+# get geographic location of a city
+getbb("Manchester New Hampshire")
+
+# pull specified set of street categories & convert to sf
+prim_roads <- getbb("Manchester NH") %>%
+  opq() %>%
+  add_osm_feature(key = "highway",
+                  value = c("motorway", "primary", "motorway_link", "primary_link")) %>% 
+  osmdata_sf()
+
+second_roads <- getbb("Manchester NH") %>%
+  opq() %>%
+  add_osm_feature(key = "highway",
+                  value = c("secondary", "tertiary", "secondary_link", "tertiary_link")) %>% # small roads
+  osmdata_sf()
+
+small_roads <- getbb("Manchester NH") %>%
+  opq() %>%
+  add_osm_feature(key = "highway",
+                  value = c("residential", "living_street",
+                            "unclassified",
+                            "service", "footway")) %>% # small roads
+  osmdata_sf()
+
+rivers <- getbb("Manchester NH") %>%
+  opq() %>%
+  add_osm_feature(key = "water",
+                  value = c("canal", "river", "stream", "tidal_channel", "basin", "lake", "reservoir")) %>% 
+  osmdata_sf()
+
+haz_spatial <- hazard %>%
+  filter(latitude > 0 & longitude > 0) %>%
+  mutate(longitude = -1*longitude) %>%
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+
+tmp <- hazard %>%
+  filter(latitude > 0 & longitude > 0)
+
+unhealthy <- poll_spat %>%
+  filter(pm2_5 > 35) %>%
+mutate(longitude = -1*longitude) %>%
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+
+
+x_min <- -1*min(tmp$longitude) - .1
+x_max <- -1*max(tmp$longitude) + .1
+
+y_min <- min(tmp$latitude) - .1
+y_max <- max(tmp$latitude) + .1
+
+ggplot() +
+  geom_sf(data = prim_roads$osm_lines,
+          inherit.aes = FALSE,
+          color = "black") +
+  geom_sf(data = second_roads$osm_lines,
+          inherit.aes = FALSE,
+          color = "black") +
+  # geom_sf(data = small_roads$osm_lines,
+  #         inherit.aes = FALSE,
+  #         color = "#666666") +
+  # geom_sf(data = second_roads$osm_lines,
+  #         inherit.aes = FALSE,
+  #         color = "black",
+  #         size = .3,
+  #         alpha = .5) +
+  # geom_sf(data = small_roads$osm_lines,
+  #         inherit.aes = FALSE,
+  #         color = "#666666",
+  #         size = .2,
+  #         alpha = .3) 
+  geom_sf(data = unhealthy, shape = 21, size = 2, alpha = .75, aes(fill = pm2_5)) +
+  scale_fill_viridis_c() +
+  coord_sf(xlim = c(42.8, 43), 
+           ylim = c(-71.55, -71.4),
+           expand = FALSE)
+
+```
+
+
+```{r}
+
+df_sf <- pollution %>%
+  st_as_sf(coords = c("longitude", "latitude"), crs = 4326)
+
+grid <- df_sf %>% 
+  st_bbox() %>% 
+  st_as_sfc() %>% 
+  st_make_grid(cellsize = 0.05)
+
+grid_sf <- grid %>%
+  st_sf() %>%
+  rownames_to_column("polygon_id") %>%
+  mutate(polygon_id = as.integer(polygon_id))
+
+pollut_grid <- poll_spat %>%
+  mutate(polygon_id = st_intersects(df_sf, grid) %>% map_int(1))
+
+plot <- pollut_grid %>%
+  group_by(polygon_id) %>%
+  summarize(mean_pm = mean(pm2_5),
+            max_pm = max(pm2_5),
+            pm_05 = quantile(pm2_5, probs = .05),
+            pm_95 = quantile(pm2_5, probs = .95)) %>%
+  left_join(grid_sf, by = "polygon_id")
+
+ggplot() +
+  geom_sf(data = plot, aes(fill = pm_95, geometry = geometry)) +
+  scale_fill_viridis_c()
+
+
+```
+
